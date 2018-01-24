@@ -1,70 +1,136 @@
-Unit 01 - Introduction
-======================
+Unit 01 - First steps in GRASS GIS
+==================================
 
-Free and Open Source Software (FOSS)
-------------------------------------
+About
+-----
 
-.. figure:: ../images/units/01/foss.png
+**GRASS GIS**, commonly referred to as GRASS (Geographic Resources
+Analysis Support System), is a free and open source Geographic
+Information System (GIS) software suite used for geospatial data
+management and analysis, image processing, graphics and maps
+production, spatial modeling, and visualization. GRASS GIS is
+currently used in academic and commercial settings around the world,
+as well as by many governmental agencies and environmental consulting
+companies. It is a founding member of the Open Source Geospatial
+Foundation (OSGeo).
 
-   FOSS software overview (`source
-   <https://www.linkedin.com/pulse/open-source-software-development-neha-sharma>`__).
+Originally developed by the U.S. Army Construction Engineering
+Research Laboratories (USA-CERL, 1982-1995, see history of GRASS
+1.0-4.2 and 5beta), a branch of the US Army Corp of Engineers, as a
+tool for land management and environmental planning by the military,
+GRASS GIS has evolved into a powerful utility with a wide range of
+applications in many different areas of applications and scientific
+research. (source: http://grass.osgeo.org)
 
-Free and open-source software (FOSS) is computer software that can be
-classified as both **free software** and **open-source
-software**. That is, anyone is freely licensed to
+.. youtube:: U3Hf0qI4JLc
 
-* use,
-* copy,
-* study, and
-* change
+   GRASS GIS promo video from 1987.
 
-the software in any way, and the source code is openly shared so that
-people are encouraged to voluntarily improve the design of the
-software. This is in contrast to **proprietary software**, where the
-software is under restrictive copyright and the source code is usually
-hidden from the users. See :wikipedia-en:`Free and open-source
-software` article on Wikipedia for details.
+.. todo:: why it's broken?
 
-FOSS for Geospatial
-^^^^^^^^^^^^^^^^^^^
+In Nutshell
+-----------
 
-Since 2006 there is `OSGeo Foundation <http://www.osgeo.org>`__ to
-support the collaborative development of open source geospatial
-software, and promote its widespread use.
+**Advantages**:
 
-.. figure:: ../images/units/01/osgeo-logo.png
-   :class: small
-   
-   OSGeo logo (`source <https://www.osgeo.org/about/branding-material/>`__)
+* open source, you can use freely, modify, improve, share
+* strong user community, commercial support
+* large scale functionality, ingredible amount of tools (2D/3D
+  raster/vector, topology, imagery, map production, space-temporal,
+  ...)
+* both GUI and CMD (easy for scripting)
+* Python API and libraries
 
-The foundation has adopted principles to ensure that projects under
-OSGeo umbrella will satisfy basic quality requirements, namely:
+**Disadvantages** (turning out to be advantages in some cases):
 
-* Projects should manage themselves, striving for consensus and
-  encouraging participation from all contributors - from beginning
-  users to advanced developers.
-* Contributors are the scarce resource and successful projects court
-  and encourage them.
-* Projects are encouraged to adopt open standards and collaborate with
-  other OSGeo projects.
-* Projects are responsible for reviewing and controlling their code
-  bases to insure the integrity of the open source baselines.
+* open source ;-)
+* complicated startup
+* native format (requires importing data, be aware of possibility of linking external formats)
+* topology (not good idea to link external vector formats)
 
-This principles ensure that `OSGeo projects
-<https://www.osgeo.org/projects/>`__ are well established, stable,
-mature and sustainable.
+**When to use GRASS GIS?**
 
-Software used in this training materials
-----------------------------------------
+* doing data analysis
+* working with topological data
+* working with spatial-temporal datasets
+* doing Python scripting
+* deploying server-side applications (e.g. as WPS process)
+* *add your point here*
+  
+**When to use something else?**
 
-* `GRASS GIS <http://grass.osgeo.org>`__ for geospatial (raster,
-  imagery, vector) data processing and providing spatial analysis.
-* `QGIS desktop <http://qgis.org>`__ for geospatial visualization,
-  creating hardcopy outputs, and publishing.
-* `GDAL library <http://gdal.org>`__ for reading and writing various
-  geospatial data (GeoTIFF, JPEG, Shapefile, GML, ...).
+* want to display geodata, symbolize, create map output in easy way
+  (use QGIS instead)
+* *add your point here*
 
-.. todo:: To be extended
+.. todo:: review, extent
 
-First steps in GRASS GIS
-------------------------
+Startup
+-------
+
+Starting GRASS GIS requires some user knowledge, the users doesn't
+like it ;-) GRASS requires to organize your data from early beginning.
+
+Before entiring GRASS a startup screen appears, the user must define
+working project in which GRASS session will operate. Without this step
+you cannot enter GRASS. This approach is not so common. Applications
+like Esri ArcGIS or QGIS just starts. The user loads different data
+from various data source in different projects, and starts to work on
+his/her project. GRASS is different, which makes this software harder
+to enter for newcomers. *We will cross a red border.*
+
+The GRASS GIS startup screen requires to set up three items:
+
+#. **Database directory.** A directory on local or network disc which
+   contains all data accessed by GRASS. It's usually directory called
+   :file:`grassdata` located in user's home directory. *This item is set up
+   automatically on Windows, so usually you don't need to care.*
+
+#. **Location**. Plays a role of "a project". All geodata stored
+   within one location must have the same spatial coordinate system
+   (GRASS doesn't support on-the-fly projects).
+
+#. **Mapset** Contains data related to task within one project. Helps
+   organizing data into logical groups or to separate parallel work of
+   more users on the same project.
+
+.. figure:: ../images/units/01/startup.svg
+
+   GRASS GIS startup screen.
+
+Let's define database directory (:fignote:`1.`). Then a new location
+can be created (:fignote:`2a.`) or official GRASS sample location(s)
+downloaded (:fignote:`2b.`). We will create our own location, a
+project related to Jena region.
+
+Example of downloading Jena administrative boundary from OpenStreetMap
+using Overpass API using GDAL library (ogr2ogr utility). Downloaded
+data are stored in GML format.
+
+.. code:: bash
+
+   ogr2ogr -f GML jena-boundary.gml -a_srs EPSG:4326 \
+   /vsicurl_streaming/"http://overpass-api.de/api/interpreter?data=%28relation\
+   %5B%22boundary%22%3D%22administrative%22%5D%5B%22admin%5Flevel%22%3D%226%22%5D%5B%22\
+   name%22%3D%22Jena%22%5D%3B%29%3B%28%2E%5F%3B%3E%3B%29%3Bout%3B%0A" multipolygons
+
+.. note::
+
+   The URL has been generated by http://overpass-turbo.eu using this
+   query below:
+
+   .. code:: xml
+
+      (
+      relation
+      ["boundary"="administrative"]
+      ["admin_level"="6"]
+      ["name"="Jena"]
+      );
+      /*added by auto repair*/
+      (._;>;);
+      /*end of auto repair*/
+      out;
+
+The initial location can be easily created from an existing data set.
+
