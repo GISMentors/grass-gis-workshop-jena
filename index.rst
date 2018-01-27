@@ -74,6 +74,8 @@ Units
    :maxdepth: 2
 
    units/01
+   units/02
+   units/03
 
 Timetable
 =========
