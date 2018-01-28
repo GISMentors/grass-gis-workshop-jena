@@ -38,6 +38,8 @@ module. The corresponding command for console would be:
 
    Clipped clouds mask by Jena city area.
 
+.. _region:
+
 Computational region
 --------------------
 
