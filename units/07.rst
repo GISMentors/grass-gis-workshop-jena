@@ -1,0 +1,123 @@
+Unit 07 - Model parametrization
+===============================
+
+At first let's improve our NDVI model created in :doc:`06`. This
+version operated on current computation region, it would be better to
+define region based on user input, eg. city region. NDVI could be also
+computed only within user defined area.
+
+NDVI values range from +1.0 to -1.0. Areas of barren rock, sand, or
+snow usually show very low NDVI values (for example, 0.1 or
+less). Sparse vegetation such as shrubs and grasslands or senescing
+crops may result in moderate NDVI values (approximately 0.2 to
+0.5). High NDVI values (approximately 0.6 to 0.9) correspond to dense
+vegetation such as that found in temperate and tropical forests or
+crops at their peak growth stage. Let's classity NDVI into 3 major
+classes:
+
+* Class 1: from -1.0 to 0.2
+* Class 2: from 0.2 to 0.6
+* Class 3: from 0.6 to 1.0
+
+The desired output will be vector map with classes. Let's also
+eliminate too small areas.
+
+From GRASS perspective computation will be performed by several steps/modules:
+
+#. Erase cloud mask from input city region (:grasscmd:`v.overlay`)
+#. Set computation region based on modified input city region (:grasscmd:`g.region`)
+#. Set mask (:grasscmd:`r.mask`)
+#. Compute NDVI values (:grasscmd:`i.vi`)
+#. Reclassify NDVI values into classes (:grasscmd:`r.recode`)
+#. Set nice color table for classes raster map (:grasscmd:`r.colors`)
+#. Convert raster classes into vector areas (:grasscmd:`r.to.vect`)
+#. Remove small areas (join them with adjacent areas by :grasscmd:`v.clean`)
+
+New modules can be added to the existing model in standard way by
+|grass-module-add| :sup:`Add command (GRASS module) to the model`. New
+commands are added to the end of computation workflow which is not
+desired in this case. The commands (items) can be reordered in
+:item:`Items` tab.
+
+.. figure:: ../images/units/07/reorder-items.png
+
+   Reorder items - commands in the model. In this case move
+   :grasscmd:`v.overlay` up to the first position.
+
+Be aware of correct computation region, don't forget to align region
+bounds to input raster data.
+
+Reclassification of floating point raster maps can be done in GRASS by
+:grasscmd:`r.recode`. Here is reclassicication table for our case:
+          
+.. code-block:: bash
+
+   -1:0.2:1
+   0.2:0.6:2
+   0.6:1:3                
+
+Beside predefined color tables :grasscmd:`r.colors` also allows using
+user-defined color table. In our case color table can be quite simple:
+
+.. code-block:: bash
+
+   1 grey
+   2 yellow
+   3 green                
+
+.. tip:: Reclassification and color table is recommended to store in
+   files otherwise it can be lost when opening model in another GRASS
+   session: `reclass.txt <../_static/models/reclass.txt>`__ and `colors.txt <../_static/models/colors.txt>`__
+         
+.. figure:: ../images/units/07/model-v2.png
+
+   Extended model.
+
+Model to download: `ndvi-v2.gxm <../_static/models/ndvi-v2.gxm>`__
+(note: don't forget to fix path to reclass and colors file in
+:grasscmd:`r.recode` and :grasscmd:`r.colors`)
+
+Parametrization
+---------------
+
+Till now our models have all parameters hardcoded, there is nothing
+which can be influenced by user when lauching the models.
+
+In Graphical Modeler user input can be defined by two mechanisms:
+
+* **parametrization** of module options
+* using self-defined **variables** (ideal when more modules are sharing
+  the same user input value)
+
+Let's start with parametrization of module options, it's simplier. We
+would like to change our model in order to provide the user ability to:
+
+* define own city region area (option :option:`ainput` in :grasscmd:`v.overlay`)
+* set threshold for small areas (option :option:`threshold` in :grasscmd:`v.clean`)
+
+For each command we want to parametrize we open properities dialog by
+doble-click on the item in the model. Then we find the option we want
+to parametrize and enable *Parametrized in model* option. That's all.
+
+.. figure:: ../images/units/07/parametrize-cmd.svg
+
+   Parametrization of :option:`ainput` option in :grasscmd:`v.overlay`
+   command.
+
+.. note:: Parametrized commands are highlighed in the model by bold
+          border.
+
+After pressing |grass-execute| :sup:`Run model` is not run
+automatically. Instead of that a GUI dialog is open to allow user
+defining inputs.
+
+.. figure:: ../images/units/07/model-params.png
+
+   Model is run after defining user input paramaters. Parametrized
+   options are organized into tabs based on the modules.
+
+After setting the input parameters the model can be :item:`Run`.
+
+.. tip:: Saved models can be run directly from Layer Manager
+   :menuselection:`File --> Run model` without opening Graphical Model
+   itself.

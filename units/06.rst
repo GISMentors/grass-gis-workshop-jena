@@ -88,3 +88,4 @@ raster map of NDVI in map display), you should see a difference.
 
    New NDVI raster map computed by the model.
 
+Model to download: `ndvi-v1.gxm <../_static/models/ndvi-v1.gxm>`__

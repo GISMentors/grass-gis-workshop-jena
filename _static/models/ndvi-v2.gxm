@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE gxm SYSTEM "grass-gxm.dtd">
+<gxm>
+    <window pos="524,167" size="985,767" />
+    <properties>
+        <name>ndvi-v2</name>
+        <description>NDVI model version 2</description>
+        <author>martin</author>
+        <flag name="overwrite" />
+    </properties>
+    <action id="1" name="v.overlay" pos="375,35" size="125,50">
+        <task name="v.overlay">
+            <parameter name="ainput">
+                <value>jena_boundary@PERMANENT</value>
+            </parameter>
+            <parameter name="alayer">
+                <value>1</value>
+            </parameter>
+            <parameter name="atype">
+                <value>auto</value>
+            </parameter>
+            <parameter name="binput">
+                <value>MaskFeature@PERMANENT</value>
+            </parameter>
+            <parameter name="blayer">
+                <value>1</value>
+            </parameter>
+            <parameter name="btype">
+                <value>area</value>
+            </parameter>
+            <parameter name="operator">
+                <value>not</value>
+            </parameter>
+            <parameter name="output">
+                <value>region_mask</value>
+            </parameter>
+            <parameter name="olayer">
+                <value>1,0,0</value>
+            </parameter>
+            <parameter name="snap">
+                <value>1e-8</value>
+            </parameter>
+            <flag name="overwrite" />
+        </task>
+    </action>
+    <action id="2" name="g.region" pos="845,75" size="125,50">
+        <task name="g.region">
+            <parameter name="vector">
+                <value>region_mask</value>
+            </parameter>
+            <parameter name="align">
+                <value>L2A_T32UPB_20170706T102021_B04_10m@PERMANENT</value>
+            </parameter>
+            <flag name="overwrite" />
+        </task>
+    </action>
+    <action id="3" name="r.mask" pos="375,110" size="125,50">
+        <task name="r.mask">
+            <parameter name="maskcats">
+                <value>*</value>
+            </parameter>
+            <parameter name="vector">
+                <value>region_mask</value>
+            </parameter>
+            <parameter name="layer">
+                <value>1</value>
+            </parameter>
+            <flag name="overwrite" />
+        </task>
+    </action>
+    <action id="4" name="i.vi" pos="375,185" size="125,50">
+        <task name="i.vi">
+            <parameter name="red">
+                <value>L2A_T32UPB_20170706T102021_B04_10m@PERMANENT</value>
+            </parameter>
+            <parameter name="output">
+                <value>ndvi</value>
+            </parameter>
+            <parameter name="viname">
+                <value>ndvi</value>
+            </parameter>
+            <parameter name="nir">
+                <value>L2A_T32UPB_20170706T102021_B08_10m@PERMANENT</value>
+            </parameter>
+            <parameter name="storage_bit">
+                <value>8</value>
+            </parameter>
+            <flag name="overwrite" />
+        </task>
+    </action>
+    <action id="5" name="r.recode" pos="605,290" size="125,50">
+        <task name="r.recode">
+            <parameter name="input">
+                <value>ndvi</value>
+            </parameter>
+            <parameter name="output">
+                <value>ndvi_class</value>
+            </parameter>
+            <parameter name="rules">
+                <value>/home/martin/geodata/jena/models/reclass.txt</value>
+            </parameter>
+            <flag name="overwrite" />
+        </task>
+    </action>
+    <action id="6" name="r.colors" pos="830,410" size="125,50">
+        <task name="r.colors">
+            <parameter name="map">
+                <value>ndvi_class</value>
+            </parameter>
+            <parameter name="rules">
+                <value>/home/martin/geodata/jena/models/colors.txt</value>
+            </parameter>
+        </task>
+    </action>
+    <action id="7" name="r.to.vect" pos="385,410" size="125,50">
+        <task name="r.to.vect">
+            <parameter name="input">
+                <value>ndvi_class</value>
+            </parameter>
+            <parameter name="output">
+                <value>ndvi_class</value>
+            </parameter>
+            <parameter name="type">
+                <value>area</value>
+            </parameter>
+            <parameter name="column">
+                <value>value</value>
+            </parameter>
+            <flag name="s" />
+            <flag name="v" />
+            <flag name="overwrite" />
+        </task>
+    </action>
+    <action id="8" name="v.clean" pos="150,510" size="125,50">
+        <task name="v.clean">
+            <parameter name="input">
+                <value>ndvi_class</value>
+            </parameter>
+            <parameter name="layer">
+                <value>-1</value>
+            </parameter>
+            <parameter name="type">
+                <value>point,line,boundary,centroid,area,face,kernel</value>
+            </parameter>
+            <parameter name="output">
+                <value>ndvi_vector</value>
+            </parameter>
+            <parameter name="tool">
+                <value>rmarea</value>
+            </parameter>
+            <parameter name="threshold">
+                <value>1600</value>
+            </parameter>
+            <flag name="overwrite" />
+        </task>
+    </action>
+    <data pos="135,35" size="175,50">
+        <data-parameter prompt="vector">
+            <value>jena_boundary@PERMANENT</value>
+        </data-parameter>
+        <relation dir="from" id="1" name="ainput">
+        </relation>
+    </data>
+    <data pos="605,75" size="175,50">
+        <data-parameter prompt="vector">
+            <value>region_mask</value>
+        </data-parameter>
+        <relation dir="from" id="3" name="vector">
+        </relation>
+        <relation dir="from" id="2" name="vector">
+        </relation>
+        <relation dir="to" id="1" name="output">
+        </relation>
+    </data>
+    <data pos="140,110" size="175,50">
+        <data-parameter prompt="vector">
+            <value>MaskFeature@PERMANENT</value>
+        </data-parameter>
+        <relation dir="from" id="1" name="binput">
+        </relation>
+    </data>
+    <data pos="600,185" size="175,50">
+        <data-parameter prompt="raster">
+            <value>L2A_T32UPB_20170706T102021_B04_10m@PERMANENT</value>
+        </data-parameter>
+        <relation dir="from" id="4" name="red">
+        </relation>
+        <relation dir="from" id="2" name="align">
+        </relation>
+    </data>
+    <data pos="375,290" size="175,50">
+        <data-parameter prompt="raster">
+            <value>ndvi</value>
+        </data-parameter>
+        <relation dir="from" id="5" name="input">
+        </relation>
+        <relation dir="to" id="4" name="output">
+        </relation>
+    </data>
+    <data pos="145,185" size="175,50">
+        <data-parameter prompt="raster">
+            <value>L2A_T32UPB_20170706T102021_B08_10m@PERMANENT</value>
+        </data-parameter>
+        <relation dir="from" id="4" name="nir">
+        </relation>
+    </data>
+    <data pos="605,410" size="175,50">
+        <data-parameter prompt="raster">
+            <value>ndvi_class</value>
+        </data-parameter>
+        <relation dir="from" id="7" name="input">
+        </relation>
+        <relation dir="from" id="6" name="map">
+        </relation>
+        <relation dir="to" id="5" name="output">
+        </relation>
+    </data>
+    <data pos="150,410" size="175,50">
+        <data-parameter prompt="vector">
+            <value>ndvi_class</value>
+        </data-parameter>
+        <relation dir="from" id="8" name="input">
+        </relation>
+        <relation dir="to" id="7" name="output">
+        </relation>
+    </data>
+    <data pos="385,510" size="175,50">
+        <data-parameter prompt="vector">
+            <value>ndvi_vector</value>
+        </data-parameter>
+        <relation dir="to" id="8" name="output">
+        </relation>
+    </data>
+</gxm>

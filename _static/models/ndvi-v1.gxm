@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE gxm SYSTEM "grass-gxm.dtd">
+<gxm>
+    <window pos="669,313" size="800,600" />
+    <properties>
+        <name>ndvi-v1</name>
+        <description>NDVI computation version 1.</description>
+        <author>martin</author>
+        <flag name="overwrite" />
+    </properties>
+    <action id="1" name="r.mask" pos="375,70" size="125,50">
+        <task name="r.mask">
+            <parameter name="maskcats">
+                <value>*</value>
+            </parameter>
+            <parameter name="vector">
+                <value>MaskFeature@PERMANENT</value>
+            </parameter>
+            <parameter name="layer">
+                <value>1</value>
+            </parameter>
+            <flag name="i" />
+            <flag name="overwrite" />
+        </task>
+    </action>
+    <action id="2" name="i.vi" pos="375,185" size="125,50">
+        <task name="i.vi">
+            <parameter name="red">
+                <value>L2A_T32UPB_20170706T102021_B04_10m@PERMANENT</value>
+            </parameter>
+            <parameter name="output">
+                <value>ndvi</value>
+            </parameter>
+            <parameter name="viname">
+                <value>ndvi</value>
+            </parameter>
+            <parameter name="nir">
+                <value>L2A_T32UPB_20170706T102021_B08_10m@PERMANENT</value>
+            </parameter>
+            <parameter name="storage_bit">
+                <value>8</value>
+            </parameter>
+            <flag name="overwrite" />
+        </task>
+    </action>
+    <data pos="595,70" size="175,50">
+        <data-parameter prompt="vector">
+            <value>MaskFeature@PERMANENT</value>
+        </data-parameter>
+        <relation dir="from" id="1" name="vector">
+        </relation>
+    </data>
+    <data pos="595,180" size="175,50">
+        <data-parameter prompt="raster">
+            <value>L2A_T32UPB_20170706T102021_B04_10m@PERMANENT</value>
+        </data-parameter>
+        <relation dir="from" id="2" name="red">
+        </relation>
+    </data>
+    <data pos="375,290" size="175,50">
+        <data-parameter prompt="raster">
+            <value>ndvi</value>
+        </data-parameter>
+        <relation dir="to" id="2" name="output">
+        </relation>
+    </data>
+    <data pos="145,185" size="175,50">
+        <data-parameter prompt="raster">
+            <value>L2A_T32UPB_20170706T102021_B08_10m@PERMANENT</value>
+        </data-parameter>
+        <relation dir="from" id="2" name="nir">
+        </relation>
+    </data>
+</gxm>
