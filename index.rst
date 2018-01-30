@@ -94,7 +94,7 @@ Lecturer
 
 * Martin Landa, Czech Technical University in Prague, Czech Republic
 
-Proudly provided by `GISMentors <http://www.gismentors.eu>`_ training
+Proudly provided by `GISMentors <http://www.gismentors.eu>`__ training
 and mentoring group.
 
 License
