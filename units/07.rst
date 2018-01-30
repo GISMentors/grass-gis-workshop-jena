@@ -121,3 +121,24 @@ After setting the input parameters the model can be :item:`Run`.
 .. tip:: Saved models can be run directly from Layer Manager
    :menuselection:`File --> Run model` without opening Graphical Model
    itself.
+
+Let's test our model with various settings.
+
+.. figure:: ../images/units/07/ndvi-no-reduction.png
+
+   NDVI vector class without reduction.
+
+.. figure:: ../images/units/07/ndvi-2000m2.png
+
+   NDVI classes smaller than 2000m :sup:`2` (so 20 pixel) removed.
+
+Now we can change region, eg. by bufferning Jena city region.
+
+.. code-block:: bash
+
+   v.buffer input=jena_boundary output=jena_boundary_5km distance=5000
+
+.. figure:: ../images/units/07/ndvi-jena-5km.png
+   :class: middle
+   
+   NDVI vector class computed in 5km buffer around Jena city region.

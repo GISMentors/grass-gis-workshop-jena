@@ -47,6 +47,8 @@ data are stored in OGC GeoPackage format (*we don't like old school
 Esri Shapefile format*). Data are reprojected to UTM zone 32N
 (:epsg:`32632`):
 
+.. _city_region_download:
+   
 .. code:: bash
 
    ogr2ogr -f GPKG jena_boundary.gpkg -a_srs EPSG:4326 -t_srs EPSG:32632 \
