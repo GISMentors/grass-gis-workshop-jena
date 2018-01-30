@@ -11,22 +11,24 @@ Before entering GRASS a startup screen appears, the user must define
 working project in which GRASS session will operate. Without this step
 you cannot enter GRASS. This approach is not so common. Applications
 like Esri ArcGIS or QGIS just starts. The user loads different data
-from various data source in different projects, and starts to work on
-his/her project. GRASS is different, which makes this software harder
-to enter for newcomers. *We will cross a red border in few steps.*
+from various data source in different projections, and starts working
+on his/her project. GRASS is different, which makes this software
+harder to enter for newcomers. *But don't worry, we will cross a red
+border in few steps.*
 
 The GRASS GIS startup screen requires to set up three items:
 
 #. **Database directory.** A directory on local or network disc which
    contains all data accessed by GRASS. It's usually directory called
-   :file:`grassdata` located in user's home directory. *This item is set up
-   automatically on Windows, so usually you don't need to care.*
+   :file:`grassdata` located in user's home directory. *This item is
+   set up on Windows automatically, so usually you don't need to
+   care.*
 
 #. **Location**. Plays a role of "a project". All geodata stored
    within one location must have the same spatial coordinate system
-   (GRASS doesn't support on-the-fly projects).
+   (GRASS doesn't support on-the-fly projection).
 
-#. **Mapset** Contains data related to task within one project. Helps
+#. **Mapset** Contains task-related data within one project. Helps
    organizing data into logical groups or to separate parallel work of
    more users on the same project.
 
@@ -41,11 +43,15 @@ can be created (:fignote:`2a.`) or official GRASS sample location(s)
 downloaded (:fignote:`2b.`). We will create our own location, a
 project related to Jena region.
 
-Example of downloading Jena administrative boundary from OpenStreetMap
-using Overpass API using GDAL library (ogr2ogr utility). Downloaded
-data are stored in OGC GeoPackage format (*we don't like old school
-Esri Shapefile format*). Data are reprojected to UTM zone 32N
-(:epsg:`32632`):
+.. note:: Download sample location functionality is available in GRASS
+   7.4.
+          
+We need some input data. Here is an example of downloading Jena
+administrative boundary from OpenStreetMap project using Overpass API
+using GDAL library (`ogr2ogr` utility). Downloaded data are stored in
+OGC GeoPackage format (*we don't like old school Esri Shapefile
+format*). Data are reprojected to UTM zone 32N (:epsg:`32632`) since
+we want to work with Sentinel data afterwards.
 
 .. _city_region_download:
    
@@ -55,6 +61,9 @@ Esri Shapefile format*). Data are reprojected to UTM zone 32N
    /vsicurl_streaming/"http://overpass-api.de/api/interpreter?data=%28relation\
    %5B%22boundary%22%3D%22administrative%22%5D%5B%22admin%5Flevel%22%3D%226%22%5D%5B%22\
    name%22%3D%22Jena%22%5D%3B%29%3B%28%2E%5F%3B%3E%3B%29%3Bout%3B%0A" multipolygons
+
+Or you can use prepared data for you: `jena_boundary.gpkg
+<../_static/data/jena_boundary.gpkg>`__
 
 .. note::
 
@@ -76,12 +85,10 @@ Esri Shapefile format*). Data are reprojected to UTM zone 32N
       out;
 
 The initial location can be easily created from an existing data
-set. After pressing :item:`New` button, see :num:`#startup0`
-(:fignote:`2.`), the location wizard shows up.
+set. After pressing :item:`New` button, see :numref:`startup0`
+(:fignote:`2a.`), the location wizard shows up.
 
-.. todo:: why fig reference is broken?
-
-In first page location name is defined, optionally also short
+In the first page, location name is defined, optionally also short
 description can be added.
 
 .. figure:: ../images/units/02/create-location-0.png
@@ -98,14 +105,14 @@ location based on dataset downloaded from OSM.
 
    Choose method for creating a new GRASS location.
 
-In next page input file is defined.
+In the next page input file is defined.
 
 .. figure:: ../images/units/02/create-location-2.png
 
    Define an input file.
 
 Spatial reference system is chosen based on input file (here
-*latlong*, ie. WGS-84 :epsg:`4326`).
+UTM zone 32N :epsg:`32632`).
 
 .. figure:: ../images/units/02/create-location-3.png
 
@@ -117,7 +124,7 @@ optionally import data used for defining the new location.
 .. figure:: ../images/units/02/create-location-4.png
    :class: small
 
-   Let's import data to simply our first steps in GRASS GIS.
+   Let's import data to simplify our first steps in GRASS GIS.
 
 Now we can *finally* start a GRASS session and enter our first GRASS
 location.
@@ -128,20 +135,17 @@ location.
 
 .. note:: By default GRASS creates in the new location always a
    PERMANENT mapset. The input data were imported into this
-   mapset. Let's keep it simply at this moment and enter PERMANENT
+   mapset. Let's keep it simple at this moment and enter PERMANENT
    mapset. Later we will organize our work into more mapsets.
 
 Display data
 ------------
 
 GRASS GUI was designed as simple user interface. Basically it is just
-a GUI front-end calling GRASS commands on background. After startup,
-the GUI consists of the major windows: *Layer Manager* and *Map
-Display*, see :num:`#gui-windows`.
+a GUI front-end calling GRASS commands (see :ref:`grass-modules`) in
+the background. After startup, the GUI consists of two main windows:
+*Layer Manager* and *Map Display*, see :numref:`gui-windows`.
 
-.. todo:: fig link
-.. todo:: add reference to GRASS commands unit.
-   
 .. _gui-windows:
 
 .. figure:: ../images/units/02/gui-windows.svg
@@ -165,8 +169,9 @@ In next dialog we choose vector (in GRASS terminology *vector map*) to display.
    Polygon defining Jena city administrative boundary.
    
 We can also add OSM WMS layer by |grass-layer-wms-add| :sup:`Add web
-service layer` to ensure that our data is spatially correct. Let's use
-WMS provided by *OSM-WMS-EUROPE*: http://129.206.228.72/cached/osm
+service layer` to ensure that our data is spatially correct. We can
+use WMS provided by *OSM-WMS-EUROPE* (http://129.206.228.72/cached/osm)
+which can be added by :item:`Add default`.
 
 After defining WMS URL in the dialog, we can connect the service and
 choose desired layer.
@@ -177,7 +182,7 @@ choose desired layer.
    projection to UTM zone 32N to avoid reprojection.
 
 We can also change map layer properties to display only outline of
-the polygon in red color.
+Jena city region polygon in red color.
 
 .. figure:: ../images/units/02/d-vect-colrs.png
             

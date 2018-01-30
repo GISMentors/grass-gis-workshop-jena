@@ -54,11 +54,11 @@ In Nutshell
   
 **When to use something else?**
 
-* want to display geodata, symbolize, or create map output in easy way
-  (use QGIS instead)
+* want to vizualize geodata in easy and quick way (use QGIS instead)
+* being scared of location and mapsets ;-)
 * *add your point here*
 
-.. todo:: review, extent
+.. todo:: review, extend
 
 Installation
 ------------
@@ -82,7 +82,7 @@ MS Windows
 
 See https://grass.osgeo.org/download/software/ms-windows/
 
-There are two options:
+There are basically two options:
 
 * **standalone installer**
 * **OSGeo4W network installer**

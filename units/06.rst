@@ -2,13 +2,13 @@ Unit 06 - Modeler
 =================
 
 **Graphic Modeler** allows creating, editing, and managing complex
-models using easy-to-use user interface. Using Graphical Modeler, that
+models in easy-to-use user interface. Using Graphical Modeler, that
 chain of processes (ie. GRASS modules) can be wrapped into one process
-(ie. model). So it's easier to execute the model repeatly with
+(ie. model). So it's easier to execute the model repeatedly with
 slightly different inputs or parameters.
 
-We start with simple model based on :doc:`05`. The module will compute
-in current computational region NDVI by :grasscmd:`i.vi`
+We will start with simple model based on :doc:`05`. Our tool will
+compute in current computational region NDVI by :grasscmd:`i.vi`
 module. Actually the model will perform two operations:
 
 #. Set mask based on vector cloud mask file (:grasscmd:`r.mask`)
@@ -38,18 +38,18 @@ enable inverse mask by :option:`-i` flag.
 
 .. figure:: ../images/units/06/module-props.png
    
-   Define parameters for :grasscmd:`r.mask`, a vector map used as for
+   Define parameters for :grasscmd:`r.mask`, a vector map used for
    creating a mask.
 
 In similar way will be added to the model second command
 :grasscmd:`i.vi` (Properties dialog for this command is open
-automatically becase there are required options which must be set).
+automatically because there are required options which must be set).
 
 .. figure:: ../images/units/06/model-v1.png
 
-   NDVI model in version 1.
+   NDVI model version 1.
 
-It's good idea to set metadata for the model and enable overwritting
+It's good idea to set metadata for the model and enable overwriting
 data produced by model (:menuselection:`Model --> Model properties`).
 
 .. figure:: ../images/units/06/model-v1-props.svg
@@ -60,8 +60,8 @@ data produced by model (:menuselection:`Model --> Model properties`).
 
 Let's try out our first model. Before running the model we should
 change computation region. The easier way is to use *Set computation
-region extent iteractively* using |grass-zoom-more| :sup:`Various zoom
-options`.
+region extent interactively* from |grass-zoom-more| :sup:`Various zoom
+options` in Map Display.
 
 .. note:: Before changing the region it's useful to remove existing
           mask in order to see whole Sentinel scene.
@@ -75,14 +75,15 @@ options`.
    Changed computation region before running the model.
 
 Now let's run our model by |grass-execute| :sup:`Run model`. Progress
-is prited into :item:`Command output`.
+is printed into :item:`Command output`.
 
 .. figure:: ../images/units/06/model-v1-output.png
 
    Model computation progress.
 
-After redrawing map display (assuming that we have already displayed
-raster map of NDVI in map display), you should see a difference.
+After redrawing map display |grass-layer-redraw| :sup:`Render map` (assuming
+that we have already displayed raster map of NDVI in map display), we
+should see a difference.
 
 .. figure:: ../images/units/06/model-v1-display.png
 

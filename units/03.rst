@@ -33,14 +33,14 @@ reference system of raster file differs from GRASS location
    window.
 
 GRASS imports raster bands as separate raster maps. Raster maps are
-represented by regular grid. Three different types are supported:
+represented by regular grid. Three different data types are supported:
 
 * CELL (integer)
 * FCELL (float)
 * DCELL (double)
 
-Basic metadata can be printed by :grasscmd:`r.info` or from Layer
-Manager.
+Basic raster metadata can be printed by :grasscmd:`r.info` or from
+Layer Manager.
 
 .. figure:: ../images/units/03/raster-metadata.png
 
@@ -62,21 +62,22 @@ formats`, from the main toolbar, or from command line using
 
    Import vector data from the main toolbar.
 
-Procedure of importing vector files is similar to rasters.
+Procedure of importing vector files is similar to raster files.
 
 .. figure:: ../images/units/03/import-vector-dialog.png
 
    Dialog for importing vector file(s).
 
-.. note:: In some case SRS of imported file can be missing or
+.. note:: In some cases SRS of imported file can be missing or
           invalid. This is our case. GRASS reports this issue as *In
           case of no significant differences in the projection
           definitions, use the -o flag to ignore them and use current
           location definition.  Consider generating a new location
           from the input dataset using the 'location' parameter.*
 
-          GRASS allows importing such file by overriding project
-          check.
+          GRASS allows importing such file by overriding project check
+          (and you are sure that SRS of input file is really the same
+          as GRASS location).
 
           .. figure:: ../images/units/03/override-projection-check.svg
 
@@ -87,20 +88,22 @@ Procedure of importing vector files is similar to rasters.
    
    Map composition of Sentinel band and cloud mask features.
 
-Vector metadata can be printed similar to raster from Layer Manager by
-:item:`Metadata` or :grasscmd:`v.info` module.
+Vector metadata can be printed similarly to raster from Layer Manager
+by :item:`Metadata` or by :grasscmd:`v.info` module from console.
 
 Vector topology
 ---------------
 
-Let's take a closer look at vector metadata.
+Let's take a closer look at vector metadata. There are no "polygons"
+but "areas" and other kind of priminites (points, lines, boundaries,
+centroids, isles).
 
 .. figure:: ../images/units/03/vector-metadata-features.png
 
    Vector metadata of imported file.
 
 GRASS is a **topological GIS**. Importing vector data into GRASS also
-means converting them from simple feature model into GRASS topological
+means converting features from simple feature model into GRASS topological
 model, see figure bellow.
 
 .. figure:: ../images/units/03/grass7-topo.png
@@ -115,7 +118,7 @@ for this procedure is important :option:`snap` option of
 
 Some topological errors is not possible to repair automatically
 without user specification, in this case the user can fix remaining
-error using :grasscmd:`v.clean`.
+errors using :grasscmd:`v.clean`.
    
 Linking external formats
 ------------------------
@@ -131,18 +134,19 @@ by :grasscmd:`v.external` (*Link external vector data*).
 Linking is mainly recommended when working with raster data such large
 datasets of imagery data. GRASS can handle linked raster data
 similarly as native raster maps. Both from point of stability and
-accesibility.
+accessibility.
 
 GUI dialog for linking is same as for import,
-:num:`#import-raster`. We can link 8th Sentinel band. From metadata
-it's visible than 4th band was imported into native GRASS format,
-while 8th band is linked directly from original OpenJPEG2000 format.
+:numref:`import-raster`. Let's create a link to 8th Sentinel band JP2
+file.
 
-.. todo:: fig ref
-          
+From metadata it's visible than 4th band was imported into
+native GRASS format, while 8th band is linked directly from original
+OpenJPEG2000 format.
+
 .. figure:: ../images/units/03/raster-linked.png
 
-   Linked raster file in external GRASS format by :grasscmd:`r.extenal`.
+   Linked raster file in external GRASS format by :grasscmd:`r.external`.
 
 .. figure:: ../images/units/03/raster-imported.png
 

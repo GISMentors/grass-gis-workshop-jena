@@ -2,6 +2,8 @@
 Introduction
 ************
 
+.. warning:: Materials are currently under heavy construction!
+             
 Free and Open Source Software (FOSS)
 ====================================
 
@@ -19,7 +21,7 @@ software**. That is, anyone is freely licensed to
 * study, and
 * change
 
-the software in any way, and the source code is openly shared so that
+the software in any way. The source code is openly shared so that
 people are encouraged to voluntarily improve the design of the
 software. This is in contrast to **proprietary software**, where the
 software is under restrictive copyright and the source code is usually
@@ -58,10 +60,11 @@ mature and sustainable.
 Software used in this training materials
 ========================================
 
-* `GRASS GIS <http://grass.osgeo.org>`__ for geospatial (raster,
-  imagery, vector) data processing and providing spatial analysis.
-* `QGIS desktop <http://qgis.org>`__ for geospatial visualization,
-  creating hardcopy outputs, and publishing.
+* `GRASS GIS <http://grass.osgeo.org>`__ (recommended version 7.4) for
+  geospatial (raster, imagery, vector) data processing and providing
+  spatial analysis.
+* `QGIS desktop <http://qgis.org>`__ (recommended version 2.18) for
+  geospatial visualization, creating hardcopy outputs, and publishing.
 * `GDAL library <http://gdal.org>`__ for reading and writing various
   geospatial data (GeoTIFF, JPEG, Shapefile, GML, ...).
 

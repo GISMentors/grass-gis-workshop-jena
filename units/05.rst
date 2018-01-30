@@ -21,7 +21,8 @@ in Layer Manager |grass-raster-calculator| :sup:`Raster map calculator`.
 .. figure:: ../images/units/05/mapcalc-gui.svg
 
    Compute NDVI using GUI raster map calculator by
-   :item:`Expression`. The result is stored in :item:`Output`.
+   :item:`Expression`. The result is defined by :item:`Output`
+   section.
 
 Corresponding command for CLI (map names shorten):
 
@@ -30,8 +31,8 @@ Corresponding command for CLI (map names shorten):
    r.mapcalc expression="ndvi = float(B08_10m - B04_10m) / ( B08_10m + B04_10m )"
 
 .. note:: Because all input raster maps are CELL type (integer) at
-          least one subresult must be casted to floating-point (here
-          by ``float()`` function). Otherwise result would be CELL map
+          least one sub-result must be converted to floating-point (here
+          by ``float()`` function). Otherwise result would be also CELL map
           (integer: -1, 0, 1).
 
 .. figure:: ../images/units/05/ndvi-mapcalc.png
@@ -50,10 +51,10 @@ second issue requires setting a mask to ignore cloudy areas for
 computation. This operation can be done by :grasscmd:`r.mask`
 (:menuselection:`Raster --> Mask`).
 
-There is also speciazed module for computing various vegetation
-indeces including NDVI - :grasscmd:`i.vi`. This module makes NDVI
-computing even simplier, and it also solves first issue since it set
-*ndvi* color table automatically.
+There is also specialized module for computing various vegetation
+indices including NDVI - :grasscmd:`i.vi`. This module makes NDVI
+computing even simpler, and it also solves first issue since the
+module sets *ndvi* color table automatically.
 
 At first let's define a mask based on cloud mask vector map (note that
 mask is created only within current computation region).
@@ -63,7 +64,7 @@ mask is created only within current computation region).
    r.mask -i vector=MaskFeature
 
 .. note:: Cloud mask provided by Sentinel products is not perfect, but
-   for us just a good starting point.
+   for us it's a good starting point.
           
 Then let's recompute `ndvi` map with :grasscmd:`i.vi` (map names shorten):
 
