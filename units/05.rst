@@ -1,5 +1,5 @@
-Unit 05 - Perform computation (NDVI)
-====================================
+Unit 05 - Perform computation
+=============================
 
 Computing :wikipedia-en:`NDVI` is well known "discipline" in remote
 sensing. It's simple task which requires basic knowledge of map
