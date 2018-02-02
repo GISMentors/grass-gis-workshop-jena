@@ -4,7 +4,7 @@ import sys
 import os
 
 sys.path.insert(0, os.path.join('..', 'sphinx-template'))
-from .utils import get_month_year, get_year
+from utils import get_month_year, get_year
 
 # -- General configuration ------------------------------------------------
 
