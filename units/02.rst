@@ -84,6 +84,8 @@ Or you can use prepared data for you: `jena_boundary.gpkg
       /*end of auto repair*/
       out;
 
+.. _create-location:
+   
 The initial location can be easily created from an existing data
 set. After pressing :item:`New` button, see :numref:`startup0`
 (:fignote:`2a.`), the location wizard shows up.
