@@ -1,5 +1,5 @@
- Unit 06 - Data export
-======================
+Unit 06 - Data export
+=====================
 
 Data produced by GRASS modules (like :grasscmd:`i.vi` in :doc:`05`) is
 stored always in the current mapset. *It's a rule.* To store data in
@@ -48,7 +48,7 @@ interpretation in your software on your own.
 .. _vector-notes:
 
 Useful notes
-============
+------------
 
 * Most of vector formats are based on **simple feature model**. It means
   that GRASS export module converts topological primitives (lines,
@@ -74,7 +74,7 @@ Useful notes
   format is default for :grasscmd:`v.out.ogr` since GRASS 7.4.
 
 Output data in external formats
-===============================
+-------------------------------
 
 GRASS environment can be set to produce data directly in external
 formats. It can be useful at the end of a workflow when final output
@@ -99,7 +99,7 @@ automatically link to such data (similarly as :grasscmd:`r.external`
 do), so you can access produced data as normal raster maps.
 
 Interoperability with Esri ArcGIS
-=================================
+---------------------------------
                
 GRASS is able to ready data stored in Esri File Geodatabase out of the
 box. Thanks to GDAL library which comes with `OpenFileGDB
