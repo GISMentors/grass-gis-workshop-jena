@@ -1,6 +1,5 @@
-=======================
  Unit 06 - Data export
-=======================
+======================
 
 Data produced by GRASS modules (like :grasscmd:`i.vi` in :doc:`05`) is
 stored always in the current mapset. *It's a rule.* To store data in
@@ -36,7 +35,7 @@ various GIS formats, see supported `raster
 
    Export NDVI raster into GeoTIFF format.
 
-Try to load created raster in your favourite GIS software like Esri
+Try to load created raster in your favorite GIS software like Esri
 ArcGIS or QGIS. Note that color table is not exported in the case of
 floating-point data, so you need to set up suitable color
 interpretation in your software on your own.
@@ -107,7 +106,7 @@ box. Thanks to GDAL library which comes with `OpenFileGDB
 <http://gdal.org/drv_openfilegdb.html>`__ support. Note that only
 vector data (feature classes) are supported, it's not possible to read
 raster data from this format. As already noted in :ref:`vector-notes`,
-vector data can be writen to Esri File Geodatabase format only when
+vector data can be written to Esri File Geodatabase format only when
 GDAL is installed with proprietary-based `FileGDB
 <http://gdal.org/drv_filegdb.html>`__ support.
 
