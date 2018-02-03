@@ -1,2 +1,100 @@
 Unit 12 - Script tuning
 =======================
+
+In :doc:`10` and :doc:`11` we gain basic knowledge of GRASS Scripting
+Library, we know how to run GRASS modules using different functions
+(:grass-script:`core.run_command`, :grass-script:`core.read_command`,
+and :grass-script:`core.parse_command`). We also read how to parse
+module output in simply way. Beside :grass-script:`core` package the
+GRASS Scripting Library offers helper module for various GRASS
+operations.
+
+* :grasscmd2:`db <libpython/script.html#module-script.db>` Database
+  related functions to be used in Python scripts.
+* :grasscmd2:`raster <libpython/script.html#module-script.raster>`
+  Raster related functions to be used in Python scripts.
+* :grasscmd2:`raster3d <libpython/script.html#module-script.raster3d>`
+  Raster3d related functions to be used in Python scripts.
+* :grasscmd2:`vector <libpython/script.html#module-script.vector>` Vector
+  related functions to be used in Python scripts.
+
+These modules contains useful functions which can simplify our
+scripts. In our case we could replace :grasscmd:`v.db.select` caller
+by :grass-script:`vector.vector_db_select` function. In other worlds
+replace code below
+
+.. code-block:: python
+                
+    # v.db.select: don't print column names (-c)
+    ret = read_command('v.db.select', flags='c', map='ndvi_vector', separator='comma')
+    for line in ret.splitlines():
+        # parse line (eg. 1,,-0.433962264150943,0.740350877192983,0.051388909449992)
+        cat,label,min,max,mean = line.split(',')
+        print ('NDVI class {0}: {1:.4f} (min) {2:.4f} (max) {3:.4f} (mean)'.format(
+        cat, float(min), float(max), float(mean)))
+
+by
+
+.. code-block:: python
+
+    from grass.script.vector import vector_db_select
+    data = vector_db_select('ndvi_vector')
+    for vals in data['values'].itervalues():
+        # unfortunately we need to cast values by float
+        print ('NDVI class {0}: {1:.4f} (min) {2:.4f} (max) {3:.4f} (mean)'.format(
+        vals[0], float(vals[2]), float(vals[3]), float(vals[4])))               
+
+There is one problem with our script, some modules
+(:grasscmd:`r.recode`, :grasscmd:`r.colors`) uses hardcoded path to
+input files. This will not work when running script on different
+computer as we know. See code below (concretely ``rules`` options).
+
+.. code-block:: python
+
+    run_command("r.recode",
+                overwrite = True,
+                input = "ndvi",
+                output = "ndvi_class",
+                rules = "/home/landa/geodata/jena/models/reclass.txt")
+
+    run_command("r.colors",
+                map = "ndvi_class",
+                rules = "/home/landa/geodata/jena/models/colors.txt")
+
+By GRASS Scripting Library we can define content of input file as a
+string object and transfer it to the command via standard input. This
+opetration allows :grass-script:`core.feed_command` function.
+
+.. code-block:: python
+
+     p1 = feed_command("r.recode",
+                       overwrite = True,
+                       input = "ndvi",
+                       output = "ndvi_class",
+                       rules = "-")
+     p1.stdin.write("""-1:0.1:1
+ 0.1:0.5:2
+ 0.5:1:3""")
+     p1.stdin.close()
+     p1.wait()
+
+     p2 = feed_command("r.colors",
+                       map = "ndvi_class",
+                       rules = "-")
+     p2.stdin.write("""1 grey
+ 2 255 255 0
+ 3 green""")
+     p2.stdin.close()
+     p2.wait()
+
+First command object is created, input string written to stdin, closed
+and than command finally performed by ``wait()``.
+     
+.. todo:: add note about pyGRASS
+               
+Our script lacks user input, let's change it.
+
+Parameterization
+----------------
+
+.. todo:: link to model version 3        

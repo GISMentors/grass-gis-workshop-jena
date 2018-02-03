@@ -6,8 +6,12 @@ sensing. It's simple task which requires basic knowledge of map
 algebra. The key module in GRASS related to map algebra is
 :grasscmd:`r.mapcalc`.
 
-To compute NDVI, the red and near-infrared channels are required. In
-the case of Sentinel-2, it means 4th and 8th band.
+.. math::
+        
+   NDVI = (NIR - VIS) / (NIR  + VIS)
+          
+To compute NDVI, the red (VIS) and near-infrared (NIR) channels are
+required. In the case of Sentinel-2, it refers to 4th and 8th band.
 
 The GUI tool for map algebra can be launched from
 :menuselection:`Raster --> Raster map calculator` or from main toolbar
