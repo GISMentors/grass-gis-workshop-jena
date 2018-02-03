@@ -95,8 +95,10 @@ Let's start with parametrization of module options, it's simple. We
 would like to change our model in order to provide the user ability
 to:
 
-* define own city region area (option :option:`ainput` in :grasscmd:`v.overlay`)
-* set threshold for small areas (option :option:`threshold` in :grasscmd:`v.clean`)
+* define own city region area (option :option:`ainput` in
+  :grasscmd:`v.overlay`)
+* set threshold for small areas (option :option:`threshold` in
+  :grasscmd:`v.clean`)
 
 For each command that we want to parameterize let's open proprieties
 dialog by double-click on the item in the model. Then we find the
@@ -120,6 +122,10 @@ defining inputs.
    Model is run after defining user input parameters. Parameterized
    options are organized into tabs based on the modules.
 
+Model to download: `ndvi-v3.gxm <../_static/models/ndvi-v3.gxm>`__
+
+.. todo:: Upload this model
+          
 After setting the input parameters the model can be :item:`Run`.
 
 .. tip:: Saved models can be run directly from Layer Manager
