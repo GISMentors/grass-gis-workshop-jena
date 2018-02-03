@@ -64,6 +64,8 @@ It turns into bunch of GRASS commands (map names shorten):
 We turn these commands into Python syntax. In this part we will focus
 on **GRASS Scripting Library** which is simple enough for beginners.
 
+.. _python-code:
+
 GRASS commands can be run by :grass-script:`core.run_command` function.
 
 .. code-block:: python
@@ -114,6 +116,15 @@ fulfill this requirement we need to change two issues:
 
    Running Python code in Layer Manager.   
 
+At end we can display resultant NDVI raster map by calling
+``AddLayer()`` function directly from Python shell.
+
+.. code-block:: python
+
+   AddLayer('ndvi')                
+   
+.. _modeler-python:
+            
 Graphical Modeler and Python
 ----------------------------
 

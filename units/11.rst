@@ -1,0 +1,165 @@
+Unit 11 - Scripting
+===================
+
+Let's start with script created by **Graphical modeler** in :ref:`Unit
+10 <modeler-python>` saved into file (:item:`Save as`). Before saving
+the script we will remove the lines below to avoid generating GUI
+dialogs when launching the script:
+
+.. code-block:: python
+
+   #%module
+   #% description: NDVI model version 2
+   #%end                
+
+Then we can try to run a script from Layer Manager |grass-script-load|
+:sup:`Launch user-defined script`.
+
+.. note:: Before starting a script GRASS can ask you to add script
+   directory path into GRASS_ADDON_PATH. It can be useful if you will
+   run script(s) from this directory more often. Then you don't need
+   to define full path to the scripts, its name will be enough.
+   
+   .. figure:: ../images/units/11/addon-path.png
+      :class: small
+           
+      Register script directory as GRASS Addon Path.
+
+We select script to run, the command output will be printed in Layer
+Manager :item:`Console` tab.
+      
+..
+   Then GUI dialog may appear and script can be run.
+
+   .. figure:: ../images/units/11/script-dialog.png
+      :class: small
+        
+   Generated GUI dialog for the script. Except of global flags like
+   ``--verbose`` and ``--quiet`` there is no input parameter. 
+
+      
+.. figure:: ../images/units/11/script-output.png
+
+   Script output printed in Layer Manager Console.
+
+Later we can modify the script based :doc:`10` in order to print basic
+statistics: minimum, maximum, and mean NDVI values. For modifying the
+script we can use our favorite editor or if we do not have any than
+GRASS integrated simple Python editor |grass-python| :sub:`Open a
+simple Python code editor`. By |grass-open| :sup:`Open` a script can
+be loaded.
+
+.. figure:: ../images/units/11/editor.png
+
+   Simple GRASS Python code editor in action.
+
+We add code for printing NDVI value statistics (be aware of
+indentation), see :ref:`Unit 10 <python-code>`.
+
+.. code-block:: python
+
+   stats = parse_command('r.univar', flags='g', map='ndvi')
+   print ('-' * 80)
+   print ('NDVI value statistics')
+   print ('-' * 80)
+   print ('NDVI min value: {0:.4f}'.format(float(stats['min'])))
+   print ('NDVI max value: {0:.4f}'.format(float(stats['max'])))
+   print ('NDVI mean value: {0:.4f}'.format(float(stats['mean'])))
+
+.. note:: In order to use :grass-script:`core.parse_command`, the
+   function must be imported.
+
+   .. code-block:: python
+
+      from grass.script import parser, run_command, parse_command
+
+Launch script by |grass-execute| :sup:`Run` and see script output in
+Layer Manager :item:`Console` tab.
+
+.. figure:: ../images/units/11/run-script.svg
+   :class: middle
+        
+   Run script from Python editor.
+
+We could also print statistics for NDVI classes. Class area size can
+be easily computed by :grasscmd:`v.report`.
+
+.. code-block:: python
+
+    print ('-' * 80)
+    print ('NDVI class statistics')
+    print ('-' * 80)
+    ret = read_command('v.report', map='ndvi_vector', option='area')
+    for line in ret.splitlines()[1:]: # skip first line (cat|label|area)
+        # parse line (eg. 1||2712850)
+        data = line.split('|')
+        cat = data[0]
+        area = float(data[-1])
+        print ('NDVI class {0}: {1:.1f} ha'.format(cat, area/1e4)) 
+
+Output of :grasscmd:`v.report` module need to be parsed. Unfortunately
+the command does not offer shell script output similarly to
+:grasscmd:`r.univar`, so we cannot use
+:grass-script:`core.parse_command`. We will implement our own parsing
+technique based on Python functions like ``splitlines()`` and
+``split()``.
+
+.. note:: Don't forget to import :grass-script:`core.read_command` command.
+
+   .. code-block:: python
+                                 
+      from grass.script import parser, run_command, parse_command, read_command
+                 
+Than we can also compute NDVI zonal statistics for each class:
+
+* zonal statistics can be computed by :grasscmd:`v.rast.stats` and
+  stored in attribute table
+* attributes can be printed by :grasscmd:`v.db.select`
+
+.. code-block:: python
+
+    # v.to.rast: use -c flag for updating statistics if exists
+    run_command('v.rast.stats', flags='c', map='ndvi_vector', raster='ndvi',
+                column_prefix='ndvi', method='minimum,maximum,average')
+    # v.db.select: don't print column names (-c)
+    ret = read_command('v.db.select', flags='c', map='ndvi_vector', separator='comma')
+    for line in ret.splitlines():
+        # parse line (eg. 1,,-0.433962264150943,0.740350877192983,0.051388909449992)
+        cat,label,min,max,mean = line.split(',')
+        print ('NDVI class {0}: {1:.4f} (min) {2:.4f} (max) {3:.4f} (mean)'.format(
+        cat, float(min), float(max), float(mean)))
+                
+Example of script output below.
+
+::
+
+   --------------------------------------------------------------------------------
+   NDVI value statistics
+   --------------------------------------------------------------------------------
+   NDVI min value: -0.6094
+   NDVI max value: 0.9997
+   NDVI mean value: 0.6485
+   --------------------------------------------------------------------------------
+   NDVI class statistics
+   --------------------------------------------------------------------------------
+   NDVI class 1: 271.3 ha
+   NDVI class 2: 2438.7 ha
+   NDVI class 3: 7561.0 ha
+   --------------------------------------------------------------------------------
+   NDVI class 1: -0.4340 (min) 0.7404 (max) 0.0514 (mean)
+   NDVI class 2: -0.1738 (min) 0.8547 (max) 0.3262 (mean)
+   NDVI class 3: -0.6094 (min) 0.9997 (max) 0.7740 (mean)
+        
+.. tip:: In order to simplify testing and increase code readability we
+   can split code into two functions: ``compute()`` and ``stats()``.
+
+   .. code-block:: python
+
+      def main():
+          compute()
+          stats()
+      
+          return 0
+
+Sample script to download: `ndvi-v2.py <../_static/scripts/ndvi-v2.py>`__
+
