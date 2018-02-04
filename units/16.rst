@@ -1,14 +1,98 @@
 Unit 16 - Flooding simulation
 =============================
 
+Beside DEM (see :doc:`15`) it would be nice to have also river streams
+available. We can download this data from OSM database similarly as we
+did in :doc:`02` in the case of Jena city region.
+
+.. note::
+   
+   .. code-block:: xml
+		   
+      [bbox:50.85374080,11.50084754,50.98991003,11.67463202];
+      (
+      way
+      ["waterway"="river"];
+      way
+      ["waterway"="stream"]
+      );
+      /*added by auto repair*/
+      (._;>;);
+      /*end of auto repair*/
+      out;
+
+   .. code-block:: bash
+
+      ogr2ogr -f GPKG jena_rivers.gpkg -a_srs EPSG:4326 -t_srs EPSG:32632 /vsicurl_streaming/"\
+      http://overpass-api.de/api/interpreter?data=%5Bbbox%3A50%2E85374080%2C11%2E50084754%2C50%2\
+      E98991003%2C11%2E67463202%5D%3B%28way%5B%22waterway%22%3D%22river%22%5D%3Bway%5B%22waterway\
+      %22%3D%22stream%22%5D%3B%29%3B%28%2E%5F%3B%3E%3B%29%3Bout%3B%0A" lines
+
+.. note:: You can find this river streams also in sample dataset in
+   :file:`osm` folder.
+
+.. todo:: Add link
+
+.. figure:: ../images/units/16/jena-rivers.png
+   :class: large
+	   
+   DEM, Jena boundary and rivers provided by OSM.
+
 Flooding can be easily simulated by :grasscmd:`r.lake` module which
 fills a lake to a target water level from a given start point or seed
 raster. The resulting raster map contains cells with values
 representing lake depth (NULL for all other cells beyond the lake).
 
-Example:
+The :grasscmd:`r.lake` requires seeds coordinates and water level. The
+coordinates can be set also interactively as :numref:`r-lake-coord`
+shows.
+
+.. _r-lake-coord:
+
+.. figure:: ../images/units/16/r-lake-coords.svg
+   :class: large
+	   
+   Set seed coordinates interactively from map display.
+
+Height of seed point can be determined by querying DEM map layer, see
+:numref:`dem-what` or directly using :grasscmd:`r.what` module, see
+example below.
 
 .. code-block:: bash
-                
-   r.lake elevation=dem37 lake=lake37 coordinates=532334,5626968 water_level=1040
 
+   r.what map=dem coordinates=681734,5644423
+   
+.. _dem-what:
+
+.. figure:: ../images/units/16/dem-what.svg
+
+   Set seed coordinates interactively from map display.
+
+.. important:: Before running :grasscmd:`r.lake` let's start organize
+   our work! Till now we used PERMANENT mapsets only. Due to our
+   ignorance we made a mess. There are input data like DEM, Jena city
+   region, cloud mask vector map, Sentinel bands, results of NDVI
+   computation and so on. We will improve data organization by
+   creating different mapsets. Let's create new mapset *flooding* in
+   current location *jena-utm*. New mapset can be created by
+   :grasscmd:`g.mapset` (:menuselection:`Settings --> GRASS working
+   environment --> Create new mapset`).
+
+Before computation we have to set computation region, eg. based on
+*dem* raster map.
+
+.. code-block:: bash
+
+   g.region raster=dem
+   
+.. code-block:: bash
+                
+   r.lake elevation=dem water_level=150 lake=lake coordinates=681734,5644423
+
+.. figure:: ../images/units/16/r-lake-150.png
+
+   Flooding simulation on water level 150m, OSM WMS as basemap.
+
+.. figure:: ../images/units/16/r-lake-150-3d.png
+
+   Flooding similation in 3D view.
