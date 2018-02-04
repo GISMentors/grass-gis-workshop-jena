@@ -1,0 +1,14 @@
+Unit 16 - Flooding simulation
+=============================
+
+Flooding can be easily simulated by :grasscmd:`r.lake` module which
+fills a lake to a target water level from a given start point or seed
+raster. The resulting raster map contains cells with values
+representing lake depth (NULL for all other cells beyond the lake).
+
+Example:
+
+.. code-block:: bash
+                
+   r.lake elevation=dem37 lake=lake37 coordinates=532334,5626968 water_level=1040
+
