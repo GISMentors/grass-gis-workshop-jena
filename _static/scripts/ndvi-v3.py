@@ -45,7 +45,7 @@ import sys
 import os
 import atexit
 
-from grass.script import parser, run_command, read_command, parse_command, feed_command, find_file
+from grass.script import parser, run_command, read_command, parse_command, feed_command
 from grass.script.vector import vector_db_select
     
 def cleanup():
@@ -101,7 +101,7 @@ def compute():
 3 green""")
     p2.stdin.close()
     p2.wait()
-    
+
     run_command("r.to.vect",
                 flags = 'sv',
                 overwrite = True,
