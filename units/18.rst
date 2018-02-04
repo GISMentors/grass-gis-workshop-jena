@@ -1,0 +1,46 @@
+Unit 18 - MODIS
+===============
+
+Only few notes.
+
+.. todo:: Write few lines about MODIS
+
+https://modis-land.gsfc.nasa.gov/MODLAND_grid.html
+
+Create new location :epsg:`3035`
+
+.. code-block:: bash
+
+   r.modis.download settings=settings.txt folder=h18v03_04 tiles=h18v03,h18v04 \
+   product=lst_aqua_eight_1000,lst_terra_eight_1000 \
+   startday=2017-01-01 endday=2017-12-31
+
+Note that output folder (:file:`h18v03` in this case) must exists.
+
+.. code-block:: bash
+
+   r.modis.import -mw files=h18v03/listfileMOD11A2.006.txt \
+   spectral='( 1 0 0 0 1 0 0 0 0 0 0 0 )' outfile=h18v03/tlist-mod.txt
+
+   r.modis.import -mw files=h18v03/listfileMYD11A2.006.txt \
+   spectral='( 1 0 0 0 1 0 0 0 0 0 0 0 )' outfile=h18v03/tlist-myd.txt
+
+.. todo:: Explain spectral
+
+.. code-block:: xml
+
+   (
+   relation
+   ["boundary"="administrative"]
+   ["admin_level"="2"]
+   ["name"="Deutschland"]
+   );
+   /*added by auto repair*/
+   (._;>;);
+   /*end of auto repair*/
+   out;
+
+.. code-block:: bash
+
+   ogr2ogr -f GPKG germany_boundary.gpkg -a_srs EPSG:4326 -t_srs EPSG:3035 /vsicurl_streaming/"http://overpass-api.de/api/interpreter?data=%28relation%5B%22boundary%22%3D%22administrative%22%5D%5B%22admin%5Flevel%22%3D%222%22%5D%5B%22name%22%3D%22Deutschland%22%5D%3B%29%3B%28%2E%5F%3B%3E%3B%29%3Bout%3B%0A" lines
+
