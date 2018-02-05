@@ -1,46 +1,198 @@
 Unit 18 - MODIS
 ===============
 
-Only few notes.
+There are two satellites, Aqua and Terra which carry the MODIS sensor
+as payload. The **Moderate Resolution Imaging Spectroradiometer**
+(:wikipedia-en:`MODIS`) is a 36-channel from visible to
+thermal-infrared sensor that was launched as part of the Terra
+satellite payload in December 1999 and Aqua satellite (May 2002). The
+Terra satellite passes twice a day (at about 10:30am, and 22:30pm
+local time), also the Aqua satellite passes twice a day (at about
+01:30am, and 13:30pm local time). (source: `GRASS Wiki
+<https://grasswiki.osgeo.org/wiki/MODIS>`__)
 
-.. todo:: Write few lines about MODIS
+Our area of interest, Germany, is covered by two tiles (see `MODLAND
+grid <https://modis-land.gsfc.nasa.gov/MODLAND_grid.html>`__):
 
-https://modis-land.gsfc.nasa.gov/MODLAND_grid.html
+* h18v03
+* h18v04
 
-Create new location :epsg:`3035`
+Download and import
+-------------------
 
+Data are provided in 3 projections (Sinusoidal, Lambert Azimuthal
+Equal-Area, and Geographic). For our purpose, data will be reprojected
+to ETRS89 / LAEA Europe :epsg:`3035`.
+
+At first, a new GRASS location need to be created (see :ref:`Unit 02
+<create-location>`). It can be easily done by using EPSG code (*Select
+EPSG code of spatial reference system*).
+
+.. figure:: ../images/units/18/create-location-epsg-0.svg
+
+   Create a new location based on EPSG code.
+
+.. figure:: ../images/units/18/create-location-epsg-1.png
+
+   Enter EPSG code.
+
+Enter a new GRASS session (PERMANENT mapset) and install
+:grasscmdaddons:`r.modis` addons extension for downloading and
+importing MODIS data (note that you have to install also `pyMODIS
+Python Library <http://www.pymodis.org/>`__).
+
+.. code-block::
+
+   pip install pymodis
+   g.extension extension=r.modis
+
+GRASS MODIS addon consists of two modules:
+
+* :grasscmd:`r.modis.download` and
+* :grasscmd:`r.modis.install`
+
+Let's download desired tiles (h18v03 and h18v04) for year 2017. We are
+interested about LST products (both Aqua and Terra satellites).
+  
 .. code-block:: bash
 
    r.modis.download settings=settings.txt folder=h18v03_04 tiles=h18v03,h18v04 \
    product=lst_aqua_eight_1000,lst_terra_eight_1000 \
    startday=2017-01-01 endday=2017-12-31
 
-Note that output folder (:file:`h18v03` in this case) must exists.
+.. note:: Output folder (:file:`h18v03_04` in this case) must exists,
+   otherwise the module will fail.
+             
+   File :file:`settings.txt` contains two lines: *username* and
+   *password* for accessing MODIS download service.
 
+Then we can import data including reprojection into our location.
+   
 .. code-block:: bash
 
-   r.modis.import -mw files=h18v03/listfileMOD11A2.006.txt \
-   spectral='( 1 0 0 0 1 0 0 0 0 0 0 0 )' outfile=h18v03/tlist-mod.txt
+   r.modis.import -mw files=h18v03_04/listfileMOD11A2.006.txt \
+   spectral='( 1 0 0 0 1 0 0 0 0 0 0 0 )' outfile=h18v03_04/tlist-mod.txt
 
-   r.modis.import -mw files=h18v03/listfileMYD11A2.006.txt \
-   spectral='( 1 0 0 0 1 0 0 0 0 0 0 0 )' outfile=h18v03/tlist-myd.txt
+   r.modis.import -mw files=h18v03_04/listfileMYD11A2.006.txt \
+   spectral='( 1 0 0 0 1 0 0 0 0 0 0 0 )' outfile=h18v03_04/tlist-myd.txt
 
 .. todo:: Explain spectral
 
-.. code-block:: xml
+If ``-m`` flag is given, the import tool creates mosaics from tiles
+automatically, see :numref:`modis-mosaics`.
 
-   (
-   relation
-   ["boundary"="administrative"]
-   ["admin_level"="2"]
-   ["name"="Deutschland"]
-   );
-   /*added by auto repair*/
-   (._;>;);
-   /*end of auto repair*/
-   out;
+.. _modis-mosaics:
+
+.. figure:: ../images/units/18/modis-mosaics.png
+   :class: middle
+        
+   Final mosaics created from h18v03 and h18v04 tiles.
+
+LTS
+---
+
+In this section we will perform **Land Surface Temperature** (LST)
+analysis. Don't forget organize your work, we will create a new mapset
+for our analysis, *germanylst* (see :ref:`Unit16 <create-mapset>`).
+
+LST analysis will be performed in Germany region. At first we will import
+layer with Germany administrative border. This data can be found in
+sample datasets: :file:`osm/germany_boundary.gpkg`.
+
+.. todo:: add link
+          
+.. note:: Administrative border of Germany has been downloaded from
+   OSM database.
+          
+   .. code-block:: xml
+
+      (
+      relation
+      ["boundary"="administrative"]
+      ["admin_level"="2"]
+      ["name"="Deutschland"]
+      );
+      /*added by auto repair*/
+      (._;>;);
+      /*end of auto repair*/
+      out;
+
+   .. code-block:: bash
+
+      ogr2ogr -f GPKG germany_boundary.gpkg -a_srs EPSG:4326 -t_srs EPSG:3035 /vsicurl_streaming/"\
+      http://overpass-api.de/api/interpreter?data=%28relation%5B%22boundary%22%3D%22\
+      administrative%22%5D%5B%22admin%5Flevel%22%3D%222%22%5D%5B%22name%22%3D%22Deutschland\
+      %22%5D%3B%29%3B%28%2E%5F%3B%3E%3B%29%3Bout%3B%0A" lines
+
+Let's import the boundary of Germany into our mapset. The input file
+contains national border represented by linestring, see
+:numref:`germany-boundary` left part. It's complication since a mask
+can be set only from areal features (polygons). We need to polygonize
+input data. This will be performed by two GRASS operations:
+
+* change line border from *lines* to *boundaries* by :grasscmd:`v.type`
+  (in GRASS topological model, an area is composition of boundaries
+  and centroid, see :ref:`Unit 03 <grass-topo>`)
+* add centroid by :grasscmd:`v.centroids`
 
 .. code-block:: bash
 
-   ogr2ogr -f GPKG germany_boundary.gpkg -a_srs EPSG:4326 -t_srs EPSG:3035 /vsicurl_streaming/"http://overpass-api.de/api/interpreter?data=%28relation%5B%22boundary%22%3D%22administrative%22%5D%5B%22admin%5Flevel%22%3D%222%22%5D%5B%22name%22%3D%22Deutschland%22%5D%3B%29%3B%28%2E%5F%3B%3E%3B%29%3Bout%3B%0A" lines
+   v.type input=germany output=germany_b from_type=line to_type=boundary
+   v.centroids input=germany_b output=germany_boundary
 
+.. _germany-boundary:
+   
+.. figure:: ../images/units/18/germany_line_area.png
+   :class: middle
+        
+   Germany national boundary as linestring on left and as polygon
+   (area) on right part.
+
+Now we can create a desired mask (:grasscmd:`r.mask`). Don't forget
+that a mask is created in the current computation region. First you
+set computation extent based on Germany and than align computation
+grid to input data by :grasscmd:`g.region`.
+
+.. code-block:: bash
+
+   g.region vector=germany_boundary align=MOD11A2.A2017001_mosaic_LST_Day_1km
+   r.mask vector=germany_boundary
+
+Let's check range values of our LST data (by :grasscmd:`r.info` module
+or from Layer Manager, see :ref:`Unit 03 <raster-metadata>`).
+
+.. code-block:: bash
+
+   r.info -r map=MOD11A2.A2017001_mosaic_LST_Day_1km
+
+::
+
+  min=0
+  max=14411    
+
+The values do not appear to be temperature. In order to determine LST
+from input data, digital values (DN) must be converted into Celsius or
+Kelvin scale.
+
+.. math::
+
+Conversion to Celsium scale can be done by :grasscmd:`r.mapcalc` (see
+:doc:`05` for basic information about map algebra in GRASS). It's also
+suitable to replace zero values with no-data value (NULL values in
+GRASS terminology).
+
+.. math::
+
+   C = DN * 0.02 - 273.15
+
+Example (replace *tile* with real map name):
+   
+.. code-block:: bash
+                
+   r.mapcalc expression="tile_c = if(tile != 0, tile * 0.02 - 273.15, null())"
+
+.. figure:: ../images/units/18/lst-c.png
+   :class: middle
+        
+   LST reconstruction for Germany in Celsius scale (color table
+   ``celsius`` applied).

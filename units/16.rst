@@ -68,6 +68,8 @@ example below.
 
    Set seed coordinates interactively from map display.
 
+.. _create-mapset:
+   
 .. important:: Before running :grasscmd:`r.lake` let's start organize
    our work! Till now we used PERMANENT mapsets only. Due to our
    ignorance we made a mess. There are input data like DEM, Jena city

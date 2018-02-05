@@ -24,6 +24,8 @@ Module :grasscmd:`r.lake` itself allows to generate only one output
 raster map within one run. This limitation is surpassed by addon
 :grasscmdaddons:`r.lake.series`.
 
+.. _grass-addons:
+                
 .. note:: Addons modules are not internal part of GRASS installation
    but can be easily installed by :grasscmd:`g.extension`
    (:menuselection:`Settings --> Addons extensions --> Install

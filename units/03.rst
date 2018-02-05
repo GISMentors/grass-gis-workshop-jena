@@ -39,6 +39,8 @@ represented by regular grid. Three different data types are supported:
 * FCELL (float)
 * DCELL (double)
 
+.. _raster-metadata:
+  
 Basic raster metadata can be printed by :grasscmd:`r.info` or from
 Layer Manager.
 
@@ -90,6 +92,8 @@ Procedure of importing vector files is similar to raster files.
 
 Vector metadata can be printed similarly to raster from Layer Manager
 by :item:`Metadata` or by :grasscmd:`v.info` module from console.
+
+.. _grass-topo:
 
 Vector topology
 ---------------
