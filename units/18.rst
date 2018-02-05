@@ -24,6 +24,8 @@ Data are provided in 3 projections (Sinusoidal, Lambert Azimuthal
 Equal-Area, and Geographic). For our purpose, data will be reprojected
 to ETRS89 / LAEA Europe :epsg:`3035`.
 
+.. _create-location-epsg:
+
 At first, a new GRASS location need to be created (see :ref:`Unit 02
 <create-location>`). It can be easily done by using EPSG code (*Select
 EPSG code of spatial reference system*).

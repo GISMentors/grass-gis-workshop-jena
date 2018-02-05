@@ -60,6 +60,8 @@ mature and sustainable.
 Software used in this training materials
 ========================================
 
+.. todo:: add logo
+          
 * `GRASS GIS <http://grass.osgeo.org>`__ (recommended version 7.4) for
   geospatial (raster, imagery, vector) data processing and providing
   spatial analysis.
@@ -95,7 +97,8 @@ Units
    units/17
    units/18
    units/19
-   
+   units/20
+      
 Timetable
 =========
 
