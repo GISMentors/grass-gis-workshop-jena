@@ -67,7 +67,9 @@ interested about LST products (both Aqua and Terra satellites).
    *password* for accessing MODIS download service.
 
 Then we can import data including reprojection into our location.
-   
+
+.. _modis-import:
+
 .. code-block:: bash
 
    r.modis.import -mw files=h18v03_04/listfileMOD11A2.006.txt \
@@ -88,16 +90,15 @@ automatically, see :numref:`modis-mosaics`.
         
    Final mosaics created from h18v03 and h18v04 tiles.
 
+.. _modis-lst:
+   
 LTS
 ---
 
 In this section we will perform **Land Surface Temperature** (LST)
-analysis. Don't forget organize your work, we will create a new mapset
-for our analysis, *germanylst* (see :ref:`Unit16 <create-mapset>`).
-
-LST analysis will be performed in Germany region. At first we will import
-layer with Germany administrative border. This data can be found in
-sample datasets: :file:`osm/germany_boundary.gpkg`.
+analysis in Germany region. At first we will import layer with Germany
+administrative border. This data can be found in sample datasets:
+:file:`osm/germany_boundary.gpkg`.
 
 .. todo:: add link
           
@@ -170,20 +171,20 @@ or from Layer Manager, see :ref:`Unit 03 <raster-metadata>`).
   min=0
   max=14411    
 
+.. _modis-dn-c:
+  
 The values do not appear to be temperature. In order to determine LST
 from input data, digital values (DN) must be converted into Celsius or
 Kelvin scale.
 
 .. math::
 
+   C = DN * 0.02 - 273.15
+
 Conversion to Celsium scale can be done by :grasscmd:`r.mapcalc` (see
 :doc:`05` for basic information about map algebra in GRASS). It's also
 suitable to replace zero values with no-data value (NULL values in
 GRASS terminology).
-
-.. math::
-
-   C = DN * 0.02 - 273.15
 
 Example (replace *tile* with real map name):
    

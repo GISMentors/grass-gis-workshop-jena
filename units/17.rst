@@ -16,7 +16,7 @@ time series data:
   series.
 
 .. todo:: Extend?
-	  
+            
 Space-time series for flooding simulation
 -----------------------------------------
 
@@ -164,6 +164,8 @@ Let's compute also univariate statistics by :grasscmd:`r.univar`:
    range: 2.93362
    mean: 1.0993
 
+.. _st-animation:
+      
 Space-time Data Visualization
 -----------------------------
 
