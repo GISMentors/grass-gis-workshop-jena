@@ -8,7 +8,8 @@ Free and Open Source Software (FOSS)
 ====================================
 
 .. figure:: ./images/foss.png
-
+   :class: small
+        
    FOSS software overview (`source
    <https://www.linkedin.com/pulse/open-source-software-development-neha-sharma>`__).
 
@@ -60,7 +61,8 @@ mature and sustainable.
 Software used in this training materials
 ========================================
 
-.. todo:: add logo
+.. figure:: ./images/grass-gis-logo.png
+   :class: small
           
 * `GRASS GIS <http://grass.osgeo.org>`__ (recommended version 7.4) for
   geospatial (raster, imagery, vector) data processing and providing
@@ -68,8 +70,14 @@ Software used in this training materials
 * `QGIS desktop <http://qgis.org>`__ (recommended version 2.18) for
   geospatial visualization, creating hardcopy outputs, and publishing.
 * `GDAL library <http://gdal.org>`__ for reading and writing various
-  geospatial data (GeoTIFF, JPEG, Shapefile, GML, ...).
-
+  geospatial data.
+* `sentinelsat library <https://pypi.python.org/pypi/sentinelsat>`__
+  utility to search and download Copernicus Sentinel satellite images.
+* `pyModis <http://www.pymodis.org/>`__ Python based library to work
+  with MODIS data.
+* `pyWPS <http://pywps.org/>`__ implementation of the Web Processing
+  Service standard from the Open Geospatial Consortium written in
+  Python.
 .. todo:: To be extended
 
 Units
@@ -107,10 +115,11 @@ Timetable
 Lecturer
 ========
 
-* Martin Landa, Czech Technical University in Prague, Czech Republic
+* Martin Landa, GeoForAll Lab, Czech Technical University in Prague,
+  Czech Republic
 
-Proudly provided by `GISMentors <http://www.gismentors.eu>`__ training
-and mentoring group.
+Materials proudly provided by `GISMentors
+<http://www.gismentors.eu>`__ training and mentoring group.
 
 License
 =======
