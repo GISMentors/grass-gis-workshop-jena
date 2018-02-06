@@ -1,0 +1,81 @@
+Unit 21 - Sentinel ST
+=====================
+
+.. todo:: in progress
+
+.. todo:: prepared location will make sense here
+                    
+.. code-block:: bash
+                
+   r.sentinel.download -l user=opengeolabs password=sentinel4ogl map=jena_boundary area_relation=Contains start=2017-01-01 end=2017-12-31 producttype=S2MSI2Ap
+
+::
+   
+   7 Sentinel product(s) found
+   e5df8b4f-a4c6-47bd-88f3-e16b7540cc7a 2017-05-27T10:20:31Z  2% S2MSI2Ap
+   b62afeda-a28d-475c-8220-91e24fc368ff 2017-05-17T10:20:31Z  2% S2MSI2Ap
+   9a6bc289-98e9-4489-84eb-1aac95aaa056 2017-08-15T10:20:21Z  3% S2MSI2Ap
+   35c72002-78a0-45f8-b39d-66c2d7b4ad87 2017-10-14T10:20:21Z  6% S2MSI2Ap
+   c0ae8085-c1bb-4a27-89f2-2138a0866586 2017-07-06T10:20:21Z 12% S2MSI2Ap
+   433ebfbc-5144-42f8-97dc-b9f4f1eb7b5a 2017-11-03T10:22:01Z 12% S2MSI2Ap
+   fc56a594-d9d8-4e93-8dec-af3a58b24080 2017-09-04T10:20:21Z 19% S2MSI2Ap
+
+.. code-block:: bash
+                
+   r.sentinel.download user=opengeolabs password=sentinel4ogl map=jena_boundary area_relation=Contains start=2017-01-01 end=2017-12-31 producttype=S2MSI2Ap output=/opt/geodata/sentinel-2017
+
+
+.. code-block:: bash
+
+   r.sentinel.import -l -c input=/opt/geodata/sentinel-2017 pattern="B0[4|8]_10m"
+
+Metadata of imported raster files shows that timestamp required to
+creating time-space dataset is missing. We will write simple Python
+script which will produce input file for :grasscmd:`t.register`
+similarly as :grasscmdaddons:`r.modis.import` as shown in :ref:`Unit
+19 <t-register-file>`. Timestamp can be easily determined from raster
+map, for example *L2A_T32UPB_20170517T102031_B04_10m* should be
+timestamped by *2017-05-17 10:20:31*.
+
+.. code-block:: bash
+
+   sentinel-timestamp.py output=sentinel.txt
+   
+The script will generate new file which we can use for registration
+maps in space time dataset. Let's create new space time dataset and
+register maps.
+
+.. code-block:: bash
+
+   t.create output=sentinel title="Sentinel L2A 2017" desc="Jena region"
+   t.register input=sentinel file=sentinel.txt
+
+.. code-block:: bash
+
+   t.info input=sentinel
+   t.rast.list input=sentinel
+
+NDVI ST computation
+-------------------
+
+.. code-block:: bash
+
+   t.rast.extract input=sentinel where="name like '%B04%'" output=b4
+   t.rast.extract input=sentinel where="name like '%B08%'" output=b8
+
+.. code-block:: bash
+
+   t.rast.list input=b4
+   t.rast.list input=b8
+
+.. code-block:: bash
+
+   g.region vect=jena_boundary align=L2A_T32UPB_20170517T102031_B04_10m
+                   
+.. code-block:: bash
+
+   t.rast.mapcalc input=b4,b8 output=ndvi \
+   expression="ndvi = float(b8 - b4) / ( b8 + b4 )" \
+   basename=ndvi nproc=3 method=start
+
+.. todo:: ERROR: The temporal map type of the sample dataset must be interval

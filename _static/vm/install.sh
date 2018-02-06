@@ -4,10 +4,6 @@ sudo apt install subversion \
      autoconf2.13 \
      autotools-dev \
      bison \
-     debhelper (>= 9) \
-     dh-python \
-     doxygen \
-     fakeroot \
      flex \
      graphviz \
      libblas-dev \
@@ -20,7 +16,7 @@ sudo apt install subversion \
      libglu1-mesa-dev \
      libjpeg-dev \
      liblapack-dev \
-     lesstif2-dev \
+     libmotif-dev \
      libmysqlclient-dev \
      libncurses5-dev \
      libnetcdf-dev \
@@ -30,7 +26,7 @@ sudo apt install subversion \
      libreadline-dev \
      libsqlite3-dev \
      libtiff-dev \
-     libwxgtk2.8-dev \
+     libwxgtk3.0-dev \
      libxmu-dev \
      netcdf-bin \
      proj-bin \
@@ -39,15 +35,16 @@ sudo apt install subversion \
      python-numpy \
      python-pil \
      python-ply \
-     python-wxgtk2.8 \
+     python-wxgtk3.0 \
      unixodbc-dev \
-     zlib1g-dev
+     zlib1g-dev \
+     liblas-c-dev 
 
 sudo pip install pymodis sentinelsat pandas
 
 function configure_grass {
     ./configure \
-        --prefix=/usr/lib \
+        --prefix=/usr/local \
         --enable-largefile \
         --enable-socket \
         --enable-shared \
@@ -62,34 +59,46 @@ function configure_grass {
         --with-lapack \
         --with-motif \
         --with-mysql \
-        --with-mysql-includes=$(shell mysql_config --include | sed -e 's/-I//') \
+        --with-mysql-includes=$(mysql_config --include | sed -e 's/-I//') \
         --with-netcdf \
         --with-nls \
         --with-odbc \
         --with-postgres \
-        --with-postgres-includes=$(shell pg_config --includedir) \
+        --with-postgres-includes=$(pg_config --includedir) \
         --with-proj-share=/usr/share/proj \
         --with-python \
         --with-readline \
         --with-sqlite \
         --with-wxwidgets=/usr/bin/wx-config \
-        --with-x
+        --with-x \
+        --with-liblas \
+        --with-openmp
 }
 
 # GRASS 7.4
-mkdir src
-cd src
+mkdir /opt/src -p
+cd /opt/src
 
-# wget https://grass.osgeo.org/grass74/source/grass-7.4.0.tar.gz
-# tar xvzf grass-7.4.0.tar.gz
-# cd grass-7.4.0
-# configure_grass
-# make
-# sudo make install
-# rm -rf grass-7.4.0
+if [  ! -f grass-7.4.0.tar.gz ] ; then
+	 wget https://grass.osgeo.org/grass74/source/grass-7.4.0.tar.gz
+fi
+tar xvzf grass-7.4.0.tar.gz
+cd grass-7.4.0
+make distclean
+configure_grass
+make
+sudo make install
+cd ..
+rm -rf grass-7.4.0
 
 # # GRASS trunk
-# svn
-# cd grass7_trunk
+if [ ! -d grass7_trunk ] ; then
+  svn checkout https://svn.osgeo.org/grass/grass/trunk grass7_trunk
+fi
+cd grass7_trunk
+make distclean
+configure_grass
+make
+ln -sf /opt/src/grass7_trunk/bin.x86_64-pc-linux-gnu/grass75 /home/user/bin
 
 exit 0

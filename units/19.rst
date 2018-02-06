@@ -34,7 +34,7 @@ Let's check basic metedata about created dataset:
 
 .. code-block:: bash
 
-   t.info modis
+   t.info input=modis
 
 ::
 
@@ -44,6 +44,8 @@ Let's check basic metedata about created dataset:
    ...
    | Number of registered maps:.. 184
 
+.. _t-register-file:
+   
 .. note:: We are using composed product from the daily 1-kilometer LST
    product (MOD11A1/MYD11A1) and stored on a 1-km Sinusoidal grid as
    the average values of clear-sky LSTs during an 8-day period.
