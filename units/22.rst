@@ -1,0 +1,44 @@
+Unit 22 - ST scripting
+======================
+
+.. todo:: Write some text
+	  
+:grasscmd2:`GRASS GIS Temporal Framework <libpython/temporal_framework.html>`
+
+.. literalinclude:: ../_static/scripts/ndvi-tgrass-v1.py
+   :language: python
+   :linenos:
+
+Example of usage:
+
+.. code-block:: bash
+		
+   ndvi-tgrass.py b4=b4 b8=b8 clouds=clouds basename=ndvi out=stats.txt
+
+Possible output:
+
+::
+
+   --------------------------------------------------------------------------------
+   NDVI class statistics (ndvi_1: 2017-05-17 10:20:31)
+   --------------------------------------------------------------------------------
+   NDVI class 1: 227.6 ha
+   NDVI class 2: 1565.3 ha
+   NDVI class 3: 9643.5 ha
+   NDVI class 1: -0.5690 (min) 0.7275 (max) 0.0496 (mean)
+   NDVI class 2: -0.4697 (min) 0.9789 (max) 0.3135 (mean)
+   NDVI class 3: -0.2160 (min) 0.9993 (max) 0.7998 (mean)
+   ...
+   --------------------------------------------------------------------------------
+   NDVI class statistics (ndvi_7: 2017-11-03 10:22:01)
+   --------------------------------------------------------------------------------
+   NDVI class 1: 156.2 ha
+   NDVI class 2: 2549.5 ha
+   NDVI class 3: 8730.5 ha
+   NDVI class 1: -0.6170 (min) 0.6725 (max) 0.0495 (mean)
+   NDVI class 2: -0.9977 (min) 0.9989 (max) 0.3215 (mean)
+   NDVI class 3: -0.1564 (min) 0.9994 (max) 0.6794 (mean)
+
+Sample script to download: `ndvi-tgrass-v1.py
+<../_static/scripts/ndvi-tgrass-v1.py>`__
+   

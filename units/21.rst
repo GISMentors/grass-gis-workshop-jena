@@ -70,6 +70,8 @@ Timestamps can be easily determined from raster map name, for example
 
 .. tip:: This workaround should be avoided.
 
+Sample script to download: `sentinel-timestamp.py <../_static/scripts/sentinel-timestamp.py>`__
+
 Then we run our script to produce timestamp file.
 
 .. code-block:: bash
@@ -157,6 +159,9 @@ need to keep mask for further usage. We will use simple trick,
    :linenos:
    :emphasize-lines: 30, 31
 
+Sample script to download: `sentinel-clouds-mask.py
+<../_static/scripts/sentinel-clouds-mask.py>`__
+	     
 .. code-block:: bash
 		
    sentinel-clouds-mask.py output=clouds.txt
