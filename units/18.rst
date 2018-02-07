@@ -43,7 +43,7 @@ Enter a new GRASS session (PERMANENT mapset) and install
 importing MODIS data (note that you have to install also `pyMODIS
 Python Library <http://www.pymodis.org/>`__).
 
-.. code-block::
+.. code-block:: bash
 
    pip install pymodis
    g.extension extension=r.modis
