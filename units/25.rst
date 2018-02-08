@@ -1,4 +1,8 @@
-Unit 25 - LIDAR?
-================
+Unit 25 - Lidar scripting
+=========================
 
 .. todo:: to be writen
+
+.. literalinclude:: ../_static/scripts/create-dem.py
+   :language: python
+   :linenos:

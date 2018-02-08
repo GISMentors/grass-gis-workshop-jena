@@ -1,6 +1,118 @@
-Unit 24 - LIDAR?
-================
+Unit 24 - Lidar
+===============
 
-.. todo:: move to unit 18
-	  
-.. todo:: to be writen
+.. todo:: move to unit 18?
+
+There is open Lidar data for Thuringia region available, see related
+`blog
+<https://rapidlasso.com/2017/01/09/second-german-state-goes-open-lidar/>`__. Go
+to `Download Höhendaten
+<http://www.geoportal-th.de/de-de/Downloadbereiche/Download-Offene-Geodaten-Th%C3%BCringen/Download-H%C3%B6hendaten>`__,
+choose region in map viewer and download selected tiles.
+
+Tiles used in this unit can be found in sample dataset, in
+:file:`lidar` folder (tiles ``681-682/5644-5646``). Data is stored in
+LAZ (compressed LAS format).
+   
+Import data
+-----------
+
+At first we will create a new GRASS location defined by :epsg:`25832`,
+see :ref:`Unit 18 <create-location-epsg>` for details.
+
+LAS/LAZ format
+^^^^^^^^^^^^^^
+
+For importing LAS/LAZ data are available two modules:
+
+* :grasscmd:`r.in.lidar` for importing point cloud data as raster map
+* :grasscmd:`v.in.lidar` for importing point cloud data as vector point map
+
+.. note:: GRASS requires `libLAS <http://www.liblas.org>`_ library for
+   reading LAS data. For compressed LAS (LAZ) there is another
+   dependency `laszip <https://www.laszip.org/>`__ library.
+
+   Basic metadata can be obtained by command line utility ``lasinfo``
+   which is part of libLAS library.
+
+   .. code-block:: bash
+
+      lasinfo las_681_5644_1_th_2014-2019.laz
+
+      ...
+      Min X Y Z:                   531815.05 5625597.55 925.35
+      Max X Y Z:                   534548.84 5627727.26 1292.54
+      Spatial Reference:           None
+
+   .. todo:: update
+                             
+Let's try to import selected tile into vector point map first. Flag
+:option:`-t` skips creation of attribute table. The import process
+will be significantly faster. Information about data SRS can be
+missing, we will skip projection check by :option:`-o` flag.
+
+.. code-block:: bash
+                
+   v.in.lidar -ot input=las_681_5644_1_th_2014-2019.laz output=las_681_5644
+
+We can also check the point overall point density by
+:grasscmd:`v.outlier`:
+
+.. code-block:: bash
+             
+   v.outlier -e input=las_681_5644
+
+   Estimated point density: 0.6418
+   Estimated mean distance between points: 1.248
+
+Now let's try import into raster map. Flag :option:`-e` extends
+current computational region to cover all imported points. Otherwise
+user needs to set up computational region via
+:grasscmd:`g.region`. Spatial resolution for output raster map is
+defined by :option:`resolution` option. Note that computational region
+is ignored when importing data using :grasscmd:`v.in.lidar`.
+   
+.. code-block:: bash
+
+   r.in.lidar -oe input=las_681_5644_1_th_2014-2019.laz output=las_681_5644 resolution=1
+
+Basic metadata about imported created raster maps can be optained by
+:grasscmd:`r.info`, or :grasscmd:`v.info` in the case of vector maps.
+
+.. code-block:: bash
+
+   r.info map=las_681_5644
+
+   ...
+   ...
+
+.. code-block:: bash
+                   
+   v.info map=las_681_5644
+
+   ...
+   ...
+
+.. todo:: image
+             
+High resolution DEM
+-------------------
+
+DEM will interpolated by :grasscmd:`v.surf.rst` using regularized
+spline with tension approximation. Output resultion will be set to ?
+meter. Since the interpolation process can be *very slow* we will
+perform the computation on smaller area.
+
+.. code-block:: bash
+
+   g.region vector=las_681_5644 res=1 -pa
+   v.surf.rst input=las_681_5644 elevation=dem_681_5644 npmin=80 tension=20 smooth=1
+
+.. tip:: Set higher npmin to reduce artifacts from segmentation
+   visible on slope and curvature maps (will be much slower!):
+
+   .. code-block:: bash
+                
+      g.region n=5626866 s=5626530 w=532642 e=533062 res=0.5 -pa
+      
+.. todo:: image

@@ -4,6 +4,8 @@ Unit 03 - Data Management
 Data import
 -----------
 
+Sample data are located in :file:`sentinel/sample`.
+
 Raster data
 ^^^^^^^^^^^
 

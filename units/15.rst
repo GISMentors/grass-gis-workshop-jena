@@ -20,7 +20,7 @@ new location for imported data and reproject data to target location
 
 .. note:: For simplification the downloaded data clipped larger region
    than our AOI is available in sample dataset, check
-   :file:`eu-dem-sample` folder for details.
+   :file:`eu-dem` folder for details.
 
    For those who are interested, sample raster file was created by
    GDAL utility :program:`gdal_translate`, see command below.
