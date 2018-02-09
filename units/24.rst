@@ -10,9 +10,10 @@ to `Download Höhendaten
 <http://www.geoportal-th.de/de-de/Downloadbereiche/Download-Offene-Geodaten-Th%C3%BCringen/Download-H%C3%B6hendaten>`__,
 choose region in map viewer and download selected tiles.
 
-Tiles used in this unit can be found in sample dataset, in
-:file:`lidar` folder (tiles ``681-682/5644-5646``). Data is stored in
-LAZ (compressed LAS format).
+Tiles used in this unit can be found in `sample dataset
+<http://geo102.fsv.cvut.cz/geoforall/grass-gis-workshop-jena-2018/jena-sample-data.7z>`__,
+see :file:`lidar` folder (``681-682/5644-5646`` tiles). Data
+is stored in LAZ (compressed LAS format).
    
 Import data
 -----------
@@ -20,10 +21,7 @@ Import data
 At first we will create a new GRASS location defined by :epsg:`25832`,
 see :ref:`Unit 18 <create-location-epsg>` for details.
 
-LAS/LAZ format
-^^^^^^^^^^^^^^
-
-For importing LAS/LAZ data are available two modules:
+For importing LAS/LAZ data are available two GRASS modules:
 
 * :grasscmd:`r.in.lidar` for importing point cloud data as raster map
 * :grasscmd:`v.in.lidar` for importing point cloud data as vector point map
@@ -40,79 +38,184 @@ For importing LAS/LAZ data are available two modules:
       lasinfo las_681_5644_1_th_2014-2019.laz
 
       ...
-      Min X Y Z:                   531815.05 5625597.55 925.35
-      Max X Y Z:                   534548.84 5627727.26 1292.54
-      Spatial Reference:           None
-
+      Min X Y Z:                   681000.000 5644000.000 -43.382
+      Max X Y Z:                   681999.990 5644999.990 968.621
+      ...
+      
    .. todo:: update
-                             
+
+Vector import
+^^^^^^^^^^^^^
+
 Let's try to import selected tile into vector point map first. Flag
-:option:`-t` skips creation of attribute table. The import process
-will be significantly faster. Information about data SRS can be
-missing, we will skip projection check by :option:`-o` flag.
+``-t`` skips creation of attribute table. The import process
+will be significantly faster. Another flag which will speed up the
+import process is ``-b`` which skips building topology. Information
+about data SRS can be missing, we will skip projection check by
+``-o`` flag.
 
 .. code-block:: bash
                 
-   v.in.lidar -ot input=las_681_5644_1_th_2014-2019.laz output=las_681_5644
+   v.in.lidar -otb input=las_681_5644_1_th_2014-2019.laz output=las_681_5644
+
+Note that computational region is ignored when importing data using
+:grasscmd:`v.in.lidar`.
 
 We can also check the point overall point density by
-:grasscmd:`v.outlier`:
+:grasscmd:`v.outlier`. Note that :grasscmd:`v.outlier` is working in
+the current computation region. So we also set up the region based on
+imported data (note that :grasscmd:`g.region` can run for a
+while. Since we skipped building topology, the map extent must
+computed by scanning all points in input vector map).
 
 .. code-block:: bash
-             
+
+   g.region vector=las_681_5644
    v.outlier -e input=las_681_5644
 
-   Estimated point density: 0.6418
-   Estimated mean distance between points: 1.248
+::
 
-Now let's try import into raster map. Flag :option:`-e` extends
-current computational region to cover all imported points. Otherwise
-user needs to set up computational region via
-:grasscmd:`g.region`. Spatial resolution for output raster map is
-defined by :option:`resolution` option. Note that computational region
-is ignored when importing data using :grasscmd:`v.in.lidar`.
-   
-.. code-block:: bash
+   Estimated point density: 8.937
+   Estimated mean distance between points: 0.3345
 
-   r.in.lidar -oe input=las_681_5644_1_th_2014-2019.laz output=las_681_5644 resolution=1
-
-Basic metadata about imported created raster maps can be optained by
-:grasscmd:`r.info`, or :grasscmd:`v.info` in the case of vector maps.
-
-.. code-block:: bash
-
-   r.info map=las_681_5644
-
-   ...
-   ...
+Basic metadata can be printed by :grasscmd:`v.info` (since no topology
+is built, the module must scan all features in the map):
 
 .. code-block:: bash
                    
    v.info map=las_681_5644
 
+::
+   
    ...
+   |   Number of points:       8936470         Number of centroids:  0          |
    ...
+   |   Map is 3D:              Yes                                              |
+   ...
+   |   Projection: UTM (zone 32)                                                |
+   |                                                                            |
+   |               N:        5644999.99    S:           5644000                 |
+   |               E:         681999.99    W:            681000                 |
+   |               B:           -43.382    T:           968.621                 |
+   ...
+   
+Raster import
+^^^^^^^^^^^^^
 
-.. todo:: image
-             
-High resolution DEM
--------------------
+Now let's try import input points into raster map. Flag ``-e`` extends
+current computational region to cover all imported points. Otherwise
+user needs to set up computational region by
+:grasscmd:`g.region`. Spatial resolution for output raster map is
+defined by ``resolution`` option. By default, for cells with more
+points involved, the value is computed by mean, see ``method``
+option. Cells covered by no points will have NULL values assigned.
+   
+.. code-block:: bash
 
-DEM will interpolated by :grasscmd:`v.surf.rst` using regularized
-spline with tension approximation. Output resultion will be set to ?
-meter. Since the interpolation process can be *very slow* we will
-perform the computation on smaller area.
+   r.in.lidar -oe input=las_681_5644_1_th_2014-2019.laz output=las_681_5644 resolution=1
+
+Basic metadata about created raster map can be obtained by
+:grasscmd:`r.info`.
 
 .. code-block:: bash
 
-   g.region vector=las_681_5644 res=1 -pa
-   v.surf.rst input=las_681_5644 elevation=dem_681_5644 npmin=80 tension=20 smooth=1
+   r.info map=las_681_5644
 
-.. tip:: Set higher npmin to reduce artifacts from segmentation
-   visible on slope and curvature maps (will be much slower!):
+::
+   
+   ...
+   |            N:    5645000    S:    5644000   Res:     1                     |
+   |            E:     682000    W:     681000   Res:     1                     |
+   |   Range of data:    min = 65.51301  max = 346.671                          |
+   ...
 
-   .. code-block:: bash
-                
-      g.region n=5626866 s=5626530 w=532642 e=533062 res=0.5 -pa
+.. figure:: ../images/units/24/import-rast-vect.png
+
+   Imported data as vector points. Raster map on 1m resolution in the
+   background.
+
+Filling gaps
+------------
+
+There are several GRASS modules for filling gaps in raster maps like
+:grasscmd:`r.fillnulls` or :grasscmd:`r.fill.stats`. The first module
+is based on spline interpolation, the second fills gaps with
+interpolated values using IDW. We will use the second module which
+fill nulls rapidly compared to :grasscmd:`r.fillnulls`. By ``-k``
+flag we ensure that original values will be kept. Only cells with
+no-data value will be modified.
+
+.. code-block:: bash
+
+   r.fill.stats -k input=las_681_5644 output=las_681_5644_no_gaps
+
+.. figure:: ../images/units/24/rast-gaps-fill.png
+
+   NULL values (on left part) filled by :grasscmd:`r.fill.stats`
+   (right part).
+
+Note that only cells in given neighbor distance (8 pixels by default,
+see ``cells`` option) are processed, see :numref:`lidar-gaps`.
+
+.. _lidar-gaps:
+
+.. figure:: ../images/units/24/rast-gaps.png
+
+   Cells out of distance not filled.
+
+.. _edge-detection:
+
+Edge detection
+--------------
+
+The filter aims to recognize and extract attached and detached object
+(such as buildings, bridges, power lines, trees, etc.) in order to
+create a Digital Terrain Model. (source:
+:grasscmd:`v.lidar.edgedetection` manual page) Example of simple
+workflow based on :grasscmd:`v.lidar.edgedetection`,
+:grasscmd:`v.lidar.growing` and :grasscmd:`v.lidar.correction`
+below. Note that edge detection is usually a time consuming task.
+
+.. code-block:: bash
+
+   v.lidar.edgedetection input=las_681_5644 output=edge_681_5644 ew_step=8 ns_step=8 lambda_g=0.5
+   v.in.lidar -otb input=las_681_5644_1_th_2014-2019.laz output=las_681_5644_first return_filter=first                
+   v.lidar.growing input=edge_681_5644 output=grow_681_5644 first=las_681_5644_first
+   v.lidar.correction input=grow_681_5644 output=corr_681_5644 terrain=terr_681_5644
+
+.. figure:: ../images/units/24/terrain-only-points.png
+
+   Filtered terrain only points.
+   
+High resolution DSM
+-------------------
+
+Digital Surface Model (DSM) will interpolated by
+:grasscmd:`v.surf.rst` using regularized spline with tension
+approximation. Output resolution will be set to 0.5 meter. The
+computation can be really slow. You can turn computation time to be
+more reasonable by running it in parallel, see ``nprocs`` option
+(GRASS 7.4+ only).
+
+.. code-block:: bash
+
+   g.region vector=las_681_5644 res=0.5 -pa
+   v.surf.rst input=las_681_5644 elevation=dsm_681_5644 npmin=80 tension=20 smooth=1 nprocs=5
+
+.. tip:: Try also to set higher npmin to reduce artifacts.
       
-.. todo:: image
+.. figure:: ../images/units/24/dsm-3d.png
+   :class: middle
+   
+   DSM in 3D view. Orthophoto downloaded from `Geoportal-Th.de
+   <http://www.geoportal-th.de/de-de/Downloadbereiche/Download-Offene-Geodaten-Th%C3%BCringen/Download-Luftbilder-und-Orthophotos>`__
+   (tile 32680_5644).
+
+.. note:: GRASS imports/links RGB image as separate bands. Color
+   composite can be displayed using :grasscmd:`d.rgb` or
+   :grasscmd:`r.composite`. The second module will create color
+   composite as new raster map.
+
+Similarly we can build Digital Terrain Model (DTM) from filtered
+terrain only points, see :ref:`edge-detection` for details.
+
