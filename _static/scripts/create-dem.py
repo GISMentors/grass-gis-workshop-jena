@@ -40,17 +40,21 @@ from grass.pygrass.modules import Module, MultiModule, ParallelModuleQueue
 def import_files(directory):
     start = time.time()
 
-    import_module = Module('v.in.lidar', flags='ot',
+    import_module = Module('v.in.lidar', flags='otb',
                            overwrite=gs.overwrite(), run_=False
     )
 
+    maps = []
     for f in os.listdir(directory):
+        if os.path.splitext(f)[1] != '.laz':
+            continue
         fullname = os.path.join(directory, f)
         basename = os.path.basename(f)
-        mapname = os.path.splitext(basename)[0]
+        # '-' is not valid for vector map names
+        mapname = os.path.splitext(basename)[0].replace('-', '_')
         
         maps.append(mapname)
-        message("Importing <{}>...".format(fullname))
+        gs.message("Importing <{}>...".format(fullname))
         import_task = deepcopy(import_module)
         queue.put(import_task(input=fullname, output=mapname))
     
@@ -75,11 +79,11 @@ def create_dmt_tiles(maps, res, rst_nprocs, offset_multiplier=10):
                            quiet=True
     )
     rst_module = Module('v.surf.rst', nprocs=rst_nprocs,
-                        overwrite=overwrite(), quiet=True, run_=False
+                        overwrite=gs.overwrite(), quiet=True, run_=False
     )
 
     for mapname in maps:
-        message("Interpolating <{}>...".format(mapname))
+        gs.message("Interpolating <{}>...".format(mapname))
         region_task = deepcopy(region_module)
         rst_task = deepcopy(rst_module)
         mm = MultiModule([region_task(vector=mapname),
@@ -94,7 +98,7 @@ def create_dmt_tiles(maps, res, rst_nprocs, offset_multiplier=10):
     )
     
 def patch_tiles(maps, output, resolution):
-    message("Patching tiles <{}>...".format(','.join(maps)))
+    gs.message("Patching tiles <{}>...".format(','.join(maps)))
     Module('g.region', raster=maps, res=resolution)
     Module('r.series', input=maps, output=output, method='average')
     Module('r.colors', map=output, color='elevation')

@@ -1,8 +1,20 @@
-Unit 26 - MODIS scripting
-=========================
+Unit 26 - MODIS ST scripting
+============================
 
 .. todo:: move to modis section
 
 .. todo:: to be writen
 
+.. literalinclude:: ../_static/scripts/modis-date-stats.py
+   :language: python
+   :linenos:
           
+.. code-block:: bash
+                
+   modis-date-stats.py input=modis_c start=2017-03-01 end=2017-04-01
+
+::
+   
+   Min: -5.4
+   Max: 13.8
+   Mean: 8.0
