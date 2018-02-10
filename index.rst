@@ -27,12 +27,12 @@ people are encouraged to voluntarily improve the design of the
 software. This is in contrast to **proprietary software**, where the
 software is under restrictive copyright and the source code is usually
 hidden from the users. See :wikipedia-en:`Free and open-source
-software` article on Wikipedia for details.
+software` article on Wikipedia for more information.
 
 FOSS for Geospatial
 -------------------
 
-Since 2006 there is `OSGeo Foundation <http://www.osgeo.org>`__ to
+In 2006 was founded `OSGeo Foundation <http://www.osgeo.org>`__ to
 support the collaborative development of open source geospatial
 software, and promote its widespread use.
 
@@ -65,7 +65,7 @@ Software used in this training materials
    :class: small
           
 * `GRASS GIS <http://grass.osgeo.org>`__ (recommended version 7.4) for
-  geospatial (raster, imagery, vector) data processing and providing
+  geospatial raster, imagery, and vector data processing and providing
   spatial analysis.
 * `QGIS desktop <http://qgis.org>`__ (recommended version 2.18) for
   geospatial visualization, creating hardcopy outputs, and publishing.
@@ -78,7 +78,6 @@ Software used in this training materials
 * `pyWPS <http://pywps.org/>`__ implementation of the Web Processing
   Service standard from the Open Geospatial Consortium written in
   Python.
-.. todo:: To be extended
 
 Units
 =====

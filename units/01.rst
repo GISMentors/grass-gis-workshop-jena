@@ -1,5 +1,5 @@
 Unit 01 - About GRASS GIS
-==================================
+=========================
 
 **GRASS GIS**, commonly referred as GRASS (Geographic Resources
 Analysis Support System), is a free and open source Geographic
@@ -39,7 +39,7 @@ In Nutshell
 **Disadvantages** (turning out to be advantages in some cases):
 
 * open source ;-)
-* complicated startup
+* complicated startup for newcomers
 * native format (requires importing data, be aware of possibility of linking external formats)
 * topology (not good idea to link external vector formats)
 
@@ -47,12 +47,12 @@ In Nutshell
 
 * doing data analysis
 * working with topological data
-* working with spatial-temporal datasets
+* analysing spatial-temporal datasets
 * doing Python scripting
 * deploying server-side applications (e.g. as WPS process)
 * *add your point here*
   
-**When to use something else?**
+**When to use rather something else?**
 
 * want to vizualize geodata in easy and quick way (use QGIS instead)
 * being scared of location and mapsets ;-)
@@ -75,7 +75,7 @@ Example for Ubuntu OS:
    sudo apt install grass
 
 .. tip:: More recent versions of GRASS are available in `UbuntuGIS PPA
-         <https://launchpad.net/~ubuntugis/+archive/ubuntu/ubuntugis-unstable>`__.
+   <https://launchpad.net/~ubuntugis/+archive/ubuntu/ubuntugis-unstable>`__.
    
 MS Windows
 ^^^^^^^^^^
