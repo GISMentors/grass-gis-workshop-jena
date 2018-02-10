@@ -33,7 +33,6 @@ def check_date(date_str):
 
 def cleanup():
     try:
-        gs.run_command('t.remove', flags='f', inputs=output)
         gs.run_command('g.remove', flags='f', type='raster', name=output)
     except CalledModuleError:
         pass
@@ -45,19 +44,14 @@ def main():
     # be silent
     os.environ['GRASS_VERBOSE'] = '0'
     
-    gs.run_command('t.rast.extract',
-                   input=options['input'],
-                   output=output,
-                   where="start_time > '{start}' and start_time < '{end}'".format(
-                       start=options['start'], end=options['end'])
-    )
-
     try:
         gs.run_command('t.rast.series',
-                       input=output,
+                       input=options['input'],
                        output=output,
-                       method='average'
-        )
+                       method='average',
+                       where="start_time > '{start}' and start_time < '{end}'".format(
+                           start=options['start'], end=options['end']
+        ))
     except CalledModuleError:
         gs.fatal('Unable to compute statistics')
         
@@ -65,9 +59,9 @@ def main():
                              flags='g',
                              map=output
     )
-    print ('Min: {0:.1f}'.format(float(stats['min'])))
-    print ('Max: {0:.1f}'.format(float(stats['max'])))
-    print ('Mean: {0:.1f}'.format(float(stats['mean'])))
+    print('Min: {0:.1f}'.format(float(stats['min'])))
+    print('Max: {0:.1f}'.format(float(stats['max'])))
+    print('Mean: {0:.1f}'.format(float(stats['mean'])))
         
 if __name__ == "__main__":
     options, flags = gs.parser()

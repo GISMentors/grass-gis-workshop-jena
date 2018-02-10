@@ -5,3 +5,82 @@ Unit 27 - PyWPS intro
 
    * pywps about
    * process v1 - date -> stats
+
+Download `PyWPS demo <https://github.com/geopython/pywps-flask>`: `master.zip <https://github.com/geopython/pywps-flask/archive/master.zip>`
+
+Install PyWPS and Flask dependency
+
+.. code-block: bash
+
+   sudo pip install pywps flask
+
+Let's try to start PyWPS demo server
+
+.. code-block:: bash
+
+   python ./demo.py
+
+
+and go to http://127.0.0.1:5000/ to see all available processes. Show
+process description for example for *say_hello* process. Try to run
+the process.
+
+http://localhost:5000/wps?request=Execute&service=WPS&identifier=say_hello&version=1.0.0&datainputs=name=Martin
+
+.. code-block:: xml
+
+   <wps:LiteralData dataType="urn:ogc:def:dataType:OGC:1.1:string" uom="urn:ogc:def:uom:OGC:1.0:unity">Hello Martin</wps:LiteralData>
+                
+Go to :file:`pywps` directory and put your first process into
+:file:`processes`. Then activate the process in :file:`demo.py`.
+
+.. code-block:: python
+
+   ...
+   from processes.modis_v1 import ModisV1
+   ...
+
+   processes = [
+    ...
+    ModisV1(),
+   ]
+
+After starting demo PyWSP server
+
+.. code-block:: bash
+
+   python ./demo.py
+
+go to http://127.0.0.1:5000/ and check your MODIS process. You should
+see your process in the list. Click on ``DescribeProcess`` to check
+input and outputs parameters description.
+
+.. figure:: ../images/units/27/modis-v1.png
+
+   Process modis-v1 available in PyWPS demo server.
+
+Now we need to implement the process itself, ...
+
+.. literalinclude:: ../_static/scripts/modis_v1.py
+   :language: python
+   :linenos:
+
+In order to use GRASS GIS functionality we need to change settings in
+``grass`` section of PyWPS configuration. Go to :file:`pywps.cfg` and
+set correct GRASS installation dir.
+
+.. code-block:: bash
+
+   gisbase=/usr/local/lib/grass-7.4.0
+
+.. todo:: check
+          
+http://localhost:5000/wps?request=Execute&service=WPS&identifier=modis-v1&version=1.0.0&datainputs=start=2017-03-01;end=2017-04-01
+
+.. code-block:: python
+
+   <wps:LiteralData dataType="urn:ogc:def:dataType:OGC:1.1:string">Min: -5.4;Max: 13.8;Mean: 8.0</wps:LiteralData>
+
+.. note:: Try to rewrite process in order to return JSON instead of string.
+          
+.. tip:: When something goes wrong, check :file:`logs/pywps.log` for details.

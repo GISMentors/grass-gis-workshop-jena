@@ -4,4 +4,12 @@ Unit 29 - PyWPS tuning 2
 .. todo::
 
    * pywps about
-   * process v3 - startdate,enddate -> zones
+   * process v3 - region, startdate,enddate -> stats
+
+.. literalinclude:: ../_static/scripts/modis_v3.py
+   :language: python
+   :linenos:
+     
+Copy :file:`jena-boundary.gpkg` to :file:`pywps-flask/static/data`.
+
+http://localhost:5000/wps?request=Execute&service=WPS&identifier=modis-v3&version=1.0.0&datainputs=start=2017-03-01;end=2017-04-01;region=@xlink:href=http://localhost:5000/static/data/jena_boundary.gpkg

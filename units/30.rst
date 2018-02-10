@@ -5,3 +5,15 @@ Unit 30 - PyWPS tuning 3
 
    * pywps about
    * process v3 - region,startdate,enddate -> zones
+
+.. literalinclude:: ../_static/scripts/modis_v4.py
+   :language: python
+   :linenos:
+     
+http://localhost:5000/wps?request=Execute&service=WPS&identifier=modis-v4&version=1.0.0&datainputs=start=2017-03-01;end=2017-04-01;region=@xlink:href=http://localhost:5000/static/data/jena_boundary.gpkg
+
+vs.
+
+http://localhost:5000/wps?request=Execute&service=WPS&identifier=modis-v4&version=1.0.0&datainputs=start=2017-03-01;end=2017-04-01;region=@xlink:href=http://localhost:5000/static/data/jena_boundary.gpkg&responsedocument=zones=@asReference=true
+
+.. todo:: reference not working

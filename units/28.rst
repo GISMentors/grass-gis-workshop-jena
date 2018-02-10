@@ -4,4 +4,12 @@ Unit 28 - PyWPS tuning 1
 .. todo::
 
    * pywps about
-   * process v2 - startdate, enddate -> stats
+   * process v2 - coords, startdate, enddate -> stats
+
+.. literalinclude:: ../_static/scripts/modis_v2.py
+   :language: python
+   :linenos:
+     
+http://localhost:5000/wps?request=Execute&service=WPS&identifier=modis-v2&version=1.0.0&datainputs=start=2017-03-01;end=2017-04-01;coords=4351849,3120313
+
+.. todo:: parse coords
