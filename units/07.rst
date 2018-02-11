@@ -29,7 +29,7 @@ bands (red and near-infrared channels).
    Input data loaded in QGIS.
 
 Processing plugin
-=================
+-----------------
 
 Processing plugin is a generic toolbox which allows to use processing
 tools provided by various software packages. Let's open
@@ -73,7 +73,7 @@ displayed in QGIS map window.
           improvements ;-)
 
 GRASS plugin
-============
+------------
 
 GRASS plugin has been designed to support GRASS as processing toolbox
 in more straightforward way. This also includes ability to display
@@ -161,10 +161,3 @@ in standard way as other data sources, see
    :class: large
         
    Browse GRASS data similarly as other data sources.
-   
-      
-   
-                         
-                  
-
-
