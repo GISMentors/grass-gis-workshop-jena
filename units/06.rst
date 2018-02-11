@@ -24,12 +24,12 @@ various GIS formats, see supported `raster
 
 .. figure:: ../images/units/06/export-menu.png
 
-   Export raster map from Layer Manager.
+   Export raster map in Layer Manager.
 
-.. important:: Remember that raster export module operates on current
-   computation region. So don't forget to set desired computation
-   region before exporting data. In this way, for example, you can
-   easily export only subregion.
+.. important:: Remember that raster export module operates in a
+   current computation region. So don't forget to set desired
+   computation region before exporting data. In this way, for example,
+   you can easily export only subregion or a tile.
 
 .. figure:: ../images/units/06/raster-export.png
 
@@ -50,19 +50,19 @@ interpretation in your software on your own.
 Useful notes
 ------------
 
-* Most of vector formats are based on **simple feature model**. It means
-  that GRASS export module converts topological primitives (lines,
-  boundaries, centroids, areas, isles) into simple features
-  (linestrings, polygons). Points have no topology, so no conversion is
-  involved.
+* Most of vector formats are based on **simple feature model**. It
+  means that GRASS export module converts topological primitives
+  (lines, boundaries, centroids, areas, isles) into simple features
+  (linestrings, polygons). Points have no topology, so no conversion
+  is involved.
 * GRASS does not distinguish between **single and multi parts**
   (features and multifeatures). Attributes are simply linked to
   primitives (usually points, lines, or centroids) via so called
-  category. More primitives can have the same category, so the same
-  attributes linked. This is a way how GRASS handles multiparts. By
-  default :grasscmd:`v.out.ogr` exports such primitives like single
-  parts, ie. featutes. Multi parts (multifeatures) are written only
-  when :option:`-m` flag is given.
+  "category". More primitives can have the same category assigned, so
+  the same attributes linked. This is a way how GRASS handles
+  multiparts. By default :grasscmd:`v.out.ogr` exports such primitives
+  like single parts, ie. featutes. Multi parts (multifeatures) are
+  written only when :param:`-m` flag is given.
 * GRASS supports also one of few topological formats, **PostGIS
   Topology**, see :grasscmd:`v.out.postgis` for details.
 * To increase interoperability with your Esri colleagues, GRASS data

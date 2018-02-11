@@ -157,6 +157,9 @@ the background. After startup, the GUI consists of two main windows:
            
    Main GUI components: Layer Manager and Map Display.
 
+.. tip:: If GUI crashes, it can be started again by :grasscmd:`g.gui`
+   command from underlaying terminal.
+         
 First task, not surprisingly, is to display imported (vector) data. It can be
 done from menu :menuselection:`File --> Map display --> Add vector` or
 more easily from a main toolbar |grass-layer-vector-add| :sup:`Add
