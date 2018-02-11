@@ -1,221 +1,201 @@
-Unit 24 - Lidar
+Unit 24 - MODIS
 ===============
 
-.. todo:: move to unit 18?
+There are two satellites, Aqua and Terra which carry the MODIS sensor
+as payload. The **Moderate Resolution Imaging Spectroradiometer**
+(:wikipedia-en:`MODIS`) is a 36-channel from visible to
+thermal-infrared sensor that was launched as part of the Terra
+satellite payload in December 1999 and Aqua satellite (May 2002). The
+Terra satellite passes twice a day (at about 10:30am, and 22:30pm
+local time), also the Aqua satellite passes twice a day (at about
+01:30am, and 13:30pm local time). (source: `GRASS Wiki
+<https://grasswiki.osgeo.org/wiki/MODIS>`__)
 
-There is open Lidar data for Thuringia region available, see related
-`blog
-<https://rapidlasso.com/2017/01/09/second-german-state-goes-open-lidar/>`__. Go
-to `Download Höhendaten
-<http://www.geoportal-th.de/de-de/Downloadbereiche/Download-Offene-Geodaten-Th%C3%BCringen/Download-H%C3%B6hendaten>`__,
-choose region in map viewer and download selected tiles.
+Our area of interest, Germany, is covered by two tiles (see `MODLAND
+grid <https://modis-land.gsfc.nasa.gov/MODLAND_grid.html>`__):
 
-Tiles used in this unit can be found in `sample dataset
-<http://geo102.fsv.cvut.cz/geoforall/grass-gis-workshop-jena-2018/jena-sample-data.7z>`__,
-see :file:`lidar` folder (``681-682/5644-5646`` tiles). Data
-is stored in LAZ (compressed LAS format).
+* h18v03
+* h18v04
+
+Download and import
+-------------------
+
+Data are provided in 3 projections (Sinusoidal, Lambert Azimuthal
+Equal-Area, and Geographic). For our purpose, data will be reprojected
+to ETRS89 / LAEA Europe :epsg:`3035`.
+
+.. _create-location-epsg:
+
+At first, a new GRASS location need to be created (see :ref:`Unit 02
+<create-location>`). It can be easily done by using EPSG code (*Select
+EPSG code of spatial reference system*).
+
+.. figure:: ../images/units/24/create-location-epsg-0.svg
+
+   Create a new location based on EPSG code.
+
+.. figure:: ../images/units/24/create-location-epsg-1.png
+
+   Enter EPSG code.
+
+Enter a new GRASS session (PERMANENT mapset) and install
+:grasscmdaddons:`r.modis` addons extension for downloading and
+importing MODIS data (note that you have to install also `pyMODIS
+Python Library <http://www.pymodis.org/>`__).
+
+.. code-block:: bash
+
+   pip install pymodis
+   g.extension extension=r.modis
+
+GRASS MODIS addon consists of two modules:
+
+* :grasscmd:`r.modis.download` and
+* :grasscmd:`r.modis.install`
+
+Let's download desired tiles (h18v03 and h18v04) for year 2017. We are
+interested about LST products (both Aqua and Terra satellites).
+  
+.. code-block:: bash
+
+   r.modis.download settings=settings.txt folder=h18v03_04 tiles=h18v03,h18v04 \
+   product=lst_aqua_eight_1000,lst_terra_eight_1000 \
+   startday=2017-01-01 endday=2017-12-31
+
+.. note:: Output folder (:file:`h18v03_04` in this case) must exists,
+   otherwise the module will fail.
+             
+   File :file:`settings.txt` contains two lines: *username* and
+   *password* for accessing MODIS download service.
+
+Then we can import data including reprojection into our location.
+
+.. _modis-import:
+
+.. code-block:: bash
+
+   r.modis.import -mw files=h18v03_04/listfileMOD11A2.006.txt \
+   spectral='( 1 0 0 0 1 0 0 0 0 0 0 0 )' outfile=h18v03_04/tlist-mod.txt
+
+   r.modis.import -mw files=h18v03_04/listfileMYD11A2.006.txt \
+   spectral='( 1 0 0 0 1 0 0 0 0 0 0 0 )' outfile=h18v03_04/tlist-myd.txt
+
+.. todo:: Explain spectral
+
+If ``-m`` flag is given, the import tool creates mosaics from tiles
+automatically, see :numref:`modis-mosaics`.
+
+.. _modis-mosaics:
+
+.. figure:: ../images/units/24/modis-mosaics.png
+   :class: middle
+        
+   Final mosaics created from h18v03 and h18v04 tiles.
+
+.. _modis-lst:
    
-Import data
------------
+LTS
+---
 
-At first we will create a new GRASS location defined by :epsg:`25832`,
-see :ref:`Unit 18 <create-location-epsg>` for details.
+In this section we will perform **Land Surface Temperature** (LST)
+analysis in Germany region. At first we will import layer with Germany
+administrative border. This data can be found in sample datasets:
+:file:`osm/germany_boundary.gpkg`.
 
-For importing LAS/LAZ data are available two GRASS modules:
+.. todo:: add link
+          
+.. note:: Administrative border of Germany has been downloaded from
+   OSM database.
+          
+   .. code-block:: xml
 
-* :grasscmd:`r.in.lidar` for importing point cloud data as raster map
-* :grasscmd:`v.in.lidar` for importing point cloud data as vector point map
-
-.. note:: GRASS requires `libLAS <http://www.liblas.org>`_ library for
-   reading LAS data. For compressed LAS (LAZ) there is another
-   dependency `laszip <https://www.laszip.org/>`__ library.
-
-   Basic metadata can be obtained by command line utility ``lasinfo``
-   which is part of libLAS library.
+      (
+      relation
+      ["boundary"="administrative"]
+      ["admin_level"="2"]
+      ["name"="Deutschland"]
+      );
+      /*added by auto repair*/
+      (._;>;);
+      /*end of auto repair*/
+      out;
 
    .. code-block:: bash
 
-      lasinfo las_681_5644_1_th_2014-2019.laz
+      ogr2ogr -f GPKG germany_boundary.gpkg -a_srs EPSG:4326 -t_srs EPSG:3035 /vsicurl_streaming/"\
+      http://overpass-api.de/api/interpreter?data=%28relation%5B%22boundary%22%3D%22\
+      administrative%22%5D%5B%22admin%5Flevel%22%3D%222%22%5D%5B%22name%22%3D%22Deutschland\
+      %22%5D%3B%29%3B%28%2E%5F%3B%3E%3B%29%3Bout%3B%0A" lines
 
-      ...
-      Min X Y Z:                   681000.000 5644000.000 -43.382
-      Max X Y Z:                   681999.990 5644999.990 968.621
-      ...
-      
-   .. todo:: update
+Let's import the boundary of Germany into our mapset. The input file
+contains national border represented by linestring, see
+:numref:`germany-boundary` left part. It's complication since a mask
+can be set only from areal features (polygons). We need to polygonize
+input data. This will be performed by two GRASS operations:
 
-Vector import
-^^^^^^^^^^^^^
+* change line border from *lines* to *boundaries* by :grasscmd:`v.type`
+  (in GRASS topological model, an area is composition of boundaries
+  and centroid, see :ref:`Unit 03 <grass-topo>`)
+* add centroid by :grasscmd:`v.centroids`
 
-Let's try to import selected tile into vector point map first. Flag
-``-t`` skips creation of attribute table. The import process
-will be significantly faster. Another flag which will speed up the
-import process is ``-b`` which skips building topology. Information
-about data SRS can be missing, we will skip projection check by
-``-o`` flag.
+.. code-block:: bash
 
+   v.type input=germany output=germany_b from_type=line to_type=boundary
+   v.centroids input=germany_b output=germany_boundary
+
+.. _germany-boundary:
+   
+.. figure:: ../images/units/24/germany_line_area.png
+   :class: middle
+        
+   Germany national boundary as linestring on left and as polygon
+   (area) on right part.
+
+Now we can create a desired mask (:grasscmd:`r.mask`). Don't forget
+that a mask is created in the current computation region. First you
+set computation extent based on Germany and than align computation
+grid to input data by :grasscmd:`g.region`.
+
+.. code-block:: bash
+
+   g.region vector=germany_boundary align=MOD11A2.A2017001_mosaic_LST_Day_1km
+   r.mask vector=germany_boundary
+
+Let's check range values of our LST data (by :grasscmd:`r.info` module
+or from Layer Manager, see :ref:`Unit 03 <raster-metadata>`).
+
+.. code-block:: bash
+
+   r.info -r map=MOD11A2.A2017001_mosaic_LST_Day_1km
+
+::
+
+  min=0
+  max=14411    
+
+.. _modis-dn-c:
+  
+The values do not appear to be temperature. In order to determine LST
+from input data, digital values (DN) must be converted into Celsius or
+Kelvin scale.
+
+.. math::
+
+   C = DN * 0.02 - 273.15
+
+Conversion to Celsium scale can be done by :grasscmd:`r.mapcalc` (see
+:doc:`05` for basic information about map algebra in GRASS). It's also
+suitable to replace zero values with no-data value (NULL values in
+GRASS terminology).
+
+Example (replace *tile* with real map name):
+   
 .. code-block:: bash
                 
-   v.in.lidar -otb input=las_681_5644_1_th_2014-2019.laz output=las_681_5644
+   r.mapcalc expression="tile_c = if(tile != 0, tile * 0.02 - 273.15, null())"
 
-Note that computational region is ignored when importing data using
-:grasscmd:`v.in.lidar`.
-
-We can also check the point overall point density by
-:grasscmd:`v.outlier`. Note that :grasscmd:`v.outlier` is working in
-the current computation region. So we also set up the region based on
-imported data (note that :grasscmd:`g.region` can run for a
-while. Since we skipped building topology, the map extent must
-computed by scanning all points in input vector map).
-
-.. code-block:: bash
-
-   g.region vector=las_681_5644
-   v.outlier -e input=las_681_5644
-
-::
-
-   Estimated point density: 8.937
-   Estimated mean distance between points: 0.3345
-
-Basic metadata can be printed by :grasscmd:`v.info` (since no topology
-is built, the module must scan all features in the map):
-
-.. code-block:: bash
-                   
-   v.info map=las_681_5644
-
-::
-   
-   ...
-   |   Number of points:       8936470         Number of centroids:  0          |
-   ...
-   |   Map is 3D:              Yes                                              |
-   ...
-   |   Projection: UTM (zone 32)                                                |
-   |                                                                            |
-   |               N:        5644999.99    S:           5644000                 |
-   |               E:         681999.99    W:            681000                 |
-   |               B:           -43.382    T:           968.621                 |
-   ...
-   
-Raster import
-^^^^^^^^^^^^^
-
-Now let's try import input points into raster map. Flag ``-e`` extends
-current computational region to cover all imported points. Otherwise
-user needs to set up computational region by
-:grasscmd:`g.region`. Spatial resolution for output raster map is
-defined by ``resolution`` option. By default, for cells with more
-points involved, the value is computed by mean, see ``method``
-option. Cells covered by no points will have NULL values assigned.
-   
-.. code-block:: bash
-
-   r.in.lidar -oe input=las_681_5644_1_th_2014-2019.laz output=las_681_5644 resolution=1
-
-Basic metadata about created raster map can be obtained by
-:grasscmd:`r.info`.
-
-.. code-block:: bash
-
-   r.info map=las_681_5644
-
-::
-   
-   ...
-   |            N:    5645000    S:    5644000   Res:     1                     |
-   |            E:     682000    W:     681000   Res:     1                     |
-   |   Range of data:    min = 65.51301  max = 346.671                          |
-   ...
-
-.. figure:: ../images/units/24/import-rast-vect.png
-
-   Imported data as vector points. Raster map on 1m resolution in the
-   background.
-
-Filling gaps
-------------
-
-There are several GRASS modules for filling gaps in raster maps like
-:grasscmd:`r.fillnulls` or :grasscmd:`r.fill.stats`. The first module
-is based on spline interpolation, the second fills gaps with
-interpolated values using IDW. We will use the second module which
-fill nulls rapidly compared to :grasscmd:`r.fillnulls`. By ``-k``
-flag we ensure that original values will be kept. Only cells with
-no-data value will be modified.
-
-.. code-block:: bash
-
-   r.fill.stats -k input=las_681_5644 output=las_681_5644_no_gaps
-
-.. figure:: ../images/units/24/rast-gaps-fill.png
-
-   NULL values (on left part) filled by :grasscmd:`r.fill.stats`
-   (right part).
-
-Note that only cells in given neighbor distance (8 pixels by default,
-see ``cells`` option) are processed, see :numref:`lidar-gaps`.
-
-.. _lidar-gaps:
-
-.. figure:: ../images/units/24/rast-gaps.png
-
-   Cells out of distance not filled.
-
-.. _edge-detection:
-
-Edge detection
---------------
-
-The filter aims to recognize and extract attached and detached object
-(such as buildings, bridges, power lines, trees, etc.) in order to
-create a Digital Terrain Model. (source:
-:grasscmd:`v.lidar.edgedetection` manual page) Example of simple
-workflow based on :grasscmd:`v.lidar.edgedetection`,
-:grasscmd:`v.lidar.growing` and :grasscmd:`v.lidar.correction`
-below. Note that edge detection is usually a time consuming task.
-
-.. code-block:: bash
-
-   v.lidar.edgedetection input=las_681_5644 output=edge_681_5644 ew_step=8 ns_step=8 lambda_g=0.5
-   v.in.lidar -otb input=las_681_5644_1_th_2014-2019.laz output=las_681_5644_first return_filter=first                
-   v.lidar.growing input=edge_681_5644 output=grow_681_5644 first=las_681_5644_first
-   v.lidar.correction input=grow_681_5644 output=corr_681_5644 terrain=terr_681_5644
-
-.. figure:: ../images/units/24/terrain-only-points.png
-
-   Filtered terrain only points.
-   
-High resolution DSM
--------------------
-
-Digital Surface Model (DSM) will interpolated by
-:grasscmd:`v.surf.rst` using regularized spline with tension
-approximation. Output resolution will be set to 0.5 meter. The
-computation can be really slow. You can turn computation time to be
-more reasonable by running it in parallel, see ``nprocs`` option
-(GRASS 7.4+ only).
-
-.. code-block:: bash
-
-   g.region vector=las_681_5644 res=0.5 -pa
-   v.surf.rst input=las_681_5644 elevation=dsm_681_5644 npmin=80 tension=20 smooth=1 nprocs=5
-
-.. tip:: Try also to set higher npmin to reduce artifacts.
-      
-.. figure:: ../images/units/24/dsm-3d.png
+.. figure:: ../images/units/24/lst-c.png
    :class: middle
-   
-   DSM in 3D view. Orthophoto downloaded from `Geoportal-Th.de
-   <http://www.geoportal-th.de/de-de/Downloadbereiche/Download-Offene-Geodaten-Th%C3%BCringen/Download-Luftbilder-und-Orthophotos>`__
-   (tile 32680_5644).
-
-.. note:: GRASS imports/links RGB image as separate bands. Color
-   composite can be displayed using :grasscmd:`d.rgb` or
-   :grasscmd:`r.composite`. The second module will create color
-   composite as new raster map.
-
-Similarly we can build Digital Terrain Model (DTM) from filtered
-terrain only points, see :ref:`edge-detection` for details.
-
+        
+   LST reconstruction for Germany in Celsius scale (color table
+   ``celsius`` applied).
