@@ -6,8 +6,8 @@ Unit 04 - Modules, Region
 Accessing GRASS modules
 -----------------------
 
-GRASS is **modular system** which consists of several hundreds tools
-(called "modules"). They are accessible from the Layer Manager menu,
+GRASS is a **modular system** which consists of several hundreds tools
+(called "modules"). Modules are accessible from the Layer Manager menu,
 :item:`Modules` tab, and from command prompt (:item:`Console` tab).
 
 Let's find a tool for clipping cloud mask vector map by Jena city
@@ -26,10 +26,10 @@ The module which we are looking for is :grasscmd:`v.overlay`.
 .. note:: Since GRASS 7.4.0 there is a better choice for vector clipping
    than generic :grasscmd:`v.overlay` module: :grasscmd:`v.clip`.
 
-The commands (modules) can be called from GUI dialogs and from command
-line (:item:`Console` or "real" terminal). Figure bellow shows GUI
-dialog of :grasscmd:`v.overlay` module. The corresponding command for
-console would be:
+The commands (modules) can be called using GUI dialogs, from command
+line (:item:`Console` or "real" terminal), or by using Python API (see
+:doc:`10`). Figure bellow shows GUI dialog of :grasscmd:`v.overlay`
+module. The corresponding command for console would be:
 
 .. code-block:: bash
 
@@ -37,14 +37,15 @@ console would be:
 
 .. figure:: ../images/units/04/v-overlay.svg
 
-   GUI dialog for launching :grasscmd:`v.overlay` module.
+   GUI dialog for launching :grasscmd:`v.overlay` module (syntax for
+   CLI displayed in statusbar).
 
 .. figure:: ../images/units/04/jena-clouds.png
 
    Clipped clouds mask by Jena city area.
 
-All GRASS commands start by prefix. By the prefix the modules are
-grouped into several sections.
+All GRASS commands start by a prefix. This prefix groups modules into
+several sections, see table below.
 
 .. cssclass:: border
 
@@ -77,12 +78,13 @@ Computational region
 
 Computation region is **key issue** in GRASS raster processing. Unlike
 GIS software like Esri ArcGIS which sets computation region based on
-input data, GRASS is leaving this operation to the user. **The user
-must define computation region before any raster computation is
-performed!**
+input data, GRASS is leaving this operation to the user.
+
+.. important:: **The user must define computation region before any
+   raster computation is performed!**
 
 Computational region is defined by *extent* (north, south, east, west)
-and by *spatial resolution* in both direction (east-west,
+and by *spatial resolution* in the both directions (east-west,
 north-south). GRASS supports only regular grids.
 
 .. figure:: ../images/units/04/region2d.png
@@ -94,8 +96,8 @@ north-south). GRASS supports only regular grids.
 
 Majority of raster processing modules (``r.*``) in GRASS respect
 computational region, there are few exceptions like import modules
-(:grasscmd:`r.import`). On the other side most of vector processing
-modules (``v.*``) ignores computation region completely.
+(:grasscmd:`r.import`). On the other hand, the most of vector
+processing modules (``v.*``) ignore computation region completely.
 
 Computational region can be easily set on existing raster or vector
 map from Layer Manager.
@@ -104,10 +106,9 @@ map from Layer Manager.
 
    Set computational region from raster map.
 
-When setting up computational region from vector map, only
-extent is adjusted. It's good idea to align the grid based on
-raster map used for computation (*Align computational region to
-selected map*).
+When setting up computational region from vector map, only extent is
+adjusted. It's good idea to align a grid based on raster map used for
+computation (*Align computational region to selected map*).
           
 .. tip:: Current computation extent can be displayed in map window.
 
@@ -118,15 +119,22 @@ selected map*).
 Full flexibility for operating with computation region allows
 :grasscmd:`g.region` module.
 
-With this knowledge let's enhance color table using histogram
-equalization (which is influenced by computation region as we already
-know):
+.. _color-table:
+
+Color table
+-----------
+
+With knowledge of computational region let's enhance color table using
+histogram equalization (which is influenced by computation region as
+we already know) by using :grasscmd:`r.colors`.
 
 .. code-block:: bash
 
    r.colors map=L2A_T32UPB_20170706T102021_B04_10m color=grey.eq
 
-.. tip:: Color table can be easily set also from Layer Manager.
+.. tip:: Color table can be easily set also from Layer Manager or
+         managed interactively by :menuselection:`Raster --> Manage
+         colors --> Manage color rules interactively`.
 
          .. figure:: ../images/units/04/r-colors-menu.png
 

@@ -58,8 +58,6 @@ In Nutshell
 * being scared of location and mapsets ;-)
 * *add your point here*
 
-.. todo:: review, extend
-
 Installation
 ------------
 
@@ -84,10 +82,8 @@ See https://grass.osgeo.org/download/software/ms-windows/
 
 There are basically two options:
 
-* **standalone installer**
+* **standalone installer** (recommended for newcomers)
 * **OSGeo4W network installer**
-
-Recommended option for newcomers is to use a standalone installer.
 
 .. tip:: GRASS GIS is also part of QGIS installer on Windows. So if
    you have QGIS already installed on the machine, you have also GRASS

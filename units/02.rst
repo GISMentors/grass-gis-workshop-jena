@@ -4,9 +4,9 @@ Unit 02 - First steps
 Startup
 -------
 
-Starting a GRASS session requires user knowledge, the users usually
-do not like it ;-) GRASS forces organizing your data from early
-beginning.
+Starting a GRASS session requires basic knowledge about software
+itself, the users usually do not like it ;-) In other words GRASS
+forces organizing your data from early beginning.
 
 Before entering GRASS a startup screen appears, the user must define
 working project in which GRASS session will operate. Without this step
@@ -14,8 +14,8 @@ you cannot enter GRASS. This approach is not so common. Applications
 like Esri ArcGIS or QGIS just starts. The user loads different data
 from various data sources in different projections, and starts working
 on his/her project. GRASS is different, which makes this software
-harder to enter for newcomers. *But don't worry, we will cross a red
-border in few steps.*
+harder to enter for newcomers. *But don't worry, we will enter GRASS
+in few steps.*
 
 The GRASS GIS startup screen requires to set up three items:
 
@@ -42,13 +42,13 @@ The GRASS GIS startup screen requires to set up three items:
 Let's define database directory (:fignote:`1.`). Then a new location
 can be created (:fignote:`2a.`) or official GRASS sample location(s)
 downloaded (:fignote:`2b.`). We will create our own location, a
-project related to Jena region.
+project related to *Jena region*.
 
-.. note:: Download sample location functionality is available in GRASS
-   7.4.
+.. note:: Download sample location functionality is available only in
+   GRASS 7.4+.
           
-We need some input data. You can start with Jena administration
-boundary in OGC GeoPackage format: `jena_boundary.gpkg
+Input data is required. We will start with Jena administration boundary
+in OGC GeoPackage format: `jena_boundary.gpkg
 <../_static/data/jena_boundary.gpkg>`__.
 
 .. _city_region_download:
@@ -57,7 +57,8 @@ boundary in OGC GeoPackage format: `jena_boundary.gpkg
    using Overpass API by GDAL library (`ogr2ogr` utility). Downloaded
    data are stored in OGC GeoPackage format (*we don't like old school
    Esri Shapefile format*). Data are reprojected to UTM zone 32N
-   (:epsg:`32632`) since we want to work with Sentinel data afterwards.
+   (:epsg:`32632`) since we want to work with Sentinel data
+   afterwards, see :doc:`03`.
    
    .. code:: bash
 
@@ -86,7 +87,7 @@ boundary in OGC GeoPackage format: `jena_boundary.gpkg
 
 .. _create-location:
    
-The initial location can be easily created from an existing data
+The initial location can be easily created from the input data
 set. After pressing :item:`New` button, see :numref:`startup0`
 (:fignote:`2a.`), the location wizard shows up.
 
@@ -99,9 +100,9 @@ description can be added.
 
 Then a method for creating new location is chosen. Usually the user
 creates a new location using EPSG code (*Select EPSG code of spatial
-reference system*) or existing data (*Read projection and datum terms
-from a georeferenced data file*). In our case we will create a new
-location based on dataset downloaded from OSM.
+reference system*) or from existing data (*Read projection and datum
+terms from a georeferenced data file*). In our case we will create a
+new location based on dataset downloaded from OSM.
 
 .. figure:: ../images/units/02/create-location-1.png
 
@@ -121,9 +122,10 @@ UTM zone 32N :epsg:`32632`).
    Check the summary.
 
 After creating a new location (:item:`Finish` button) the user can
-optionally import data used for defining the new location.
+optionally import data used for defining the new location (in our case
+*jena_boundary.gpkg*).
 
-.. figure:: ../images/units/02/create-location-4.png
+.. figure:: ../images/units/02/create-location-4.svg
    :class: small
 
    Let's import data to simplify our first steps in GRASS GIS.
@@ -143,7 +145,7 @@ location.
 Display data
 ------------
 
-GRASS GUI has been designed as simple user interface. Basically it is just
+GRASS GUI is designed as simple user interface. Basically it is just
 a GUI front-end calling GRASS commands (see :ref:`grass-modules`) in
 the background. After startup, the GUI consists of two main windows:
 *Layer Manager* and *Map Display*, see :numref:`gui-windows`.
@@ -155,9 +157,10 @@ the background. After startup, the GUI consists of two main windows:
            
    Main GUI components: Layer Manager and Map Display.
 
-First task, not surprisingly, is to display imported data. It can be
+First task, not surprisingly, is to display imported (vector) data. It can be
 done from menu :menuselection:`File --> Map display --> Add vector` or
-more easily from a main toolbar |grass-layer-vector-add| :sup:`Add vector map layer`.
+more easily from a main toolbar |grass-layer-vector-add| :sup:`Add
+vector map layer`.
 
 In next dialog we choose vector (in GRASS terminology *vector map*) to display.
 
@@ -188,8 +191,8 @@ Jena city region polygon in red color.
 
 .. figure:: ../images/units/02/d-vect-colrs.png
             
-   Change vector map layer properties to display only outline of
-   the city polygon.
+   Choose :item:`Properties` in order to change vector map layer
+   properties to display only outline of the city polygon.
 
 .. figure:: ../images/units/02/jena-boundary-wms.png
    :class: large

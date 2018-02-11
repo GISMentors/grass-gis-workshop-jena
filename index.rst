@@ -2,8 +2,6 @@
 Introduction
 ************
 
-.. warning:: Materials are currently under heavy construction!
-             
 Free and Open Source Software (FOSS)
 ====================================
 
@@ -68,7 +66,8 @@ Software used in this training materials
   geospatial raster, imagery, and vector data processing and providing
   spatial analysis.
 * `QGIS desktop <http://qgis.org>`__ (recommended version 2.18) for
-  geospatial visualization, creating hardcopy outputs, and publishing.
+  geospatial visualization, creating hardcopy outputs, and data
+  publishing.
 * `GDAL library <http://gdal.org>`__ for reading and writing various
   geospatial data.
 * `sentinelsat library <https://pypi.python.org/pypi/sentinelsat>`__
@@ -119,13 +118,13 @@ Units
 Timetable
 =========
 
-.. todo:: google spreadsheet
+`[here] <https://docs.google.com/spreadsheets/d/1im4Yx_us0m1KfKxruJ2Un7chAlh6fxudlrxjVVK9UaE/edit?usp=sharing>`__
 
 Lecturer
 ========
 
-* Martin Landa, GeoForAll Lab, Czech Technical University in Prague,
-  Czech Republic
+* `Martin Landa <http://geo.fsv.cvut.cz/gwiki/Landa>`__, GeoForAll
+  Lab, Czech Technical University in Prague, Czech Republic
 
 Materials proudly provided by `GISMentors
 <http://www.gismentors.eu>`__ training and mentoring group.

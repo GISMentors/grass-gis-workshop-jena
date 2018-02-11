@@ -4,17 +4,17 @@ Unit 03 - Data Management
 Data import
 -----------
 
-Data used by this unit is located in
-:file:`sentinel/sample` directory in `sample dataset
-<http://geo102.fsv.cvut.cz/geoforall/grass-gis-workshop-jena-2018/jena-sample-data.7z>`__.
+Data used in this unit is located in :file:`sentinel/sample` directory
+of a sample dataset (`download 7z-archive
+<http://geo102.fsv.cvut.cz/geoforall/grass-gis-workshop-jena-2018/jena-sample-data.7z>`__).
 
 
 Raster data
 ^^^^^^^^^^^
 
 Raster data is possible to import from the menu :menuselection:`File
---> Import raster data --> Common import formats`, from the main
-toolbar, or from command line using :grasscmd:`r.import` module.
+--> Import raster data --> Common import formats`, from a main
+toolbar, or from command line by :grasscmd:`r.import` module.
 
 .. figure:: ../images/units/03/import-raster-toolbar.png
 
@@ -23,7 +23,8 @@ toolbar, or from command line using :grasscmd:`r.import` module.
 Import dialog allows importing single raster file (:item:`File`) or
 multiple files from directory (:item:`Directory`). If spatial
 reference system of raster file differs from GRASS location
-(:item:`Project match`) the raster data are automatically reprojected.
+(:item:`Project match`) the raster data are automatically reprojected
+(*please forget about on-the-fly reprojection*).
 
 .. _import-raster:
 
@@ -34,8 +35,10 @@ reference system of raster file differs from GRASS location
 .. figure:: ../images/units/03/display-band4.png
    :class: large
    
-   Imported raster file is added into layer tree and displayed in map
-   window.
+   Imported raster file (Sentinel 4th band) is added into layer tree
+   and displayed in map window. Default grey color table is not
+   perfect as you can see, we will enhance color interpretation in
+   :ref:`Unit 04 <color-table>`.
 
 GRASS imports raster bands as separate raster maps. Raster maps are
 represented by regular grid. Three different data types are supported:
@@ -47,7 +50,7 @@ represented by regular grid. Three different data types are supported:
 .. _raster-metadata:
   
 Basic raster metadata can be printed by :grasscmd:`r.info` or from
-Layer Manager.
+Layer Manager contextual menu.
 
 .. figure:: ../images/units/03/raster-metadata.png
 
@@ -62,7 +65,7 @@ Vector data
 
 Dialog for importing vector data is accessible from menu
 :menuselection:`File --> Import vector data --> Common import
-formats`, from the main toolbar, or from command line using
+formats`, from a main toolbar, or from command line by
 :grasscmd:`v.import` module.
 
 .. figure:: ../images/units/03/import-vector-toolbar.png
@@ -83,12 +86,12 @@ Procedure of importing vector files is similar to raster files.
           from the input dataset using the 'location' parameter.*
 
           GRASS allows importing such file by overriding project check
-          (and you are sure that SRS of input file is really the same
+          (if you are really sure that SRS of input file is the same
           as GRASS location).
 
           .. figure:: ../images/units/03/override-projection-check.svg
 
-             Override projection check.
+             Override projection check to force import.
           
 .. figure:: ../images/units/03/display-band4-clouds.png
    :class: large
@@ -96,7 +99,7 @@ Procedure of importing vector files is similar to raster files.
    Map composition of Sentinel band and cloud mask features.
 
 Vector metadata can be printed similarly to raster from Layer Manager
-by :item:`Metadata` or by :grasscmd:`v.info` module from console.
+by :item:`Metadata` or using :grasscmd:`v.info` module from console.
 
 .. _grass-topo:
 
@@ -112,8 +115,9 @@ centroids, isles).
    Vector metadata of imported file.
 
 GRASS is a **topological GIS**. Importing vector data into GRASS also
-means converting features from simple feature model into GRASS topological
-model, see figure bellow.
+means converting features from simple feature model (points,
+linestrings, polygons, ...) into GRASS topological model, see figure
+bellow.
 
 .. figure:: ../images/units/03/grass7-topo.png
    :class: middle
@@ -122,12 +126,11 @@ model, see figure bellow.
    boundaries, centroids, areas, and isles.
           
 During this process also topological errors are checked and repaired,
-for this procedure is important :option:`snap` option of
-:grasscmd:`v.import` module.
+be awere of :param:`snap` option of :grasscmd:`v.import` module.
 
 Some topological errors is not possible to repair automatically
 without user specification, in this case the user can fix remaining
-errors using :grasscmd:`v.clean`.
+errors using :grasscmd:`v.clean` module.
 
 .. _link-external:
 
@@ -147,11 +150,11 @@ datasets of imagery data. GRASS can handle linked raster data
 similarly as native raster maps. Both from point of stability and
 accessibility.
 
-GUI dialog for linking is same as for import,
+GUI dialog for data linking is the same as for import, see
 :numref:`import-raster`. Let's create a link to 8th Sentinel band JP2
 file.
 
-From metadata it's visible than 4th band was imported into
+From metadata it is visible than 4th band was imported into
 native GRASS format, while 8th band is linked directly from original
 OpenJPEG2000 format.
 
