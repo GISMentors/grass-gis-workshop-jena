@@ -1,7 +1,7 @@
 Unit 19 - Lidar scripting
 =========================
 
-.. todo:: to be writen
+.. todo:: explain
 
 .. literalinclude:: ../_static/scripts/create-dem.py
    :language: python

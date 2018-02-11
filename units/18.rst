@@ -1,8 +1,6 @@
 Unit 18 - Lidar
 ===============
 
-.. todo:: move to unit 18?
-
 There is open Lidar data for Thuringia region available, see related
 `blog
 <https://rapidlasso.com/2017/01/09/second-german-state-goes-open-lidar/>`__. Go

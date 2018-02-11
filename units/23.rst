@@ -1,5 +1,5 @@
-Unit 23 - ST scripting tuning
-=============================
+Unit 23 - ST script tuning
+==========================
 
 .. todo:: Write some text
 
