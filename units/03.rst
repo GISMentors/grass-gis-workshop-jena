@@ -4,7 +4,10 @@ Unit 03 - Data Management
 Data import
 -----------
 
-Sample data are located in :file:`sentinel/sample`.
+Data used by this unit is located in
+:file:`sentinel/sample` directory in `sample dataset
+<http://geo102.fsv.cvut.cz/geoforall/grass-gis-workshop-jena-2018/jena-sample-data.7z>`__.
+
 
 Raster data
 ^^^^^^^^^^^
