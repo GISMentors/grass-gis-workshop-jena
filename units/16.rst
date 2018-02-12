@@ -28,10 +28,10 @@ did in :doc:`02` in the case of Jena city region.
       E98991003%2C11%2E67463202%5D%3B%28way%5B%22waterway%22%3D%22river%22%5D%3Bway%5B%22waterway\
       %22%3D%22stream%22%5D%3B%29%3B%28%2E%5F%3B%3E%3B%29%3Bout%3B%0A" lines
 
-.. note:: You can find this river streams also in sample dataset in
-   :file:`osm` folder.
-
-.. todo:: Add link
+For simplification you can find this data in sample dataset (`download
+7z-archive
+<http://geo102.fsv.cvut.cz/geoforall/grass-gis-workshop-jena-2018/jena-sample-data.7z>`__):
+:file:`osm/jena-rivers.gpkg`.
 
 .. figure:: ../images/units/16/jena-rivers.png
    :class: large
@@ -66,22 +66,22 @@ example below.
 
 .. figure:: ../images/units/16/dem-what.svg
 
-   Set seed coordinates interactively from map display.
+   Query DEM layer for height value.
 
 .. _create-mapset:
    
-.. important:: Before running :grasscmd:`r.lake` let's start organize
-   our work! Till now we used PERMANENT mapsets only. Due to our
-   ignorance we made a mess. There are input data like DEM, Jena city
-   region, cloud mask vector map, Sentinel bands, results of NDVI
-   computation and so on. We will improve data organization by
+.. important:: Before running :grasscmd:`r.lake` let's start
+   organizing our work! Till now we used PERMANENT mapsets only. Due
+   to our ignorance we made a mess :-) There is input data like DEM,
+   Jena city region, cloud mask vector map, Sentinel bands, results of
+   NDVI computation and so on. We will improve data organization by
    creating different mapsets. Let's create new mapset *flooding* in
    current location *jena-utm*. New mapset can be created by
    :grasscmd:`g.mapset` (:menuselection:`Settings --> GRASS working
    environment --> Create new mapset`).
 
 Before computation we have to set computation region, eg. based on
-*dem* raster map.
+:map:`dem` raster map.
 
 .. code-block:: bash
 

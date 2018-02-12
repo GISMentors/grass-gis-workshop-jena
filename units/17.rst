@@ -1,9 +1,9 @@
-Unit 17 - Space-temporal intro
-==============================
+Unit 17 - Spatio-temporal intro
+===============================
 
-GRASS comes in version 7 with high quality tools for spatial-temporal
-data processing, see :grasscmd:`GRASS manual <temporalintro>` for
-details.
+GRASS comes in version 7 with high quality tools for spatio-temporal
+data processing, see :grasscmd:`GRASS documentation <temporalintro>`
+for details.
 
 GRASS introduces three special datatypes that are designed to handle
 time series data:
@@ -14,13 +14,11 @@ time series data:
   map time series.
 * *Space time vector datasets* (``stvds``) for managing vector map time
   series.
-
-.. todo:: Extend?
             
-Space-time series for flooding simulation
------------------------------------------
+Spatio-temporal flooding simulation
+-----------------------------------
 
-Module :grasscmd:`r.lake` itself allows to generate only one output
+Module :grasscmd:`r.lake` itself allows to generating only one output
 raster map within one run. This limitation is surpassed by addon
 :grasscmdaddons:`r.lake.series`.
 
@@ -47,7 +45,7 @@ registered in space-time raster dataset.
 In the example above we created space-time series between water levels
 134 and 145 with step 0.1 m. Time step is 10 min. To increase
 computation speed we used three CPU cores. The result is stored in
-raster space-time dataset named *lakes*.
+raster space-time dataset named :map:`lakes`.
 
 Basic information about output dataset can be obtained by
 :grasscmd:`t.info` command.
@@ -86,16 +84,17 @@ Time topology information can be obtained by :grasscmd:`t.topology`.
 Space-time Data Querying
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-By :grasscmd:`t.list.rast` are printed raster maps within given time
-period. In the example below are printed raster maps generated in the
-first hour of flooding simulation.
+By :grasscmd:`t.list.rast` can be printed raster maps within given
+time period. In the example below are printed raster maps within the
+first hour of simulated flooding.
 
 .. code-block:: bash
 
    t.rast.list input=lakes order=start_time where="start_time < 60"
 
 Univariate statistic can be calculated by :grasscmd:`t.rast.univar`,
-in example below we compute statistics for first hour of flooding.
+in example below we compute statistics only for the first hour of
+flooding.
 
 .. code-block:: bash
 
@@ -133,10 +132,10 @@ subsequent analysis like univariate statistics:
    ag_00019@flooding|1081|1141|5.69696318836018|4.57763671875e-05|11.9405110677083|...
 
 Space-time Data Extracting
---------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Raster spatial-temporal data can be extract into new datasets using
-:grasscmd:`t.rast.extract`. In the example below will be created three
+Raster spatio-temporal data can be extract into new datasets using
+:grasscmd:`t.rast.extract`. In the example below will be create three
 new datasets for first, second and third six hours of flooding.
 
 .. code-block:: bash
@@ -145,13 +144,15 @@ new datasets for first, second and third six hours of flooding.
    t.rast.extract input=lakes where="start_time > 360 and start_time < 720" output=lakes_2
    t.rast.extract input=lakes where="start_time > 720" output=lakes_3         
 
-Aggregation can be done by :grasscmd:`t.rast.series`:
+Aggregation into single raster output can be performed by
+:grasscmd:`t.rast.series`:
 
 .. code-block:: bash
                 
    t.rast.series input=lakes_1 output=lakes_1_avg method=average
 
-Let's compute also univariate statistics by :grasscmd:`r.univar`:
+Let's print univariate statistics for generated raster output by
+:grasscmd:`r.univar`:
 
 .. code-block:: bash
 
@@ -167,10 +168,10 @@ Let's compute also univariate statistics by :grasscmd:`r.univar`:
 .. _st-animation:
       
 Space-time Data Visualization
------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Time series can be visualized by specialized tool
-:grasscmd:`g.gui.timeline`. Example:
+:grasscmd:`g.gui.timeline`. Example below.
 
 .. code-block:: bash
                 
@@ -178,14 +179,17 @@ Time series can be visualized by specialized tool
 
 .. figure:: ../images/units/17/timeline.png
 
-   Timeline tool showning three space-time datasets.
+   Timeline tool showing three space-time datasets.
    
-Simple animation can be created by :grasscmd:`g.gui.animation`
-(:menuselection:`File --> Animation tool`).
+And finally, a simple animation can be created by
+:grasscmd:`g.gui.animation` (:menuselection:`File --> Animation
+tool`), see :numref:`flooding-animation`.
 
 .. code-block:: bash
 
    g.gui.animation strds=lakes
+
+.. _flooding-animation:
 
 .. figure:: ../images/units/17/flooding-anim.gif
    :class: large

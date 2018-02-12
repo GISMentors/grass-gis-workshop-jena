@@ -4,7 +4,7 @@ Unit 15 - Reprojection
 In order to perform simple flooding simulation (see :doc:`16`) we need
 digital elevation model (DEM) for our area of interest (AOI), Jena
 city region. There are several options like global DEM datasets (SRTM,
-EU-DEM, ...), local DEMs created as product of laser scanning
+EU-DEM, ...), local DEMs created as a product of laser scanning
 techniques.
 
 In our example we will use EU-DEM global dataset provided by
@@ -18,9 +18,11 @@ can import just a subregion covering our AOI. Unfortunately
 new location for imported data and reproject data to target location
 (*jena-utm*) manually.
 
-.. note:: For simplification the downloaded data clipped larger region
-   than our AOI is available in sample dataset, check
-   :file:`eu-dem` folder for details.
+.. note:: For simplification the downloaded data clipped by larger
+   region than our AOI is available in sample dataset (`download
+   7z-archive
+   <http://geo102.fsv.cvut.cz/geoforall/grass-gis-workshop-jena-2018/jena-sample-data.7z>`__),
+   check out the :file:`eu-dem` folder.
 
    For those who are interested, sample raster file was created by
    GDAL utility :program:`gdal_translate`, see command below.
@@ -29,8 +31,6 @@ new location for imported data and reproject data to target location
 
       gdal_translate -of GTiff -projwin 11 51.5 12 50.5 -projwin_srs EPSG:4326
       eu_dem_v11_E40N30.TIF eu_dem_sample.tif
-
-.. todo:: add link to sample dataset
 
 EU-DEM dataset is provided in ETRS-89 (:epsg:`3035`). Let's start GRASS and
 create a new location based on input data (similarly as we did in
@@ -65,12 +65,12 @@ vector map --> Reproject vector map from different GRASS location`).
 
 .. tip:: In GRASS 7.4 you can easily reproject maps between different
    locations also from :item:`Data` tab in Layer Manager just by
-   copying and pasting.
+   copying and pasting them.
 
    .. figure:: ../images/units/15/data-reproject.png
 
       Easy and quick way how to reproject (copy-and-paste) raster and
-      vector map in :item:`Data` tab from Layer Manager.
+      vector maps in :item:`Data` tab from Layer Manager.
       
 Before importing DEM set computation region extent based on
 reprojected Jena city region.
@@ -82,7 +82,8 @@ reprojected Jena city region.
    
 After this step import process can be started. Launch
 :grasscmd:`r.in.gdal` (:menuselection:`File --> Import raster data -->
-Import of common raster formats`), don't forget to enable ``-r`` flag.
+Import of common raster formats`), don't forget to enable :option:`-r`
+flag.
 
 .. code-block:: bash
 
@@ -126,4 +127,4 @@ Example of reprojecting raster data using :grasscmd:`r.proj` command below.
 .. figure:: ../images/units/15/dem-3d.svg
    :class: large
 	   
-   Reprojected DEM display in 3D view.
+   Reprojected DEM displayed in 3D view.

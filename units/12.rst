@@ -188,7 +188,7 @@ All other generated maps will be removed when computation finished.
 
 .. figure:: ../images/units/12/call-ndvi-script.png
    :class: large
-	   
+   
    NDVI script in action.
 
 Sample script to download: `ndvi-v3.py <../_static/scripts/ndvi-v3.py>`__

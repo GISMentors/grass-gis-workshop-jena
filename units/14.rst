@@ -7,11 +7,10 @@ caller is represented by :pygrass-modules:`Module` class. In contrast
 to GRASS Scripting Library which defines several routines to run
 module (:grass-script:`core.run_command`,
 :grass-script:`core.read_command`, or
-:grass-script:`core.feed_command`) in PyGRASS there is one caller
+:grass-script:`core.feed_command`) in PyGRASS there is only one caller
 technique.
 
-In this part we will rewrite our simple script created in :doc:`12`
-using PyGRASS.
+We can rewrite our simple script created in :doc:`12` using PyGRASS.
 
 We start replacing all :grass-script:`core.run_command` by
 :pygrass-modules:`Module` caller, see example below.
@@ -90,7 +89,7 @@ Changed to
        ...
 
 .. note:: In PyGRASS, multiple options need to turned into a list. See
-   example below for :grasscmd:`v.rast.stats` and ``method``
+   example below for :grasscmd:`v.rast.stats` and :param:`method`
    option.
 
    .. code-block:: python
@@ -112,5 +111,3 @@ Python libraries, or approaches if you want. Either GRASS Scripting
 Library based on procedural programming techniques or PyGRASS as an
 objected-oriented approach. It's your choice. We, in the next units,
 will focus mainly on PyGRASS.
-
-.. todo:: Extend?
