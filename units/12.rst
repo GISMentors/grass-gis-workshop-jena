@@ -1,26 +1,26 @@
 Unit 12 - Script tuning
 =======================
 
-In :doc:`10` and :doc:`11` we gain basic knowledge of GRASS Scripting
-Library, we know how to run GRASS modules using different functions
+In :doc:`10` and :doc:`11` we gain basic knowledge of
+:grasscmd2:`GRASS Scripting Library <libpython/script_intro.html>`, we
+know how to run GRASS modules using different functions
 (:grass-script:`core.run_command`, :grass-script:`core.read_command`,
-and :grass-script:`core.parse_command`). We also read how to parse
+and :grass-script:`core.parse_command`). We are also able to parse
 module output in simply way. Beside :grass-script:`core` package the
-GRASS Scripting Library offers helper module for various GRASS
-operations.
+GRASS Scripting Library also offers useful functions which can
+simplify our scripts.
 
 * :grasscmd2:`db <libpython/script.html#module-script.db>` Database
-  related functions to be used in Python scripts.
+  related functions
 * :grasscmd2:`raster <libpython/script.html#module-script.raster>`
-  Raster related functions to be used in Python scripts.
+  Raster related functions
 * :grasscmd2:`raster3d <libpython/script.html#module-script.raster3d>`
-  Raster3d related functions to be used in Python scripts.
+  Raster3d related functions
 * :grasscmd2:`vector <libpython/script.html#module-script.vector>` Vector
-  related functions to be used in Python scripts.
+  related functions
 
-These modules contains useful functions which can simplify our
-scripts. In our case we could replace :grasscmd:`v.db.select` caller
-by :grass-script:`vector.vector_db_select` function. In other worlds
+In our case we could replace :grasscmd:`v.db.select` caller by
+:grass-script:`vector.vector_db_select` function. In other worlds
 replace code below
 
 .. code-block:: python
@@ -47,7 +47,8 @@ by
 There is one problem with our script, some modules
 (:grasscmd:`r.recode`, :grasscmd:`r.colors`) uses hardcoded path to
 input files. This will not work when running script on different
-computer as we know. See code below (concretely ``rules`` options).
+computer as we know. See code below (concretely :option:`rules`
+options).
 
 .. code-block:: python
 
@@ -63,7 +64,7 @@ computer as we know. See code below (concretely ``rules`` options).
 
 By GRASS Scripting Library we can define content of input file as a
 string object and transfer it to the command via standard input. This
-opetration allows :grass-script:`core.feed_command` function.
+operation is allowed by :grass-script:`core.feed_command` function.
 
 .. code-block:: python
 
@@ -87,11 +88,9 @@ opetration allows :grass-script:`core.feed_command` function.
      p2.stdin.close()
      p2.wait()
 
-First command object is created, input string written to stdin, closed
-and than command finally performed by ``wait()``.
+First a command object is created, input string written to stdin,
+closed and than the command finally performed by ``wait()``.
      
-.. todo:: add note about pyGRASS
-
 We can also define cleanup routine which removes all intermediate data
 when compution is finished.
 
@@ -99,7 +98,7 @@ when compution is finished.
 
    def cleanup():
        run_command('g.remove', flags='f', name='region_mask', type='vector')
-		
+
 User input
 ----------
 
@@ -107,7 +106,7 @@ Our script lacks user input, all the input paramaters are
 hardcoded. We have to modify our script similarly as we did for model
 :doc:`09`. Do you remember our first modification of model in :doc:`11`?
 
-We will add deleted lines back to the script.
+Let's add previously removed lines back to the script.
 
 .. code-block:: python
 
@@ -115,10 +114,10 @@ We will add deleted lines back to the script.
    #% description: NDVI model version 2
    #%end                
 
-After running a script, magic is done, and GUI dialog appears. This
+After running a script, a magic is done, and GUI dialog appears. This
 dialog was generated from few lines above. Since we defined only
 module description and no parameters, the dialog offers only global
-flags like ``--verbose`` or ``--quiet``.
+flags like :param:`--verbose` or :param:`--quiet`.
 
 .. figure:: ../images/units/12/ndvi-dialog.png
    :class: small
@@ -130,7 +129,7 @@ Let's define few parameters:
 * ``region``: vector map defining a region (required)
 * ``clouds``: vector map with cloud mask features (optional)
 * ``red``: input red channel (required)
-* ``nir``: input NIR channel (required)
+* ``nir``: input nir channel (required)
 * ``threshold``: threshold for removing small areas (optional)
 * ``basename``: basename for output maps (required)
 
@@ -142,7 +141,7 @@ Related lines can look like as below.
 
 .. figure:: ../images/units/12/ndvi-dialog-params.png
 
-   GUI dialog including user options.
+   GUI dialog including input options.
    
 In the script we have still input parameters hardcoded, eg.
 
@@ -174,7 +173,7 @@ option keys, see example below.
                operator = "not",
                output = "region_mask")
 
-The ``clouds`` option is optional, so we will perform
+The :param:`clouds` option is not mandatory, so we will perform
 :grasscmd:`v.overlay` module only when this option is given.
    
 .. literalinclude:: ../_static/scripts/ndvi-v3.py

@@ -2,7 +2,7 @@ Unit 10 - Python intro
 ======================
 
 :wikipedia-en:`Python` programming/scripting language is very popular
-in the field of GIS or a science in general. Python is also the main
+in the field of GIS and a science in general. Python is also the main
 scripting platform for Esri product (see `arcpy
 <http://pro.arcgis.com/en/pro-app/arcpy/get-started/what-is-arcpy-.htm>`__
 package). GRASS is not an exception. In reality, many GRASS modules
@@ -10,8 +10,9 @@ are simple Python scripts, eg. :grasscmd:`r.mask` (see *Source Code*
 section).
 
 GRASS Python environment includes various libraries, see
-:grasscmd2:`GRASS documentation <libpython/index.html>`. We will focus
-on three main libraries related to this workshop:
+:grasscmd2:`GRASS documentation <libpython/index.html>` for
+details. We will focus on three main libraries related to this
+workshop:
 
 * :grasscmd2:`GRASS Scripting Library <libpython/script_intro.html>`
   as entering node to Python scripting capabilities in GRASS
@@ -20,9 +21,7 @@ on three main libraries related to this workshop:
 * space-temporal :grasscmd2:`GRASS GIS Temporal Framework
   <libpython/temporal_framework.html>`
 
-.. todo:: add links to other units
-
-Let's do our first steps from safe GRASS GUI environment which we
+Let's do our first steps from "safe" GRASS GUI environment which we
 already know. Switch in Layer Manager to :item:`Python` tab.
 
 .. figure:: ../images/units/10/layer-manager-python.png
@@ -71,35 +70,35 @@ GRASS commands can be run by :grass-script:`core.run_command` function.
 .. code-block:: python
                 
    # 1.
-   grass.run_command('g.region', vector='jena_boundary', align='B04_10m')
+   grass.run_command('g.region', vector='jena_boundary', align='L2A_T32UPB_20170706T102021_B04_10m')
    # 2.
    grass.run_command('g.region', n='n+1000', s='s-1000', e='e+1000', w='w-1000')
    # 3.
    grass.run_command('r.mask', flags='i', vector='MaskFeature', overwrite=True)
    # 4.
-   grass.run_command('i.vi', red='B04_10m', output='ndvi', viname='ndvi', nir='B08_10m', overwrite=True)
+   grass.run_command('i.vi', red='L2A_T32UPB_20170706T102021_B04_10m', output='ndvi',
+                     viname='ndvi', nir='L2A_T32UPB_20170706T102021_B08_10m', overwrite=True)
    # 5.
    grass.run_command('r.univar', map='ndvi')
 
 .. note:: Function :grass-script:`core.run_command` prints return code
           of run command, ``0`` value is fine ;-)
 
-.. tip:: Python shell has its history, you can browse previsions
+.. tip:: Python shell has its history, you can browse previous
    commands by :kbd:`Alt+P`, next commands by :kbd:`Alt+N`.
 
 There is a weak point in our first script. Module :grasscmd:`r.univar`
 is run by function :grass-script:`core.run_command`. In the result
 output of this command is discarded, only return code is
-printed. That's not what we want.
+printed. That's not what we want. A solution is to run
+:grasscmd:`r.univar` by :grass-script:`core.read_command` which does
+not discard command output. Instead of return code, the output is
+returned by this function. But it is still not perfect, statistics is
+printed to standard output. It would be nice to manage command output
+as Python object, eg. a directory. To fulfill this requirement we need
+to change two issues:
 
-In this case it's desired to run :grasscmd:`r.univar` by
-:grass-script:`core.read_command` which does not discard command
-output. Instead of return code, the output is printed. But it's still
-not perfect, statistics is printed to standard output. It would be
-nice to manage command output as Python object, eg. a directory. To
-fulfill this requirement we need to change two issues:
-
-* run :grasscmd:`r.univar` with ``-g`` to enable shell script
+* run :grasscmd:`r.univar` with :param:`-g` to enable shell script
   (parse-able) output
 * use :grass-script:`core.parse_command` function which parses output
   and store result as Python directory object
@@ -128,15 +127,16 @@ At end we can display resultant NDVI raster map by calling
 Graphical Modeler and Python
 ----------------------------
 
-It's good to know that a model created in Graphical Modeler can be
+It is good to know that a model created in Graphical Modeler can be
 easily turned into Python script. Let's open the one of models created
 in :doc:`09`: `ndvi-v2.gxm <../_static/models/ndvi-v2.gxm>`__ and go
 to :item:`Python editor` tab.
 
 You can easily modify generated Python script in simple editor,
 :item:`Run` original or modified script. Script can be also saved as
-file.
+file (:item:`Save as`).
            
 .. figure:: ../images/units/10/model-python-editor.svg
-
+   :class: middle
+   
    Python editor integrated in Graphical Modeler.

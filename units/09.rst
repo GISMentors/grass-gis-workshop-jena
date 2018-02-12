@@ -1,10 +1,10 @@
 Unit 09 - Model tuning
 ======================
 
-At first let's improve our NDVI model created in :doc:`06`. This
-version operated on current computation region, it would be better to
-define region based on user input, eg. city region. Then NDVI would be
-computed only within user defined area.
+Let's improve our NDVI model created in :doc:`08`. The model operates
+in a current computation region, it would be better to define region
+based on user input, eg. by city area. Then NDVI would be computed
+only within user defined area.
 
 NDVI values range from +1.0 to -1.0. Areas of barren rock, sand, or
 snow usually show very low NDVI values (for example, 0.1 or
@@ -29,14 +29,14 @@ From GRASS perspective computation will be performed by several steps/modules:
 #. Set mask (:grasscmd:`r.mask`)
 #. Compute NDVI values (:grasscmd:`i.vi`)
 #. Reclassify NDVI values into classes (:grasscmd:`r.recode`)
-#. Set nice color table for classes raster map (:grasscmd:`r.colors`)
+#. Set nice color table for raster map classes (:grasscmd:`r.colors`)
 #. Convert raster classes into vector areas (:grasscmd:`r.to.vect`)
 #. Remove small areas (join them with adjacent areas by :grasscmd:`v.clean`)
 
 New modules can be added to the existing model in standard way by
 |grass-module-add| :sup:`Add command (GRASS module) to the model`. New
-commands are added to the end of computation workflow which is not
-desired in this case. The commands (items) can be reordered in
+commands are added to the end of a computation workflow which is not
+desired in this case. Good news: we can reorder commands (items) in
 :item:`Items` tab.
 
 .. figure:: ../images/units/09/reorder-items.png
@@ -44,9 +44,9 @@ desired in this case. The commands (items) can be reordered in
    Reorder items - commands in the model. In this case move
    :grasscmd:`v.overlay` up to the first position.
 
-Be aware of correct computation region, don't forget to align region
-bounds to input raster data (:grasscmd:`g.region` with :option:`align`
-option).
+.. note:: Be aware of correct computation region, don't forget to align region
+   bounds to input raster data (:grasscmd:`g.region` with :param:`align`
+   option).
 
 Reclassification of floating point raster maps can be done in GRASS by
 :grasscmd:`r.recode`. Here is reclassification table for our case:
@@ -57,8 +57,10 @@ Reclassification of floating point raster maps can be done in GRASS by
    0.2:0.6:2
    0.6:1:3                
 
-Beside predefined color tables :grasscmd:`r.colors` also allows using
-user-defined color table. In our case color table can be quite simple:
+Beside predefined color tables :grasscmd:`r.colors` (see
+:ref:`color-table` section) also allows to use user-defined color
+table by :param:`rules` option. In our case color table can be quite
+simple:
 
 .. code-block:: bash
 
@@ -66,18 +68,18 @@ user-defined color table. In our case color table can be quite simple:
    2 yellow
    3 green                
 
-.. tip:: Reclassification and color table is recommended to store as
-   files otherwise it can be lost when opening model in another GRASS
-   session: `reclass.txt <../_static/models/reclass.txt>`__ and
-   `colors.txt <../_static/models/colors.txt>`__
+.. tip:: Reclassification and color table is recommended to store into
+   files otherwise it can be lost when opening model next time:
+   `reclass.txt <../_static/models/reclass.txt>`__ and `colors.txt
+   <../_static/models/colors.txt>`__
          
 .. figure:: ../images/units/09/model-v2.png
 
    Extended model.
 
-Model to download: `ndvi-v2.gxm <../_static/models/ndvi-v2.gxm>`__
-(note: don't forget to fix path to reclass and colors file in
-:grasscmd:`r.recode` and :grasscmd:`r.colors`)
+Sample model to download: `ndvi-v2.gxm <../_static/models/ndvi-v2.gxm>`__
+(note: don't forget to fix path to reclass and colors file for
+:grasscmd:`r.recode` and :grasscmd:`r.colors` modules)
 
 Parameterization
 ----------------
@@ -95,26 +97,26 @@ Let's start with parametrization of module options, it's simple. We
 would like to change our model in order to provide the user ability
 to:
 
-* define own city region area (option :option:`ainput` in
+* define own city region area (option :param:`ainput` in
   :grasscmd:`v.overlay`)
-* set threshold for small areas (option :option:`threshold` in
+* set threshold for small areas (option :param:`threshold` in
   :grasscmd:`v.clean`)
 
 For each command that we want to parameterize let's open proprieties
-dialog by double-click on the item in the model. Then we find the
-option to be parameterized and enable *Parameterized in model*
+dialog by double-click on command item in the model. Then you find a
+option to be parameterized and enable :item:`Parameterized in model`
 checkbox below. That's all.
 
 .. figure:: ../images/units/09/parametrize-cmd.svg
 
-   Parametrization of :option:`ainput` option in :grasscmd:`v.overlay`
+   Parametrization of :param:`ainput` option in :grasscmd:`v.overlay`
    command.
 
 .. note:: Parameterized commands are highlighted in the model by bold
           border.
 
 After pressing |grass-execute| :sup:`Run model` the model is not run
-automatically. Instead of that a GUI dialog is open to allow user
+automatically. Instead of that a GUI dialog is shown to allow user
 defining inputs.
 
 .. figure:: ../images/units/09/model-params.png
@@ -122,10 +124,6 @@ defining inputs.
    Model is run after defining user input parameters. Parameterized
    options are organized into tabs based on the modules.
 
-Model to download: `ndvi-v3.gxm <../_static/models/ndvi-v3.gxm>`__
-
-.. todo:: Upload this model
-          
 After setting the input parameters the model can be :item:`Run`.
 
 .. tip:: Saved models can be run directly from Layer Manager
@@ -142,7 +140,8 @@ Let's test our model with various settings.
 
    NDVI classes smaller than 2000m :sup:`2` (so 20 pixel) removed.
 
-Now we can change region, eg. by buffering Jena city region.
+Now we can change region, eg. by buffering Jena city region
+(:grasscmd:`v.buffer`).
 
 .. code-block:: bash
 
@@ -151,4 +150,6 @@ Now we can change region, eg. by buffering Jena city region.
 .. figure:: ../images/units/09/ndvi-jena-5km.png
    :class: middle
    
-   NDVI vector class computed in 5km buffer around Jena city region.
+   NDVI vector classes computed in 5km buffer around Jena city region.
+
+Sample model to download: `ndvi-v3.gxm <../_static/models/ndvi-v3.gxm>`__
