@@ -1,8 +1,42 @@
 Unit 19 - Lidar scripting
 =========================
 
-.. todo:: explain
+In this unit we will recover our knowledge of PyGRASS scripting (see
+:doc:`14`). Let's create a fancy script to produce seamless DEM
+(Digital Elevation Model) from bunch of LAS/LAZ files. Why so fancy?
+We will do our work in parallel!
 
+Let's start with defining user interface. There will be one input:
+
+* :param:`directory` (line :lcode:`6`) - directory with input LAS/LAZ files
+
+and one output:
+
+* :param:`elevation` (line :lcode:`9`) - name for output elevation raster map mosaics
+
+The resolution of output DEM will be defined by :param:`resolution`
+parameter (line :lcode:`13`). And finally user will be able to control
+number of processes running in parallel by :param:`nproc` (line :lcode:`18`).
+
+Our script consists of three main functions:
+
+1. ``import_files()`` to import input LAS/LAZ files (line
+:lcode:`33`). Import process can be done in parallel by
+:pygrass-modules:`ParallelModuleQueue`, see lines :lcode:`37, 42, 56,
+57, 59`.
+
+2. ``create_dem_tiles()`` to compute DEM per tile (line :lcode:`66`)
+using :grasscmd:`v.surf.rst`. We need to compute DEMs with reasonable
+overlap in order to create seamless mosaics, see
+:lcode:`72-75`. Tiles can be processed in parallel too, see line
+:lcode:`81`.
+
+3. ``patch_tiles()`` to patch DEM tiles together by
+:grasscmd:`r.series`, see :lcode:`88`. In overlaps cell values will be
+computed as avarage, it is a main reason why we do not use
+:grasscmd:`r.patch`.
+  
 .. literalinclude:: ../_static/scripts/create-dem.py
    :language: python
    :linenos:
+   :emphasize-lines: 6, 9, 13, 18, 33, 37, 42, 56, 57, 59, 66, 72-75, 81, 88
