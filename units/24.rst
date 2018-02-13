@@ -39,9 +39,10 @@ EPSG code of spatial reference system*).
    Enter EPSG code.
 
 Enter a new GRASS session (PERMANENT mapset) and install
-:grasscmdaddons:`r.modis` addons extension for downloading and
-importing MODIS data (note that you have to install also `pyMODIS
-Python Library <http://www.pymodis.org/>`__).
+:grasscmdaddons:`r.modis` addons extension (more about installing
+addons in :ref:`Unit 17 <grass-addons>`) for downloading and importing
+MODIS data (note that you have to install also `pyMODIS Python Library
+<http://www.pymodis.org/>`__).
 
 .. code-block:: bash
 
@@ -55,6 +56,14 @@ GRASS MODIS addon consists of two modules:
 
 Let's download desired tiles (h18v03 and h18v04) for year 2017. We are
 interested about LST products (both Aqua and Terra satellites).
+
+.. note:: Already downloaded MODIS can be found in sample dataset
+   (`download 7z-archive
+   <http://geo102.fsv.cvut.cz/geoforall/grass-gis-workshop-jena-2018/jena-sample-data.7z>`__)
+   in :file:`modis/h18v03_04` folder. Or alternatively you can use
+   GRASS location with imported data
+   (:file:`grassdata/germany-modis.tar.gz`) and continue with
+   :ref:`LST computation <modis-lst>`.
   
 .. code-block:: bash
 
@@ -80,8 +89,6 @@ Then we can import data including reprojection into our location.
    r.modis.import -mw files=h18v03_04/listfileMYD11A2.006.txt \
    spectral='( 1 0 0 0 1 0 0 0 0 0 0 0 )' outfile=h18v03_04/tlist-myd.txt
 
-.. todo:: Explain spectral
-
 If ``-m`` flag is given, the import tool creates mosaics from tiles
 automatically, see :numref:`modis-mosaics`.
 
@@ -99,11 +106,11 @@ LTS
 
 In this section we will perform **Land Surface Temperature** (LST)
 analysis in Germany region. At first we will import layer with Germany
-administrative border. This data can be found in sample datasets:
+administrative border. This data can be found in sample datasets
+(`download 7z-archive
+<http://geo102.fsv.cvut.cz/geoforall/grass-gis-workshop-jena-2018/jena-sample-data.7z>`__):
 :file:`osm/germany_boundary.gpkg`.
 
-.. todo:: add link
-          
 .. note:: Administrative border of Germany has been downloaded from
    OSM database.
           
@@ -133,7 +140,7 @@ contains national border represented by linestring, see
 can be set only from areal features (polygons). We need to polygonize
 input data. This will be performed by two GRASS operations:
 
-* change line border from *lines* to *boundaries* by :grasscmd:`v.type`
+* change line border to *boundary* by :grasscmd:`v.type`
   (in GRASS topological model, an area is composition of boundaries
   and centroid, see :ref:`Unit 03 <grass-topo>`)
 * add centroid by :grasscmd:`v.centroids`
@@ -153,8 +160,8 @@ input data. This will be performed by two GRASS operations:
 
 Now we can create a desired mask (:grasscmd:`r.mask`). Don't forget
 that a mask is created in the current computation region. First you
-set computation extent based on Germany and than align computation
-grid to input data by :grasscmd:`g.region`.
+set computation extent based on Germany vector map and than align
+computation grid to input data by :grasscmd:`g.region`.
 
 .. code-block:: bash
 
@@ -188,7 +195,7 @@ Conversion to Celsium scale can be done by :grasscmd:`r.mapcalc` (see
 suitable to replace zero values with no-data value (NULL values in
 GRASS terminology).
 
-Example (replace *tile* with real map name):
+Example (replace :map:`tile` with real map name):
    
 .. code-block:: bash
                 

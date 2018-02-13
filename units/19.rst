@@ -33,7 +33,7 @@ overlap in order to create seamless mosaics, see
 
 3. ``patch_tiles()`` to patch DEM tiles together by
 :grasscmd:`r.series`, see :lcode:`88`. In overlaps cell values will be
-computed as avarage, it is a main reason why we do not use
+computed as average, it is a main reason why we do not use
 :grasscmd:`r.patch`.
   
 .. literalinclude:: ../_static/scripts/create-dem.py

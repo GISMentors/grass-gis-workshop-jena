@@ -1,15 +1,16 @@
 Unit 25 - MODIS ST
 ==================
 
-In this section we will perform time-series based LST reconstruction
-(see :ref:`Unit 24 <modis-lst>`). As we already know GRASS enables
+In this unit we will perform time-series based LST reconstruction
+based on :ref:`Unit 24 <modis-lst>`. As we already know GRASS enables
 time-series data handling thanks to :grasscmd:`temporal data
 processing framework <temporalintro>`.
 
 In :doc:`24` we have :ref:`imported <modis-import>` MODIS data into
 GRASS by :grasscmdaddons:`r.modis.import`. The command was called with
-``-w`` flag and ``outfile`` parameter to generate special file which
-can be later used for creating space-time raster dataset (strds).
+:param:`-w` flag and :param:`outfile` parameter to generate special
+file which can be later used for creating space-time raster dataset
+(strds).
 
 Creation of space time dataset including basic operations is explained
 in :doc:`17`. Here we just apply our knowledge on MODIS dataset.
@@ -30,7 +31,8 @@ than for Terra data.
    t.register input=modis file=h18v03_04/tlist-mod.txt
    t.register input=modis file=h18v03_04/tlist-myd.txt
 
-Let's check basic metedata about created dataset:
+Let's check basic metedata about created dataset by
+:grasscmd:`t.info`.
 
 .. code-block:: bash
 
@@ -47,8 +49,8 @@ Let's check basic metedata about created dataset:
 .. _t-register-file:
    
 .. note:: We are using composed product from the daily 1-kilometer LST
-   product (MOD11A1/MYD11A1) and stored on a 1-km Sinusoidal grid as
-   the average values of clear-sky LSTs during an 8-day period.
+   product (MOD11A1/MYD11A1) stored on a 1-km Sinusoidal grid as the
+   average values of clear-sky LSTs during an 8-day period.
 
    ::
       
@@ -66,7 +68,7 @@ For querying space time raster dataset is designed
    where="start_time > '2017-03-01' and start_time < '2017-04-01'"
 
 Univariate statistics can be computed by :grasscmd:`t.rast.univar`
-(note that such commands are running in the current computation region
+(note that the command is running in the current computation region
 similarly as :grasscmd:`r.univar` does).
 
 .. code-block:: bash
@@ -92,10 +94,10 @@ registered in input space time dataset.
    t.rast.mapcalc input=modis output=modis_c nproc=3 basename=c \
    expression="tile_c = if(modis != 0, modis * 0.02 - 273.15, null())"
                 
-The command will create new space time raster dataset with raster maps
-in Celsius scale. Since new raster map will be created, the command
-requires to define ``basename`` for them. Note that new raster
-maps will be produced in current computation region with mask
+The command will create a new space time raster dataset with raster
+maps in Celsius scale. Since new raster map will be created, the
+command requires to define :param:`basename` for them. Note that new
+raster maps will be produced in current computation region with mask
 respected.
 
 .. code-block:: bash

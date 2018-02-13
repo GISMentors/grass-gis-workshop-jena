@@ -1,8 +1,6 @@
 Unit 26 - MODIS ST scripting
 ============================
 
-.. todo:: move to modis section
-
 .. todo:: to be writen
 
 .. literalinclude:: ../_static/scripts/modis-date-stats.py

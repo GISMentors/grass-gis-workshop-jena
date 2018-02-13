@@ -22,15 +22,15 @@
 #%end
 #%option G_OPT_STRDS_INPUT
 #% key: b4
-#% description: Name of the input 4th band space time raster dataset
+#% description: Name of input 4th band space time raster dataset
 #%end
 #%option G_OPT_STRDS_INPUT
 #% key: b8
-#% description: Name of the input 4th band space time raster dataset
+#% description: Name of input 8th band space time raster dataset
 #%end
 #%option G_OPT_STRDS_INPUT
 #% key: clouds
-#% description: Name of the input clouds space time raster dataset
+#% description: Name of input clouds space time raster dataset
 #%end
 #%option G_OPT_F_OUTPUT
 #%end

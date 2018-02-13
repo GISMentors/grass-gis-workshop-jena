@@ -1,11 +1,25 @@
 Unit 23 - ST script tuning
 ==========================
 
-.. todo:: Write some text
+Let's improve script created in :doc:`22` by processing Sentinel
+scenes in parallel. The paralelization is done by
+:pygrass-modules:`ParallelModuleQueue`, see line :lcode:`237`
+similarly to :doc:`19`.
 
-:pygrass-modules:`ParallelModuleQueue`
-:pygrass-modules:`MultiModule`		 
+New feature of PyGRASS library is introduced on line :lcode:`166`. By
+:pygrass-modules:`MultiModule` you can define list of modules which
+will work as separated units not influenced by other processes running
+parallel. By ``set_temp_region`` we ensure that computation region
+settings will not influenced by other processes running in parallel.
+
+New script option :param:`ncproc` on line :lcode:`48` enables
+controlling number of processes running in parallel.
 
 .. literalinclude:: ../_static/scripts/ndvi-tgrass-v2.py
    :language: python
    :linenos:
+   :emphasize-lines: 48, 166, 237
+
+Sample script to download: `ndvi-tgrass-v2.py
+<../_static/scripts/ndvi-tgrass-v2.py>`__
+                     
