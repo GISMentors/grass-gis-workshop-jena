@@ -53,7 +53,7 @@ class ModisV2(Process):
         Module('g.region', raster='c_001')
         try:
             ret = Module('t.rast.what',
-                         stdout_=PIPE
+                         stdout_=PIPE,
                          strds='modis_c@PERMANENT',
                          coordinates=request.inputs['coords'][0].data,
                          sep=',',
@@ -88,11 +88,9 @@ class ModisV2(Process):
                     
         stats['mean'] = stats['sum'] / stats['count']
         
-        outstr = ''
-        outstr += 'Min: {0:.1f};'.format(float(stats['min']))
-        outstr += 'Max: {0:.1f};'.format(float(stats['max']))
-        outstr += 'Mean: {0:.1f}'.format(float(stats['mean']))
-
+        outstr = 'Min: {0:.1f};Max: {1:.1f};Mean: {2:.1f}'.format(
+            float(stats['min']), float(stats['max']), float(stats['mean'])
+        )
         response.outputs['stats'].data = outstr
 
         return response

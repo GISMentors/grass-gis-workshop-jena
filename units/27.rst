@@ -1,38 +1,88 @@
 Unit 27 - PyWPS intro
 =====================
 
-.. todo::
+.. warning:: In construction!
+             
+`PyWPS <http://pywps.org>`__ is a server side implementation of the
+`OGC Web Processing Service
+<http://www.opengeospatial.org/standards/wps>`__ (OGC WPS) standard,
+using the Python programming language.
 
-   * pywps about
-   * process v1 - date -> stats
+**OGC Web Processing Service** standard provides rules for
+standardizing how inputs and outputs (requests and responses) for
+geospatial processing services. The standard also defines how a client
+can request the execution of a process, and how the output from the
+process is handled. It defines an interface that facilitates the
+publishing of geospatial processes and clients discovery of and
+binding to those processes. The data required by the WPS can be
+delivered across a network or they can be available at the
+server. (source: `PyWPS documentation
+<http://pywps.readthedocs.io/en/master/wps.html>`__)
 
-Download `PyWPS demo <https://github.com/geopython/pywps-flask>`: `master.zip <https://github.com/geopython/pywps-flask/archive/master.zip>`
+In this unit we will demonstrate how to write your own WPS
+processes. Our processes will be tested in simple environment of
+`PyWPS demo <https://github.com/geopython/pywps-flask>`__. `Download
+<https://github.com/geopython/pywps-flask/archive/master.zip>`__ the
+demo and extract into your working directory.
 
-Install PyWPS and Flask dependency
+Then install PyWPS and Flask dependency
 
-.. code-block: bash
+.. code-block:: bash
 
    sudo pip install pywps flask
 
-Let's try to start PyWPS demo server
+Go to :file:`pywps-flask` directory and try to start your PyWPS demo
+server
 
 .. code-block:: bash
 
    python ./demo.py
 
 
-and go to http://127.0.0.1:5000/ to see all available processes. Show
-process description for example for *say_hello* process. Try to run
-the process.
+Then go to http://127.0.0.1:5000/ in order to see all available demo
+processes. Let's try to show process description for selected process,
+eg. *say_hello* process. Try to run this process.
 
 http://localhost:5000/wps?request=Execute&service=WPS&identifier=say_hello&version=1.0.0&datainputs=name=Martin
 
+You should get similar response as below.
+
 .. code-block:: xml
 
-   <wps:LiteralData dataType="urn:ogc:def:dataType:OGC:1.1:string" uom="urn:ogc:def:uom:OGC:1.0:unity">Hello Martin</wps:LiteralData>
-                
+   <wps:LiteralData dataType="urn:ogc:def:dataType:OGC:1.1:string" uom="urn:ogc:def:uom:OGC:1.0:unity">
+   Hello Martin
+   </wps:LiteralData>
+
+Well, we have working demo, so let's continue with creating our first
+process.
+
+Design own process
+------------------
+
 Go to :file:`pywps` directory and put your first process into
-:file:`processes`. Then activate the process in :file:`demo.py`.
+:file:`processes` (you can take :file:`grassbuffer.py` as
+template). Example of process below is based on script created in
+:doc:`26`. Let's focus on important parts.
+
+Process itself is defined as a Python class, :class:`ModisV1` in this
+case (line :lcode:`7`). In class constructor you define input (lines
+:lcode:`9` and :lcode:`11`) and output parameters (line
+:lcode:`13`). Every process has its identifier (line :lcode:`18`),
+title and abstract. The process will operate in GRASS location, it is
+defined on line :lcode:`28`. PyWPS creates in this location for each
+job (executed process by client) temporary mapset which is deleted
+when process is finished. Process body is always implemented as
+``_handler()`` method, see line :lcode:`38`. Resultant statistics is
+stored to response output as simple string on line :lcode:`78`.
+
+.. literalinclude:: ../_static/scripts/modis_v1.py
+   :language: python
+   :linenos:
+   :emphasize-lines: 7, 9, 11, 13, 18, 28, 38, 78
+                     
+Then we have to activate the process in :file:`demo.py` (which
+implements PyWPS demo server). Assuming that you named file with
+process as :file:`modis_v1.py`.
 
 .. code-block:: python
 
@@ -45,42 +95,42 @@ Go to :file:`pywps` directory and put your first process into
     ModisV1(),
    ]
 
-After starting demo PyWSP server
+Stop running demo PyWPS server by :kbd:`Ctrl+C` and start again.
 
 .. code-block:: bash
 
+                
    python ./demo.py
 
-go to http://127.0.0.1:5000/ and check your MODIS process. You should
-see your process in the list. Click on ``DescribeProcess`` to check
-input and outputs parameters description.
+you should see your ``modis-v1`` process in the list. Click on
+``DescribeProcess`` to check input and outputs parameters description.
 
-.. figure:: ../images/units/27/modis-v1.png
+.. figure:: ../images/units/27/modis-v1.svg
 
-   Process modis-v1 available in PyWPS demo server.
+   Process modis-v1 available on PyWPS demo server.
 
-Now we need to implement the process itself, ...
+.. important:: In order to use GRASS GIS functionality check PyWPS
+   configuration. Go to :file:`pywps.cfg` and set correct GRASS
+   installation directory, eg.
 
-.. literalinclude:: ../_static/scripts/modis_v1.py
-   :language: python
-   :linenos:
+   .. code-block:: bash
+                   
+      gisbase=/usr/lib/grass-7.4.0
 
-In order to use GRASS GIS functionality we need to change settings in
-``grass`` section of PyWPS configuration. Go to :file:`pywps.cfg` and
-set correct GRASS installation dir.
+Now you can finally execute your first WPS process!
 
-.. code-block:: bash
-
-   gisbase=/usr/local/lib/grass-7.4.0
-
-.. todo:: check
-          
 http://localhost:5000/wps?request=Execute&service=WPS&identifier=modis-v1&version=1.0.0&datainputs=start=2017-03-01;end=2017-04-01
+
+Example of response:
 
 .. code-block:: python
 
-   <wps:LiteralData dataType="urn:ogc:def:dataType:OGC:1.1:string">Min: -5.4;Max: 13.8;Mean: 8.0</wps:LiteralData>
+   <wps:LiteralData dataType="urn:ogc:def:dataType:OGC:1.1:string">
+   Min: -5.4;Max: 13.8;Mean: 8.0
+   </wps:LiteralData>
 
-.. note:: Try to rewrite process in order to return JSON instead of string.
-          
-.. tip:: When something goes wrong, check :file:`logs/pywps.log` for details.
+.. tip:: When something goes wrong, check :file:`logs/pywps.log` for
+   details.
+
+.. note:: Try to rewrite process in order to return something more
+          usable than string, eg. :wikipedia-en:`JSON`.

@@ -36,6 +36,9 @@ class ModisV1(Process):
             raise Exception("Only year 2017 allowed")
 
     def _handler(self, request, response):
+        from subprocess import PIPE
+
+        import grass.script as gs
         from grass.pygrass.modules import Module
         from grass.exceptions import CalledModuleError
         
@@ -62,16 +65,16 @@ class ModisV1(Process):
         except CalledModuleError:
             raise Exception('Unable to compute statistics')
 
-        stats = Module('r.univar',
-                       flags='g',
-                       map=output
+        ret = Module('r.univar',
+                     flags='g',
+                     map=output,
+                     stdout_=PIPE
         )
-
-        outstr = ''
-        outstr += 'Min: {0:.1f};'.format(float(stats['min']))
-        outstr += 'Max: {0:.1f};'.format(float(stats['max']))
-        outstr += 'Mean: {0:.1f}'.format(float(stats['mean']))
-
+        stats = gs.parse_key_val(ret.outputs.stdout)
+        
+        outstr = 'Min: {0:.1f};Max: {1:.1f};Mean: {2:.1f}'.format(
+            float(stats['min']), float(stats['max']), float(stats['mean'])
+        )
         response.outputs['stats'].data = outstr
 
         return response

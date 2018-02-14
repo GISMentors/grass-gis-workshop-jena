@@ -77,11 +77,10 @@ class ModisV3(Process):
         )
 
         stats = gs.parse_key_val(ret.outputs.stdout)
-        outstr = ''
-        outstr += 'Min: {0:.1f};'.format(float(stats['min']))
-        outstr += 'Max: {0:.1f};'.format(float(stats['max']))
-        outstr += 'Mean: {0:.1f}'.format(float(stats['mean']))
 
+        outstr = 'Min: {0:.1f};Max: {1:.1f};Mean: {2:.1f}'.format(
+            float(stats['min']), float(stats['max']), float(stats['mean'])
+        )
         response.outputs['stats'].data = outstr
 
         return response
