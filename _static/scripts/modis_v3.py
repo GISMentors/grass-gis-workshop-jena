@@ -38,7 +38,10 @@ class ModisV3(Process):
             raise Exception("Only year 2017 allowed")
 
     def _handler(self, request, response):
+        from subprocess import PIPE
+
         import grass.script as gs
+        from grass.pygrass.modules import Module
         from grass.exceptions import CalledModuleError
         
         start = request.inputs['start'][0].data
@@ -51,27 +54,29 @@ class ModisV3(Process):
         # be silent
         os.environ['GRASS_VERBOSE'] = '0'
 
-        gs.run_command('v.import',
-                       input=request.inputs['region'][0].file,
-                       output='poly')
-        gs.run_command('g.region', vector='poly', align='c_001')
-        gs.run_command('r.mask', vector='poly')
+        Module('v.import',
+               input=request.inputs['region'][0].file,
+               output='poly')
+        Module('g.region', vector='poly', align='c_001')
+        Module('r.mask', vector='poly')
         try:
-            gs.run_command('t.rast.series',
-                           input='modis_c@PERMANENT',
-                           output=output,
-                           method='average',
-                           where="start_time > '{start}' and start_time < '{end}'".format(
-                               start=start, end=end
+            Module('t.rast.series',
+                   input='modis_c@PERMANENT',
+                   output=output,
+                   method='average',
+                   where="start_time > '{start}' and start_time < '{end}'".format(
+                       start=start, end=end
             ))
         except CalledModuleError:
             raise Exception('Unable to compute statistics')
 
-        stats = gs.parse_command('r.univar',
-                                 flags='g',
-                                 map=output
+        ret = Module('r.univar',
+                     flags='g',
+                     map=output,
+                     stdout_=PIPE
         )
-        
+
+        stats = gs.parse_key_val(ret.outputs.stdout)
         outstr = ''
         outstr += 'Min: {0:.1f};'.format(float(stats['min']))
         outstr += 'Max: {0:.1f};'.format(float(stats['max']))

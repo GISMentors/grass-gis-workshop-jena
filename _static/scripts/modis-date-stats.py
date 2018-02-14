@@ -22,8 +22,10 @@ import os
 import sys
 import atexit
 from datetime import datetime
+from subprocess import PIPE
 
 import grass.script as gs
+from grass.pygrass.modules import Module
 from grass.exceptions import CalledModuleError
     
 def check_date(date_str):
@@ -33,7 +35,7 @@ def check_date(date_str):
 
 def cleanup():
     try:
-        gs.run_command('g.remove', flags='f', type='raster', name=output)
+        Module('g.remove', flags='f', type='raster', name=output)
     except CalledModuleError:
         pass
     
@@ -45,20 +47,22 @@ def main():
     os.environ['GRASS_VERBOSE'] = '0'
     
     try:
-        gs.run_command('t.rast.series',
-                       input=options['input'],
-                       output=output,
-                       method='average',
-                       where="start_time > '{start}' and start_time < '{end}'".format(
-                           start=options['start'], end=options['end']
+        Module('t.rast.series',
+               input=options['input'],
+               output=output,
+               method='average',
+               where="start_time > '{start}' and start_time < '{end}'".format(
+                   start=options['start'], end=options['end']
         ))
     except CalledModuleError:
         gs.fatal('Unable to compute statistics')
         
-    stats = gs.parse_command('r.univar',
-                             flags='g',
-                             map=output
+    ret = Module('r.univar',
+                 flags='g',
+                 map=output,
+                 stdout_=PIPE
     )
+    stats = gs.parse_key_val(ret.outputs.stdout)
     print('Min: {0:.1f}'.format(float(stats['min'])))
     print('Max: {0:.1f}'.format(float(stats['max'])))
     print('Mean: {0:.1f}'.format(float(stats['mean'])))

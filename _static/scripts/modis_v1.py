@@ -36,7 +36,7 @@ class ModisV1(Process):
             raise Exception("Only year 2017 allowed")
 
     def _handler(self, request, response):
-        import grass.script as gs
+        from grass.pygrass.modules import Module
         from grass.exceptions import CalledModuleError
         
         start = request.inputs['start'][0].data
@@ -50,21 +50,21 @@ class ModisV1(Process):
         os.environ['GRASS_VERBOSE'] = '0'
 
         # need to set computation region (would be nice g.region strds or t.region)
-        gs.run_command('g.region', raster='c_001')
+        Module('g.region', raster='c_001')
         try:
-            gs.run_command('t.rast.series',
-                           input='modis_c@PERMANENT',
-                           output=output,
-                           method='average',
-                           where="start_time > '{start}' and start_time < '{end}'".format(
-                               start=start, end=end
+            Module('t.rast.series',
+                   input='modis_c@PERMANENT',
+                   output=output,
+                   method='average',
+                   where="start_time > '{start}' and start_time < '{end}'".format(
+                       start=start, end=end
             ))
         except CalledModuleError:
             raise Exception('Unable to compute statistics')
 
-        stats = gs.parse_command('r.univar',
-                                 flags='g',
-                                 map=output
+        stats = Module('r.univar',
+                       flags='g',
+                       map=output
         )
 
         outstr = ''

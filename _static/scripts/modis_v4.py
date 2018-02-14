@@ -39,6 +39,8 @@ class ModisV4(Process):
             raise Exception("Only year 2017 allowed")
 
     def _handler(self, request, response):
+        from subprocess import PIPE
+        
         import grass.script as gs
         from grass.exceptions import CalledModuleError
         
@@ -52,53 +54,52 @@ class ModisV4(Process):
         # be silent
         os.environ['GRASS_VERBOSE'] = '0'
 
-        gs.run_command('v.import',
-                       input=request.inputs['region'][0].file,
-                       output='poly')
-        gs.run_command('g.region', vector='poly', align='c_001')
-        gs.run_command('r.mask', vector='poly')
+        Module('v.import',
+               input=request.inputs['region'][0].file,
+               output='poly')
+        Module('g.region', vector='poly', align='c_001')
+        Module('r.mask', vector='poly')
         try:
-            gs.run_command('t.rast.series',
-                           input='modis_c@PERMANENT',
-                           output=output,
-                           method='average',
-                           where="start_time > '{start}' and start_time < '{end}'".format(
-                               start=start, end=end
+            Module('t.rast.series',
+                   input='modis_c@PERMANENT',
+                   output=output,
+                   method='average',
+                   where="start_time > '{start}' and start_time < '{end}'".format(
+                       start=start, end=end
             ))
         except CalledModuleError:
             raise Exception('Unable to compute statistics')
 
-        stats = gs.parse_command('r.univar',
-                                 flags='ge',
-                                 map=output
+        ret = Module('r.univar',
+                     flags='ge',
+                     map=output,
+                     stdout_=PIPE
         )
-
-        p1 = gs.feed_command("r.recode",
-                          overwrite = True,
-                          input = output,
-                          output = output + '_zones',
-                          rules = "-")
-        p1.stdin.write("""{min}:{first}:1
+        stats = gs.parse_val_key(ret.outputs.stdout)
+        
+        Module("r.recode",
+               input = output,
+               output = output + '_zones',
+               rules = "-",
+               stdin_ = """{min}:{first}:1
 {first}:{median}:2
 {median}:{third}:3
         {third}:{max}:4""".format(
             min=stats['min'], first=stats['first_quartile'],
             median=stats['median'], third=stats['third_quartile'],
-            max=stats['max']))
-        p1.stdin.close()
-        p1.wait()
+            max=stats['max'])
+        )
 
-        gs.run_command("r.to.vect",
-                       flags = 'sv',
-                       overwrite = True,
-                       input = output + '_zones',
-                       output = output + '_zones',
-                       type = "area")
+        Module("r.to.vect",
+               flags = 'sv',
+               input = output + '_zones',
+               output = output + '_zones',
+               type = "area")
         
-        gs.run_command('v.out.ogr',
-                       input=output + '_zones',
-                       output='zones.gml',
-                       format='GML')
+        Module('v.out.ogr',
+               input=output + '_zones',
+               output='zones.gml',
+               format='GML')
 
         response.outputs['zones'].file = 'zones.gml'
 

@@ -38,7 +38,7 @@ class ModisV2(Process):
             raise Exception("Only year 2017 allowed")
 
     def _handler(self, request, response):
-        import grass.script as gs
+        from subprocess import PIPE
         from grass.exceptions import CalledModuleError
         
         start = request.inputs['start'][0].data
@@ -50,14 +50,15 @@ class ModisV2(Process):
         os.environ['GRASS_VERBOSE'] = '0'
 
         # need to set computation region (would be nice g.region strds or t.region)
-        gs.run_command('g.region', raster='c_001')
+        Module('g.region', raster='c_001')
         try:
-            out = gs.read_command('t.rast.what',
-                                  strds='modis_c@PERMANENT',
-                                  coordinates=request.inputs['coords'][0].data,
-                                  sep=',',
-                                  where="start_time > '{start}' and start_time < '{end}'".format(
-                                      start=start, end=end
+            ret = Module('t.rast.what',
+                         stdout_=PIPE
+                         strds='modis_c@PERMANENT',
+                         coordinates=request.inputs['coords'][0].data,
+                         sep=',',
+                         where="start_time > '{start}' and start_time < '{end}'".format(
+                             start=start, end=end
             ))
         except CalledModuleError:
             raise Exception('Unable to compute statistics')
@@ -70,7 +71,7 @@ class ModisV2(Process):
             'count' : 0,
         }
         count = 0
-        for line in out.splitlines():
+        for line in ret.outputs.stdout.splitlines():
             items = line.split(',')
             if items[-1] == '*': # no data
                 continue
