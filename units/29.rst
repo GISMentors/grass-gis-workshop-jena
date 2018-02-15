@@ -1,15 +1,32 @@
-Unit 29 - PyWPS tuning 2
-========================
+Unit 29 - PyWPS LST region stats
+================================
 
-.. todo::
-
-   * pywps about
-   * process v3 - region, startdate,enddate -> stats
+The third version of our process will return LST statistics for region
+in Germany defined by input vector data. Input region is imported by
+:grasscmd:`v.import` (line :lcode:`60`), resultant statistics is
+computed by :grasscmd:`t.rast.series` (line :lcode:`66`) and
+:grasscmd:`r.univar` (line :lcode:`76`).
 
 .. literalinclude:: ../_static/scripts/modis_v3.py
    :language: python
    :linenos:
-     
-Copy :file:`jena-boundary.gpkg` to :file:`pywps-flask/static/data`.
+   :emphasize-lines: 10, 60, 66, 76
+                     
+Sample process to download: `modis_v3.py
+<../_static/scripts/modis_v3.py>`__
+
+Do not forget to import process as done in :ref:`Unit 27
+<process-import>` and restart demo PyWPS server.
+
+Copy :file:`jena-boundary.gpkg` to :file:`pywps-flask/static/data` and
+execute the process.
 
 http://localhost:5000/wps?request=Execute&service=WPS&identifier=modis-v3&version=1.0.0&datainputs=start=2017-03-01;end=2017-04-01;region=@xlink:href=http://localhost:5000/static/data/jena_boundary.gpkg
+
+Possible response.
+
+.. code-block:: xml
+
+   <wps:ComplexData mimeType="application/json">
+   {"min": "7.70250000000003", "max": "10.6513333333334", "mean": "9.14346666666669", ...}
+   </wps:ComplexData>

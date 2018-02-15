@@ -65,22 +65,26 @@ template). Example of process below is based on the script created in
 Process itself is defined as a Python class, :class:`ModisV1` in this
 case (line :lcode:`7`). In class constructor you define input (lines
 :lcode:`9` and :lcode:`11`) and output parameters (line
-:lcode:`13`). Every process has its identifier (line :lcode:`18`),
-title and abstract. The process will operate in GRASS location, it is
-defined on line :lcode:`28`. For each job (executed process by a
-client) PyWPS creates in this location a temporary mapset which is
-deleted when process is finished. Process body is implemented as
-``_handler()`` method, see line :lcode:`38`. Resultant statistics is
-stored to response output as a simple string on line :lcode:`78`.
+:lcode:`14`). Every process has its identifier (line :lcode:`20`),
+title and abstract. The process will operate in GRASS location defined
+on line :lcode:`30`. On line :lcode:`61` is assumed that space time
+LST dataset is located in PERMANENT, see :doc:`25`. For each job
+(executed process by a client) PyWPS creates in this location a
+temporary mapset which is deleted when process is finished. Process
+body is implemented as ``_handler()`` method, see line
+:lcode:`40`. Resultant statistics is stored to response output as a
+simple string on line :lcode:`80`.
 
 .. literalinclude:: ../_static/scripts/modis_v1.py
    :language: python
    :linenos:
-   :emphasize-lines: 7, 9, 11, 13, 18, 28, 38, 78
+   :emphasize-lines: 7, 9, 11, 14, 20, 30, 40, 61, 80
 
 Sample process to download: `modis_v1.py
 <../_static/scripts/modis_v1.py>`__
-                     
+
+.. _process-import:
+
 We have to activate the process in :file:`demo.py` (which implements
 PyWPS demo server). Assuming that you named file with process as
 :file:`modis_v1.py`.

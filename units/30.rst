@@ -1,19 +1,33 @@
-Unit 30 - PyWPS tuning 3
-========================
+Unit 30 - PyWPS LST region zones
+================================
 
-.. todo::
-
-   * pywps about
-   * process v3 - region,startdate,enddate -> zones
+The last (fourth) version of the process will return for input region
+and dates, LST zones in vector format (:wikipedia-en:`GML`), see line
+:lcode:`17`.  Zones are defined on line :lcode:`83` by
+:grasscmd:`r.recode`. Raster classes are convert to vector by
+:grasscmd:`r.to.vect` on line :lcode:`96`. Finally vector classes are
+exported into GML format on line :lcode:`102` by
+:grasscmd:`v.out.ogr`.
 
 .. literalinclude:: ../_static/scripts/modis_v4.py
    :language: python
    :linenos:
-     
+   :emphasize-lines: 17, 83, 96, 102
+                     
+Do not forget to import process as done in :ref:`Unit 27
+<process-import>` and restart demo PyWPS server.
+
+Execute process:
+      
 http://localhost:5000/wps?request=Execute&service=WPS&identifier=modis-v4&version=1.0.0&datainputs=start=2017-03-01;end=2017-04-01;region=@xlink:href=http://localhost:5000/static/data/jena_boundary.gpkg
 
-vs.
+Compare with (output return as reference):
 
 http://localhost:5000/wps?request=Execute&service=WPS&identifier=modis-v4&version=1.0.0&datainputs=start=2017-03-01;end=2017-04-01;region=@xlink:href=http://localhost:5000/static/data/jena_boundary.gpkg&responsedocument=zones=@asReference=true
 
-.. todo:: reference not working
+.. figure:: ../images/units/30/qgis-result.png
+   :class: large
+           
+   Example of WPS process consumption in QGIS using WPS client plugin.
+
+**It is the end (of the workshop), enjoy GRASS GIS, PyWPS (and your real life)! :-)**

@@ -1,19 +1,24 @@
 import os
+import json
 
-from pywps import Process, LiteralInput, LiteralOutput, ComplexInput, Format
+from pywps import Process, LiteralInput, LiteralOutput, ComplexInput, ComplexOutput, Format
 
 __author__ = 'Martin Landa'
 
 class ModisV3(Process):
     def __init__(self):
         inputs = [ComplexInput('region', 'Input vector region',
-                               supported_formats=[Format('application/gml+xml')]),
+                               supported_formats=[
+                                   Format('text/xml'), # requires QGIS WPS client
+                                   Format('application/gml+xml')]),
                   LiteralInput('start', 'Start date (eg. 2017-03-01)',
                                data_type='string'),
                   LiteralInput('end', 'End date (eg. 2017-04-01)',
-                               data_type='string')]
-        outputs = [LiteralOutput('stats', 'Computed LST statistics',
-                                 data_type='string')]
+                               data_type='string')
+        ]
+        outputs = [ComplexOutput('stats', 'Computed LST statistics',
+                                 supported_formats=[Format('application/json')])
+        ]
 
         super(ModisV3, self).__init__(
             self._handler,
@@ -78,9 +83,6 @@ class ModisV3(Process):
 
         stats = gs.parse_key_val(ret.outputs.stdout)
 
-        outstr = 'Min: {0:.1f};Max: {1:.1f};Mean: {2:.1f}'.format(
-            float(stats['min']), float(stats['max']), float(stats['mean'])
-        )
-        response.outputs['stats'].data = outstr
+        response.outputs['stats'].data = json.dumps(stats)
 
         return response

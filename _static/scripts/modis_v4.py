@@ -7,12 +7,14 @@ __author__ = 'Martin Landa'
 class ModisV4(Process):
     def __init__(self):
         inputs = [ComplexInput('region', 'Input vector region',
-                               supported_formats=[Format('application/gml+xml')]),
+                               supported_formats=[
+                                   Format('text/xml'), # requires QGIS WPS client
+                                   Format('application/xml')]),
                   LiteralInput('start', 'Start date (eg. 2017-03-01)',
                                data_type='string'),
                   LiteralInput('end', 'End date (eg. 2017-04-01)',
                                data_type='string')]
-        outputs = [ComplexInput('zones', 'Output LST zones',
+        outputs = [ComplexOutput('zones', 'Output LST zones',
                                 supported_formats=[Format('application/gml+xml')])
         ]
 
@@ -42,6 +44,7 @@ class ModisV4(Process):
         from subprocess import PIPE
         
         import grass.script as gs
+        from grass.pygrass.modules import Module
         from grass.exceptions import CalledModuleError
         
         start = request.inputs['start'][0].data
@@ -75,7 +78,7 @@ class ModisV4(Process):
                      map=output,
                      stdout_=PIPE
         )
-        stats = gs.parse_val_key(ret.outputs.stdout)
+        stats = gs.parse_key_val(ret.outputs.stdout)
         
         Module("r.recode",
                input = output,

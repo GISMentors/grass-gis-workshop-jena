@@ -1,6 +1,7 @@
 import os
+import json
 
-from pywps import Process, LiteralInput, LiteralOutput
+from pywps import Process, LiteralInput, ComplexOutput, Format
 
 __author__ = 'Martin Landa'
 
@@ -11,9 +12,11 @@ class ModisV2(Process):
                   LiteralInput('start', 'Start date (eg. 2017-03-01)',
                                data_type='string'),
                   LiteralInput('end', 'End date (eg. 2017-04-01)',
-                               data_type='string')]
-        outputs = [LiteralOutput('stats', 'Computed LST statistics',
-                                 data_type='string')]
+                               data_type='string')
+        ]
+        outputs = [ComplexOutput('stats', 'Computed LST statistics',
+                                 supported_formats=[Format('application/json')])
+        ]
 
         super(ModisV2, self).__init__(
             self._handler,
@@ -39,6 +42,8 @@ class ModisV2(Process):
 
     def _handler(self, request, response):
         from subprocess import PIPE
+        
+        from grass.pygrass.modules import Module
         from grass.exceptions import CalledModuleError
         
         start = request.inputs['start'][0].data
@@ -46,6 +51,8 @@ class ModisV2(Process):
         self.check_date(start)
         self.check_date(end)
 
+        x, y = request.inputs['coords'][0].data.split(',')
+        
         # be silent
         os.environ['GRASS_VERBOSE'] = '0'
 
@@ -55,19 +62,19 @@ class ModisV2(Process):
             ret = Module('t.rast.what',
                          stdout_=PIPE,
                          strds='modis_c@PERMANENT',
-                         coordinates=request.inputs['coords'][0].data,
-                         sep=',',
+                         coordinates=[x, y],
+                         separator=',',
                          where="start_time > '{start}' and start_time < '{end}'".format(
                              start=start, end=end
             ))
         except CalledModuleError:
             raise Exception('Unable to compute statistics')
 
+        tsum = 0
         stats = {
             'min' : None,
             'max' : None,
             'mean' : None,
-            'sum' : 0,
             'count' : 0,
         }
         count = 0
@@ -83,14 +90,11 @@ class ModisV2(Process):
                     stats['min'] = val
                 if val > stats['max']:
                     stats['max'] = val
-            stats['sum'] += val
+            tsum += val
             stats['count'] += 1
                     
-        stats['mean'] = stats['sum'] / stats['count']
+        stats['mean'] = tsum / stats['count']
         
-        outstr = 'Min: {0:.1f};Max: {1:.1f};Mean: {2:.1f}'.format(
-            float(stats['min']), float(stats['max']), float(stats['mean'])
-        )
-        response.outputs['stats'].data = outstr
-
+        response.outputs['stats'].data = json.dumps(stats)
+        
         return response

@@ -9,9 +9,11 @@ class ModisV1(Process):
         inputs = [LiteralInput('start', 'Start date (eg. 2017-03-01)',
                                data_type='string'),
                   LiteralInput('end', 'End date (eg. 2017-04-01)',
-                               data_type='string')]
+                               data_type='string')
+        ]
         outputs = [LiteralOutput('stats', 'Computed LST statistics',
-                                 data_type='string')]
+                                 data_type='string')
+        ]
 
         super(ModisV1, self).__init__(
             self._handler,
