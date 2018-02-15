@@ -92,7 +92,7 @@ registered in input space time dataset.
 .. code-block:: bash
       
    t.rast.mapcalc input=modis output=modis_c nproc=3 basename=c \
-   expression="tile_c = if(modis != 0, modis * 0.02 - 273.15, null())"
+   expression="if(modis != 0, modis * 0.02 - 273.15, null())"
                 
 The command will create a new space time raster dataset with raster
 maps in Celsius scale. Since new raster map will be created, the
