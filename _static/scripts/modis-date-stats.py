@@ -69,7 +69,9 @@ def main():
         
 if __name__ == "__main__":
     options, flags = gs.parser()
-    output = '{}_{}'.format(options['input'], os.getpid())
-    
+    output = '{}_{}'.format(
+        options['input'].split('@')[0], os.getpid()
+    )
+
     atexit.register(cleanup)
     sys.exit(main())
