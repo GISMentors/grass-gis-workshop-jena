@@ -13,7 +13,10 @@ exported into GML format on line :lcode:`102` by
    :language: python
    :linenos:
    :emphasize-lines: 17, 83, 96, 102
-                     
+
+Sample process to download: `modis_v4.py
+<../_static/scripts/modis_v4.py>`__
+      
 Do not forget to import process as done in :ref:`Unit 27
 <process-import>` and restart demo PyWPS server.
 
