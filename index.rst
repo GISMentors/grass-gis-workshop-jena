@@ -115,10 +115,9 @@ Units
    units/29
    units/30
 
-Timetable
-=========
-
-`[here] <https://docs.google.com/spreadsheets/d/1im4Yx_us0m1KfKxruJ2Un7chAlh6fxudlrxjVVK9UaE/edit?usp=sharing>`__
+..
+   Timetable
+   `[here] <https://docs.google.com/spreadsheets/d/1im4Yx_us0m1KfKxruJ2Un7chAlh6fxudlrxjVVK9UaE/edit?usp=sharing>`__
 
 Lecturer
 ========
