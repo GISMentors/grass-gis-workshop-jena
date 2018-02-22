@@ -78,6 +78,14 @@ Software used in this training materials
   Service standard from the Open Geospatial Consortium written in
   Python.
 
+.. note::
+   
+   You can also download VMDK (Virtual Machine Disk) based on
+   OSGeoLive 11.0 with all software and libraries preinstalled
+   (`osgeo-live-11.0-vm.7z
+   <http://geo102.fsv.cvut.cz/geoforall/grass-gis-workshop-jena-2018/osgeo-live-11.0-vm.7z>`__)
+   for easy plug-and-play.
+  
 Units
 =====
 
