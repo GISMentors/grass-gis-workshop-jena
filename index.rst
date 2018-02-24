@@ -144,5 +144,9 @@ License
 .. figure:: ./images/cc-by-sa.png 
    :width: 130px
    :scale-latex: 120
-              
+
+Source code available on `GitHub
+<https://github.com/GISMentors/grass-gis-workshop-jena-2018>`__. Feel
+free to open issues or pull requests to improve the materials :-)
+
 *Document version:* |release| (built |today|)
