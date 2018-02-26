@@ -10,7 +10,7 @@ below. Is is enough for our purpose.
 
 .. code-block:: bash
                 
-   r.sentinel.download -l user=xxx password=xxx map=jena_boundary area_relation=Contains \
+   r.sentinel.download -l settings=sentinel.txt map=jena_boundary area_relation=Contains \
    start=2017-01-01 end=2017-12-31 producttype=S2MSI2Ap
 
 ::
@@ -36,7 +36,7 @@ Now we can start downloading data.
 
 .. code-block:: bash
                 
-   r.sentinel.download user=xxx password=xxx map=jena_boundary area_relation=Contains \
+   r.sentinel.download settings=sentinel.txt map=jena_boundary area_relation=Contains \
    start=2017-01-01 end=2017-12-31 producttype=S2MSI2Ap output=/opt/geodata/sentinel-2017
 
 When data are downloaded we can import them into our *jena-utm*

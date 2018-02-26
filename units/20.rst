@@ -76,11 +76,13 @@ moment. Let's search for latest available product by
 just to print results, download procedure will be performed later. In
 order to search and download Sentinel products, you have to create an
 user account in Copernicus Open Access Hub, see manual page of
-:grasscmd:`r.sentinel.download` module for details.
+:grasscmd:`r.sentinel.download` module for details. Create a new file
+:file:`sentinel.txt` containing two lines with your username and
+password.
 
 .. code-block:: bash
 
-   r.sentinel.download -l map=aoi producttype=S2MSI2Ap user=xxx password=xxx 
+   r.sentinel.download -l map=aoi producttype=S2MSI2Ap settings=sentinel.txt
           
 ::
 
@@ -96,7 +98,7 @@ that our AOI is fully covered by a Sentinel product we also set
 
 .. code-block:: bash
                 
-   r.sentinel.download -l map=aoi producttype=S2MSI2Ap user=opengeolabs password=sentinel4ogl \
+   r.sentinel.download -l map=aoi producttype=S2MSI2Ap settings=sentinel.txt \
    start=2017-01-01 end=2018-02-05 area_relation=Contains clouds=10
 
 ::
@@ -113,7 +115,7 @@ directory where data should be saved.
 
 .. code-block:: bash
                 
-   r.sentinel.download map=aoi producttype=S2MSI2Ap user=opengeolabs password=sentinel4ogl \
+   r.sentinel.download map=aoi producttype=S2MSI2Ap settings=sentinel.txt \
    start=2017-01-01 end=2018-02-05 area_relation=Contains clouds=10 limit=1 output=/opt/geodata/sentinel
 
 When download is successfully finished we can import data by
@@ -129,7 +131,16 @@ features by :param:`-c` flag.
 .. code-block:: bash
 
    r.sentinel.import -l -c input=/opt/geodata/sentinel pattern="B0[4|8]_10m"
-   
+
+.. tip:: Before importing or linking try to print list of found raster
+   files including projection match. If projection of input data
+   differs from current location consider reprojection (:param:`-r`)
+   or creating a new location for import.
+
+   .. code-block:: bash
+
+      r.sentinel.import -p input=/opt/geodata/sentinel pattern="B0[4|8]_10m"
+
 Now start our NDVI sample script created in :doc:`12`, enter input
 parameters and run.
    
