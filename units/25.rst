@@ -157,7 +157,7 @@ A new space time dataset only with subset of data can be created by
    output=modis_winter
 
 
-By the next command :grasscmd:`r.rast.series`, we will compute average
+By the next command :grasscmd:`t.rast.series`, we will compute average
 temperature for each seasons.
 
 .. code-block:: bash

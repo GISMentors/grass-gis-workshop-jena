@@ -51,8 +51,8 @@ MODIS data (note that you have to install also `pyMODIS Python Library
 
 GRASS MODIS addon consists of two modules:
 
-* :grasscmd:`r.modis.download` and
-* :grasscmd:`r.modis.install`
+* :grasscmdaddons:`r.modis.download` and
+* :grasscmdaddons:`r.modis.import`
 
 Let's download desired tiles (h18v03 and h18v04) for year 2017. We are
 interested about LST products (both Aqua and Terra satellites).
@@ -101,7 +101,7 @@ automatically, see :numref:`modis-mosaics`.
 
 .. _modis-lst:
    
-LTS
+LST
 ---
 
 In this section we will perform **Land Surface Temperature** (LST)

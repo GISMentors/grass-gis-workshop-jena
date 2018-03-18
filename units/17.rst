@@ -84,7 +84,7 @@ Time topology information can be obtained by :grasscmd:`t.topology`.
 Space-time Data Querying
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-By :grasscmd:`t.list.rast` can be printed raster maps within given
+By :grasscmd:`t.rast.list` can be printed raster maps within given
 time period. In the example below are printed raster maps within the
 first hour of simulated flooding.
 
