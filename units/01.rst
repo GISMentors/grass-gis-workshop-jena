@@ -17,11 +17,14 @@ Research Laboratories (USA-CERL, 1982-1995, see history of GRASS
 tool for land management and environmental planning by the military,
 GRASS GIS has evolved into a powerful utility with a wide range of
 applications in many different areas of applications and scientific
-research. (source: http://grass.osgeo.org)
+research. (source: https://grass.osgeo.org)
 
 .. youtube:: U3Hf0qI4JLc
 
-   GRASS GIS promo video from 1987.
+   GRASS GIS promo video from 1987
+
+.. tip:: Get higher quality video at `TIB AV-Portal
+         <https://av.tib.eu/media/12963>`__.
 
 In Nutshell
 -----------
