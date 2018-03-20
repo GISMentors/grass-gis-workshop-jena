@@ -6,22 +6,22 @@ Sentinel products from `Copernicus Open Access Hub
 <https://scihub.copernicus.eu/>`__.
 
 One of such tool will be introduced in this unit. For GRASS GIS there
-is available :grasscmdaddons:`r.sentinel` Addon extension. It consists
+is available :grasscmdaddons:`i.sentinel` Addon extension. It consists
 of two GRASS modules:
 
-* :grasscmdaddons:`r.sentinel.download` and
-* :grasscmdaddons:`r.sentinel.import`  
+* :grasscmdaddons:`i.sentinel.download` and
+* :grasscmdaddons:`i.sentinel.import`  
 
 Let's install this addon by using :grasscmd:`g.extension` and try it
 out (more about installing addons in :ref:`Unit 17
-<grass-addons>`). Note that :grasscmdaddons:`r.sentinel.download`
+<grass-addons>`). Note that :grasscmdaddons:`i.sentinel.download`
 requires also `sentinelsat library
 <https://pypi.python.org/pypi/sentinelsat>`__ to be installed.
 
 .. code-block:: bash
 
    pip install sentinelsat
-   g.extension extension=r.sentinel
+   g.extension extension=i.sentinel
   
 Let's download suitable Sentinel product for you favorite place and
 perform for simplicity NDVI calculation as described in :doc:`05`
@@ -72,17 +72,17 @@ Now we can search for suitable Sentinel products. We will prefer
 <https://www.sentinel-hub.com/blog/sentinel-2-l2a-products-available-sentinel-hub>`__,
 we don't want to compute atmospheric corrections on our own at this
 moment. Let's search for latest available product by
-:grasscmd:`r.sentinel.download`. At first with :param:`-l` flag given,
+:grasscmd:`i.sentinel.download`. At first with :param:`-l` flag given,
 just to print results, download procedure will be performed later. In
 order to search and download Sentinel products, you have to create an
 user account in Copernicus Open Access Hub, see manual page of
-:grasscmd:`r.sentinel.download` module for details. Create a new file
+:grasscmd:`i.sentinel.download` module for details. Create a new file
 :file:`sentinel.txt` containing two lines with your username and
 password.
 
 .. code-block:: bash
 
-   r.sentinel.download -l map=aoi producttype=S2MSI2Ap settings=sentinel.txt
+   i.sentinel.download -l map=aoi producttype=S2MSI2Ap settings=sentinel.txt
           
 ::
 
@@ -98,7 +98,7 @@ that our AOI is fully covered by a Sentinel product we also set
 
 .. code-block:: bash
                 
-   r.sentinel.download -l map=aoi producttype=S2MSI2Ap settings=sentinel.txt \
+   i.sentinel.download -l map=aoi producttype=S2MSI2Ap settings=sentinel.txt \
    start=2017-01-01 end=2018-02-05 area_relation=Contains clouds=10
 
 ::
@@ -115,11 +115,11 @@ directory where data should be saved.
 
 .. code-block:: bash
                 
-   r.sentinel.download map=aoi producttype=S2MSI2Ap settings=sentinel.txt \
+   i.sentinel.download map=aoi producttype=S2MSI2Ap settings=sentinel.txt \
    start=2017-01-01 end=2018-02-05 area_relation=Contains clouds=10 limit=1 output=/opt/geodata/sentinel
 
 When download is successfully finished we can import data by
-:grasscmdaddons:`r.sentinel.import`. The command will import **all**
+:grasscmdaddons:`i.sentinel.import`. The command will import **all**
 Sentinel bands from :param:`input` directory recursively. Sentinel
 bands to be imported can be optionally filtered by :param:`pattern`
 option. In example below only 4th and 8th bands in 10m resolution will
@@ -130,7 +130,7 @@ features by :param:`-c` flag.
 
 .. code-block:: bash
 
-   r.sentinel.import -l -c input=/opt/geodata/sentinel pattern="B0[4|8]_10m"
+   i.sentinel.import -l -c input=/opt/geodata/sentinel pattern="B0[4|8]_10m"
 
 .. tip:: Before importing or linking try to print list of found raster
    files including projection match. If projection of input data
@@ -139,7 +139,7 @@ features by :param:`-c` flag.
 
    .. code-block:: bash
 
-      r.sentinel.import -p input=/opt/geodata/sentinel pattern="B0[4|8]_10m"
+      i.sentinel.import -p input=/opt/geodata/sentinel pattern="B0[4|8]_10m"
 
 Now start our NDVI sample script created in :doc:`12`, enter input
 parameters and run.
