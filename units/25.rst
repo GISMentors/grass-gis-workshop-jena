@@ -7,7 +7,7 @@ time-series data handling thanks to :grasscmd:`temporal data
 processing framework <temporalintro>`.
 
 In :doc:`24` we have :ref:`imported <modis-import>` MODIS data into
-GRASS by :grasscmdaddons:`r.modis.import`. The command was called with
+GRASS by :grasscmdaddons:`i.modis.import`. The command was called with
 :param:`-w` flag and :param:`outfile` parameter to generate special
 file which can be later used for creating space-time raster dataset
 (strds).

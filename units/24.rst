@@ -39,7 +39,7 @@ EPSG code of spatial reference system*).
    Enter EPSG code.
 
 Enter a new GRASS session (PERMANENT mapset) and install
-:grasscmdaddons:`r.modis` addons extension (more about installing
+:grasscmdaddons:`i.modis` addons extension (more about installing
 addons in :ref:`Unit 17 <grass-addons>`) for downloading and importing
 MODIS data (note that you have to install also `pyMODIS Python Library
 <http://www.pymodis.org/>`__).
@@ -47,12 +47,12 @@ MODIS data (note that you have to install also `pyMODIS Python Library
 .. code-block:: bash
 
    pip install pymodis
-   g.extension extension=r.modis
+   g.extension extension=i.modis
 
 GRASS MODIS addon consists of two modules:
 
-* :grasscmdaddons:`r.modis.download` and
-* :grasscmdaddons:`r.modis.import`
+* :grasscmdaddons:`i.modis.download` and
+* :grasscmdaddons:`i.modis.import`
 
 Let's download desired tiles (h18v03 and h18v04) for year 2017. We are
 interested about LST products (both Aqua and Terra satellites).
@@ -67,7 +67,7 @@ interested about LST products (both Aqua and Terra satellites).
   
 .. code-block:: bash
 
-   r.modis.download settings=settings.txt folder=h18v03_04 tiles=h18v03,h18v04 \
+   i.modis.download settings=settings.txt folder=h18v03_04 tiles=h18v03,h18v04 \
    product=lst_aqua_eight_1000,lst_terra_eight_1000 \
    startday=2017-01-01 endday=2017-12-31
 
@@ -83,10 +83,10 @@ Then we can import data including reprojection into our location.
 
 .. code-block:: bash
 
-   r.modis.import -mw files=h18v03_04/listfileMOD11A2.006.txt \
+   i.modis.import -mw files=h18v03_04/listfileMOD11A2.006.txt \
    spectral='( 1 0 0 0 1 0 0 0 0 0 0 0 )' outfile=h18v03_04/tlist-mod.txt
 
-   r.modis.import -mw files=h18v03_04/listfileMYD11A2.006.txt \
+   i.modis.import -mw files=h18v03_04/listfileMYD11A2.006.txt \
    spectral='( 1 0 0 0 1 0 0 0 0 0 0 0 )' outfile=h18v03_04/tlist-myd.txt
 
 If ``-m`` flag is given, the import tool creates mosaics from tiles
