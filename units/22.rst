@@ -23,6 +23,8 @@ Let's define input and output parameters:
 * :param:`threshold` - Threshold for removing small areas (line
   :lcode:`43`)
 
+.. _temporal-api:
+
 Let's focus on functions used from :grasscmd2:`GRASS GIS Temporal
 Framework <libpython/temporal_framework.html>`:
 
