@@ -9,22 +9,22 @@ from utils import get_month_year, get_year
 # -- General configuration ------------------------------------------------
 
 # General information about the project.
-project = u'GISMentors: GRASS GIS Workshop in Jena'
-copyright = u'%d GISMentors.eu' % 2018
+project = u'GRASS GIS Workshop in Jena'
+copyright = u'2018-%d Martin Landa and GISMentors.eu' % get_year()
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
 # built documents.
 #
 # The short X.Y version.
-version = '1.0'
+version = '2.0'
 # The full version, including alpha/beta/rc tags.
 release = '%s' % version
 
 # -- Options for HTML output ----------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'grass-gis-workshop-jena-2018-gismentors'
+htmlhelp_basename = 'grass-gis-workshop-jena'
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
