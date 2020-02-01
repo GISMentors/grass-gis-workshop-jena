@@ -11,7 +11,7 @@ Free and Open Source Software (FOSS)
    FOSS software overview (`source
    <https://www.linkedin.com/pulse/open-source-software-development-neha-sharma>`__).
 
-Free and open-source software (FOSS) is computer software that can be
+Free and open-source software (FOSS) is a computer software that can be
 classified as both **free software** and **open-source
 software**. That is, anyone is freely licensed to
 
@@ -139,14 +139,15 @@ Materials proudly provided by `GISMentors
 License
 =======
 
-`Creative Commons Attribution-ShareAlike 4.0 International License <http://creativecommons.org/licenses/by-sa/4.0/>`_.
+`Creative Commons Attribution-ShareAlike 4.0 International License
+<http://creativecommons.org/licenses/by-sa/4.0/>`_.
 
 .. figure:: ./images/cc-by-sa.png 
    :width: 130px
    :scale-latex: 120
 
 Source code available on `GitHub
-<https://github.com/GISMentors/grass-gis-workshop-jena-2018>`__. Feel
+<https://github.com/GISMentors/grass-gis-workshop-jena>`__. Feel
 free to open issues or pull requests to improve the materials :-)
 
 *Document version:* |release| (built |today|)
