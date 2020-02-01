@@ -34,7 +34,7 @@ In Nutshell
 * open source, you can use it freely, modify, improve, share
 * strong user community, commercial support
 * large scale functionality, large amount of tools (2D/3D
-  raster/vector, topology, imagery, map production, spatial-temporal
+  raster/vector, topology, imagery, map production, spatio-temporal
   data, ...)
 * both GUI and CMD (easy for scripting)
 * Python API and libraries
@@ -42,24 +42,26 @@ In Nutshell
 **Disadvantages** (turning out to be advantages in some cases):
 
 * open source ;-)
-* complicated startup for newcomers
-* native format (requires importing data, be aware of possibility of linking external formats)
-* topology (not good idea to link external vector formats)
+* complicated for newcomers
+* native data format (requires importing data, be aware of possibility
+  of linking external formats)
+* topology (not a good idea to link external vector formats)
 
 **When to use GRASS GIS?**
 
 * doing data analysis
-* working with topological data
-* analysing spatial-temporal datasets
+* working with topological vector data
+* analysing spatio-temporal data
 * doing Python scripting
-* deploying server-side applications (e.g. as WPS process)
-* *add your point here*
+* deploying server-side applications (e.g. as WPS processes)
+* *add your point here...*
   
 **When to use rather something else?**
 
 * want to vizualize geodata in easy and quick way (use QGIS instead)
+* quick access to vector data (simple features)
 * being scared of location and mapsets ;-)
-* *add your point here*
+* *add your point here...*
 
 Installation
 ------------
@@ -75,7 +77,7 @@ Example for Ubuntu OS:
 
    sudo apt install grass
 
-.. tip:: More recent versions of GRASS are available in `UbuntuGIS PPA
+.. tip:: More recent versions of GRASS are available via `UbuntuGIS PPA
    <https://launchpad.net/~ubuntugis/+archive/ubuntu/ubuntugis-unstable>`__.
    
 MS Windows
@@ -85,9 +87,7 @@ See https://grass.osgeo.org/download/software/ms-windows/
 
 There are basically two options:
 
-* **standalone installer** (recommended for newcomers)
 * **OSGeo4W network installer**
+* **traditional standalone installer**
 
-.. tip:: GRASS GIS is also part of QGIS installer on Windows. So if
-   you have QGIS already installed on the machine, you have also GRASS
-   GIS installed.
+.. tip:: On Windows GRASS GIS is also part of QGIS installation!

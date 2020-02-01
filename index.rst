@@ -78,14 +78,39 @@ Software used in this training materials
   Service standard from the Open Geospatial Consortium written in
   Python.
 
-.. note::
-   
-   You can also download VMDK (Virtual Machine Disk) based on
-   OSGeoLive 11.0 with all software and libraries preinstalled
-   (`osgeo-live-11.0-vm.7z
-   <http://geo102.fsv.cvut.cz/geoforall/grass-gis-workshop-jena-2018/osgeo-live-11.0-vm.7z>`__)
-   for easy plug-and-play.
-  
+Dataset
+=======
+
+For purpose of this training materials a sample dataset has been
+created based on Open Data covering Germany and Jena region. See
+detailed description below.
+
+.. todo:: add list of layers, update links
+
+Download sample dataset as `7z archive
+<http://geo102.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2020/jena-data.7z>`__
+(xxGB, xxGB uncompressed).
+
+Virtual machine
+===============
+
+The simplest way how to follow this training. `VirtualBox
+<http://virtualbox.org>`__ must be installed on your PC, enable also
+*virtualization support* in BIOS. See `Virtualization Quickstart
+<https://live.osgeo.org/en/quickstart/virtualization_quickstart.html>`__
+for details.
+
+A customized virtual machine (VM) below is based on `OSGeoLive
+<http://live.osgeo.org>`__ version 13. This VM contains all software
+dependecies including sample dataset in :file:`geodata` directory.
+
+Download tailored virtual machine **including sample dataset** as `7z
+archive
+<http://geo102.fsv.cvut.cz/geoforall/grass-gis-workshop-jena-2018/osgeo-live-11.0-vm.7z>`__
+(xxGB, xxGB uncompressed).
+
+.. todo:: update links
+
 Units
 =====
 
