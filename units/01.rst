@@ -26,8 +26,8 @@ research. (source: https://grass.osgeo.org)
 .. tip:: Get higher quality video at `TIB AV-Portal
          <https://av.tib.eu/media/12963>`__.
 
-In Nutshell
------------
+In a nutshell
+-------------
 
 **Advantages**:
 
@@ -36,7 +36,7 @@ In Nutshell
 * large scale functionality, large amount of tools (2D/3D
   raster/vector, topology, imagery, map production, spatio-temporal
   data, ...)
-* both GUI and CMD (easy for scripting)
+* both GUI and CMD (easy for scripting) user interface
 * Python API and libraries
 
 **Disadvantages** (turning out to be advantages in some cases):
@@ -45,7 +45,8 @@ In Nutshell
 * complicated for newcomers
 * native data format (requires importing data, be aware of possibility
   of linking external formats)
-* topology (not a good idea to link external vector formats)
+* vector topology (confusing for GIS beginners, sometimes tricky to
+  import broken GIS data)
 
 **When to use GRASS GIS?**
 
@@ -59,19 +60,19 @@ In Nutshell
 **When to use rather something else?**
 
 * want to vizualize geodata in easy and quick way (use QGIS instead)
-* quick access to vector data (simple features)
+* want quick access to vector data (simple features)
 * being scared of location and mapsets ;-)
 * *add your point here...*
 
-Installation
-------------
+How to install
+--------------
 
 GNU/Linux
 ^^^^^^^^^
 
 See https://grass.osgeo.org/download/software/linux/
 
-Example for Ubuntu OS:
+Example for Debian/Ubuntu OS:
 
 .. code-block:: bash
 
@@ -90,4 +91,22 @@ There are basically two options:
 * **OSGeo4W network installer**
 * **traditional standalone installer**
 
-.. tip:: On Windows GRASS GIS is also part of QGIS installation!
+Choose 64bit version if you don't care.
+
+.. tip:: GRASS GIS is also part of `QGIS installer on Windows
+   <https://qgis.org/en/site/forusers/download.html>`__. So if QGIS is
+   already installed on your machine, you don't have to install GRASS
+   GIS separately.
+
+Useful links
+-------------
+
+* `GRASS GIS homepage <https://grass.osgeo.org>`__
+* `GRASS GIS wiki <https://grasswiki.osgeo.org>`__: a lot information, with examples
+  and tutorials
+* `GRASS user mailing list <http://lists.osgeo.org/mailman/listinfo/grass-user>`__:
+  the simpler and most used way to ask support
+* `GRASS on stackexchange <https://gis.stackexchange.com/questions/tagged/grass>`__:
+  another way to ask support
+* `GRASS GIS tutorials <https://grass.osgeo.org/documentation/tutorials/>`__:
+  an incomplete list of tutorials related to GRASS GIS
