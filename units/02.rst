@@ -1,33 +1,33 @@
 Unit 02 - First steps
 =====================
 
-Startup
--------
 
 Starting a GRASS session requires basic knowledge about software
-itself, the users usually do not like it ;-) In other words GRASS
-forces organizing your data from early beginning.
+itself. It is an obstacle especially for newcomers. In other words
+GRASS forces organizing your data from early beginning.
 
 Before entering GRASS a startup screen appears, the user must define
 working project in which GRASS session will operate. Without this step
-you cannot enter GRASS. This approach is not so common. Applications
+you cannot enter GRASS. Such approach is not so common. Applications
 like Esri ArcGIS or QGIS just starts. The user loads different data
 from various data sources in different projections, and starts working
 on his/her project. GRASS is different, which makes this software
-harder to enter for newcomers. *But don't worry, we will enter GRASS
-in few steps.*
+harder to enter for newcomers. *But don't worry, we will enter our
+first GRASS sessions in few steps.*
+
+.. _location-mapset-section:
 
 The GRASS GIS startup screen requires to set up three items:
 
 #. **Database directory.** A directory on local or network disc which
    contains all data accessed by GRASS. It's usually directory called
-   :file:`grassdata` located in user's home directory. *This item is
+   :file:`grassdata` located in a user's home directory. *This item is
    set up on Windows automatically, so usually you don't need to
-   care.*
+   care about it.*
 
 #. **Location**. Plays a role of "a project". All geodata stored
    within one location must have the same spatial coordinate system
-   (GRASS doesn't support on-the-fly projection).
+   (GRASS doesn't support on-the-fly projection from several reasons).
 
 #. **Mapset** Contains task-related data within one project. Helps
    organizing data into logical groups or to separate parallel work of
@@ -39,26 +39,56 @@ The GRASS GIS startup screen requires to set up three items:
 
    GRASS GIS startup screen.
 
-Let's define database directory (:fignote:`1.`). Then a new location
-can be created (:fignote:`2a.`) or official GRASS sample location(s)
-downloaded (:fignote:`2b.`). We will create our own location, a
-project related to *Jena region*.
+At first define database directory (:fignote:`1.`) if not already set
+up. Then a new location can be created (:fignote:`2a.`) or official
+GRASS sample location(s) downloaded (:fignote:`2b.`). We will create
+our own location, a project related to *Jena region*.
 
 .. note:: Download sample location functionality is available only in
    GRASS 7.4+.
+
+.. _create-location:
+
+Create a new location
+---------------------
+
+A new GRASS location can be easily created by :wikipedia:`EPSG` code
+or available geodata. After pressing :item:`New` button, see
+:numref:`startup0` (:fignote:`2a.`), the Location Wizard shows up.
+
+In the first page of a wizard, a location name is defined, optionally
+also short description can be added.
           
-Input data is required. We will start with Jena administration boundary
-in OGC GeoPackage format: `jena_boundary.gpkg
-<../_static/data/jena_boundary.gpkg>`__.
+.. figure:: ../images/units/02/create-location-0.png
+
+   Define a name for new GRASS location. 
+
+Then a method for creating new location is chosen. Usually a location
+is created using given EPSG code (*Select EPSG code of spatial
+reference system*) or from existing data (*Read projection and datum
+terms from a georeferenced data file*). In our case a new location
+will be created based on sample Jena administrative boundary vector
+layer.
+
+.. figure:: ../images/units/02/create-location-1.png
+
+   Choose method for creating a new GRASS location.
+
+In the next page define an input file.
+
+.. figure:: ../images/units/02/create-location-2.png
+
+   Define an input file `jena_boundary.gpkg
+   <../_static/data/jena_boundary.gpkg>`__.
 
 .. _city_region_download:
 
-.. note:: Data above has been downloaded from OpenStreetMap project
-   using Overpass API by GDAL library (`ogr2ogr` utility). Downloaded
-   data are stored in OGC GeoPackage format (*we don't like old school
-   Esri Shapefile format*). Data are reprojected to UTM zone 32N
-   (:epsg:`32632`) since we want to work with Sentinel data
-   afterwards, see :doc:`03`.
+.. note:: Jena administrative boundary has been downloaded from
+   OpenStreetMap project using Overpass API by GDAL library (`ogr2ogr`
+   utility). Downloaded data are stored in OGC GeoPackage format (*we
+   don't like an old-school Esri Shapefile format*). Data is reprojected
+   to UTM zone 32N (:epsg:`32632`) since we want to work with Sentinel
+   data afterwards, see :doc:`03`.
    
    .. code:: bash
 
@@ -85,37 +115,8 @@ in OGC GeoPackage format: `jena_boundary.gpkg
       /*end of auto repair*/
       out;
 
-.. _create-location:
-   
-The initial location can be easily created from the input data
-set. After pressing :item:`New` button, see :numref:`startup0`
-(:fignote:`2a.`), the location wizard shows up.
-
-In the first page, location name is defined, optionally also short
-description can be added.
-
-.. figure:: ../images/units/02/create-location-0.png
-
-   Define a name for new GRASS location.
-
-Then a method for creating new location is chosen. Usually the user
-creates a new location using EPSG code (*Select EPSG code of spatial
-reference system*) or from existing data (*Read projection and datum
-terms from a georeferenced data file*). In our case we will create a
-new location based on dataset downloaded from OSM.
-
-.. figure:: ../images/units/02/create-location-1.png
-
-   Choose method for creating a new GRASS location.
-
-In the next page input file is defined.
-
-.. figure:: ../images/units/02/create-location-2.png
-
-   Define an input file.
-
-Spatial reference system is chosen based on input file (here
-UTM zone 32N :epsg:`32632`).
+Spatial reference system is chosen based on input file (UTM zone 32N
+:epsg:`32632`).
 
 .. figure:: ../images/units/02/create-location-3.png
 
@@ -130,25 +131,25 @@ optionally import data used for defining the new location (in our case
 
    Let's import data to simplify our first steps in GRASS GIS.
 
-Now we can *finally* start a GRASS session to enter our first GRASS
+Now we can *finally* start a GRASS session by entering our first GRASS
 location.
 
 .. figure:: ../images/units/02/startup-1.svg
 
    Entering a GRASS session.
 
-.. note:: By default GRASS creates in the new location always a
-   PERMANENT mapset. The input data were imported into this
+.. note:: By default GRASS creates in a new location a PERMANENT
    mapset. Let's keep it simple at this moment and enter PERMANENT
-   mapset. Later we will organize our work into more mapsets.
+   mapset. Later we will try organizing our work into more mapsets.
 
 Display data
 ------------
 
-GRASS GUI is designed as simple user interface. Basically it is just
-a GUI front-end calling GRASS commands (see :ref:`grass-modules`) in
-the background. After startup, the GUI consists of two main windows:
-*Layer Manager* and *Map Display*, see :numref:`gui-windows`.
+GRASS GUI is designed as an *simple* user interface. Basically it is
+just a GUI front-end calling GRASS commands (see :ref:`grass-modules`)
+in the background. After startup, the GUI appears. It consists of two
+main windows: *Layer Manager* and *Map Display*, see
+:numref:`gui-windows`.
 
 .. _gui-windows:
 
@@ -158,47 +159,46 @@ the background. After startup, the GUI consists of two main windows:
    Main GUI components: Layer Manager and Map Display.
 
 .. tip:: If GUI crashes, it can be started again by :grasscmd:`g.gui`
-   command from underlaying terminal.
+   command from underlaying terminal (command prompt).
          
-First task, not surprisingly, is to display imported (vector) data. It can be
-done from menu :menuselection:`File --> Map display --> Add vector` or
-more easily from a main toolbar |grass-layer-vector-add| :sup:`Add
-vector map layer`.
-
-In next dialog we choose vector (in GRASS terminology *vector map*) to display.
-
-.. figure:: ../images/units/02/d-vect.png
-
-   Choose vector map to display.
+Let's display already imported vector data layer
+:map:`jena_boundary`. Use :item:`Data` tab, main menu :menuselection:`File -->
+Map display --> Add vector` or a toolbar |grass-layer-vector-add|
+:sup:`Add vector map layer` icon.
 
 .. figure:: ../images/units/02/jena-boundary.png
    :class: large
            
-   Polygon defining Jena city administrative boundary.
+   Display Jena city administrative boundary vector layer. Select
+   :menuselection:`Display layer` from contextual menu in Data tab or
+   simply use double-click on the desired layer.
    
 We can also add OSM WMS layer by |grass-layer-wms-add| :sup:`Add web
-service layer` to ensure that our data is spatially correct. We can
-use WMS provided by *OSM-WMS-EUROPE* (http://129.206.228.72/cached/osm)
+service layer` to ensure that our data is spatially correct. Let's use
+WMS provided by *OSM-WMS-EUROPE* (http://129.206.228.72/cached/osm)
 which can be added by :item:`Add default`.
 
-After defining WMS URL in the dialog, we can connect the service and
-choose desired layer.
+After defining WMS URL in the dialog, a service can be connected and
+desired layer chosen.
 
 .. figure:: ../images/units/02/d-wms.svg
             
    Choose WMS layer to display. Don't forget to change source
    projection to UTM zone 32N to avoid reprojection.
 
-We can also change map layer properties to display only outline of
-Jena city region polygon in red color.
+Let's change map properties in order to display outline of Jena city
+region polygon in red color. Switch to :item:`Layer` tab and choose
+:item:`Properties` from contextual menu (right click on selected
+layer). Set also :item:`Area fill color` to transparent.
 
 .. figure:: ../images/units/02/d-vect-colrs.png
             
-   Choose :item:`Properties` in order to change vector map layer
-   properties to display only outline of the city polygon.
+   Change map layer properties.
 
 .. figure:: ../images/units/02/jena-boundary-wms.png
    :class: large
 
    Final composition, OSM WMS layer as a basemap, boundary of Jena
    city region in red color.
+
+.. todo:: Hide WMS (broken in GRASS)

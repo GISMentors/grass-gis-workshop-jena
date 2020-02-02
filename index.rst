@@ -85,6 +85,9 @@ For purpose of this training materials a sample dataset has been
 created based on Open Data covering Germany and Jena region. See
 detailed description below.
 
+* administrative borders (directory: :file:`osm`, source:
+  OpenStreetMap)
+
 .. todo:: add list of layers, update links
 
 Download sample dataset as `7z archive
