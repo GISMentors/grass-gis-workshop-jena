@@ -44,6 +44,6 @@ cd grass
 make distclean
 configure_grass
 make
-ln -sf /opt/src/grass/bin.x86_64-pc-linux-gnu/grass79 /home/user/bin
+ln -sf /opt/grass/bin.x86_64-pc-linux-gnu/grass79 /home/user/bin
 
 exit 0
