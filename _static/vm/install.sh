@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo apt install subversion \
+sudo apt install git \
      autoconf2.13 \
      autotools-dev \
      bison \
@@ -30,16 +30,17 @@ sudo apt install subversion \
      libxmu-dev \
      netcdf-bin \
      proj-bin \
-     python \
-     python-dev \
-     python-numpy \
-     python-pil \
-     python-ply \
-     python-wxgtk3.0 \
+     python3 \
+     python3-dev \
+     python3-numpy \
+     python3-pil \
+     python3-ply \
+     python3-wxgtk4.0 \
      unixodbc-dev \
      zlib1g-dev \
-     python-ply \
-    python-flask
+     python3-ply \
+     python3-flask \
+     geany
 
 sudo pip install pymodis sentinelsat pandas pywps
 
