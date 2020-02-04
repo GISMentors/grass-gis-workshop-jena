@@ -40,7 +40,8 @@ sudo apt -y install git \
      zlib1g-dev \
      python3-ply \
      python3-flask \
-     geany
+     geany \
+     subversion
 
 sudo pip install pymodis sentinelsat pandas pywps
 
