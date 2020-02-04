@@ -4,25 +4,25 @@ Unit 21 - Sentinel ST
 This unit is dedicated to downloading and processing time-series
 Sentinel products.
 
-Let's download Sentinel products (still *Sentinel L2A* as we did in
-:doc:`20`) for year 2017. There are 7 products available as shown
-below. Is is enough for our purpose.
+Let's download Sentinel products (*Sentinel2 L2A* similary as in
+:doc:`20`) for year 2019. There are 7 products available as shown
+below, which quite enough for our purpose.
 
 .. code-block:: bash
                 
    i.sentinel.download -l settings=sentinel.txt map=jena_boundary area_relation=Contains \
-   start=2017-01-01 end=2017-12-31 producttype=S2MSI2Ap
+   start=2019-04-01 end=2019-10-31 producttype=S2MSI2A clouds=10
 
 ::
    
    7 Sentinel product(s) found
-   e5df8b4f-a4c6-47bd-88f3-e16b7540cc7a 2017-05-27T10:20:31Z  2% S2MSI2Ap
-   b62afeda-a28d-475c-8220-91e24fc368ff 2017-05-17T10:20:31Z  2% S2MSI2Ap
-   9a6bc289-98e9-4489-84eb-1aac95aaa056 2017-08-15T10:20:21Z  3% S2MSI2Ap
-   35c72002-78a0-45f8-b39d-66c2d7b4ad87 2017-10-14T10:20:21Z  6% S2MSI2Ap
-   c0ae8085-c1bb-4a27-89f2-2138a0866586 2017-07-06T10:20:21Z 12% S2MSI2Ap
-   433ebfbc-5144-42f8-97dc-b9f4f1eb7b5a 2017-11-03T10:22:01Z 12% S2MSI2Ap
-   fc56a594-d9d8-4e93-8dec-af3a58b24080 2017-09-04T10:20:21Z 19% S2MSI2Ap
+   a0ae6f58-4890-4382-bbd8-571874bfc65e 2019-06-26T10:20:31Z  1% S2MSI2A
+   caa11e7b-454d-4301-86b9-4c11659cc8a1 2019-04-17T10:20:31Z  3% S2MSI2A
+   31ad53f4-146a-41a8-bce6-d9e99dfd7f66 2019-04-22T10:20:29Z  3% S2MSI2A
+   e6ecc89f-0a06-498b-9e8d-354d1e8ead4e 2019-10-14T10:20:31Z  5% S2MSI2A
+   3fe2df76-019d-4611-8ffb-560683ae4500 2019-08-25T10:20:31Z  6% S2MSI2A
+   be91b224-0d6c-45d0-95a5-5cf5743a349e 2019-09-04T10:20:21Z  7% S2MSI2A
+   60149bc8-5ab0-4a79-b964-24672739d5b9 2019-04-07T10:20:21Z  9% S2MSI2A
 
 .. note:: For simplification you can find this data in sample dataset (`download
    7z-archive
@@ -37,7 +37,7 @@ Now we can start downloading data.
 .. code-block:: bash
                 
    i.sentinel.download settings=sentinel.txt map=jena_boundary area_relation=Contains \
-   start=2017-01-01 end=2017-12-31 producttype=S2MSI2Ap output=/opt/geodata/sentinel-2017
+  start=2019-04-01 end=2019-10-31 producttype=S2MSI2A clouds=10 output=/home/user/geodata/sentinel/2019
 
 When data are downloaded we can import them into our *jena-utm*
 location. It is a good idea to import data into newly created mapset
@@ -47,7 +47,9 @@ below we force linking instead of importing data.
 .. code-block:: bash
 
    g.mapset -c mapset=st
-   i.sentinel.import -l -c input=/opt/geodata/sentinel-2017 pattern="B0[4|8]_10m"
+   i.sentinel.import -l -c input=/home/user/geodata/sentinel/2019 pattern="B0[4|8]_10m"
+
+.. todo:: register_output=2019/register.txt
 
 .. _sentinel-go-to:
 

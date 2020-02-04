@@ -69,7 +69,7 @@ interested about LST products (both Aqua and Terra satellites).
 
    i.modis.download settings=settings.txt folder=h18v03_04 tiles=h18v03,h18v04 \
    product=lst_aqua_eight_1000,lst_terra_eight_1000 \
-   startday=2017-01-01 endday=2017-12-31
+   startday=2019-01-01 endday=2019-12-31
 
 .. note:: Output folder (:file:`h18v03_04` in this case) must exists,
    otherwise the module will fail.
