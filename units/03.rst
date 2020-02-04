@@ -77,6 +77,8 @@ displayed in Map Window.
    table is not perfect as you can see, we will enhance color
    interpretation in :ref:`Unit 04 <color-table>`.
 
+.. todo:: why reprojection is performed?
+          
 .. note:: GRASS imports/links RGB image as separate bands. Color
    composition can be displayed using :grasscmd:`d.rgb`. By
    :grasscmd:`r.composite` it is possible to create color composite as
@@ -213,3 +215,5 @@ format.
 
    Imported raster file in native GRASS format by
    :grasscmd:`r.in.gdal` (or :grasscmd:`r.import`).
+
+.. todo:: r.colors is needed! + link visualization is slow
