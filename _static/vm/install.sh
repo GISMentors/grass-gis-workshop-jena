@@ -89,6 +89,6 @@ chown user:user $dir
 cd $dir
 ln -s /home/user/pywps-flask .
 ln -s /opt/grass-gis-workshop-jena/_build/html/index.html .
-
+ln -s /home/user/geodata .
 
 exit 0
