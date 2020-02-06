@@ -78,22 +78,6 @@ Software used in this training materials
   Service standard from the Open Geospatial Consortium written in
   Python.
 
-Dataset
-=======
-
-For purpose of this training materials a sample dataset has been
-created based on Open Data covering Germany and Jena region. See
-detailed description below.
-
-* administrative borders (directory: :file:`osm`, source:
-  OpenStreetMap)
-
-.. todo:: add list of layers, update links
-
-Download sample dataset as `7z archive
-<http://geo102.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2020/jena-data.7z>`__
-(xxGB, xxGB uncompressed).
-
 Virtual machine
 ===============
 
@@ -105,14 +89,40 @@ for details.
 
 A customized virtual machine (VM) below is based on `OSGeoLive
 <http://live.osgeo.org>`__ version 13. This VM contains all software
-dependecies including sample dataset in :file:`geodata` directory.
+dependecies including sample dataset. See :file:`GRASS Jena Workshop`
+folder on the desktop.
+
+.. todo:: add screenshot
 
 Download tailored virtual machine **including sample dataset** as `7z
 archive
-<http://geo102.fsv.cvut.cz/geoforall/grass-gis-workshop-jena-2018/osgeo-live-11.0-vm.7z>`__
-(xxGB, xxGB uncompressed).
+<http://geo102.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2020/osgeolive-13.0-amd64-jena.vmdk.7z>`__
+(11GB, 20GB uncompressed). Note that VM size can grow up to 40GB!
 
-.. todo:: update links
+Sample dataset
+==============
+
+For purpose of this training materials a sample dataset has been
+created based on Open Data covering Germany and Jena region. See
+detailed description below.
+
+* EU-DEM (directory: :file:`eu-dem`, source: `Copernicus Land Monitoring
+  Service - EU-DEM
+  <https://www.eea.europa.eu/data-and-maps/data/copernicus-land-monitoring-service-eu-dem>`__)
+* Sample GRASS locations/mapsets (directory: :file:`grassdata`)
+* Lidar LAZ data (directory: :file:`lidar`, source: `GeoPortal Th
+  <https://www.geoportal-th.de>`__)
+* MODIS Land Surface Temperature eight day 1 Km (directory:
+  :file:`modis`, source: `LP DAAC
+  <https://lpdaac.usgs.gov/dataset_discovery/modis/modis_products_table>`__)
+* Administrative regions (directory: :file:`osm`, source:
+  OpenStreetMap)
+* Sentinel-2 data (directory: :file:`sentinel`, source: `Copernicus
+  Open Access Hub <https://scihub.copernicus.eu/>`__)
+          
+Sample dataset can be also download as `7z archive
+<http://geo102.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2020/jena-sample-data.7z>`__
+(6.1GB, 6.5GB uncompressed).
 
 Units
 =====

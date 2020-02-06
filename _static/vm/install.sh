@@ -58,6 +58,7 @@ grass79 --tmp-location EPSG:4326 --exec bash grass-addons.sh
 
 # update script
 cp jena-update.sh /home/user/bin/
+chown user:user /home/user/bin/jena-update.sh
 chmod +x /home/user/bin/jena-update.sh
 
 # build materials
