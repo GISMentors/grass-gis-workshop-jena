@@ -92,12 +92,14 @@ A customized virtual machine (VM) below is based on `OSGeoLive
 dependecies including sample dataset. See :file:`GRASS Jena Workshop`
 folder on the desktop.
 
-.. todo:: add screenshot
+.. figure:: images/osgeolive.png
+
+   OSGeoLive VM
 
 Download tailored virtual machine **including sample dataset** as `7z
 archive
 <http://geo102.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2020/osgeolive-13.0-amd64-jena.vmdk.7z>`__
-(11GB, 20GB uncompressed). Note that VM size can grow up to 40GB!
+(10.2GB, 20GB uncompressed). Note that VM size can grow up to 40GB!
 
 Sample dataset
 ==============
