@@ -1,33 +1,40 @@
 #!/bin/bash
 
-sudo apt -y install git \
+sudo apt -y install \
      autoconf2.13 \
      autotools-dev \
      bison \
+     debhelper \
+     dh-python \
+     doxygen \
+     fakeroot \
      flex \
      graphviz \
      libblas-dev \
      libbz2-dev \
      libcairo2-dev \
+     libegl1-mesa-dev \
      libfftw3-dev \
      libfreetype6-dev \
-     libgdal-dev \
+     libgdal-dev (>= 2.0) \
      libgeos-dev \
-     libglu1-mesa-dev \
      libjpeg-dev \
      liblapack-dev \
-     libmotif-dev \
-     libmysqlclient-dev \
+     lesstif2-dev \
+     default-libmysqlclient-dev \
      libncurses5-dev \
      libnetcdf-dev \
+     libpdal-dev \
      libpng-dev \
      libpq-dev \
      libproj-dev \
      libreadline-dev \
      libsqlite3-dev \
      libtiff-dev \
-     libwxgtk3.0-dev \
+     libwxgtk3.0-gtk3-dev \
      libxmu-dev \
+     libzstd-dev \
+     lsb-release \
      netcdf-bin \
      proj-bin \
      python3 \
@@ -35,18 +42,17 @@ sudo apt -y install git \
      python3-numpy \
      python3-pil \
      python3-ply \
+     python3-six \
      python3-wxgtk4.0 \
      unixodbc-dev \
      zlib1g-dev \
-     python3-ply \
      python3-flask \
      geany \
      subversion \
      mc \
      python3-sphinx
 
-
-sudo pip install pymodis sentinelsat pandas pywps
+sudo pip3 install pymodis sentinelsat pandas pywps
 
 # laszip
 wget https://github.com/LASzip/LASzip/releases/download/v2.2.0/laszip-src-2.2.0.tar.gz
