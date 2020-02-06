@@ -84,7 +84,9 @@ git clone https://github.com/geopython/pywps-flask.git
 chown user:user pywps-flask -R
 
 # GRASS
+cd //opt/grass-gis-workshop-jena/_static/vm
 ./grass-install.sh
+cp jena-update.sh /home/user/bin/
 
 # build materials
 (cd /opt/grass-gis-workshop-jena; make html)
@@ -98,6 +100,5 @@ ln -s /home/user/pywps-flask .
 ln -s /opt/grass-gis-workshop-jena/_build/html/index.html .
 ln -s /home/user/geodata .
 
-cp jena-update.sh /home/user/bin/
 
 exit 0
