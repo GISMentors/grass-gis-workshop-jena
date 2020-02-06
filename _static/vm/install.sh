@@ -41,7 +41,10 @@ sudo apt -y install git \
      python3-ply \
      python3-flask \
      geany \
-     subversion
+     subversion \
+     mc \
+     python3-sphinx
+
 
 sudo pip install pymodis sentinelsat pandas pywps
 
@@ -72,4 +75,20 @@ rm -r libLAS-1.8.1 libLAS-1.8.1.tar.bz2
 cd /home/user
 git clone https://github.com/geopython/pywps-flask.git
 chown user:user pywps-flask -R
+
+# GRASS
+./grass-install.sh
+
+# build materials
+(cd /opt/grass-gis-workshop-jena; make html)
+
+# Desktop links
+dir="/home/user/Desktop/GRASS Jena Workshop"
+mkdir $dir
+chown user:user $dir
+cd $dir
+ln -s /home/user/pywps-flask .
+ln -s /opt/grass-gis-workshop-jena/_build/html/index.html .
+
+
 exit 0

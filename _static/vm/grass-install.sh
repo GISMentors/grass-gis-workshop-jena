@@ -36,7 +36,8 @@ function configure_grass {
 # GRASS 7.9
 cd /opt
 if [ ! -d grass ] ; then
-    git clone https://github.com/osgeo/grass.git
+    git clone https://github.com/landam/grass.git
+    (cd grass; git checkout jena-workshop; git pull)
 else
     (cd grass ; git pull)
 fi
