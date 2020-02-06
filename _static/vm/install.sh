@@ -51,7 +51,8 @@ sudo apt -y install \
      subversion \
      mc \
      python3-sphinx \
-     python3-pip
+     python3-pip \
+     liblas-dev
 
 sudo pip3 install pymodis sentinelsat pandas pywps
 
@@ -84,8 +85,7 @@ git clone https://github.com/geopython/pywps-flask.git
 chown user:user pywps-flask -R
 
 # GRASS
-cd //opt/grass-gis-workshop-jena/_static/vm
-./grass-install.sh
+bash /opt/grass-gis-workshop-jena/_static/vm/grass-install.sh
 cp jena-update.sh /home/user/bin/
 
 # build materials
