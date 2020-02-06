@@ -5,7 +5,6 @@ apt -y update
 apt -y build-dep grass
 
 sudo apt -y install \
-     # GRASS
      python3 \
      python3-dev \
      python3-numpy \
@@ -14,7 +13,6 @@ sudo apt -y install \
      python3-six \
      python3-wxgtk4.0 \
      libwxgtk3.0-gtk3-dev \
-     # extra
      python3-flask \
      geany \
      subversion \
@@ -57,8 +55,10 @@ chown user:user pywps-flask -R
 cd /opt/grass-gis-workshop-jena/_static/vm/
 bash grass-install.sh
 cp jena-update.sh /home/user/bin/
+chmod +x /home/user/bin/jena-update.sh
 
 # build materials
+(cd /opt ; git clone https://github.com:gismentors/sphinx-template; cd sphinx-template; git checkout en)
 (cd /opt/grass-gis-workshop-jena; make html)
 
 # Desktop links
