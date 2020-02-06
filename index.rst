@@ -93,7 +93,8 @@ dependecies including sample dataset. See :file:`GRASS Jena Workshop`
 folder on the desktop.
 
 .. figure:: images/osgeolive.png
-
+   :class: middle
+        
    OSGeoLive VM
 
 Download tailored virtual machine **including sample dataset** as `7z
