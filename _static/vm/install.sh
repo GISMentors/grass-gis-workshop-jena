@@ -54,6 +54,9 @@ chown user:user pywps-flask -R
 # GRASS
 cd /opt/grass-gis-workshop-jena/_static/vm/
 bash grass-install.sh
+grass79 --tmp-location EPSG:4326 --exec bash grass-addons.sh
+
+# update script
 cp jena-update.sh /home/user/bin/
 chmod +x /home/user/bin/jena-update.sh
 
