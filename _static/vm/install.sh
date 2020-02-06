@@ -50,7 +50,8 @@ sudo apt -y install \
      geany \
      subversion \
      mc \
-     python3-sphinx
+     python3-sphinx \
+     python3-pip
 
 sudo pip3 install pymodis sentinelsat pandas pywps
 
