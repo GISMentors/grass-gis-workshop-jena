@@ -1,8 +1,8 @@
 #!/bin/bash -e
 
 echo "deb-src http://ro.archive.ubuntu.com/ubuntu/ bionic universe" >> /etc/apt/sources.list
-apt update
-apt build-dep grass
+apt -y update
+apt -y build-dep grass
 
 sudo apt -y install \
      # GRASS
