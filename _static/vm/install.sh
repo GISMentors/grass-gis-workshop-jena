@@ -1,42 +1,11 @@
 #!/bin/bash -e
 
+echo "deb-src http://ro.archive.ubuntu.com/ubuntu/ bionic universe" >> /etc/apt/sources.list
+apt update
+apt build-dep grass
+
 sudo apt -y install \
-     autoconf2.13 \
-     autotools-dev \
-     bison \
-     debhelper \
-     dh-python \
-     doxygen \
-     fakeroot \
-     flex \
-     graphviz \
-     libblas-dev \
-     libbz2-dev \
-     libcairo2-dev \
-     libegl1-mesa-dev \
-     libfftw3-dev \
-     libfreetype6-dev \
-     libgdal-dev \
-     libgeos-dev \
-     libjpeg-dev \
-     liblapack-dev \
-     lesstif2-dev \
-     default-libmysqlclient-dev \
-     libncurses5-dev \
-     libnetcdf-dev \
-     libpdal-dev \
-     libpng-dev \
-     libpq-dev \
-     libproj-dev \
-     libreadline-dev \
-     libsqlite3-dev \
-     libtiff-dev \
-     libwxgtk3.0-gtk3-dev \
-     libxmu-dev \
-     libzstd-dev \
-     lsb-release \
-     netcdf-bin \
-     proj-bin \
+     # GRASS
      python3 \
      python3-dev \
      python3-numpy \
@@ -44,8 +13,8 @@ sudo apt -y install \
      python3-ply \
      python3-six \
      python3-wxgtk4.0 \
-     unixodbc-dev \
-     zlib1g-dev \
+     libwxgtk3.0-gtk3-dev \
+     # extra
      python3-flask \
      geany \
      subversion \
@@ -85,7 +54,8 @@ git clone https://github.com/geopython/pywps-flask.git
 chown user:user pywps-flask -R
 
 # GRASS
-bash /opt/grass-gis-workshop-jena/_static/vm/grass-install.sh
+cd /opt/grass-gis-workshop-jena/_static/vm/
+bash grass-install.sh
 cp jena-update.sh /home/user/bin/
 
 # build materials
@@ -99,6 +69,9 @@ cd $dir
 ln -s /home/user/pywps-flask .
 ln -s /opt/grass-gis-workshop-jena/_build/html/index.html .
 ln -s /home/user/geodata .
-
+cp "/home/user/Desktop/Desktop GIS/qgis.desktop" .
+cp "/home/user/Desktop/Desktop GIS/grass76.desktop" grass79.desktop
+sed -i 's#/usr/bin/grass76#/home/user/bin/grass79#g' grass79.desktop
+sed -i 's#grass76#grass79#g' grass79.desktop
 
 exit 0
