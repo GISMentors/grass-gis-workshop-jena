@@ -16,7 +16,7 @@ sudo apt -y install \
      libegl1-mesa-dev \
      libfftw3-dev \
      libfreetype6-dev \
-     libgdal-dev (>= 2.0) \
+     libgdal-dev \
      libgeos-dev \
      libjpeg-dev \
      liblapack-dev \
