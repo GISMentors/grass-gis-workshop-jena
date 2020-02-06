@@ -58,19 +58,19 @@ cp jena-update.sh /home/user/bin/
 chmod +x /home/user/bin/jena-update.sh
 
 # build materials
-(cd /opt ; git clone https://github.com:gismentors/sphinx-template; cd sphinx-template; git checkout en)
+(cd /opt ; git clone https://github.com/gismentors/sphinx-template; cd sphinx-template; git checkout en)
 (cd /opt/grass-gis-workshop-jena; make html)
 
 # Desktop links
 dir="/home/user/Desktop/GRASS Jena Workshop"
-mkdir $dir
-chown user:user $dir
-cd $dir
+mkdir "$dir"
+chown user:user "$dir"
+cd "$dir"
 ln -s /home/user/pywps-flask .
 ln -s /opt/grass-gis-workshop-jena/_build/html/index.html .
 ln -s /home/user/geodata .
-cp "/home/user/Desktop/Desktop GIS/qgis.desktop" .
-cp "/home/user/Desktop/Desktop GIS/grass76.desktop" grass79.desktop
+cp /home/user/Desktop/Desktop\ GIS/qgis.desktop .
+cp /home/user/Desktop/Desktop\ GIS/grass76.desktop grass79.desktop
 sed -i 's#/usr/bin/grass76#/home/user/bin/grass79#g' grass79.desktop
 sed -i 's#grass76#grass79#g' grass79.desktop
 
