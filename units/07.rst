@@ -44,7 +44,8 @@ tools provided by various software packages. Let's open
 .. figure:: ../images/units/07/processing-i-vi-params.svg
    :class: middle
                     
-   Set input parameters, don't forget about computation region.
+   Set input parameters. Computation extent can be defined in Advanced
+   parameters section.
 
 :numref:`processing-result` nicely shows how Processing plugin
 is working. First of all a temporal GRASS location is created by
@@ -114,9 +115,8 @@ operations can be used :grasscmd:`g.region` GRASS module.
    correct spatial resolution (for real work it's better to use
    :grasscmd:`g.region` with `align` option).
    
-Unfortunately :grasscmd:`i.vi` GRASS module is not available in GRASS
-plugin. We can try to compute NDVI index using :grasscmd:`r.mapcalc`,
-and well-known map algebra technique.
+We can try to compute NDVI index using :grasscmd:`r.mapcalc`, and
+well-known map algebra technique.
 
 .. figure:: ../images/units/07/grass-r-mapcalc.png
    :class: small
@@ -129,11 +129,10 @@ GRASS plugin offers native graphical front-end for map algebra.
 
    Graphical Map Calculator in GRASS plugin.
 
-For those who don't like this tool there is another possibility. To
-launch :grasscmd:`i.vi` from **GRASS Shell**.
+Or simply launch :grasscmd:`i.vi` from **GRASS modules** tab or
+alternatively from **GRASS Shell** as shows the figure below.
 
 .. figure:: ../images/units/07/grass-shell.png
-   :class: small
         
    GRASS Shell.
 
