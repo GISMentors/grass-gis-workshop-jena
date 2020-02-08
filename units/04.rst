@@ -6,9 +6,10 @@ Unit 04 - Modules, Region
 Accessing GRASS modules
 -----------------------
 
-GRASS is a **modular system** which consists of several hundreds tools
-(called "modules"). Modules are accessible from the Layer Manager menu,
-:item:`Modules` tab, and from command prompt (:item:`Console` tab).
+GRASS GIS is a **modular system** which consists of several hundreds
+tools ("modules" in the GRASS terminology). Modules are accessible
+from the Layer Manager menu, :item:`Modules` tab, and from command
+prompt (:item:`Console` tab).
 
 Let's find a tool for clipping cloud mask vector map by Jena city
 area.
@@ -17,28 +18,25 @@ area.
 
    Searching module in Layer Manager by 'clip' keyword.
 
-The module which we are looking for is :grasscmd:`v.overlay`.
+The module which we are looking for is :grasscmd:`v.clip`.
 
 .. figure:: ../images/units/04/modules-cmd.png
 
-   Launching :grasscmd:`v.overlay` module from Layer Manager console.
-
-.. note:: Since GRASS 7.4.0 there is a better choice for vector clipping
-   than generic :grasscmd:`v.overlay` module: :grasscmd:`v.clip`.
+   Launching :grasscmd:`v.clip` module from Layer Manager console.
 
 The commands (modules) can be called using GUI dialogs, from command
 line (:item:`Console` or "real" terminal), or by using Python API (see
-:doc:`10`). Figure bellow shows GUI dialog of :grasscmd:`v.overlay`
+:doc:`10`). Figure bellow shows GUI dialog of :grasscmd:`v.clip`
 module. The corresponding command for console would be:
 
 .. code-block:: bash
 
-   v.overlay ainput=MaskFeature binput=jena_boundary operator=and output=jena_clouds
+   v.clip input=MaskFeature clip=jena_boundary output=jena_clouds
 
-.. figure:: ../images/units/04/v-overlay.svg
+.. figure:: ../images/units/04/v-clip.svg
 
-   GUI dialog for launching :grasscmd:`v.overlay` module (syntax for
-   CLI displayed in statusbar).
+   GUI dialog for launching :grasscmd:`v.clip` module (tip: syntax for
+   CLI displayed in the statusbar).
 
 .. figure:: ../images/units/04/jena-clouds.png
 
