@@ -18,6 +18,11 @@ ogrinfo /home/user/geodata/osm/jena_rivers.gpkg -sql 'alter table lines rename t
 ogrinfo /home/user/geodata/osm/jena_boundary.gpkg -sql 'alter table multipolygons rename to jena_boundary'
 ogrinfo /home/user/geodata/osm/germany_boundary.gpkg -sql 'alter table lines rename to germany_boundary'
 
+if [ ! -f /home/user/geodata/osm/basemap.pack ] ; then
+    cd /home/user/geodata/osm/
+    wget http://geo102.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2020/basemap.pack
+fi
+
 ###
 
 cd /opt
