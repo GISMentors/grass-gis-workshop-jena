@@ -56,11 +56,11 @@ options).
                 overwrite = True,
                 input = "ndvi",
                 output = "ndvi_class",
-                rules = "/home/landa/geodata/jena/models/reclass.txt")
+                rules = "/home/user/geodata/models/reclass.txt")
 
     run_command("r.colors",
                 map = "ndvi_class",
-                rules = "/home/landa/geodata/jena/models/colors.txt")
+                rules = "/home/user/geodata/models/colors.txt")
 
 By GRASS Scripting Library we can define content of input file as a
 string object and transfer it to the command via standard input. This
@@ -138,6 +138,12 @@ Related lines can look like as below.
 .. literalinclude:: ../_static/scripts/ndvi-v3.py
    :language: python
    :lines:  18-41
+
+.. note:: Don't forget to uncomment
+
+   .. code-block:: python
+
+      options, flags = parser()
 
 .. figure:: ../images/units/12/ndvi-dialog-params.png
 

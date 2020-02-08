@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #
 ##############################################################################
 #
@@ -54,7 +54,7 @@ def cleanup():
     run_command('g.remove', flags='f', name='ndvi_class', type='raster')
     run_command('g.remove', flags='f', name='ndvi_class', type='vector')
 
-def compute():
+def compute(options):
 
     if options["clouds"]:
         region_mask = "region_mask"
@@ -116,7 +116,7 @@ def compute():
                 tool = "rmarea",
                 threshold = options['threshold'])
 
-def stats():
+def stats(options):
     print ('-' * 80)
     print ('NDVI class statistics')
     print ('-' * 80)
@@ -138,13 +138,13 @@ def stats():
         print ('NDVI class {0}: {1:.4f} (min) {2:.4f} (max) {3:.4f} (mean)'.format(
             vals[0], float(vals[2]), float(vals[3]), float(vals[4])))
 
-def main():
-    compute()
-    stats()
+def main(options, flags):
+    compute(options)
+    stats(options)
 
     return 0
 
 if __name__ == "__main__":
     options, flags = parser()
     atexit.register(cleanup)
-    sys.exit(main())
+    sys.exit(main(options, flags))
