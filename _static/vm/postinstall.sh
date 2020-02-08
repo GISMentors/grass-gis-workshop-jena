@@ -1,5 +1,7 @@
 #!/bin/sh
 
+pip3 install --upgrade wxpython==4.0.7
+
 cd /opt
 
 # update GRASS
