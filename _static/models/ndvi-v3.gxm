@@ -98,7 +98,7 @@
                 <value>ndvi_class</value>
             </parameter>
             <parameter name="rules">
-                <value>/home/martin/geodata/jena/models/reclass.txt</value>
+                <value>/home/user/geodata/models/reclass.txt</value>
             </parameter>
             <flag name="overwrite" />
         </task>
@@ -109,7 +109,7 @@
                 <value>ndvi_class</value>
             </parameter>
             <parameter name="rules">
-                <value>/home/martin/geodata/jena/models/colors.txt</value>
+                <value>/home/user/geodata/models/colors.txt</value>
             </parameter>
         </task>
     </action>
