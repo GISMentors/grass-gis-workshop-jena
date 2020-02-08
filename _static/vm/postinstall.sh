@@ -14,6 +14,10 @@ if [ ! -d /home/user/geodata/models ] ; then
     cp -r /opt/grass-gis-workshop-jena/_static/models/ /home/user/geodata/
 fi
 
+ogrinfo /home/user/geodata/osm/jena_rivers.gpkg -sql 'alter table lines rename to jena_rivers'
+ogrinfo /home/user/geodata/osm/jena_boundary.gpkg -sql 'alter table multipolygons rename to jena_boundary'
+ogrinfo /home/user/geodata/osm/germany_boundary.gpkg -sql 'alter table lines rename to germany_boundary'
+
 ###
 
 cd /opt
