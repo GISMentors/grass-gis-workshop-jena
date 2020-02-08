@@ -1,5 +1,7 @@
 #!/bin/sh
 
+apt update
+apt install libgtk-3-dev
 pip3 install --upgrade wxpython==4.0.7
 
 cd /opt
