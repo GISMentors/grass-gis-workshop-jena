@@ -87,7 +87,7 @@ def compute(options):
                       input = "ndvi",
                       output = "ndvi_class",
                       rules = "-")
-    p1.stdin.write("""-1:0.1:1
+    p1.stdin.write(b"""-1:0.1:1
 0.1:0.5:2
 0.5:1:3""")
     p1.stdin.close()
@@ -96,7 +96,7 @@ def compute(options):
     p2 = feed_command("r.colors",
                       map = "ndvi_class",
                       rules = "-")
-    p2.stdin.write("""1 grey
+    p2.stdin.write(b"""1 grey
 2 255 255 0
 3 green""")
     p2.stdin.close()
@@ -133,7 +133,7 @@ def stats(options):
                 column_prefix='ndvi', method='minimum,maximum,average')
     
     data = vector_db_select(options["output"])
-    for vals in data['values'].itervalues():
+    for vals in data['values'].values():
         # unfortunately we need to cast values by float
         print ('NDVI class {0}: {1:.4f} (min) {2:.4f} (max) {3:.4f} (mean)'.format(
             vals[0], float(vals[2]), float(vals[3]), float(vals[4])))
