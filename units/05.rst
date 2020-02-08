@@ -1,7 +1,7 @@
 Unit 05 - Perform computation
 =============================
 
-Computation of :wikipedia-en:`NDVI` is a well known "discipline" in
+Computation of :wikipedia:`NDVI` is a well known "discipline" in
 remote sensing. It's simple task which requires basic knowledge of map
 algebra. The key module in GRASS related to map algebra is
 :grasscmd:`r.mapcalc`.

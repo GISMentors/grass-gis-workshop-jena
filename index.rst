@@ -102,6 +102,8 @@ archive
 <http://geo102.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2020/osgeolive-13.0-amd64-jena.vmdk.7z>`__
 (10.2GB, 20GB uncompressed). Note that VM size can grow up to 40GB!
 
+.. note:: RAM 4GB minimum, at least 2 CPU cores
+
 Sample dataset
 ==============
 
