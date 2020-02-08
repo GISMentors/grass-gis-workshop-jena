@@ -58,11 +58,11 @@ def compute():
                 overwrite = True,
                 input = "ndvi",
                 output = "ndvi_class",
-                rules = "/home/landa/geodata/jena/models/reclass.txt")
+                rules = "/home/user/geodata/models/reclass.txt")
 
     run_command("r.colors",
                 map = "ndvi_class",
-                rules = "/home/landa/geodata/jena/models/colors.txt")
+                rules = "/home/user/geodata/models/colors.txt")
 
     run_command("r.to.vect",
                 flags = 'sv',
