@@ -30,7 +30,7 @@ did in :doc:`02` in the case of Jena city region.
 
 For simplification you can find this data in sample dataset (`download
 7z-archive
-<http://geo102.fsv.cvut.cz/geoforall/grass-gis-workshop-jena-2018/jena-sample-data.7z>`__):
+<http://geo102.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2020/jena-sample-data.7z>`__):
 :file:`osm/jena-rivers.gpkg`.
 
 .. figure:: ../images/units/16/jena-rivers.png

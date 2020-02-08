@@ -21,7 +21,7 @@ new location for imported data and reproject data to target location
 .. note:: For simplification the downloaded data clipped by larger
    region than our AOI is available in sample dataset (`download
    7z-archive
-   <http://geo102.fsv.cvut.cz/geoforall/grass-gis-workshop-jena-2018/jena-sample-data.7z>`__),
+   <http://geo102.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2020/jena-sample-data.7z>`__),
    check out the :file:`eu-dem` folder.
 
    For those who are interested, sample raster file was created by
@@ -87,7 +87,7 @@ flag.
 
 .. code-block:: bash
 
-   r.in.gdal -r input=/path/to/eu_dem_sample.tif output=dem 
+   r.in.gdal -r input=/home/user/geodata/eu-dem/dem_sample.tif output=dem 
 
 .. figure:: ../images/units/15/dem-imported.png
    :class: large
