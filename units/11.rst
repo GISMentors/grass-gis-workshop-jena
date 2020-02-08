@@ -2,18 +2,23 @@ Unit 11 - Scripting
 ===================
 
 Let's start with script created by *Graphical modeler* in :ref:`Unit
-10 <modeler-python>` saved into file. Before saving
-the script we will remove the lines below to avoid generating GUI
-dialogs when launching the script.
+10 <modeler-python>` saved into file. Before saving the script replace
+the lines below to avoid generating GUI dialogs when launching the
+script.
 
 .. code-block:: python
 
-   #%module
-   #% description: NDVI model version 2
-   #%end                
+   options, flags = parser()
 
-Then we can try to run a script from Layer Manager |grass-script-load|
-:sup:`Launch user-defined script` main toolbar.
+with
+
+.. code-block:: python
+
+   # options, flags = parser()
+   options, flags = [None, None]
+
+Then run a script from Layer Manager |grass-script-load| :sup:`Launch
+user-defined script` main toolbar.
 
 .. note:: Before starting a script GRASS can ask you to add script
    directory path into GRASS_ADDON_PATH. It can be useful if you will
@@ -25,7 +30,7 @@ Then we can try to run a script from Layer Manager |grass-script-load|
            
       Register script directory into GRASS Addon Path.
 
-We select script to run, the command output will be printed in Layer
+Select script to run, the command output will be printed in Layer
 Manager :item:`Console` tab.
       
 ..
@@ -42,12 +47,12 @@ Manager :item:`Console` tab.
 
    Script output printed in Layer Manager Console.
 
-We can modify the script based :doc:`10` in order to print basic
-statistics: minimum, maximum, and mean NDVI values. You can use your
-favorite editor or if your do not have any than GRASS integrated
-Python editor |grass-python| :sub:`Open a simple Python code editor`
-is probably the most simple choice. Load script by |grass-open|
-:sup:`Open` and start modifying it.
+Modify the script based :doc:`10` in order to print basic statistics:
+minimum, maximum, and mean NDVI values. You can use your favorite
+editor or if your do not have any than GRASS integrated Python editor
+|grass-python| :sub:`Open a simple Python code editor` is probably the
+most simple choice. Load script by |grass-open| :sup:`Open` and start
+modifying it.
 
 .. figure:: ../images/units/11/editor.png
 
@@ -155,7 +160,7 @@ Example of script output below.
 
    .. code-block:: python
 
-      def main():
+      def main(options, flags):
           compute()
           stats()
       

@@ -104,7 +104,7 @@ def stats():
         print ('NDVI class {0}: {1:.4f} (min) {2:.4f} (max) {3:.4f} (mean)'.format(
         cat, float(min), float(max), float(mean)))
 
-def main():
+def main(options, flags):
     compute()
     stats()
 
@@ -113,4 +113,4 @@ def main():
 if __name__ == "__main__":
     options, flags = parser()
     atexit.register(cleanup)
-    sys.exit(main())
+    sys.exit(main(options, flags))
