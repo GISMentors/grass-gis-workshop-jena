@@ -1,7 +1,7 @@
 Unit 10 - Python intro
 ======================
 
-:wikipedia-en:`Python` programming/scripting language is very popular
+:wikipedia:`Python` programming/scripting language is very popular
 in the field of GIS and a science in general. Python is also the main
 scripting platform for Esri product (see `arcpy
 <http://pro.arcgis.com/en/pro-app/arcpy/get-started/what-is-arcpy-.htm>`__
@@ -80,9 +80,6 @@ GRASS commands can be run by :grass-script:`core.run_command` function.
                      viname='ndvi', nir='L2A_T32UPB_20170706T102021_B08_10m', overwrite=True)
    # 5.
    grass.run_command('r.univar', map='ndvi')
-
-.. note:: Function :grass-script:`core.run_command` prints return code
-          of run command, ``0`` value is fine ;-)
 
 .. tip:: Python shell has its history, you can browse previous
    commands by :kbd:`Alt+P`, next commands by :kbd:`Alt+N`.
