@@ -38,7 +38,6 @@
 #% answer: 1600
 #%end
 #%option G_OPT_V_OUTPUT
-#% answer: jena_classes
 #%end
 
 
@@ -136,7 +135,7 @@ def stats():
            column_prefix='ndvi', method=['minimum','maximum','average'])
     
     data = vector_db_select(options["output"])
-    for vals in data['values'].itervalues():
+    for vals in data['values'].values():
         # unfortunately we need to cast values by float
         print ('NDVI class {0}: {1:.4f} (min) {2:.4f} (max) {3:.4f} (mean)'.format(
             vals[0], float(vals[2]), float(vals[3]), float(vals[4])))
