@@ -58,23 +58,11 @@ data produced by model (:menuselection:`Model --> Model properties`).
    Define model properties and enable overwriting data produced by
    model.
 
-Let's try out our first model. You can run the model repeatedly on
-different computation regions. You can quickly change current
-computation region by *Set computation region extent interactively*
-from |grass-zoom-more| :sup:`Various zoom options` in Map Display.
-
-.. figure:: ../images/units/08/model-v1-region.png
-
-   Change computation region before running the model.
-
-
-.. important:: Before changing the region it's good idea to remove mask if
-   exists.
-
-   .. code-block:: bash
-
-      r.mask -r
-
+.. figure:: ../images/units/08/model-v1-req-display.png
+   
+   Set the output raster map to be automatically displayed in the map
+   window.
+   
 Now let's run our model by |grass-execute| :sup:`Run model`. Progress
 is printed into :item:`Command output`.
 
@@ -82,13 +70,25 @@ is printed into :item:`Command output`.
 
    Model computation progress.
 
-After redrawing map display |grass-layer-redraw| :sup:`Render map` (assuming
-that we have already displayed raster map of NDVI in map display), we
-should see a difference.
-
 .. figure:: ../images/units/08/model-v1-display.png
    :class: middle
    
    New NDVI raster map computed by the model.
+
+Run the model repeatedly on different computation regions. Current
+computation region can be change easily by *Set computation region
+extent interactively* from |grass-zoom-more| :sup:`Various zoom
+options` in Map Display.
+
+.. figure:: ../images/units/08/model-v1-region.png
+
+   Change computation region before running the model.
+
+.. important:: Before changing the region it's good idea to remove mask if
+   exists.
+
+   .. code-block:: bash
+
+      r.mask -r
 
 Sample model to download: `ndvi-v1.gxm <../_static/models/ndvi-v1.gxm>`__
