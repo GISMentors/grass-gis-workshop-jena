@@ -1,10 +1,10 @@
 Unit 09 - Model tuning
 ======================
 
-Let's improve our NDVI model created in :doc:`08`. The model operates
-in a current computation region, it would be better to define region
-based on user input, eg. by city area. Then NDVI would be computed
-only within user defined area.
+Let's improve our NDVI model created in :doc:`08`. Current model
+operates in a current computation region, it would be better to define
+region based on user input. Then NDVI would be computed only within
+user defined area.
 
 NDVI values range from +1.0 to -1.0. Areas of barren rock, sand, or
 snow usually show very low NDVI values (for example, 0.1 or
@@ -24,8 +24,8 @@ eliminate too small areas.
 
 From GRASS perspective computation will be performed by several steps/modules:
 
-#. Erase cloud mask from input city region (:grasscmd:`v.overlay`: ``not`` operator)
-#. Set computation region based on modified input city region (:grasscmd:`g.region`)
+#. Erase cloud mask in input region (:grasscmd:`v.overlay`: ``not`` operator)
+#. Set computation region based on modified input region (:grasscmd:`g.region`)
 #. Set mask (:grasscmd:`r.mask`)
 #. Compute NDVI values (:grasscmd:`i.vi`)
 #. Reclassify NDVI values into classes (:grasscmd:`r.recode`)
@@ -33,15 +33,28 @@ From GRASS perspective computation will be performed by several steps/modules:
 #. Convert raster classes into vector areas (:grasscmd:`r.to.vect`)
 #. Remove small areas (join them with adjacent areas by :grasscmd:`v.clean`)
 
-New modules can be added to the existing model in standard way by
-|grass-module-add| :sup:`Add command (GRASS module) to the model`. New
-commands are added to the end of a computation workflow which is not
-desired in this case. Good news: we can reorder commands (items) in
+Overview of commands below:
+
+.. code-block:: bash
+
+   v.overlay ainput=jena_region binput=MaskFeature operator=not output=region_mask
+   g.region vector=region_mask align=L2A_T32UPB_20170706T102021_B04_10m
+   r.mask vector=region_mask
+   i.vi red=L2A_T32UPB_20170706T102021_B04_10m output=ndvi nir=L2A_T32UPB_20170706T102021_B08_10m
+   r.recode input=ndvi output=ndvi_class rules=reclass.txt
+   r.colors map=ndvi_class rules=colors.txt
+   r.to.vect -s -v input=ndvi_class output=ndvi_class type=area
+   v.clean input=ndvi_class output=ndvi_vector tool=rmarea threshold=1600
+   
+New modules can be added to the existing model by |grass-module-add|
+:sup:`Add command (GRASS module) to the model`. Note that new commands
+are added to the end of a computation workflow which is not desired in
+this case. Commands (items in model terminology) can be reorder in
 :item:`Items` tab.
 
 .. figure:: ../images/units/09/reorder-items.png
 
-   Reorder items - commands in the model. In this case move
+   Reorder model items (commands). In this case move
    :grasscmd:`v.overlay` up to the first position.
 
 .. note:: Be aware of correct computation region, don't forget to align region
@@ -84,8 +97,8 @@ Sample model to download: `ndvi-v2.gxm <../_static/models/ndvi-v2.gxm>`__
 Parameterization
 ----------------
 
-Till now our models have all parameters hard-coded, there is nothing
-which can be influenced by user when launching the model.
+Our models have all parameters hard-coded, there is nothing which can be
+influenced by a user when launching the model.
 
 In Graphical Modeler user input can be defined by two mechanisms:
 
@@ -97,15 +110,15 @@ Let's start with parametrization of module options, it's simple. We
 would like to change our model in order to provide the user ability
 to:
 
-* define own city region area (option :param:`ainput` in
+* define own region area (option :param:`ainput` in
   :grasscmd:`v.overlay`)
 * set threshold for small areas (option :param:`threshold` in
   :grasscmd:`v.clean`)
 
-For each command that we want to parameterize let's open proprieties
-dialog by double-click on command item in the model. Then you find a
-option to be parameterized and enable :item:`Parameterized in model`
-checkbox below. That's all.
+For each command that we want to parameterize a properties dialog by
+double-click on command item must be open. Then desired option to be
+parameterized found and enabled by :item:`Parameterized in model`
+checkbox below.
 
 .. figure:: ../images/units/09/parametrize-cmd.svg
 
@@ -125,12 +138,12 @@ defining inputs.
    options are organized into tabs based on the modules.
 
 After setting the input parameters the model can be :item:`Run`.
-
+   
 .. tip:: Saved models can be run directly from Layer Manager
    :menuselection:`File --> Run model` without opening Graphical Model
    itself.
 
-Let's test our model with various settings.
+Let's test our model with different settings...
 
 .. figure:: ../images/units/09/ndvi-no-reduction.png
 
@@ -140,8 +153,8 @@ Let's test our model with various settings.
 
    NDVI classes smaller than 2000m :sup:`2` (so 20 pixel) removed.
 
-Now we can change region, eg. by buffering Jena city region
-(:grasscmd:`v.buffer`).
+Let's change the computation region region, eg. by buffering Jena city
+region (:grasscmd:`v.buffer`).
 
 .. code-block:: bash
 
