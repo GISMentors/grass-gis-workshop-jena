@@ -31,7 +31,7 @@ bands (red and near-infrared channels).
 Processing plugin
 -----------------
 
-Processing plugin is a generic toolbox which allows to use processing
+Processing plugin is a generic toolbox which allows to run processing
 tools provided by various software packages. Let's open
 :menuselection:`Processing --> Toolbox` and search for
 :grasscmd:`i.vi` GRASS module.
@@ -48,11 +48,11 @@ tools provided by various software packages. Let's open
    parameters section.
 
 :numref:`processing-result` nicely shows how Processing plugin
-is working. First of all a temporal GRASS location is created by
-:grasscmd:`g.proj`, then input data are linking into this location by
+works. First of all a temporal GRASS location is created by
+:grasscmd:`g.proj`, input data are linking into this location by
 :grasscmd:`r.external`. Then computation can finally starts by running
-:grasscmd:`i.vi`. In the last step output data are exported outside of
-GRASS using :grasscmd:`r.out.gdal`. The resultant GTIFF file can be
+:grasscmd:`i.vi` module. In the last step output data are exported out
+of GRASS using :grasscmd:`r.out.gdal`. The resultant GTIFF file is
 displayed in QGIS map window.
 
 .. _processing-i-vi-running:
@@ -67,32 +67,29 @@ displayed in QGIS map window.
 .. figure:: ../images/units/07/processing-result.png
    :class: large
            
-   Resultant NDVI raster displayed to QGIS map window (with better
-   color interpretation than grayscale).
-
-.. note:: We skipped masking cloud mask areas. There is a room for
-          improvements ;-)
+   Resultant NDVI raster displayed in QGIS map window (with better
+   color interpretation than grayscale). No clouds mask involved.
 
 GRASS plugin
 ------------
 
-GRASS plugin has been designed to support GRASS as processing toolbox
-in more straightforward way. This also includes ability to display
-data stored in GRASS native format, raster and vector maps located in
-GRASS locations. And, of course, ability to run any GRASS command with
-full flexibility of GRASS environment. On the other hand, in contrast
-to **Processing** plugin, the GRASS plugin requires at least basic
-knowledge of GRASS GIS. User have to understand concept of locations
-and mapset, and control computational region. Data created by GRASS
-plugin are persistent and accessible also by GRASS itself.
+GRASS plugin has been designed to support GRASS as *native* processing
+toolbox.  This also includes ability to display data stored in GRASS
+native format, raster and vector maps located in GRASS locations. And,
+of course, ability to run any GRASS command with full flexibility of
+GRASS environment. On the other hand, in contrast to **Processing**
+plugin, the GRASS plugin requires at least basic knowledge of GRASS
+GIS. User have to understand concept of locations and mapset, and
+control computational region. Data created by GRASS plugin are
+persistent and accessible also by GRASS itself.
 
 GRASS plugin behaves similarly to GRASS itself. In order to use GRASS
-tools, there must be location and mapset to be entered. New
-location/mapset can be created by :menuselection:`Plugins --> GRASS
---> New Mapset`. Creating new mapsets in GRASS plugin is a very
-similar procedure to creating location/mapset in native GRASS
+tools, there must be a location and a mapset available to be
+entered. New location/mapset can be created by :menuselection:`Plugins
+--> GRASS --> New Mapset`. Creating new mapsets in GRASS plugin is a
+very similar procedure to creating location/mapset in native GRASS
 environment, see :ref:`Creating new location <create-location>` (Unit
-02). As we already have GRASS location and mapset prepared from
+02). Since we already have GRASS location and mapset prepared from
 :doc:`02`, we can easily open it by :menuselection:`Plugins --> GRASS
 --> Open Mapset`.
 
@@ -101,8 +98,9 @@ environment, see :ref:`Creating new location <create-location>` (Unit
            
    Open existing location and mapset by GRASS plugin.
 
-After opening mapset, the GRASS tools are activated and accessible
-from menu :menuselection:`Plugins --> GRASS --> Open GRASS Tools`.
+After opening existing mapset, the GRASS tools are activated 
+accessible from menu :menuselection:`Plugins --> GRASS --> Open GRASS
+Tools`.
 
 As advanced GRASS users, we know that before any computation desired
 computational region must be defined. For this task, GRASS plugin
@@ -114,34 +112,24 @@ operations can be used :grasscmd:`g.region` GRASS module.
    Set computation region from map display. Don't forget to set
    correct spatial resolution (for real work it's better to use
    :grasscmd:`g.region` with `align` option).
-   
-We can try to compute NDVI index using :grasscmd:`r.mapcalc`, and
-well-known map algebra technique.
 
-.. figure:: ../images/units/07/grass-r-mapcalc.png
-   :class: small
-   
-   Search :grasscmd:`r.mapcalc` module in GRASS plugin.
+Simply launch :grasscmd:`i.vi` from **GRASS modules** tab.
 
-GRASS plugin offers native graphical front-end for map algebra.
+.. todo:: add screenshot
+          
+.. tip:: GRASS modules can be launched from **GRASS Shell** as shows
+         the figure below.
 
-.. figure:: ../images/units/07/grass-map-calc.png
-
-   Graphical Map Calculator in GRASS plugin.
-
-Or simply launch :grasscmd:`i.vi` from **GRASS modules** tab or
-alternatively from **GRASS Shell** as shows the figure below.
-
-.. figure:: ../images/units/07/grass-shell.png
+   .. figure:: ../images/units/07/grass-shell.png
         
-   GRASS Shell.
+      Start a GRASS Shell.
 
-.. tip:: If you add special flag :param:`--ui` at the end of command,
-   a native GRASS GUI dialog appears. In this way you can start other
+   By adding a special flag :param:`--ui` to the end of command, a
+   native GRASS GUI dialog appears. In this way you can start other
    GRASS tools like :grasscmd:`g.gui.gmodeler` (see :doc:`08`) or
    whole GRASS GUI by :grasscmd:`g.gui`. But it seems schizophrenic a
    bit to start GRASS GUI from GRASS plugin in QGIS
-   environment. Someone could ask, why don't you use GRASS directly
+   environment. Someone can ask, why don't you use GRASS directly
    ;-)
 
    .. figure:: ../images/units/07/grass-i-vi-shell.svg
@@ -149,12 +137,26 @@ alternatively from **GRASS Shell** as shows the figure below.
            
       Launch native GUI dialog for :grasscmd:`i.vi` GRASS module.
 
-In any case, output data are stored in current mapset open by GRASS
-plugin. And GRASS data can be directly accessed by QGIS *Browse panel*
-in standard way as other data sources, see
-:numref:`qgis-grass-browse`.
+.. note:: NDVI can be alternatively computed using
+   :grasscmd:`r.mapcalc`, and well-known map algebra technique.
 
-.. _qgis-grass-browse:
+   .. figure:: ../images/units/07/grass-r-mapcalc.png
+      :class: small
+   
+      Search :grasscmd:`r.mapcalc` module in GRASS plugin.
+
+   GRASS plugin offers native graphical front-end for map algebra.
+
+      .. figure:: ../images/units/07/grass-map-calc.png
+
+         Graphical Map Calculator in GRASS plugin.
+
+Resultant output data are stored in current mapset open by GRASS
+plugin. Native GRASS data can be directly accessed by QGIS *Browse
+Panel* in normal way as other data sources, see
+:numref:`qgis-grass-browser`.
+
+.. _qgis-grass-browser:
 
 .. figure:: ../images/units/07/grass-data-browse.png
    :class: large
