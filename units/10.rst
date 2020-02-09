@@ -1,13 +1,18 @@
 Unit 10 - Python intro
 ======================
 
-:wikipedia:`Python` programming/scripting language is very popular
-in the field of GIS and a science in general. Python is also the main
-scripting platform for Esri product (see `arcpy
+:wikipedia:`Python` programming/scripting language is very popular in
+the field of GIS and a science in general. Python is also the main
+scripting platform for Esri products (see `arcpy
 <http://pro.arcgis.com/en/pro-app/arcpy/get-started/what-is-arcpy-.htm>`__
 package). GRASS is not an exception. In reality, many GRASS modules
 are simple Python scripts, eg. :grasscmd:`r.mask` (see *Source Code*
 section).
+
+.. important:: Until GRASS GIS version 7.6 only Python 2 has been
+   supported. Python 3 support has been introduced in GRASS GIS
+   recently. The first version with full Python 3 support is GRASS GIS
+   7.8.
 
 GRASS Python environment includes various libraries, see
 :grasscmd2:`GRASS documentation <libpython/index.html>` for
@@ -21,19 +26,29 @@ workshop:
 * space-temporal :grasscmd2:`GRASS GIS Temporal Framework
   <libpython/temporal_framework.html>`
 
-Let's do our first steps from "safe" GRASS GUI environment which we
-already know. Switch in Layer Manager to :item:`Python` tab.
+:grasscmd2:`PyGRASS <libpython/pygrass_index.html>` has been
+originally design as an **object-oriented** Python API for GRASS
+GIS. This is a major difference to :grasscmd2:`GRASS Scripting Library
+<libpython/script_intro.html>` which consists of procedures - Python
+functions. It is important to mention that PyGRASS has not been
+designed as replacement of GRASS Scripting Library, the both libraries
+are living next to each other. It is up to the user (you) which
+library use in his/her scripts. It's also possible to compine the both
+libraries in one script.
+  
+Let's do our first steps towards Python scripting in GRASS GIS using
+Layer Manager's :item:`Python` tab.
 
 .. figure:: ../images/units/10/layer-manager-python.png
 
    Python shell in Layer Manager.
             
-As initial step we try to script simple computation workflow:
+As initial step we try to script simple computation workflow below:
 
-#. Set computation extent to Jena city region, align region to Sentinel band
+#. Set computation extent to Oslo region, align region to Sentinel bands
 #. Extend computation region by 1km offset
 #. Set mask based on cloud vector map
-#. Compute NDVI index
+#. Compute NDVI
 #. Compute NDVI values statistics, print min, max and mean NDVI values
 
 It turns into bunch of GRASS commands (map names shorten):
@@ -60,8 +75,12 @@ It turns into bunch of GRASS commands (map names shorten):
                
       Log GRASS commands into file.         
             
-We turn these commands into Python syntax. In this part we will focus
-on **GRASS Scripting Library** which is simple enough for beginners.
+These commands will be turned into Python syntax. In this unit **GRASS
+Scripting Library** will be used since GUI Python tab already includes
+this library. Only basic syntax will be explained. In next units we
+will switch to more fancy **PyGRASS** environment.
+
+.. todo:: really?
 
 .. _python-code:
 
@@ -84,10 +103,9 @@ GRASS commands can be run by :grass-script:`core.run_command` function.
 .. tip:: Python shell has its history, you can browse previous
    commands by :kbd:`Alt+P`, next commands by :kbd:`Alt+N`.
 
-There is a weak point in our first script. Module :grasscmd:`r.univar`
-is run by function :grass-script:`core.run_command`. In the result
-output of this command is discarded, only return code is
-printed. That's not what we want. A solution is to run
+There is a small problem with our first script. Output of module
+:grasscmd:`r.univar` is discarded by :grass-script:`core.run_command`
+function, only return code is printed. A solution is to run
 :grasscmd:`r.univar` by :grass-script:`core.read_command` which does
 not discard command output. Instead of return code, the output is
 returned by this function. But it is still not perfect, statistics is
@@ -112,7 +130,7 @@ to change two issues:
 
    Running Python code in Layer Manager.   
 
-At end we can display resultant NDVI raster map by calling
+Resultant NDVI raster map can be displayed easily by calling
 ``AddLayer()`` function directly from Python shell.
 
 .. code-block:: python
@@ -129,11 +147,11 @@ easily turned into Python script. Let's open the one of models created
 in :doc:`09`: `ndvi-v2.gxm <../_static/models/ndvi-v2.gxm>`__ and go
 to :item:`Python editor` tab.
 
-You can easily modify generated Python script in simple editor,
-:item:`Run` original or modified script. Script can be also saved as
-file (:item:`Save as`).
+Generated Python script can be easily modified in built-in simple
+editor.
            
 .. figure:: ../images/units/10/model-python-editor.svg
    :class: middle
    
-   Python editor integrated in Graphical Modeler.
+   Python editor integrated in Graphical Modeler. Python code can be run or
+   saved into file.
