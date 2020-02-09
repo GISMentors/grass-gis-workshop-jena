@@ -52,6 +52,7 @@ In a nutshell
 
 * doing data analysis
 * working with topological vector data
+* working with large amount of data
 * analysing spatio-temporal data
 * doing Python scripting
 * deploying server-side applications (e.g. as WPS processes)
@@ -88,8 +89,8 @@ See https://grass.osgeo.org/download/software/ms-windows/
 
 There are basically two options:
 
-* **OSGeo4W network installer**
-* **traditional standalone installer**
+#. OSGeo4W network installer
+#. traditional standalone installer
 
 Choose 64bit version if you don't care.
 

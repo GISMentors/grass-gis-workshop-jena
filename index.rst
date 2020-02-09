@@ -95,7 +95,7 @@ folder on the desktop.
 .. figure:: images/osgeolive.png
    :class: middle
         
-   OSGeoLive VM
+   Customized OSGeoLive VM
 
 Download tailored virtual machine **including sample dataset** as `7z
 archive
@@ -108,8 +108,8 @@ Sample dataset
 ==============
 
 For purpose of this training materials a sample dataset has been
-created based on Open Data covering Germany and Jena region. See
-detailed description below.
+created based on Open Data covering Germany and Jena region
+specifically. See detailed description below.
 
 * EU-DEM (directory: :file:`eu-dem`, source: `Copernicus Land Monitoring
   Service - EU-DEM
@@ -131,6 +131,8 @@ Sample dataset can be also download as `7z archive
 
 Units
 =====
+
+See a `timetable <https://docs.google.com/spreadsheets/d/1usoz9TaWb2mlWtq5EgaHA6f3dB_oeBYMC_ovwPSB_Ns/edit?usp=sharing>`__
 
 .. toctree::
    :maxdepth: 2
@@ -165,10 +167,6 @@ Units
    units/28
    units/29
    units/30
-
-..
-   Timetable
-   `[here] <https://docs.google.com/spreadsheets/d/1im4Yx_us0m1KfKxruJ2Un7chAlh6fxudlrxjVVK9UaE/edit?usp=sharing>`__
 
 Lecturer
 ========
