@@ -172,33 +172,38 @@ Map display --> Add vector` or a toolbar |grass-layer-vector-add|
    Display Jena city administrative boundary vector layer. Select
    :menuselection:`Display layer` from contextual menu in Data tab or
    simply use double-click on the desired layer.
-   
-We can also add OSM WMS layer by |grass-layer-wms-add| :sup:`Add web
-service layer` to ensure that our data is spatially correct. Let's use
-WMS provided by *OSM-WMS-EUROPE* (http://129.206.228.72/cached/osm)
-which can be added by :item:`Add default`.
 
-After defining WMS URL in the dialog, a service can be connected and
-desired layer chosen.
+..                  
+   We can also add OSM WMS layer by |grass-layer-wms-add| :sup:`Add web
+   service layer` to ensure that our data is spatially correct. Let's use
+   WMS provided by *OSM-WMS-EUROPE* (http://129.206.228.72/cached/osm)
+   which can be added by :item:`Add default`.
 
-.. figure:: ../images/units/02/d-wms.svg
+   After defining WMS URL in the dialog, a service can be connected and
+   desired layer chosen.
+
+   .. figure:: ../images/units/02/d-wms.svg
             
-   Choose WMS layer to display. Don't forget to change source
-   projection to UTM zone 32N to avoid reprojection.
+      Choose WMS layer to display. Don't forget to change source
+      projection to UTM zone 32N to avoid reprojection.
 
-Let's change map properties in order to display outline of Jena city
-region polygon in red color. Switch to :item:`Layer` tab and choose
-:item:`Properties` from contextual menu (right click on selected
-layer). Set also :item:`Area fill color` to transparent.
+   Let's change map properties in order to display outline of Jena city
+   region polygon in red color. Switch to :item:`Layer` tab and choose
+   :item:`Properties` from contextual menu (right click on selected
+         layer). Set also :item:`Area fill color` to transparent.
 
-.. figure:: ../images/units/02/d-vect-colrs.png
+   .. figure:: ../images/units/02/d-vect-colrs.png
             
-   Change map layer properties.
+      Change map layer properties.
 
-.. figure:: ../images/units/02/jena-boundary-wms.png
-   :class: large
+.. tip:: Unpack basemap layer from :file:`osm/basemap.pack`
+   (:menuselection:`File --> Import raster map --> Unpack raster
+   map`).
 
-   Final composition, OSM WMS layer as a basemap, boundary of Jena
-   city region in red color.
+   .. figure:: ../images/units/02/jena-boundary-wms.png
+      :class: large
 
-.. todo:: Hide WMS (broken in GRASS)
+      A map composition, basemap and boundary of Jena city region in red
+      color.
+
+.. todo:: Fix WMS reprojection in GRASS GIS.
