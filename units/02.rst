@@ -41,8 +41,8 @@ The GRASS GIS startup screen requires to set up three items:
 
 At first define database directory (:fignote:`1.`) if not already set
 up. Then a new location can be created (:fignote:`2a.`) or official
-GRASS sample location(s) downloaded (:fignote:`2b.`). We will create
-our own location, a project related to *Jena region*.
+GRASS sample location(s) downloaded (:fignote:`2b.`). Let's create our
+own location, a project related to *Jena region*.
 
 .. note:: Download sample location functionality is available only in
    GRASS 7.4+.
@@ -53,7 +53,7 @@ Create a new location
 ---------------------
 
 A new GRASS location can be easily created by :wikipedia:`EPSG` code
-or available geodata. After pressing :item:`New` button, see
+or available input geodata. After pressing :item:`New` button, see
 :numref:`startup0` (:fignote:`2a.`), the Location Wizard shows up.
 
 In the first page of a wizard, a location name is defined, optionally
@@ -79,16 +79,17 @@ In the next page define an input file.
 .. figure:: ../images/units/02/create-location-2.png
 
    Define an input file `jena_boundary.gpkg
-   <../_static/data/jena_boundary.gpkg>`__.
+   <../_static/data/jena_boundary.gpkg>`__ (available from
+   :file:`geodata/osm` directory).
 
 .. _city_region_download:
 
 .. note:: Jena administrative boundary has been downloaded from
    OpenStreetMap project using Overpass API by GDAL library (`ogr2ogr`
-   utility). Downloaded data are stored in OGC GeoPackage format (*we
-   don't like an old-school Esri Shapefile format*). Data is reprojected
-   to UTM zone 32N (:epsg:`32632`) since we want to work with Sentinel
-   data afterwards, see :doc:`03`.
+   utility). Downloaded data is stored in OGC GeoPackage format (*we
+   don't like an old-school Esri Shapefile format*). Data is
+   reprojected to UTM zone 32N (:epsg:`32632`) since we want to work
+   with Sentinel data afterwards, see :doc:`03`.
    
    .. code:: bash
 
@@ -145,11 +146,11 @@ location.
 Display data
 ------------
 
-GRASS GUI is designed as an *simple* user interface. Basically it is
-just a GUI front-end calling GRASS commands (see :ref:`grass-modules`)
-in the background. After startup, the GUI appears. It consists of two
-main windows: *Layer Manager* and *Map Display*, see
-:numref:`gui-windows`.
+GRASS GUI is designed as a *simple and lightweight* user
+interface. Basically it is just a GUI front-end calling GRASS commands
+(see :ref:`grass-modules`) in the background. After startup, the GUI
+appears. It consists of two main windows: *Layer Manager* and *Map
+Display*, see :numref:`gui-windows`.
 
 .. _gui-windows:
 
