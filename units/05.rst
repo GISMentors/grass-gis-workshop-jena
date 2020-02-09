@@ -6,13 +6,13 @@ remote sensing. It is a simple task which requires basic knowledge of
 *map algebra*. The key GRASS module related to map algebra is
 :grasscmd:`r.mapcalc`.
 
-.. math::
-        
-   NDVI = (NIR - VIS) / (NIR  + VIS)
-
 To compute NDVI, the red (VIS) and near-infrared (NIR) channels are
 required. In the case of Sentinel-2, it refers to 4th and 8th
 band. The bands have been already imported into GRASS in :doc:`03`.
+
+.. math::
+        
+   NDVI = (NIR - VIS) / (NIR  + VIS)
 
 A GUI tool for map algebra can be launched from :menuselection:`Raster
 --> Raster map calculator` or by |grass-raster-calculator|
@@ -57,26 +57,31 @@ The first issue can be easily fixed by :grasscmd:`r.colors`
 to ignore cloudy areas in computation. This operation can be done by
 :grasscmd:`r.mask` module (:menuselection:`Raster --> Mask`).
 
-There is also specialized module for computing various vegetation
-indices including NDVI - :grasscmd:`i.vi`. This module makes NDVI
-computing even simpler, and it also solves first issue since the
-module sets *ndvi* color table automatically.
+A mask will defined base on cloud mask vector map in inverse
+manner. Note that mask as other raster processing is created only
+within the current computation region.
 
-At first let's define a mask based on cloud mask vector map (note that
-mask is created only within current computation region).
+.. figure:: ../images/units/05/r-mask.png
 
+   Creating mask from an input vector map.
+   
 .. code-block:: bash
 
    r.mask -i vector=MaskFeature
 
 .. note:: Cloud mask provided by Sentinel products is not perfect, but
    it is a good starting point for us.
-          
-Then let's recompute :map:`ndvi` map with :grasscmd:`i.vi` (map names shorten):
+
+There is also specialized module for computing various vegetation
+indices including NDVI - :grasscmd:`i.vi`. This module makes NDVI
+computing even simpler.
+
+Let's recompute :map:`ndvi` map using :grasscmd:`i.vi` (map names
+shorten):
 
 .. code-block:: bash
 
-   i.vi --overwrite red=B04_10m output=ndvi viname=ndvi nir=B08_10m
+   i.vi red=B04_10m output=ndvi viname=ndvi nir=B08_10m
 
 .. tip:: Also a simple legend can be added to map display by
    |grass-overlay-add| :sup:`Add map elements` (*Add raster legend*) from

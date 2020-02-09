@@ -12,7 +12,7 @@ Manager menu, :item:`Modules` tab, or from command prompt
 (:item:`Console` tab).
 
 Let's find a tool for clipping cloud mask vector map by Jena city
-area.
+region.
 
 .. figure:: ../images/units/04/modules-tab.svg
 
@@ -51,11 +51,10 @@ The corresponding command for console would be:
 
 .. figure:: ../images/units/04/jena-clouds.png
 
-   Clipped clouds mask by Jena city area.
+   Clipped clouds mask by Jena city region.
 
-As you can see from example above GRASS commands start by a
-prefix. This prefix groups modules into several sections, see table
-below.
+Each GRASS command starts by a prefix. This prefix groups modules into
+several sections, see table below.
   
 .. cssclass:: border
 
@@ -128,9 +127,6 @@ to selected map*).
    .. figure:: ../images/units/04/show-comp-region.png
 
       Show computation region extent in map display.
-
-Full flexibility for operating with computation region allows
-:grasscmd:`g.region` module.
 
 Full flexibility for operating with computation region allows
 :grasscmd:`g.region` module (:menuselection:`Settings --> Computational
