@@ -3,19 +3,14 @@ Unit 11 - PyGRASS scripting
 
 Let's start with a Python script created by *Graphical modeler* in
 :ref:`Unit 10 <modeler-python>` saved into file. Before saving the
-script replace the lines below to avoid generating GUI dialogs when
-launching the script.
+script remove the lines below to avoid generating GUI dialogs when
+launching the script (will be explained in :doc:`12`).
 
 .. code-block:: python
 
-   options, flags = parser()
-
-with
-
-.. code-block:: python
-
-   # options, flags = parser()
-   options, flags = [None, None]
+   #%module
+   #% description: NDVI model version 2
+   #%end
 
 Then run a script from Layer Manager |grass-script-load| :sup:`Launch
 user-defined script` main toolbar.
