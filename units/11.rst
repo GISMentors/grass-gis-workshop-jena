@@ -122,20 +122,16 @@ In the next step the script will be improved by printing NDVI value
 statistics (be aware of indentation), see :ref:`Unit 10
 <python-code>`.
 
-.. code-block:: python
+.. literalinclude:: ../_static/scripts/ndvi-v2.py
+   :language: python
+   :lines:  87-94
 
-   from subprocess import PIPE
-   from grass.script import parse_key_val
+.. note:: Import relevant functions
+
+   .. literalinclude:: ../_static/scripts/ndvi-v2.py
+      :language: python
+      :lines:  19-21
    
-   ret = Module('r.univar', flags='g', map='ndvi', stdout_=PIPE)
-   stats = parse_key_val(ret.outputs.stdout)
-   print ('-' * 80)
-   print ('NDVI value statistics')
-   print ('-' * 80)
-   print ('NDVI min value: {0:.4f}'.format(float(stats['min'])))
-   print ('NDVI max value: {0:.4f}'.format(float(stats['max'])))
-   print ('NDVI mean value: {0:.4f}'.format(float(stats['mean'])))
-
 Launch script by |grass-execute| :sup:`Run` and check out an output in
 Layer Manager :item:`Console` tab.
 
@@ -150,18 +146,9 @@ Statistics
 Also NDVI classes statistics could be reported. Area size can be
 easily computed by :grasscmd:`v.report`.
 
-.. code-block:: python
-
-    print ('-' * 80)
-    print ('NDVI class statistics')
-    print ('-' * 80)
-    ret = Module('v.report', map='ndvi_vector', option='area', stdout_=PIPE)
-    for line in ret.outputs.stdout.splitlines()[1:]: # skip first line (cat|label|area)
-        # parse line (eg. 1||2712850)
-        data = line.split('|')
-        cat = data[0]
-        area = float(data[-1])
-        print ('NDVI class {0}: {1:.1f} ha'.format(cat, area/1e4)) 
+.. literalinclude:: ../_static/scripts/ndvi-v2.py
+   :language: python
+   :lines:  96-105
 
 Output of :grasscmd:`v.report` module need to be parsed. Unfortunately
 the command does not offer shell script output similarly to
@@ -174,18 +161,9 @@ Than also NDVI zonal statistics for each class can be computed:
   stored in attribute table
 * attributes can be printed by :grasscmd:`v.db.select`
 
-.. code-block:: python
-
-    # v.to.rast: use -c flag for updating statistics if exists
-    Module('v.rast.stats', flags='c', map='ndvi_vector', raster='ndvi',
-           column_prefix='ndvi', method=['minimum','maximum','average'])
-    # v.db.select: don't print column names (-c)
-    ret = Module('v.db.select', flags='c', map='ndvi_vector', separator='comma', stdout_=PIPE)
-    for line in ret.outputs.stdout.splitlines():
-        # parse line (eg. 1,,-0.433962264150943,0.740350877192983,0.051388909449992)
-        cat,label,min,max,mean = line.split(',')
-        print ('NDVI class {0}: {1:.4f} (min) {2:.4f} (max) {3:.4f} (mean)'.format(
-        cat, float(min), float(max), float(mean)))
+.. literalinclude:: ../_static/scripts/ndvi-v2.py
+   :language: python
+   :lines:  107-116
                 
 Example of script output below.
 
@@ -215,8 +193,8 @@ Example of script output below.
    .. code-block:: python
 
       def main(options, flags):
-          compute()
-          stats()
+          compute(options)
+          stats(options)
       
           return 0
 

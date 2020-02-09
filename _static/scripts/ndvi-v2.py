@@ -24,7 +24,7 @@ from grass.pygrass.modules import Module
 def cleanup():
     pass
 
-def main():
+def main(options, flags):
     Module("v.overlay",
            overwrite = True,
            ainput = "jena_boundary@PERMANENT",
