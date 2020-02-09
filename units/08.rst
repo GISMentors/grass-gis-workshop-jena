@@ -1,14 +1,14 @@
 Unit 08 - Modeler
 =================
 
-**Graphic Modeler** allows creating, editing, and managing complex
+**Graphical Modeler** allows creating, editing, and managing complex
 models in easy-to-use graphical user interface. Using Graphical
-Modeler, that chain of processes (ie. GRASS modules) can be wrapped
-into one process (model). The model can be executed repeatedly with
+Modeler a chain of processes (ie. GRASS modules) can be wrapped
+into one process (a model). A model can be executed repeatedly with
 slightly different inputs or parameters.
 
-Our first model will be simple as much as possible based on :doc:`05`.
-Actually the model will perform two operations:
+Our first model will be based on :doc:`05`. Actually the model will
+perform two operations:
 
 #. set mask based on vector cloud mask file (:grasscmd:`r.mask`) and
 #. compute NDVI (:grasscmd:`i.vi`)
@@ -41,7 +41,7 @@ mask. Don't forget to enable inverse mask by :param:`-i` flag.
    Define parameters for :grasscmd:`r.mask`, a vector map used for
    creating a mask.
 
-In similar way will be added to the model second command
+In similar way will be added to the model the second command
 :grasscmd:`i.vi` (properties dialog for this command is open
 automatically because there are required options which must be set).
 
@@ -49,7 +49,7 @@ automatically because there are required options which must be set).
 
    NDVI model version 1.
 
-It's good idea to set metadata for the model and enable overwriting
+It's a good idea to set metadata for the model and enable overwriting
 data produced by model (:menuselection:`Model --> Model properties`).
 
 .. figure:: ../images/units/08/model-v1-props.svg
