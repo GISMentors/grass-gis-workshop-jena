@@ -197,14 +197,14 @@ Map display --> Add vector` or a toolbar |grass-layer-vector-add|
             
       Change map layer properties.
 
-.. tip:: Unpack basemap layer from :file:`osm/basemap.pack`
+.. tip:: Unpack basemap layer from :file:`geodata/osm/basemap.pack`
    (:menuselection:`File --> Import raster map --> Unpack raster
    map`).
 
    .. figure:: ../images/units/02/jena-boundary-wms.png
       :class: large
 
-      A map composition, basemap and boundary of Jena city region in red
-      color.
+      A map composition of basemap and boundary of Jena city region in
+      red color.
 
 .. todo:: Fix WMS reprojection in GRASS GIS.
