@@ -105,8 +105,10 @@ types are supported:
 Vector data
 ^^^^^^^^^^^
 
-Cloud mask is stored in :file:`MSK_CLOUDS_B00.gml` :wikipedia:`GML`
-file, which is a commonly used GIS exchange *vector* format.
+Let's import *vector* cloud mask data layer located in
+:file:`sentinel/sample` directory. Cloud mask is stored in
+:file:`MSK_CLOUDS_B00.gml` :wikipedia:`GML` file, which is a commonly
+used GIS exchange *vector* format.
 
 .. figure:: ../images/units/03/import-vector-toolbar.png
 

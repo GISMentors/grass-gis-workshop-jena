@@ -7,19 +7,23 @@ Accessing GRASS modules
 -----------------------
 
 GRASS GIS is a **modular system** which consists of several hundreds
-tools ("modules" in the GRASS terminology). Modules are accessible
-from the Layer Manager menu, :item:`Modules` tab, and from command
-prompt (:item:`Console` tab).
+tools (called "modules"). Modules are accessible from the Layer
+Manager menu, :item:`Modules` tab, or from command prompt
+(:item:`Console` tab).
 
 Let's find a tool for clipping cloud mask vector map by Jena city
 area.
 
 .. figure:: ../images/units/04/modules-tab.svg
 
-   Searching module in Layer Manager by 'clip' keyword.
+   Searching module in Layer Manager by 'clip' keyword. The module
+   which we are looking for is :grasscmd:`v.clip`. Module dialog can
+   be open by :item:`Run` button.
 
-The module which we are looking for is :grasscmd:`v.clip`.
-
+.. note:: Module :grasscmd:`v.clip` has been introduce to GRASS in
+   version 7.4.0. In older versions more generic :grasscmd:`v.overlay`
+   module can be used.
+   
 .. figure:: ../images/units/04/modules-cmd.png
 
    Launching :grasscmd:`v.clip` module from Layer Manager console.
@@ -27,24 +31,32 @@ The module which we are looking for is :grasscmd:`v.clip`.
 The commands (modules) can be called using GUI dialogs, from command
 line (:item:`Console` or "real" terminal), or by using Python API (see
 :doc:`10`). Figure bellow shows GUI dialog of :grasscmd:`v.clip`
-module. The corresponding command for console would be:
+module.
+
+.. _v-clip:
+
+.. figure:: ../images/units/04/v-clip.svg
+
+   GUI dialog for launching :grasscmd:`v.clip` module.
+
+.. tip:: CLI syntax of modules is shown in GUI dialog statusbar, see
+   :numref:`v-clip`. Command can be copied to clipboard by
+   :item:`Copy` button for later usage.
+
+The corresponding command for console would be:
 
 .. code-block:: bash
 
    v.clip input=MaskFeature clip=jena_boundary output=jena_clouds
 
-.. figure:: ../images/units/04/v-clip.svg
-
-   GUI dialog for launching :grasscmd:`v.clip` module (tip: syntax for
-   CLI displayed in the statusbar).
-
 .. figure:: ../images/units/04/jena-clouds.png
 
    Clipped clouds mask by Jena city area.
 
-All GRASS commands start by a prefix. This prefix groups modules into
-several sections, see table below.
-
+As you can see from example above GRASS commands start by a
+prefix. This prefix groups modules into several sections, see table
+below.
+  
 .. cssclass:: border
 
 +----------+--------------------------------+-----------------------------------------------+
@@ -64,38 +76,40 @@ several sections, see table below.
 +----------+--------------------------------+-----------------------------------------------+
 | ``r3.``  | :grasscmd:`raster3D`           | 3D raster data processing                     |
 +----------+--------------------------------+-----------------------------------------------+
+| ``t.``   | :grasscmd:`temporal`           | Temporal data processing                      |
++----------+--------------------------------+-----------------------------------------------+
 | ``v.``   | :grasscmd:`vector`             | 2D/3D vector data processing                  |
 +----------+--------------------------------+-----------------------------------------------+
-
-
  
 .. _region:
 
 Computational region
 --------------------
 
-Computation region is **key issue** in GRASS raster processing. Unlike
-GIS software like Esri ArcGIS which sets computation region based on
-input data, GRASS is leaving this operation to the user.
+Computation region is a **key issue** in GRASS raster
+processing. Unlike GIS software like Esri ArcGIS which sets
+computation region based on input data, GRASS is leaving this
+operation to the user.
 
 .. important:: **The user must define computation region before any
    raster computation is performed!**
 
 Computational region is defined by *extent* (north, south, east, west)
 and by *spatial resolution* in the both directions (east-west,
-north-south). GRASS supports only regular grids.
+north-south). Note that GRASS supports only regular grids.
 
 .. figure:: ../images/units/04/region2d.png
               
    2D computation region grid.
 
-.. note:: For 3D raster data there is an extension to 3D computation
-   grid.
+.. note:: For 3D raster data (known as "volumes") there is an
+   extension to 3D computation grid.
 
-Majority of raster processing modules (``r.*``) in GRASS respect
-computational region, there are few exceptions like import modules
-(:grasscmd:`r.import`). On the other hand, the most of vector
-processing modules (``v.*``) ignore computation region completely.
+Majority of raster processing GRASS modules (``r.*``) respect
+computational region, there are a few exceptions like import modules
+(eg. :grasscmd:`r.import`). On the other hand, the most of vector
+processing modules (``v.*``) ignore computation region completely
+since there is no computation grid defined by them.
 
 Computational region can be easily set on existing raster or vector
 map from Layer Manager.
@@ -104,9 +118,10 @@ map from Layer Manager.
 
    Set computational region from raster map.
 
-When setting up computational region from vector map, only extent is
-adjusted. It's good idea to align a grid based on raster map used for
-computation (*Align computational region to selected map*).
+Note that when setting up computational region from vector map, only
+extent is adjusted. It's good idea to align the computational grid
+based on raster map used for computation (*Align computational region
+to selected map*).
           
 .. tip:: Current computation extent can be displayed in map window.
 
@@ -117,14 +132,23 @@ computation (*Align computational region to selected map*).
 Full flexibility for operating with computation region allows
 :grasscmd:`g.region` module.
 
+Full flexibility for operating with computation region allows
+:grasscmd:`g.region` module (:menuselection:`Settings --> Computational
+region --> Set region`). Example below:
+
+.. code-block:: bash
+
+   g.region vector=jena_boundary align=L2A_T32UPB_20170706T102021_B04_10m
+          
 .. _color-table:
 
 Color table
 -----------
 
-With knowledge of computational region let's enhance color table using
-histogram equalization (which is influenced by computation region as
-we already know) by using :grasscmd:`r.colors`.
+With knowledge of computational region let's enhance color table of
+imported Sentinel band using histogram equalization (which is
+influenced by computation region as we already know) by using
+:grasscmd:`r.colors` command.
 
 .. code-block:: bash
 
