@@ -2,7 +2,7 @@ Unit 11 - PyGRASS scripting
 ===========================
 
 Let's start with a Python script created by *Graphical modeler* in
-:ref:`Unit 10 <modeler-python>` saved into file. Before saving the
+:ref:`Unit 10 <modeler-python>`. Before saving the
 script remove the lines below to avoid generating GUI dialogs when
 launching the script (will be explained in :doc:`12`).
 
@@ -39,9 +39,9 @@ PyGRASS syntax.
 PyGRASS syntax
 --------------
 
-Open Python script by your favorite editor or if your do not have any
-use GRASS integrated Python editor |grass-python| :sub:`Open a simple
-Python code editor`.
+Open exported Python script by your favorite editor or if your do not
+have any just use GRASS-integrated Python editor |grass-python| :sub:`Open
+a simple Python code editor`.
 
 .. figure:: ../images/units/11/editor.png
 
@@ -139,18 +139,18 @@ Statistics
 ----------
 
 Also NDVI classes statistics could be reported. Area size can be
-easily computed by :grasscmd:`v.report`.
+computed by :grasscmd:`v.report`.
 
 .. literalinclude:: ../_static/scripts/ndvi-v2.py
    :language: python
    :lines:  96-105
 
 Output of :grasscmd:`v.report` module need to be parsed. Unfortunately
-the command does not offer shell script output similarly to
-:grasscmd:`r.univar`. We will implement our own parsing technique
-based on Python functions like ``splitlines()`` and ``split()``.
+the command does not offer a shell script output similarly to
+:grasscmd:`r.univar`. Python fuctions like ``splitlines()`` and
+``split()`` can be used.
 
-Than also NDVI zonal statistics for each class can be computed:
+At the end NDVI zonal statistics for each class can be computed:
 
 * zonal statistics can be computed by :grasscmd:`v.rast.stats` and
   stored in attribute table
@@ -182,8 +182,8 @@ Example of script output below.
    NDVI class 3: -0.6094 (min) 0.9997 (max) 0.7740 (mean)
         
 .. tip:: In order to simplify testing and increase code readability
-   our code should be split into two functions: ``compute()``
-   and ``stats()``.
+   our code could be split into two functions: ``compute()`` and
+   ``stats()``.
 
    .. code-block:: python
 
