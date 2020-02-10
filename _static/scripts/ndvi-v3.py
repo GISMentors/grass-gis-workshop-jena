@@ -137,10 +137,10 @@ def main(options, flags):
         print ('NDVI class {0}: {1:.1f} ha'.format(cat, area/1e4)) 
 
     # v.to.rast: use -c flag for updating statistics if exists
-    Module('v.rast.stats', flags='c', map=options['ndvi_vector'], raster='ndvi',
+    Module('v.rast.stats', flags='c', map=options['output'], raster='ndvi',
            column_prefix='ndvi', method=['minimum','maximum','average'])
     # v.db.select: don't print column names (-c)
-    ret = Module('v.db.select', flags='c', map=options['ndvi_vector'], separator='comma', stdout_=PIPE)
+    ret = Module('v.db.select', flags='c', map=options['output'], separator='comma', stdout_=PIPE)
     for line in ret.outputs.stdout.splitlines():
         # parse line (eg. 1,,-0.433962264150943,0.740350877192983,0.051388909449992)
         cat,label,min,max,mean = line.split(',')
