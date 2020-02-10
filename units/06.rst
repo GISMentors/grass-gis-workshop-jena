@@ -64,7 +64,7 @@ Useful notes
   written only when :param:`-m` flag is given.
 * GRASS supports also one of few topological formats, **PostGIS
   Topology**, see :grasscmd:`v.out.postgis` for details.
-* To increase interoperability with your Esri colleagues, GRASS data
+* To increase interoperability with your Esri-based colleagues, GRASS data
   can be exported directly also to **Esri File Geodatabase
   format**. This requires GDAL with `FileGDB
   <http://gdal.org/drv_filegdb.html>`__ support. But we highly
@@ -105,13 +105,13 @@ Example for our workflow (map names shorten):
 .. code-block:: bash
 
    g.region vector=jena_boundary align=B04_10m
-   r.mask --overwrite -i vector=MaskFeature
-   r.external.out directory=/opt/geodata/jena format=GTiff extension=tif
-   i.vi --overwrite red=B04_10m output=ndvi nir=B08_10m
+   r.mask -i vector=MaskFeature
+   r.external.out directory=/home/user format=GTiff extension=tif
+   i.vi red=B04_10m output=ndvi nir=B08_10m
 
-.. todo:: test commands
+.. todo:: Fix "OGR can't parse PROJ.4-style parameter string" issue
 
 Produced data is stored directly (without any data conversion) in
 external format (GeoTIFF in this case). GRASS also creates
 automatically link to such data (similarly as :grasscmd:`r.external`
-do), so you can access produced data as normal raster maps.
+does), so produced data can be accessed as "normal" raster maps.
