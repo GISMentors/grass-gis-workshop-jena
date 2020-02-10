@@ -12,7 +12,7 @@
         <task name="v.overlay">
             <parameter name="ainput">
                 <parameterized />
-                <value>jena_boundary_5km@PERMANENT</value>
+                <value>jena_boundary@PERMANENT</value>
             </parameter>
             <parameter name="alayer">
                 <value>1</value>
