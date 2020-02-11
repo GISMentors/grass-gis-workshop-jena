@@ -1,12 +1,8 @@
-#!/usr/bin/env python
-
-import sys
-import codecs
-sys.stdout = codecs.getwriter('utf8')(sys.stdout)
+#!/usr/bin/env python3
 
 from grass.pygrass.vector import VectorTopo
 
-counties = VectorTopo('Fylke')
+counties = VectorTopo('counties')
 counties.open('r')
 
 for o in counties.viter('areas'):
@@ -16,6 +12,6 @@ for o in counties.viter('areas'):
             if n != -1 and n != o.id:
                 neighbours.add(n)
     
-    print (u'{:25}: {}'.format(o.attrs['navn'].split(':', 1)[1][:-1], len(neighbours)))
+    print (u'{:25}: {}'.format(o.attrs['name'].split(':', 1)[1][:-1], len(neighbours)))
 
 counties.close()
