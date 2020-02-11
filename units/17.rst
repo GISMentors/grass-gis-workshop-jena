@@ -1,9 +1,9 @@
 Unit 17 - Spatio-temporal intro
 ===============================
 
-GRASS comes in version 7 with high quality tools for spatio-temporal
-data processing, see :grasscmd:`GRASS documentation <temporalintro>`
-for details.
+GRASS GIS comes in version 7 with high quality tools for
+spatio-temporal data processing, see :grasscmd:`GRASS documentation
+<temporalintro>` for details.
 
 GRASS introduces three special datatypes that are designed to handle
 time series data:
@@ -38,16 +38,16 @@ registered in space-time raster dataset.
 
 .. code-block:: bash
 
-   r.lake.series elevation=dem out=lakes start_water_level=134 end_water_level=145 \
-   water_level_step=0.1 coordinates=686668,5650664 \
-   time_step=10 nproc=3
+   r.lake.series elevation=dem out=lakes start_water_level=134 end_water_level=145 
+    water_level_step=0.1 coordinates=686668,5650664 
+    time_step=10 nproc=3
 
 In the example above we created space-time series between water levels
 134 and 145 with step 0.1 m. Time step is 10 min. To increase
 computation speed we used three CPU cores. The result is stored in
 raster space-time dataset named :map:`lakes`.
 
-Basic information about output dataset can be obtained by
+Basic information about output space-time dataset can be obtained by
 :grasscmd:`t.info` command.
 
 .. code-block:: bash
@@ -93,7 +93,7 @@ first hour of simulated flooding.
    t.rast.list input=lakes order=start_time where="start_time < 60"
 
 Univariate statistic can be calculated by :grasscmd:`t.rast.univar`,
-in example below we compute statistics only for the first hour of
+in example below statistics is computed only for the first hour of
 flooding.
 
 .. code-block:: bash
@@ -111,7 +111,7 @@ flooding.
    lakes_134.5@flooding|51|None|0.582153865733045|0.0008697509765625|1.54051208496094|...
 
 Data aggregation can be performed by :grasscmd:`t.rast.aggregate`. In
-the example below data are aggregated by 1 hour.
+the example below data is aggregated by 1 hour.
 
 .. code-block:: bash
 
@@ -134,9 +134,9 @@ subsequent analysis like univariate statistics:
 Space-time Data Extracting
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Raster spatio-temporal data can be extract into new datasets using
-:grasscmd:`t.rast.extract`. In the example below will be create three
-new datasets for first, second and third six hours of flooding.
+Raster space-time data can be extract into new datasets using
+:grasscmd:`t.rast.extract`. In the example below three new datasets
+are created for the first, second and third six hours of flooding.
 
 .. code-block:: bash
 		
