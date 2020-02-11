@@ -22,10 +22,10 @@ of columns and rows, min and max values, range printed.
 .. code-block:: python
 
    ndvi.open()
-   print (ndvi.info.cols, ndvi.info.rows)
+   print(ndvi.info.cols, ndvi.info.rows)
    min, max = ndvi.info.range
-   print (min, max)             
-   print (max - min)
+   print(min, max)             
+   print(max - min)
                 
 .. figure:: ../images/units/13/pygrass-shell.png
 
@@ -46,67 +46,39 @@ statistics below.
 .. literalinclude:: ../_static/scripts/ndvi-pygrass-univar.py
    :language: python
 
+Sample script to download: `ndvi-pygrass-univar.py
+<../_static/scripts/ndvi-pygrass-univar.py>`__
+              
 .. tip:: Compare computation speed of your simple script with C-based
-   :grasscmd:`r.univar` module...
+   :grasscmd:`r.univar` module.
 
    .. figure:: ../images/units/13/r-univar.png
 
       PyGRASS script and :grasscmd:`r.univar` comparision.
              
-Sample script to download: `ndvi-pygrass-univar.py
-<../_static/scripts/ndvi-pygrass-univar.py>`__
-
 Writing raster data
 -------------------
 
-It is possible to write raster map using PyGRASS, it is possible to start
-from existing maps or from scratch. In the next example we are going to
-create ndvi map from the existing Sentinel bands
+PyGRASS allows also writing raster data. In the example below a NDVI
+map will be computed from Sentinel-2 red and near-infrated channels.
 
-.. code-block:: python
+.. literalinclude:: ../_static/scripts/ndvi-pygrass.py
+   :language: python
+   :lines: 3-24
 
-   import numpy
-
-   b04 = RasterRow('L2A_T32UPB_20170706T102021_B04_10m')
-   b04.open()
-   b08 = RasterRow('L2A_T32UPB_20170706T102021_B08_10m')
-   b08.open()
-   ndvi = RasterRow('ndvi_pyrass')
-   ndvi.open('w', mtype='FCELL', overwrite=True)
-   
-   for i in range(len(b04)):
-       row_b04 = b04[i]
-       row_b08 = b08[i]
-       rowb04 = row_b04.astype(numpy.float32)
-       rowb08 = row_b08.astype(numpy.float32)
-       row_new = (rowb08 - rowb04) / (rowb08 + rowb04)
-       ndvi.put_row(row_new)
-
-   ndvi.close() 
-   b04.close()
-   b08.close()
-
+Sample script to download: `ndvi-pygrass.py
+<../_static/scripts/ndvi-pygrass.py>`__
+              
 .. tip::
 
-   To create a raster from scratch you need to remember to get the right
-   number of rows and columns and create an empty row (Buffer object in PyGRASS)
+   To create a raster map from scratch the number of rows and columns
+   must be defined. Raster row is represented by Buffer object in
+   PyGRASS.
    
-   .. code-block:: python
-   
-      newscratch = RasterRow('newscratch')
-      newscratch.open('w', overwrite=True)
-      
-      # get computational region info
-      from grass.pygrass.gis.region import Region
-      reg = Region()
-      
-      # import buffer and create empty row
-      from grass.pygrass.raster.buffer import Buffer
-      newrow = Buffer((reg.cols,), mtype='CELL')
-    
-      # we create a raster to fill all the GRASS GIS region
-      for r in range(reg.rows):
-          newrow[:] = np.random.random_integers(0, 1000, size=newrow.size)
-          newscratch.put_row(newrow)
-    
-      newscratch.close()
+   .. literalinclude:: ../_static/scripts/pygrass-write-raster.py
+      :language: python
+      :lines: 3-24
+              
+   Sample script to download: `pygrass-write-raster.py
+   <../_static/scripts/pygrass-write-raster.py>`__
+            

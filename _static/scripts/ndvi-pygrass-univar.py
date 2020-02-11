@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
-import numpy as np
+import numpy
+
 from grass.pygrass.raster import RasterRow
 
 ndvi = RasterRow('ndvi')
@@ -10,7 +11,7 @@ min = max = None
 count = ncount = 0
 for row in ndvi:
     for value in row:
-        if np.isnan(value):
+        if numpy.isnan(value):
             ncount += 1
         else:
             if min is None:
