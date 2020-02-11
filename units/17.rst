@@ -38,9 +38,9 @@ registered in space-time raster dataset.
 
 .. code-block:: bash
 
-   r.lake.series elevation=dem out=lakes start_water_level=134 end_water_level=145 
-    water_level_step=0.1 coordinates=686668,5650664 
-    time_step=10 nproc=3
+   r.lake.series elevation=dem out=lakes start_water_level=134 end_water_level=145 \
+    water_level_step=0.1 coordinates=686668,5650664 \
+    time_step=10 nproc=3 
 
 In the example above we created space-time series between water levels
 134 and 145 with step 0.1 m. Time step is 10 min. To increase

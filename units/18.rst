@@ -113,7 +113,7 @@ will get NULL values assigned.
    
 .. code-block:: bash
 
-   r.in.lidar -oe input=las_681_5644_1_th_2014-2019.laz output=las_681_5644 resolution=1
+   r.in.lidar -oe input=/home/user/geodata/lidar/las_681_5644_1_th_2014-2019.laz output=las_681_5644 resolution=1
 
 Basic metadata about created raster map can be obtained by
 :grasscmd:`r.info`.
