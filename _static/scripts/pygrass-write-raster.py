@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+import numpy
+
 from grass.pygrass.raster import RasterRow
 
 newscratch = RasterRow('newscratch')
@@ -15,7 +17,7 @@ newrow = Buffer((reg.cols,), mtype='CELL')
 
 # we create a raster to fill all the GRASS GIS region
 for r in range(reg.rows):
-    newrow[:] = np.random.random_integers(0, 1000, size=newrow.size)
+    newrow[:] = numpy.random.random_integers(0, 1000, size=newrow.size)
     newscratch.put_row(newrow)
           
 newscratch.close()
