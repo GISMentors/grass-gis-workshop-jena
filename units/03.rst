@@ -147,7 +147,7 @@ displayed in map window.
 Vector metadata can be printed similarly to raster maps from Layer Manager
 by :item:`Metadata` or using :grasscmd:`v.info` module from console.
 
-.. _grass-topo:
+.. _vector-topo-section:
 
 Vector topology
 ---------------
