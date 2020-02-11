@@ -12,6 +12,6 @@ for o in counties.viter('areas'):
             if n != -1 and n != o.id:
                 neighbours.add(n)
     
-    print (u'{:25}: {}'.format(o.attrs['name'].split(':', 1)[1][:-1], len(neighbours)))
+    print (u'{:25}: {}'.format(o.attrs['name'], len(neighbours)))
 
 counties.close()

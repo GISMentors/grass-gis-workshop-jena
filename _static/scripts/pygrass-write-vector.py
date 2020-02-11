@@ -11,7 +11,7 @@ new = VectorTopo('pois')
 new.open('w', tab_cols=cols, overwrite=True)
 # add points
 point = Point(681671.15,5644545.63)
-new.write(point0, ('Jena',))
+new.write(point, ('Jena',))
 # commit attributes, otherwise they will be not saved
 new.table.conn.commit()
 # close the vector
