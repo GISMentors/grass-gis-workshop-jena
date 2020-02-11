@@ -38,11 +38,6 @@ is not used here.
 .. literalinclude:: ../_static/scripts/create-dtm.py
    :language: python
    :linenos:
-   :emphasize-lines: 6, 9, 13, 18, 33, 37, 42, 56, 57, 59, 66, 72-75, 81, 88
-
-.. literalinclude:: ../_static/scripts/create-dtm.py
-   :language: python
-   :linenos:
    :emphasize-lines: 6, 9, 13, 18, 33, 37, 42, 57-58, 60, 67, 73-76, 82, 86
 
 Sample script to download: `create-dtm.py <../_static/scripts/create-dtm.py>`__
