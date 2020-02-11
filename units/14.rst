@@ -27,6 +27,8 @@ hectares.
    counties.open('r')
    
    for feat in counties.viter('areas'):
+       if not feat.attrs:
+           continue
        print (u'{0}: {1:.1f}ha'.format(feat.attrs['name'], feat.area() / 10e4))
    
    counties.close()

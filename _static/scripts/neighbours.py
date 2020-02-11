@@ -11,7 +11,7 @@ for o in counties.viter('areas'):
         for n in b.read_area_ids():
             if n != -1 and n != o.id:
                 neighbours.add(n)
-    
-    print (u'{:25}: {}'.format(o.attrs['name'], len(neighbours)))
+    if o.attrs:
+        print (u'{:25}: {}'.format(o.attrs['name'], len(neighbours)))
 
 counties.close()
