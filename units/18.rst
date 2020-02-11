@@ -1,16 +1,16 @@
 Unit 18 - Lidar, DTM interpolation
 ==================================
 
-There is open Lidar data for Thuringia region available, see related
-`blog
-<https://rapidlasso.com/2017/01/09/second-german-state-goes-open-lidar/>`__
-by rapidlasso GmbH. Go to `Download Höhendaten
-<http://www.geoportal-th.de/de-de/Downloadbereiche/Download-Offene-Geodaten-Th%C3%BCringen/Download-H%C3%B6hendaten>`__,
-choose region in map viewer and download selected tiles.
+LiDAR data used in this unit can be found in :file:`geodata/lidar`
+directory. Data is stored in LAZ format (compressed LAS format).
 
-LiDAR data used in this unit can be found in sample dataset, in
-:file:`geodata/lidar` folder. Data is stored in LAZ format
-(compressed LAS format).
+.. note:: There is open Lidar data for Thuringia region available, see
+   related `blog
+   <https://rapidlasso.com/2017/01/09/second-german-state-goes-open-lidar/>`__
+   by rapidlasso GmbH. Go to `Download Höhendaten
+   <http://www.geoportal-th.de/de-de/Downloadbereiche/Download-Offene-Geodaten-Th%C3%BCringen/Download-H%C3%B6hendaten>`__,
+   choose region in map viewer and download selected tiles.
+
 
 Data import
 -----------
@@ -36,15 +36,17 @@ For importing LAS/LAZ data there are available two GRASS modules:
       Max X Y Z:                   681999.990 5644999.990 968.621
       ...
 
+.. tip:: There are also new modules available
+   :grasscmdaddons:`r.in.pdal` and :grasscmd:`v.in.pdal` which are
+   based on `PDAL <https://pdal.io/>`__ library.
+         
 Vector import
 ^^^^^^^^^^^^^
 
-Let'screate a new GRASS location defined by :epsg:`25832`,
-see :ref:`Unit 24 <create-location-epsg>` for details.
-
-Let's try to import selected tile into vector point map first. Flag
-:param:`-t` skips creation of attribute table. The import process will
-be significantly faster. Another flag which will speed up the import
+Let's create a new GRASS location defined by :epsg:`25832` and import
+selected tile into vector point map first. By Flag :param:`-t`
+creation of attribute table is skipped. The import process will be
+significantly faster. Another flag which will speed up the import
 process is :param:`-b`. It skips building :ref:`topology
 <vector-topo-section>` (which is not needed for point features
 anyway). Information about data SRS can be missing, projection check
@@ -139,9 +141,9 @@ Filling gaps
 There are several GRASS modules for filling gaps in raster maps like
 :grasscmd:`r.fillnulls` or :grasscmd:`r.fill.stats`. The first module
 is based on spline interpolation, the second fills gaps with
-interpolated values using IDW. We will use the second module which
-fill nulls rapidly compared to :grasscmd:`r.fillnulls`. By
-:option:`-k` flag we ensure that original values will be kept. Only
+interpolated values using IDW. Let's use the second module which fill
+nulls rapidly compared to :grasscmd:`r.fillnulls`. By :option:`-k`
+flag it is ensured that original values will be kept untouched. Only
 cells with no-data value will be modified.
 
 .. code-block:: bash
@@ -169,11 +171,11 @@ cells with no-data value will be modified.
 High resolution DSM
 -------------------
 
-Digital Surface Model (DSM) is interpolated by :grasscmd:`v.surf.rst`
-using regularized spline with tension approximation. Output resolution
-set to 0.5 meter. The computation can be really slow. You can turn
-computation time to be more reasonable by running it in parallel, see
-:option:`nprocs` option (GRASS 7.4+ only).
+Digital Surface Model (DSM) can be interpolated by
+:grasscmd:`v.surf.rst` using regularized spline with tension
+approximation. Output resolution set to 0.5 meter. The computation can
+be really slow. The computation time becomes more reasonable by
+running in parallel, see :option:`nprocs` option (GRASS 7.4+ only).
 
 .. code-block:: bash
 
@@ -194,7 +196,7 @@ computation time to be more reasonable by running it in parallel, see
    :grasscmd:`r.composite` it is possible to create color composite as
    a new raster map.
    
-.. note:: Similarly can build Digital Terrain Model (DTM) from
+.. note:: Similarly can built Digital Terrain Model (DTM) from
    filtered terrain only points by *edge detection*.
 
    The filter aims to recognize and extract attached and detached object
@@ -215,5 +217,5 @@ computation time to be more reasonable by running it in parallel, see
 
    .. figure:: ../images/units/18/terrain-only-points.png
 
-      Filtered terrain only points.
+      Filtered terrain points only.
 

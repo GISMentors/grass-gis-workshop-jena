@@ -2,7 +2,7 @@ Unit 19 - DTM script parallelization
 ====================================
 
 This unit is focused on **computing parallelization**. Sample script
-below produces seamless DTM (Digital Terrain Model, see :doc:`16`)
+below produces seamless DTM (Digital Terrain Model, see :doc:`18`)
 from bunch of LAS/LAZ files. Computation will be split into tiles and
 performed in parallel.
 
@@ -22,7 +22,7 @@ A script consists of three main functions:
 1. ``import_files()`` to import input LAS/LAZ files (line
 :lcode:`33`). Import process can be done in parallel by
 :pygrass-modules:`ParallelModuleQueue` from PyGRASS library (see
-:doc:`11` for PyGRASS intoruction), lines :lcode:`37, 42, 57-58, 60`.
+:doc:`11` for PyGRASS introduction), lines :lcode:`37, 42, 57-58, 60`.
 
 2. ``create_dtm_tiles()`` to compute DTM per tile (line :lcode:`67`)
 using :grasscmd:`v.surf.rst`. DTM tiles need to be computed with a
@@ -69,15 +69,16 @@ Sample script to download: `create-dtm.py <../_static/scripts/create-dtm.py>`__
 DTM comparision
 ---------------
 
-In this session we are going to calculate the Canopy Height Model (CHM), it is
-the difference between interpolated DSM and imported EUDEM DTM
+In this session we are going to calculate the Canopy Height Model
+(CHM), as the difference between interpolated DSM and imported EU-DEM
+DTM from :doc:`15`.
 
 The CHM is computed using :grasscmd:`r.mapcalc`, executing the difference between
 DSM and DTM
 
 .. code-block:: bash
 
-   r.mapcalc expression="chm = DTM_laz - dem"
+   r.mapcalc expression="chm = dtm_laz - dem"
 
 .. figure:: ../images/units/19/chm.png
    :class: middle
