@@ -1,4 +1,4 @@
-Unit 15 - DMT reprojection
+Unit 15 - DTM reprojection
 ==========================
 
 In this unit EU-DEM global dataset provided by `Copernicus programme

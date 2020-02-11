@@ -1,9 +1,9 @@
 Unit 16 - Flooding simulation
 =============================
 
-Beside DEM (see :doc:`15`) it would be nice to have also river streams
-available. We can download this data from OSM database similarly as we
-did in :doc:`02` in the case of Jena city region.
+Beside DTM (see :doc:`15`) also river streams are required. Such data
+can be downloaded from OSM database similarly as done in :doc:`02`
+in the case of Jena city region.
 
 .. note::
    
@@ -28,15 +28,13 @@ did in :doc:`02` in the case of Jena city region.
       E98991003%2C11%2E67463202%5D%3B%28way%5B%22waterway%22%3D%22river%22%5D%3Bway%5B%22waterway\
       %22%3D%22stream%22%5D%3B%29%3B%28%2E%5F%3B%3E%3B%29%3Bout%3B%0A" lines
 
-For simplification you can find this data in sample dataset (`download
-7z-archive
-<http://geo102.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2020/jena-sample-data.7z>`__):
-:file:`osm/jena-rivers.gpkg`.
+For simplification data is available from
+:file:`geodata/osm/jena-rivers.gpkg`.
 
 .. figure:: ../images/units/16/jena-rivers.png
    :class: large
 	   
-   DEM, Jena boundary and rivers provided by OSM.
+   DTM, Jena boundary and rivers provided by OSM.
 
 Flooding can be easily simulated by :grasscmd:`r.lake` module which
 fills a lake to a target water level from a given start point or seed
@@ -54,7 +52,7 @@ shows.
 	   
    Set seed coordinates interactively from map display.
 
-Height of seed point can be determined by querying DEM map layer, see
+Height of seed point can be determined by querying DTM map layer, see
 :numref:`dem-what` or directly using :grasscmd:`r.what` module, see
 example below.
 
@@ -66,21 +64,21 @@ example below.
 
 .. figure:: ../images/units/16/dem-what.svg
 
-   Query DEM layer for height value.
+   Query DTM layer for elevation value.
 
 .. _create-mapset:
    
 .. important:: Before running :grasscmd:`r.lake` let's start
-   organizing our work! Till now we used PERMANENT mapsets only. Due
-   to our ignorance we made a mess :-) There is input data like DEM,
-   Jena city region, cloud mask vector map, Sentinel bands, results of
-   NDVI computation and so on. We will improve data organization by
-   creating different mapsets. Let's create new mapset *flooding* in
-   current location *jena-utm*. New mapset can be created by
-   :grasscmd:`g.mapset` (:menuselection:`Settings --> GRASS working
-   environment --> Create new mapset`).
+   organizing our work! Till now we used PERMANENT mapsets only. There
+   is input data like DTM, Jena city region, cloud mask vector map,
+   Sentinel bands, results of NDVI computation and so on. Data
+   organization can be improved by creating different mapsets. Let's
+   create a new mapset *flooding* in the current location *jena-region*. New
+   mapset can be created by :grasscmd:`g.mapset`
+   (:menuselection:`Settings --> GRASS working environment --> Create
+   new mapset`).
 
-Before computation we have to set computation region, eg. based on
+Before computation the computation region have to be set, eg. based on
 :map:`dem` raster map.
 
 .. code-block:: bash
