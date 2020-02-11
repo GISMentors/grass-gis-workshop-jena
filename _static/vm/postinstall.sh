@@ -23,6 +23,11 @@ if [ ! -f /home/user/geodata/osm/basemap.pack ] ; then
     wget http://geo102.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2020/basemap.pack
 fi
 
+if [ ! -f /home/user/geodata/osm/counties.gpkg ] ; then
+    cd /home/user/geodata/osm/
+    wget http://geo102.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2020/counties.gpkg
+fi
+
 ###
 
 cd /opt
