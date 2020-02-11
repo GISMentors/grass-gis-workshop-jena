@@ -82,3 +82,6 @@ Sample script to download: `ndvi-pygrass.py
    Sample script to download: `pygrass-write-raster.py
    <../_static/scripts/pygrass-write-raster.py>`__
             
+   .. figure:: ../images/units/13/newscratch.png
+
+      Example of created raster map.
