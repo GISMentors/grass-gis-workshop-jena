@@ -1,113 +1,98 @@
-Unit 14 - PyGRASS scripting
-===========================
+Unit 14 - PyGRASS Vector Access
+===============================
 
-PyGRASS also allows calling existing GRASS module similarly as GRASS
-Scripting Library does (see :doc:`11` and :doc:`12`). The module
-caller is represented by :pygrass-modules:`Module` class. In contrast
-to GRASS Scripting Library which defines several routines to run
-module (:grass-script:`core.run_command`,
-:grass-script:`core.read_command`, or
-:grass-script:`core.feed_command`) in PyGRASS there is only one caller
-technique.
+PyGRASS allows directly accessing native GRASS raster and vector maps
+in the sense of Python objects. This unit shows how to deal with GRASS
+vector data by PyGRASS API, see :doc:`13` for raster data.
 
-We can rewrite our simple script created in :doc:`12` using PyGRASS.
+Vector data
+-----------
 
-We start replacing all :grass-script:`core.run_command` by
-:pygrass-modules:`Module` caller, see example below.
+Vector map can be treated by :pygrass-vector:`Vector` when dealing
+with basic vector primitives (points, lines, boundaries, centroids) or
+by :pygrass-vector:`VectorTopo` which allows accessing topological
+primitives like areas or isles. See :ref:`vector-topo-section` section
+for details.
 
-.. code-block:: python
-
-   from grass.script import run_command
-
-   run_command("v.overlay",
-		overwrite = True,
-                ainput = options["region"],
-                binput = options["clouds"],
-                operator = "not",
-                output = region_mask)
-
-by
+Example below prints nicely format region names and their area size in
+hectares.
 
 .. code-block:: python
-
-   from grass.pygrass.modules import Module
-
-   Module("v.overlay",
-          overwrite = True,
-          ainput = options["region"],
-          binput = options["clouds"],
-          operator = "not",
-          output = region_mask)
-
-Then let's replace :grass-script:`core.feed_command`. In this case
-PyGRASS leads to more compact syntax, see below.
-
-.. code-block:: python
-
-    p1 = feed_command("r.recode",
-                      overwrite = True,
-                      input = "ndvi",
-                      output = "ndvi_class",
-                      rules = "-")
-    p1.stdin.write("""-1:0.1:1
- 0.1:0.5:2
- 0.5:1:3""")
-    p1.stdin.close()
-    p1.wait()
-
-In PyGRASS syntax replaced also by :pygrass-modules:`Module` class.
-
-.. code-block:: python
-
-    recode_str="""-1:0.1:1
- 0.1:0.5:2
- 0.5:1:3"""
-
-    Module("r.recode",
-           overwrite = True,
-           input = "ndvi",
-           output = "ndvi_class",
-           rules = "-",
-           stdin_ = recode_str)   
-
-In similar way also :grass-script:`core.read_command` can be replaced
-by :pygrass-modules:`Module` class, see a code block below.
-
-.. code-block:: python
-
-   ret = read_command('v.report', map=options["output"], option='area')
-   for line in ret.splitlines()[1:]:
-       ...
-
-Changed to
-
-.. code-block:: python
-		
-   ret = Module('v.report', map=options["output"], option='area',
-                stdout_=PIPE)
-   for line in ret.outputs.stdout.splitlines()[1:]:
-       ...
-
-.. note:: In PyGRASS, multiple options need to turned into a list. See
-   example below for :grasscmd:`v.rast.stats` and :param:`method`
-   option.
-
-   .. code-block:: python
-
-      Module('v.rast.stats', flags='c', map=options["output"], raster='ndvi',
-      column_prefix='ndvi', method='minimum,maximum,average')
-
-   Changed to 
+                
+   from grass.pygrass.vector import VectorTopo
+   fylke = VectorTopo('Fylke')
+   fylke.open('r')
    
-   .. code-block:: python
-
-      Module('v.rast.stats', flags='c', map=options["output"], raster='ndvi',
-      column_prefix='ndvi', method=['minimum','maximum','average'])
+   for feat in fylke.viter('areas'):
+       print (u'{0}: {1:.1f}ha'.format(feat.attrs['navn'].split(':', 1)[1][:-1], feat.area() / 10e4))
    
-Sample script to download: `ndvi-v4.py <../_static/scripts/ndvi-v4.py>`__
+   fylke.close()
 
-For GRASS scripting the user can choose between two different GRASS
-Python libraries, or approaches if you want. Either GRASS Scripting
-Library based on procedural programming techniques or PyGRASS as an
-objected-oriented approach. It's your choice. We, in the next units,
-will focus mainly on PyGRASS.
+.. figure:: ../images/units/14/pygrass-shell-vector.png
+
+   PyGRASS vector example in action.
+
+Writing vector data
+--------------------
+
+As for raster also for vector it is possible to create vector layer using
+PyGRASS. In the next example we are going to create a point vector data with
+attribute table. Let's see how to do that
+
+.. code-block:: python
+
+   from grass.pygrass.vector.geometry import Point
+
+   # create the columns definition
+   cols = [(u'cat',   'INTEGER PRIMARY KEY'),
+           (u'name',  'VARCHAR')]
+   # start new vector with columns definition
+   new = VectorTopo('pois')
+   new.open('w', tab_cols=cols, overwrite=True)
+   # add points
+   point0 = Point(597241.89, 6643036.03)
+   point1 = Point(592409.49, 6655332.75)
+   new.write(point0, ('Oslo', ))
+   new.write(point1, ('Studenterhytta', ))
+   # commit attributes, otherwise they will be not saved
+   new.table.conn.commit()
+   # close the vector
+   new.close()
+
+
+
+Topology access example
+-----------------------
+
+In the following example is presented how to access vector topological
+primitives directly using PyGRASS. It requires full understanding of
+GRASS topological model, see :ref:`vector-topo-section` section in
+:doc:`03`.
+
+Sample script below prints for each county (vector map :map:`Fylke`
+imported in :doc:`03`) number of its neighbours.
+
+#. Vector map :map:`Fylke` is open on line :lcode:`10` by
+   :pygrass-vector:`VectorTopo` and its method ``open()``.
+#. Features (areas in this case) are sequentially read by ``for`` loop
+   on line :lcode:`12`. Areas are interated by ``viter()`` function.
+#. For each feature (ie. county) its boudaries are looped, see line
+   :lcode:`14`. Each boundary has two neighbours (line :lcode:`15`): on
+   the left and right side (``-1`` for no area).
+
+.. note:: To avoid unicode error when lauching the script from GRASS
+          GUI, few lines are added to a beginnging of the script, see
+          lines :lcode:`3-5`.
+   
+.. literalinclude:: ../_static/scripts/neighbours.py
+   :language: python
+   :linenos:
+   :emphasize-lines: 3-5, 10, 12, 14, 15
+
+Possible output:
+
+::
+
+   Troms,Romsa              : 2
+   Finnmark,Finnmárku       : 1
+   Hordaland                : 4
