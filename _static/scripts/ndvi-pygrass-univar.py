@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
 import numpy as np
-from grass.pygrass import raster
+from grass.pygrass.raster import RasterRow
 
-ndvi = raster.RasterRow('ndvi')
+ndvi = RasterRow('ndvi')
 ndvi.open()
 
 min = max = None
