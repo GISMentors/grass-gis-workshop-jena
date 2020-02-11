@@ -1,7 +1,7 @@
 Unit 15 - DMT reprojection
 ==========================
 
-In our example EU-DEM global dataset provided by `Copernicus programme
+In this unit EU-DEM global dataset provided by `Copernicus programme
 <https://www.eea.europa.eu/data-and-maps/data/copernicus-land-monitoring-service-eu-dem#tab-gis-data>`__
 will be used. Jena region is covered by tile E40N30. Be aware that
 EU-DEM tiles covers large regions (4GB per tile).
@@ -15,37 +15,36 @@ such flag. In this unit manual reprojection will be presented. A new
 location for imported data (:epsg:`4258`) must be created and data
 reprojected into target *jena-region* (:epsg:`32632`) location manually.
 
-.. note:: To save space the original EU-DEM tile was clipped by larger
-   region than Jena AOI. Modified tile is available from
-   :file:`geodata/eu-dem` directory.
+.. note:: In order to save space of disk the original EU-DEM tile was
+   clipped by larger region than Jena AOI. Modified tile is available
+   from :file:`geodata/eu-dem` directory.
 
 Create location for data import
 -------------------------------
 
 EU-DEM dataset is provided in ETRS-89 (:epsg:`4258`). Start a new
-GRASS session and create a new location *oslo-eu-dem* based on input
+GRASS session and create a new location *jena-eu-dem* based on input
 :file:`geodata/eu-dem/dem_sample.tif` data (similarly as done in
 :ref:`Unit 02 <create-location>`). Skip data import provided by
-location wizard since only subregion defined by Oslo region is planned
-to be imported.
+location wizard since only subregion defined by Jena city region is
+planned to be imported.
 
 .. figure:: ../images/units/15/create-location-0.png
 
-   Define name for new location.
+   Define name for a new location.
    
 Location will be created based on input sample DEM file (*Read
 projection and datum terms from a georeferenced data file*).
 
 .. figure:: ../images/units/15/create-location-1.png
 
-   Create new location based on sample DEM file.
+   Create a new location based on a sample DEM file.
 
 .. figure:: ../images/units/15/create-location-2.svg
-   :class: small
 	      
    Don't import input data from Location Wizard.
 
-Enter new location (PERMANENT mapset) and reproject Oslo region vector
+Enter new location (PERMANENT mapset) and reproject Jena region vector
 map by :grasscmd:`v.proj` (:menuselection:`Vector --> Develop vector
 map --> Reproject vector map from different GRASS location`) or simply
 from :item:`Data` tab in Layer Manager just by copying and pasting the
@@ -68,7 +67,7 @@ reprojected Jena city region.
 .. figure:: ../images/units/15/region-extent.png
    :class: large
 	   
-   Set computational region extent based on Oslo region.
+   Set computational region extent based on Jena city region.
 
 Launch :grasscmd:`r.in.gdal` (:menuselection:`File --> Import raster
 data --> Import of common raster formats`) to import DEM tile, don't
@@ -87,16 +86,15 @@ forget to enable :option:`-r` flag.
 Reproject DEM into target location
 ----------------------------------
    
-Now switch back to our *oslo-region* location and create within this
-location a new mapset for *eu-dem* :menuselection:`Settings --> GRASS
-working environment --> Change location and mapset`.
+Now switch back to *jena-region* location (:menuselection:`Settings
+--> GRASS working environment --> Change location and mapset`).
 
 .. figure:: ../images/units/15/switch-location.png
    :class: small
 	   
-   Switch GRASS to oslo location and PERMANENT mapset.
+   Switch GRASS to jena-region location and PERMANENT mapset.
 
-Reproject DEM from *oslo-eu-dem* location by :grasscmd:`r.proj`
+Reproject DEM from *jena-eu-dem* location by :grasscmd:`r.proj`
 (:menuselection:`Raster --> Develop raster map --> Reproject raster
 map from different GRASS location`) or directly from :item:`Data` tab
 in Layer Manager. Set desired resolution (25m) and choose appropriate
