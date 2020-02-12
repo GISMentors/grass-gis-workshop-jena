@@ -54,6 +54,15 @@ band are selected.
       i.sentinel.import -l -c input=/home/user/geodata/sentinel/2019 pattern="B0(4|8)_10m" \
       register_output=/home/user/sentinel-timestamps.txt
 
+   Example
+
+   ::
+
+      T32UPB_20190407T102021_B04_10m|2019-04-07 10:26:45.035007|S2_4
+      T32UPB_20190407T102021_B08_10m|2019-04-07 10:26:45.035007|S2_8
+      T32UPB_20190422T102029_B04_10m|2019-04-22 10:26:50.312683|S2_4
+      ...
+   
    Otherwise follow cookbook below. Unfortunately there are no
    timestamps for imported maps required by
    :grasscmd:`t.register`. For this purpose a simple Python script has
@@ -84,7 +93,7 @@ At this moment a new space time dataset can be created by
 .. code-block:: bash
 
    t.create output=sentinel title="Sentinel L2A 2019" desc="Jena region"
-   t.register input=sentinel file=sentinel-timestamps.txt
+   t.register input=sentinel file=/home/user/sentinel-timestamps.txt
 
 Let's check basic metadata (:grasscmd:`t.info`) and list of registered
 maps (:grasscmd:`t.rast.list`).
@@ -96,10 +105,10 @@ maps (:grasscmd:`t.rast.list`).
 ::
 
    ...
-   | Start time:................. 2017-05-06 10:50:31
-   | End time:................... 2017-07-05 10:50:32
+   | Start time:................. 2019-04-07 10:26:45.035007
+   | End time:................... 2019-10-14 10:26:46.742599
    ...
-   | Number of registered maps:.. 8
+   | Number of registered maps:.. 14
 
 .. code-block:: bash
 
@@ -108,10 +117,11 @@ maps (:grasscmd:`t.rast.list`).
 ::
 
    name|mapset|start_time|end_time
-   L2A_T32VNM_20170506T105031_B04_10m|sentinel-st-ndvi|2017-05-06 10:50:31|2017-05-06 10:50:32
-   L2A_T32VNM_20170506T105031_B08_10m|sentinel-st-ndvi|2017-05-06 10:50:31|2017-05-06 10:50:32
-   L2A_T32VNM_20170523T104031_B04_10m|sentinel-st-ndvi|2017-05-23 10:40:31|2017-05-23 10:40:32
-   
+   T32UPB_20190407T102021_B04_10m|sentinel|2019-04-07 10:26:45.035007|None
+   T32UPB_20190407T102021_B08_10m|sentinel|2019-04-07 10:26:45.035007|None
+   T32UPB_20190417T102031_B04_10m|sentinel|2019-04-17 10:26:46.415802|None
+   ...
+
 NDVI ST computation
 -------------------
 
@@ -149,6 +159,14 @@ performed in parallel (:param:`nproc`).
    t.rast.mapcalc input=b4,b8 output=ndvi \
    expression="ndvi = float(b8 - b4) / ( b8 + b4 )" \
    basename=ndvi nproc=3
+
+.. note:: In GRASS GIS 7.9 due to band reference support the
+   computation is much more straighforward.
+
+   .. code-block:: bash
+                   
+      t.rast.mapcalc inputs=sentinel.S2_8,sentinel.S2_4 output=ndvi basename=ndvi \
+      expression="float(sentinel.S2_8 - sentinel.S2_4) / (sentinel.S2_8 + sentinel.S2_4)"
 
 When computation is finished *ndvi* color table can be by
 :grasscmd:`t.rast.colors`.

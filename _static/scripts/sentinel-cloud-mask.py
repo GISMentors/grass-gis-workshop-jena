@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 #%module
 #% description: Creates raster mask maps based on clouds mask features.
