@@ -218,7 +218,7 @@ registered.
 .. code-block:: bash
 
    t.create output=clouds title="Sentinel L2A 2019 (clouds)" desc="Jena region"
-   t.register input=clouds file=clouds-timestamps.txt
+   t.register input=clouds file=cloud-timestamps.txt
 
 And apply modified expression for map algebra.
 

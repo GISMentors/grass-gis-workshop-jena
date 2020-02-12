@@ -27,11 +27,12 @@ def main():
     with open(options['output'], 'w') as fd:
         for rast in mapset.glist('raster', pattern='*_B04_10m'):
             items = rast.split('_')
-            d = datetime.strptime(items[2], '%Y%m%dT%H%M%S')
+            print (items)
+            d = datetime.strptime(items[1], '%Y%m%dT%H%M%S')
             ## workaround
             dd = d + timedelta(seconds=1)
 
-            vect = '{}_{}_MSK_CLOUDS'.format(items[1], items[2])
+            vect = '{}_{}_MSK_CLOUDS'.format(items[0], items[1])
             mask_vect = '{}_{}'.format(vect, options['map'].split('@')[0])
             if Vector(vect).exist():
                 Module('v.overlay', ainput=options['map'], binput=vect, operator='not',
