@@ -15,11 +15,6 @@
 #%module
 #% description: NDVI TGRASS script version 1
 #%end                
-#%option G_OPT_V_INPUT
-#% key: region
-#% description: Name of input vector region map 
-#% answer: jena_boundary@PERMANENT
-#%end
 #%option G_OPT_STRDS_INPUT
 #% key: b4
 #% description: Name of input 4th band space time raster dataset
@@ -29,8 +24,8 @@
 #% description: Name of input 8th band space time raster dataset
 #%end
 #%option G_OPT_STRDS_INPUT
-#% key: clouds
-#% description: Name of input clouds space time raster dataset
+#% key: mask
+#% description: Name of input mask space time raster dataset
 #%end
 #%option G_OPT_F_OUTPUT
 #%end
@@ -54,32 +49,20 @@ from grass.script import parser
 from grass.script.vector import vector_db_select
     
 def cleanup():
-    Module('g.remove', flags='f', name='region_mask', type='vector')
     Module('g.remove', flags='f', name='ndvi', type='raster')
     Module('g.remove', flags='f', name='ndvi_class', type='raster')
     Module('g.remove', flags='f', name='ndvi_class', type='vector')
 
-def compute(b4, b8, cl, output):
-
-    if cl:
-        region_mask = "region_mask"
-        Module("v.overlay",
-               overwrite = True,
-               ainput = options["region"],
-               binput = cl,
-               operator = "not",
-               output = region_mask)
-    else:
-        region_mask = options["region"]
+def compute(b4, b8, msk, output):
 
     Module("g.region",
            overwrite = True,
-           vector = region_mask,
+           vector = msk,
            align = b4)
 
     Module("r.mask",
            overwrite = True,
-           vector = region_mask)
+           raster = msk)
 
     Module("i.vi",
            overwrite = True,
@@ -156,7 +139,7 @@ def main():
 
     sp4 = tgis.open_old_stds(options['b4'], 'raster')
     sp8 = tgis.open_old_stds(options['b8'], 'raster')
-    spc = tgis.open_old_stds(options['clouds'], 'raster')
+    msk = tgis.open_old_stds(options['mask'], 'raster')
 
     idx = 1
     fd = open(options['output'], 'w')
@@ -165,10 +148,10 @@ def main():
         date=item[1]
         b8 = sp8.get_registered_maps(columns='name',
                                      where="start_time = '{}'".format(date))[0][0]
-        cl = spc.get_registered_maps(columns='name',
+        ms = msk.get_registered_maps(columns='name',
                                      where="start_time = '{}'".format(date))[0][0]
         output = '{}_{}'.format(options['basename'], idx)
-        compute(b4, b8, cl, output)
+        compute(b4, b8, ms, output)
         stats(output, date, fd)
         cleanup()
         idx += 1

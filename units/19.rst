@@ -62,7 +62,8 @@ Sample script to download: `create-dtm.py <../_static/scripts/create-dtm.py>`__
    
    DTM created from all available tiles.
 
-.. todo:: update
+..   
+   .. todo:: update
           
 .. _dmt-comparision:
 
@@ -85,4 +86,5 @@ DSM and DTM
    
    The CHM map.
 
-.. todo:: update screenshot
+..
+    .. todo:: update screenshot

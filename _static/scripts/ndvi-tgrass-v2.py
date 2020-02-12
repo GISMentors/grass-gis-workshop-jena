@@ -2,7 +2,7 @@
 #
 ##############################################################################
 #
-# MODULE:       ndvi-tgrass-v1
+# MODULE:       ndvi-tgrass-v2
 #
 # AUTHOR(S):    martin
 #
@@ -15,11 +15,6 @@
 #%module
 #% description: NDVI TGRASS script version 2
 #%end                
-#%option G_OPT_V_INPUT
-#% key: region
-#% description: Name of input vector region map 
-#% answer: jena_boundary@PERMANENT
-#%end
 #%option G_OPT_STRDS_INPUT
 #% key: b4
 #% description: Name of the input 4th band space time raster dataset
@@ -29,8 +24,8 @@
 #% description: Name of the input 4th band space time raster dataset
 #%end
 #%option G_OPT_STRDS_INPUT
-#% key: clouds
-#% description: Name of the input clouds space time raster dataset
+#% key: mask
+#% description: Name of the input mask space time raster dataset
 #%end
 #%option G_OPT_F_OUTPUT
 #%end
@@ -60,40 +55,25 @@ from grass.script import parser
 from grass.script.vector import vector_db_select
     
 def cleanup(idx):
-    Module('g.remove', flags='f', name='region_mask' + idx, type='vector')
     Module('g.remove', flags='f', name='mask' + idx, type='raster')
     Module('g.remove', flags='f', name='ndvi' + idx, type='raster')
     Module('g.remove', flags='f', name='ndvi_class' + idx, type='raster')
     Module('g.remove', flags='f', name='ndvi_class' + idx, type='vector')
 
-def compute(b4, b8, cl, output, idx):
+def compute(b4, b8, msk, output, idx):
 
     modules = []
-    if cl:
-        region_mask = "region_mask" + idx
-        modules.append(
-            Module("v.overlay",
-                   overwrite = True,
-                   ainput = options["region"],
-                   binput = cl,
-                   operator = "not",
-                   output = region_mask,
-                   run_ = False)
-        )
-    else:
-        region_mask = options["region"]
-
     modules.append(
         Module("g.region",
                overwrite = True,
-               vector = region_mask,
+               vector = msk,
                align = b4,
                run_ = False)
     )
     modules.append(
         Module("v.to.rast",
                overwrite = True,
-               input = region_mask,
+               input = msk,
                output = 'mask' + idx,
                type = 'area',
                use = 'val',
@@ -104,7 +84,7 @@ def compute(b4, b8, cl, output, idx):
         Module("r.mapcalc",
                overwrite = True,
                expression = "ndvi{idx} = if(isnull({clouds}), null(), float({b8} - {b4}) / ({b8} + {b4}))".format(
-                   idx=idx, clouds=cl, b8=b8, b4=b4),
+                   idx=idx, clouds=msk, b8=b8, b4=b4),
                run_ = False)
     )
                 
@@ -197,7 +177,7 @@ def main():
 
     sp4 = tgis.open_old_stds(options['b4'], 'raster')
     sp8 = tgis.open_old_stds(options['b8'], 'raster')
-    spc = tgis.open_old_stds(options['clouds'], 'raster')
+    msk = tgis.open_old_stds(options['mask'], 'raster')
 
     idx = 1
     data = []
@@ -206,10 +186,10 @@ def main():
         date=item[1]
         b8 = sp8.get_registered_maps(columns='name',
                                      where="start_time = '{}'".format(date))[0][0]
-        cl = spc.get_registered_maps(columns='name',
+        ms = msk.get_registered_maps(columns='name',
                                      where="start_time = '{}'".format(date))[0][0]
         output = '{}_{}'.format(options['basename'], idx)
-        compute(b4, b8, cl, output, str(idx))
+        compute(b4, b8, ms, output, str(idx))
 
         data.append(
             (output, date)

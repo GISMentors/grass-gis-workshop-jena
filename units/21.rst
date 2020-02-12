@@ -1,12 +1,12 @@
-Unit 21 - Sentinel ST
-=====================
+Unit 21 - Sentinel spatio-temporal
+==================================
 
-This unit is dedicated to downloading and processing time-series
-Sentinel products.
+Create a new mapset in *jena-region* location, eg. *sentinel-ndvi*
+(:menuselection:`Settings --> GRASS working enviroment --> Create new
+mapset`).
 
-Let's download Sentinel products (*Sentinel2 L2A* similary as in
-:doc:`20`) for year 2019. There are 7 products available as shown
-below, which quite enough for our purpose.
+Let's download Sentinel L2A products for spring/summer
+2019. There are 7 products available as shown below.
 
 .. code-block:: bash
                 
@@ -24,40 +24,34 @@ below, which quite enough for our purpose.
    be91b224-0d6c-45d0-95a5-5cf5743a349e 2019-09-04T10:20:21Z  7% S2MSI2A
    60149bc8-5ab0-4a79-b964-24672739d5b9 2019-04-07T10:20:21Z  9% S2MSI2A
 
-.. note:: For simplification you can find this data in sample dataset (`download
-   7z-archive
-   <http://geo102.fsv.cvut.cz/geoforall/grass-gis-workshop-jena-2018/jena-sample-data.7z>`__)
-   in :file:`sentinel/2017` folder or as GRASS mapset as
-   :file:`grassdata/st.tar.gz`. You can use this mapset (extract to
-   *jena-utm* location) and go to :ref:`next part <sentinel-go-to>` if
-   you like.
-
-Now we can start downloading data.
+Download selected Sentinel scenes:
 
 .. code-block:: bash
                 
    i.sentinel.download settings=sentinel.txt map=jena_boundary area_relation=Contains \
-  start=2019-04-01 end=2019-10-31 producttype=S2MSI2A clouds=10 output=/home/user/geodata/sentinel/2019
+   start=2019-04-01 end=2019-10-31 producttype=S2MSI2A clouds=10 \
+   output=geodata/sentinel/2019
+   
+.. note:: Pre-downloaded Sentinel scenes are available in the sample
+   dataset :file:`geodata/sentinel/2019`.
 
-When data are downloaded we can import them into our *jena-utm*
-location. It is a good idea to import data into newly created mapset
-(:grasscmd:`g.mapset`, see :ref:`Unit 16 <create-mapset>`). In command
-below we force linking instead of importing data.
+Data can be imported by :grasscmd:`i.sentinel.import` similarly as
+done in :doc:`20`. At fisrt check list of bands to be imported by
+:param:`-p` flag. Since NDVI is going to be computed only 4th and 8th
+band are selected.
 
 .. code-block:: bash
 
-   g.mapset -c mapset=st
-   i.sentinel.import -l -c input=/home/user/geodata/sentinel/2019 pattern="B0[4|8]_10m"
-
-.. todo:: register_output=2019/register.txt
+   i.sentinel.import -p input=/home/user/geodata/sentinel/2019 pattern="B0(4|8)_10m"
+   
+   i.sentinel.import -l -c input=/home/user/geodata/sentinel/2019 pattern="B0(4|8)_10m"
 
 .. _sentinel-go-to:
 
-In next step a new space time raster dataset will created and imported
-maps registered. Unfortunately we don't have timestamps for imported
-maps required by :grasscmd:`t.register` (as shown in :ref:`Unit 25
-<t-register-file>`). For this purpose we will design a simple Python
-script as shown below.
+In next step a new space time raster dataset will be created and
+imported maps registered. Unfortunately there are no timestamps for
+imported maps required by :grasscmd:`t.register`. For this purpose a
+simple Python script has been designed.
 
 .. literalinclude:: ../_static/scripts/sentinel-timestamp.py
    :language: python
@@ -65,8 +59,8 @@ script as shown below.
    :emphasize-lines: 27, 30
 
 Timestamps can be easily determined from raster map name, for example
-*L2A_T32UPB_20170517T102031_B04_10m* raster map will be timestamped by
-*2017-05-17 10:20:31*, see line :lcode:`30`.
+*L2A_T32UPB_A021941_20190904T102045* raster map will be timestamped by
+*2019-09-04 10:20:45*, see line :lcode:`30`.
 
 .. note:: To avoid error in computation we also set up endtime
    timestamp as starttime+1sec, see :lcode:`27`.
@@ -76,20 +70,31 @@ Timestamps can be easily determined from raster map name, for example
 Sample script to download: `sentinel-timestamp.py
 <../_static/scripts/sentinel-timestamp.py>`__
 
-Now we can run our script to produce timestamp file.
+By running this script a timestamp file will be produced.
 
 .. code-block:: bash
 
-   sentinel-timestamp.py output=sentinel.txt
-   
-At this moment we can create a new space time dataset
-(:grasscmd:`t.create`) and register all imported Sentinel bands
-(:grasscmd:`t.register`).
+   sentinel-timestamp.py output=sentinel-timestamps.txt
+
+Example of created timestamps file show below.
+
+::
+
+   L2A_T32VNM_20170523T104031_B04_10m|2017-05-23 10:40:31|2017-05-23 10:40:32
+   L2A_T32VNM_20170506T105031_B08_10m|2017-05-06 10:50:31|2017-05-06 10:50:32
+   L2A_T32VNM_20170526T105031_B04_10m|2017-05-26 10:50:31|2017-05-26 10:50:32
+   ...
+
+.. todo:: update
+          
+At this moment a new space time dataset can be created by
+:grasscmd:`t.create` and all imported Sentinel bands registered by
+:grasscmd:`t.register`.
 
 .. code-block:: bash
 
-   t.create output=sentinel title="Sentinel L2A 2017" desc="Jena region"
-   t.register input=sentinel file=sentinel.txt
+   t.create output=sentinel title="Sentinel L2A 2019" desc="Jena region"
+   t.register input=sentinel file=sentinel-timestamps.txt
 
 Let's check basic metadata (:grasscmd:`t.info`) and list of registered
 maps (:grasscmd:`t.rast.list`).
@@ -97,13 +102,34 @@ maps (:grasscmd:`t.rast.list`).
 .. code-block:: bash
 
    t.info input=sentinel
+
+::
+
+   ...
+   | Start time:................. 2017-05-06 10:50:31
+   | End time:................... 2017-07-05 10:50:32
+   ...
+   | Number of registered maps:.. 8
+
+.. code-block:: bash
+
    t.rast.list input=sentinel
 
+::
+
+   name|mapset|start_time|end_time
+   L2A_T32VNM_20170506T105031_B04_10m|sentinel-st-ndvi|2017-05-06 10:50:31|2017-05-06 10:50:32
+   L2A_T32VNM_20170506T105031_B08_10m|sentinel-st-ndvi|2017-05-06 10:50:31|2017-05-06 10:50:32
+   L2A_T32VNM_20170523T104031_B04_10m|sentinel-st-ndvi|2017-05-23 10:40:31|2017-05-23 10:40:32
+   
 NDVI ST computation
 -------------------
 
-For NDVI computation we will create new space time datasets for 4th
-and 8th bands respectively (by :grasscmd:`t.rast.extract`).
+For NDVI computation 4th and 8th bands are required (:doc:`05`). Map
+algebra is performed in the case of spatio-temporal data by
+:grasscmd:`t.rast.mapcalc` which requires data separated into
+spatio-temporal datasets (see example in :doc:`22`). Such datasets can
+be prepared by :grasscmd:`t.rast.extract`.
 
 .. code-block:: bash
 
@@ -117,24 +143,25 @@ Let's check content of the new datasets by :grasscmd:`t.rast.list`.
    t.rast.list input=b4
    t.rast.list input=b8
 
-Before computation let's desired computation region by :grasscmd:`g.region`.
+Set computational region by :grasscmd:`g.region` including mask for
+area of interest by :grasscmd:`r.mask`.
 
 .. code-block:: bash
 
-   g.region vector=jena_boundary align=L2A_T32UPB_20170517T102031_B04_10m
+   g.region vector=jena_boundary align=T32UPB_20190407T102021_B04_10m
+   r.mask vector=jena_boundary
 
-And perform NDVI computation based map algebra expression as described
-in :doc:`05` in parallel (:param:`nproc`) by
-:grasscmd:`t.rast.mapcalc`.
-
+NDVI (see :doc:`05`) computation on spatio-temporal datasets can be
+performed in parallel (:param:`nproc`).
+          
 .. code-block:: bash
 
    t.rast.mapcalc input=b4,b8 output=ndvi \
    expression="ndvi = float(b8 - b4) / ( b8 + b4 )" \
    basename=ndvi nproc=3
 
-When computation is finished we can set up *ndvi* color table in order
-to create fancy animation as shown below.
+When computation is finished *ndvi* color table can be by
+:grasscmd:`t.rast.colors`.
 
 .. code-block:: bash
 
@@ -146,41 +173,44 @@ to create fancy animation as shown below.
    Simple NDVI animation (no clouds mask applied) created by
    :grasscmd:`g.gui.animation`.
 
-.. note:: Load maps as multiple raster maps instead of space time
-          datasets. There is problem with sampling related to trick
+.. note:: Load data as multiple raster maps instead of space time
+          dataset. There is problem with sampling related to trick
           with endtime mentioned above.
 
-The result is not perfect as we can see. We should apply at least
-cloud mask before NDVI computation. This operation can be easily
-solved by applying new space time dataset containing computed raster
-masks. We will create a new Python script for this purpose. The script
-will also produce timestamp file similarly to
-:file:`sentinel-timestamp.py`. The mask can be created as we know from
-:doc:`05` by :grasscmd:`r.mask`, see line :lcode:`39`. But in this
-case we need to keep mask for further usage. We will use simple trick,
-:grasscmd:`r.mask` produces normal raster map with unique name
-*MASK*. It's enough to rename this map by :grasscmd:`g.rename`, see
-line :lcode:`30`.
+Cloud mask
+^^^^^^^^^^
 
-.. literalinclude:: ../_static/scripts/sentinel-clouds-mask.py
+The result is not perfect enough. At least cloud mask should be
+applied before NDVI computation. This operation can be easily solved
+by applying new space time dataset containing computed raster masks. A
+sample Python script has been designed for this purpose below. The
+script also produces a timestamp file similarly to
+:file:`sentinel-timestamp.py`. Such mask can be created by
+:grasscmd:`r.mask`, see line :lcode:`30`. But in this case a mask
+should be kept for further usage. Note that :grasscmd:`r.mask` module
+produces normal raster map with unique name *MASK*. To disable mask it
+is enough to rename *MASK* map by :grasscmd:`g.rename`, see line
+:lcode:`43`.
+
+.. literalinclude:: ../_static/scripts/sentinel-cloud-mask.py
    :language: python
    :linenos:
-   :emphasize-lines: 29, 30
+   :emphasize-lines: 30, 43
 
-Sample script to download: `sentinel-clouds-mask.py
-<../_static/scripts/sentinel-clouds-mask.py>`__
+Sample script to download: `sentinel-cloud-mask.py
+<../_static/scripts/sentinel-cloud-mask.py>`__
 	     
 .. code-block:: bash
 		
-   sentinel-clouds-mask.py output=clouds.txt
+   sentinel-cloud-mask.py map=jena_boundary output=cloud-timestamps.txt
 
 Now we can create a new space time dataset with raster cloud masks
 registered.
 
 .. code-block:: bash
 
-   t.create output=clouds title="Sentinel L2A 2017 (clouds)" desc="Jena region"
-   t.register input=clouds file=clouds.txt
+   t.create output=clouds title="Sentinel L2A 2019 (clouds)" desc="Jena region"
+   t.register input=clouds file=clouds-timestamps.txt
 
 And apply modified expression for map algebra.
 
@@ -188,12 +218,9 @@ And apply modified expression for map algebra.
 
    t.rast.mapcalc input=b4,b8,clouds output=ndvi \
    expression="ndvi = if(isnull(clouds), null(), float(b8 - b4) / ( b8 + b4 ))" \
-   basename=ndvi nproc=3 --overwrite
+   basename=ndvi nproc=3
 
    t.rast.colors in=ndvi color=ndvi
-
-The result is a little bit better, provided cloud mask are not perfect
-as we already know.
 
 .. figure:: ../images/units/21/simple-animation-clouds.gif
    :class: middle
