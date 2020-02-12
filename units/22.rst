@@ -1,4 +1,4 @@
-Unit 24 - Spatio-temporal scripting
+Unit 22 - Spatio-temporal scripting
 ===================================
 
 There is another GRASS Python library to be introduced -
