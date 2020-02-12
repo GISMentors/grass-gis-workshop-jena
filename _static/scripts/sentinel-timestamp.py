@@ -21,7 +21,7 @@ def main():
     with open(options['output'], 'w') as fd:
         for rast in mapset.glist('raster'):
             items = rast.split('_')
-            d = datetime.strptime(items[2], '%Y%m%dT%H%M%S')
+            d = datetime.strptime(items[1], '%Y%m%dT%H%M%S')
             #fd.write("{0}|{1}{2}".format(rast, iso_date, os.linesep))
             ## workaround
             dd = d + timedelta(seconds=1)
