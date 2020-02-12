@@ -46,7 +46,10 @@ Focus on functions used from :grasscmd2:`GRASS GIS Temporal Framework
    :language: python
    :linenos:
    :emphasize-lines: 19, 23, 27, 30, 33, 38, 138, 140-142, 146, 149-152
-                     
+
+Sample script to download: `ndvi-tgrass-v1.py
+<../_static/scripts/ndvi-tgrass-v1.py>`__
+      
 Example of usage:
 
 .. code-block:: bash
@@ -78,6 +81,3 @@ Possible output:
    NDVI class 3: -0.1564 (min) 0.9994 (max) 0.6794 (mean)
 
 .. todo:: update
-
-Sample script to download: `ndvi-tgrass-v1.py
-<../_static/scripts/ndvi-tgrass-v1.py>`__
