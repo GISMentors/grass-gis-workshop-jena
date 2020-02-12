@@ -27,7 +27,6 @@ def main():
     with open(options['output'], 'w') as fd:
         for rast in mapset.glist('raster', pattern='*_B04_10m'):
             items = rast.split('_')
-            print (items)
             d = datetime.strptime(items[1], '%Y%m%dT%H%M%S')
             ## workaround
             dd = d + timedelta(seconds=1)
@@ -36,7 +35,7 @@ def main():
             mask_vect = '{}_{}'.format(vect, options['map'].split('@')[0])
             if Vector(vect).exist():
                 Module('v.overlay', ainput=options['map'], binput=vect, operator='not',
-                       output=mask_vect)
+                       output=mask_vect, overwrite=True)
             else:
                 copy(options['map'], mask_vect, 'vector')
             Module('r.mask', vector=mask_vect, overwrite=True)

@@ -57,7 +57,7 @@ def compute(b4, b8, msk, output):
 
     Module("g.region",
            overwrite = True,
-           vector = msk,
+           raster = msk,
            align = b4)
 
     Module("r.mask",
@@ -126,7 +126,7 @@ def stats(output, date, fd):
            column_prefix='ndvi', method=['minimum','maximum','average'])
     
     data = vector_db_select(output)
-    for vals in data['values'].itervalues():
+    for vals in data['values'].values():
         # unfortunately we need to cast values by float
         fd.write('NDVI class {0}: {1:.4f} (min) {2:.4f} (max) {3:.4f} (mean)'.format(
             vals[0], float(vals[2]), float(vals[3]), float(vals[4])))
