@@ -46,47 +46,37 @@ band are selected.
    
    i.sentinel.import -l -c input=/home/user/geodata/sentinel/2019 pattern="B0(4|8)_10m"
 
-.. _sentinel-go-to:
+.. note:: In GRASS GIS 7.9 use :option:`register_output` in order to
+   create timestamps directly.
 
-In next step a new space time raster dataset will be created and
-imported maps registered. Unfortunately there are no timestamps for
-imported maps required by :grasscmd:`t.register`. For this purpose a
-simple Python script has been designed.
+   .. code-block:: bash
 
-.. literalinclude:: ../_static/scripts/sentinel-timestamp.py
-   :language: python
-   :linenos:
-   :emphasize-lines: 27, 30
+      i.sentinel.import -l -c input=/home/user/geodata/sentinel/2019 pattern="B0(4|8)_10m" \
+      register_output=/home/user/sentinel-timestamps.txt
 
-Timestamps can be easily determined from raster map name, for example
-*L2A_T32UPB_A021941_20190904T102045* raster map will be timestamped by
-*2019-09-04 10:20:45*, see line :lcode:`30`.
+   Otherwise follow cookbook below. Unfortunately there are no
+   timestamps for imported maps required by
+   :grasscmd:`t.register`. For this purpose a simple Python script has
+   been designed.
 
-.. note:: To avoid error in computation we also set up endtime
-   timestamp as starttime+1sec, see :lcode:`27`.
+   .. literalinclude:: ../_static/scripts/sentinel-timestamp.py
+      :language: python
+      :linenos:
+      :emphasize-lines: 27, 30
 
-   This workaround should be avoided. Determine how?
+   Timestamps can be easily determined from raster map name, for example
+   *L2A_T32UPB_A021941_20190904T102045* raster map will be timestamped by
+   *2019-09-04 10:20:45*, see line :lcode:`30`.
 
-Sample script to download: `sentinel-timestamp.py
-<../_static/scripts/sentinel-timestamp.py>`__
+   Sample script to download: `sentinel-timestamp.py
+   <../_static/scripts/sentinel-timestamp.py>`__
 
-By running this script a timestamp file will be produced.
+   By running this script a timestamp file will be produced.
 
-.. code-block:: bash
+   .. code-block:: bash
 
-   sentinel-timestamp.py output=sentinel-timestamps.txt
+      sentinel-timestamp.py output=sentinel-timestamps.txt
 
-Example of created timestamps file show below.
-
-::
-
-   L2A_T32VNM_20170523T104031_B04_10m|2017-05-23 10:40:31|2017-05-23 10:40:32
-   L2A_T32VNM_20170506T105031_B08_10m|2017-05-06 10:50:31|2017-05-06 10:50:32
-   L2A_T32VNM_20170526T105031_B04_10m|2017-05-26 10:50:31|2017-05-26 10:50:32
-   ...
-
-.. todo:: update
-          
 At this moment a new space time dataset can be created by
 :grasscmd:`t.create` and all imported Sentinel bands registered by
 :grasscmd:`t.register`.

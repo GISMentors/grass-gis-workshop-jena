@@ -16,7 +16,7 @@ parallel.
 The option :param:`ncproc` on line :lcode:`43` enables controlling
 number of processes running in parallel.
 
-.. literalinclude:: ../_static/scripts/ndvi-tgrass-v2.py
+. literalinclude:: ../_static/scripts/ndvi-tgrass-v2.py
    :language: python
    :linenos:
    :emphasize-lines: 43, 146, 217
