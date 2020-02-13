@@ -156,6 +156,9 @@ At the end NDVI zonal statistics for each class can be computed:
   stored in attribute table
 * attributes can be printed by :grasscmd:`v.db.select`
 
+.. todo:: Can be simplified since this statistics is already reported
+   by :grasscmd:`v.report`
+          
 .. literalinclude:: ../_static/scripts/ndvi-v2.py
    :language: python
    :lines:  107-116
