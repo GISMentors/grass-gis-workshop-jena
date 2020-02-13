@@ -58,12 +58,7 @@ Let's download desired tiles (h18v03 and h18v04) for year 2019. We are
 interested about LST products (both Aqua and Terra satellites).
 
 .. note:: Already downloaded MODIS can be found in sample dataset
-   (`download 7z-archive
-   <http://geo102.fsv.cvut.cz/geoforall/grass-gis-workshop-jena-2018/jena-sample-data.7z>`__)
-   in :file:`modis/h18v03_04` folder. Or alternatively you can use
-   GRASS location with imported data
-   (:file:`grassdata/germany-modis.tar.gz`) and continue with
-   :ref:`LST computation <modis-lst>`.
+   :file:`geodata/modis`.
   
 .. code-block:: bash
 
@@ -177,8 +172,8 @@ or from Layer Manager, see :ref:`Unit 03 <raster-metadata>`).
 
 ::
 
-  min=0
-  max=14411    
+   min=0
+   max=14418    
 
 .. _modis-dn-c:
   

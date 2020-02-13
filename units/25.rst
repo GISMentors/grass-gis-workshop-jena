@@ -182,7 +182,8 @@ for spring by using :grasscmd:`r.univar`.
    mean: 10.7001
 
 .. figure:: ../images/units/25/spring_avg.png
-
+   :class: middle
+           
    Average temperature for spring 2019.
 
 Data visualization
@@ -193,5 +194,6 @@ for temporal data visualization: :grasscmd:`g.gui.timeline` and
 :grasscmd:`g.gui.animation`. See animation example below.
 
 .. figure:: ../images/units/25/modis-animation.gif
+   :class: middle
 
    Monthly aggregated dataset animation.
