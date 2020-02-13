@@ -1,19 +1,19 @@
 #!/usr/bin/env python3
 
 #%module
-#% description: Computes LST stats for given period (limited to Germany and 2017).
+#% description: Computes LST stats for given period (limited to Germany and 2019).
 #%end
 #%option G_OPT_STRDS_INPUT
 #%end
 #%option 
 #% key: start
-#% description: Start date (eg. 2017-03-01)
+#% description: Start date (eg. 2019-03-01)
 #% type: string
 #% required: yes
 #%end
 #%option 
 #% key: end
-#% description: End date (eg. 2017-04-01)
+#% description: End date (eg. 2019-04-01)
 #% type: string
 #% required: yes
 #%end
@@ -30,8 +30,8 @@ from grass.exceptions import CalledModuleError
     
 def check_date(date_str):
     d = datetime.strptime(date_str, '%Y-%m-%d')
-    if d.year != 2017:
-        gs.fatal("Only year 2017 allowed")
+    if d.year != 2019:
+        gs.fatal("Only year 2019 allowed")
 
 def cleanup():
     try:
