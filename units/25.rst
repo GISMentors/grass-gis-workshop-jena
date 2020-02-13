@@ -20,7 +20,7 @@ At first we will create a new space time raster dataset by
 
 .. code-block:: bash
 
-   t.create output=modis title="MODIS 2017" desc="MODIS data for Germany"
+   t.create output=modis title="MODIS 2019" desc="MODIS data for Germany"
 
 In the next step will register to the dataset imported MODIS data by
 :grasscmd:`t.register`. We run this command twice, once for Aqua data
@@ -28,8 +28,8 @@ than for Terra data.
 
 .. code-block:: bash
                 
-   t.register input=modis file=h18v03_04/tlist-mod.txt
-   t.register input=modis file=h18v03_04/tlist-myd.txt
+   t.register input=modis file=tlist-mod.txt
+   t.register input=modis file=tlist-myd.txt
 
 Let's check basic metedata about created dataset by
 :grasscmd:`t.info`.
@@ -41,8 +41,8 @@ Let's check basic metedata about created dataset by
 ::
 
    ...
-   | Start time:................. 2017-01-01 00:00:00
-   | End time:................... 2018-01-04 00:00:00
+   | Start time:................. 2019-01-01 00:00:00
+   | End time:................... 2020-01-04 00:00:00
    ...
    | Number of registered maps:.. 184
 
@@ -54,18 +54,18 @@ Let's check basic metedata about created dataset by
 
    ::
       
-      MOD11A2.A2017297_mosaic_LST_Day_1km|2017-10-24|2017-11-01
+      MOD11A2.A2019297_mosaic_LST_Day_1km|2019-10-24|2019-11-01
 
 Data querying
 -------------
 
 For querying space time raster dataset is designed
-:grasscmd:`t.rast.list`. Let's print raster data covering March 2017.
+:grasscmd:`t.rast.list`. Let's print raster data covering March 2019.
 
 .. code-block:: bash
                 
    t.rast.list input=modis order=start_time \
-   where="start_time > '2017-03-01' and start_time < '2017-04-01'"
+   where="start_time > '2019-03-01' and start_time < '2019-04-01'"
 
 Univariate statistics can be computed by :grasscmd:`t.rast.univar`
 (note that the command is running in the current computation region
@@ -73,12 +73,12 @@ similarly as :grasscmd:`r.univar` does).
 
 .. code-block:: bash
                 
-   t.rast.univar input=modis where="start_time > '2017-03-01' and start_time < '2017-04-01'"
+   t.rast.univar input=modis where="start_time > '2019-03-01' and start_time < '2019-04-01'"
 
 ::
    
    id|start|end|mean|min|max|mean_of_abs|stddev|variance|coeff_var|sum|null_cells|cells
-   ...|2017-03-06 00:00:00|2017-03-14 00:00:00|11127.9119722696|0|14548|11127.9119722696|...
+   ...|2019-03-06 00:00:00|2019-03-14 00:00:00|11127.9119722696|0|14548|11127.9119722696|...
 
 As we can see we have to convert DN into Celsius scale as we done for
 selected data in :ref:`Unit 24 <modis-dn-c>`. Instead of running
@@ -102,14 +102,14 @@ respected.
 
 .. code-block:: bash
 
-   t.rast.univar input=modis_c where="start_time > '2017-03-01' and start_time < '2017-04-01'"
+   t.rast.univar input=modis_c where="start_time > '2019-03-01' and start_time < '2019-04-01'"
 
 Looks better.
 
 ::
    
    id|start|end|mean|min|max|mean_of_abs|stddev|variance|coeff_var|sum|null_cells|cells
-   c_033@PERMANENT|2017-03-06 00:00:00|2017-03-14 00:00:00|8.38271624724276|-20.35|17.81|...
+   c_033@PERMANENT|2019-03-06 00:00:00|2019-03-14 00:00:00|8.38271624724276|-20.35|17.81|...
 
 .. tip:: Color table can be easily set by :grasscmd:`t.rast.colors`
          similarly as :grasscmd:`r.colors` does for single raster
@@ -134,7 +134,7 @@ Example for July and August only.
 
 .. code-block:: bash
 
-   t.rast.univar modis_cm where="start_time > '2017-07-01' and start_time < '2017-09-01'"
+   t.rast.univar modis_cm where="start_time > '2019-07-01' and start_time < '2019-09-01'"
 
 Data extraction
 ---------------
@@ -144,16 +144,16 @@ A new space time dataset only with subset of data can be created by
 
 .. code-block:: bash
                           
-   t.rast.extract input=modis_c where="start_time > '2017-03-01' and start_time < '2017-06-01'" \
+   t.rast.extract input=modis_c where="start_time > '2019-03-01' and start_time < '2019-06-01'" \
    output=modis_spring
 
-   t.rast.extract input=modis_c where="start_time > '2017-06-01' and start_time < '2017-09-01'" \
+   t.rast.extract input=modis_c where="start_time > '2019-06-01' and start_time < '2019-09-01'" \
    output=modis_summer
                 
-   t.rast.extract input=modis_c where="start_time > '2017-09-01' and start_time < '2017-12-01'" \
+   t.rast.extract input=modis_c where="start_time > '2019-09-01' and start_time < '2019-12-01'" \
    output=modis_autumn
                 
-   t.rast.extract input=modis_c where="start_time > '2017-12-01' or start_time < '2017-03-01'" \
+   t.rast.extract input=modis_c where="start_time > '2019-12-01' or start_time < '2019-03-01'" \
    output=modis_winter
 
 
@@ -183,7 +183,7 @@ for spring by using :grasscmd:`r.univar`.
 
 .. figure:: ../images/units/25/spring_avg.png
 
-   Average temperature for spring 2017.
+   Average temperature for spring 2019.
 
 Data visualization
 ------------------

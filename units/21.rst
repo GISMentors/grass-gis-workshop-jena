@@ -157,7 +157,7 @@ performed in parallel (:param:`nproc`).
 .. code-block:: bash
 
    t.rast.mapcalc input=b4,b8 output=ndvi \
-   expression="ndvi = float(b8 - b4) / ( b8 + b4 )" \
+   expression="float(b8 - b4) / ( b8 + b4 )" \
    basename=ndvi nproc=3
 
 .. note:: In GRASS GIS 7.9 due to band reference support the

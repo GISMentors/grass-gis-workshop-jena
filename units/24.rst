@@ -3,12 +3,12 @@ Unit 24 - MODIS
 
 There are two satellites, Aqua and Terra which carry the MODIS sensor
 as payload. The **Moderate Resolution Imaging Spectroradiometer**
-(:wikipedia-en:`MODIS`) is a 36-channel from visible to
-thermal-infrared sensor that was launched as part of the Terra
-satellite payload in December 1999 and Aqua satellite (May 2002). The
-Terra satellite passes twice a day (at about 10:30am, and 22:30pm
-local time), also the Aqua satellite passes twice a day (at about
-01:30am, and 13:30pm local time). (source: `GRASS Wiki
+(:wikipedia:`MODIS`) is a 36-channel from visible to thermal-infrared
+sensor that was launched as part of the Terra satellite payload in
+December 1999 and Aqua satellite (May 2002). The Terra satellite
+passes twice a day (at about 10:30am, and 22:30pm local time), also
+the Aqua satellite passes twice a day (at about 01:30am, and 13:30pm
+local time). (source: `GRASS Wiki
 <https://grasswiki.osgeo.org/wiki/MODIS>`__)
 
 Our area of interest, Germany, is covered by two tiles (see `MODLAND
@@ -54,7 +54,7 @@ GRASS MODIS addon consists of two modules:
 * :grasscmdaddons:`i.modis.download` and
 * :grasscmdaddons:`i.modis.import`
 
-Let's download desired tiles (h18v03 and h18v04) for year 2017. We are
+Let's download desired tiles (h18v03 and h18v04) for year 2019. We are
 interested about LST products (both Aqua and Terra satellites).
 
 .. note:: Already downloaded MODIS can be found in sample dataset
@@ -83,11 +83,11 @@ Then we can import data including reprojection into our location.
 
 .. code-block:: bash
 
-   i.modis.import -mw files=h18v03_04/listfileMOD11A2.006.txt \
-   spectral='( 1 0 0 0 1 0 0 0 0 0 0 0 )' outfile=h18v03_04/tlist-mod.txt
+   i.modis.import -mw files=/home/user/geodata/modis/h18v03_04/listfileMOD11A2.006.txt \
+   spectral='( 1 0 0 0 1 0 0 0 0 0 0 0 )' outfile=tlist-mod.txt
 
-   i.modis.import -mw files=h18v03_04/listfileMYD11A2.006.txt \
-   spectral='( 1 0 0 0 1 0 0 0 0 0 0 0 )' outfile=h18v03_04/tlist-myd.txt
+   i.modis.import -mw files=/home/user/geodata/modis/h18v03_04/listfileMYD11A2.006.txt \
+   spectral='( 1 0 0 0 1 0 0 0 0 0 0 0 )' outfile=tlist-myd.txt
 
 If ``-m`` flag is given, the import tool creates mosaics from tiles
 automatically, see :numref:`modis-mosaics`.
@@ -147,8 +147,8 @@ input data. This will be performed by two GRASS operations:
 
 .. code-block:: bash
 
-   v.type input=germany output=germany_b from_type=line to_type=boundary
-   v.centroids input=germany_b output=germany_boundary
+   v.type input=germany_boundary output=germany_b from_type=line to_type=boundary
+   v.centroids input=germany_b output=germany
 
 .. _germany-boundary:
    
@@ -165,15 +165,15 @@ computation grid to input data by :grasscmd:`g.region`.
 
 .. code-block:: bash
 
-   g.region vector=germany_boundary align=MOD11A2.A2017001_mosaic_LST_Day_1km
-   r.mask vector=germany_boundary
+   g.region vector=germany align=MOD11A2.A2019001_mosaic_LST_Day_1km
+   r.mask vector=germany
 
 Let's check range values of our LST data (by :grasscmd:`r.info` module
 or from Layer Manager, see :ref:`Unit 03 <raster-metadata>`).
 
 .. code-block:: bash
 
-   r.info -r map=MOD11A2.A2017001_mosaic_LST_Day_1km
+   r.info -r map=MOD11A2.A2019001_mosaic_LST_Day_1km
 
 ::
 
@@ -199,7 +199,9 @@ Example (replace :map:`tile` with real map name):
    
 .. code-block:: bash
                 
-   r.mapcalc expression="tile_c = if(tile != 0, tile * 0.02 - 273.15, null())"
+   r.mapcalc expression="MOD11A2.A2019001_mosaic_LST_Day_1km_c = \
+   if(MOD11A2.A2019001_mosaic_LST_Day_1km != 0, \
+   MOD11A2.A2019001_mosaic_LST_Day_1km * 0.02 - 273.15, null())"
 
 .. figure:: ../images/units/24/lst-c.png
    :class: middle
