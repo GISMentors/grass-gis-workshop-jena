@@ -27,6 +27,6 @@ Possible response.
 
 .. code-block:: xml
 
-   <wps:ComplexData mimeType="application/json">
-   {"min": "7.70250000000003", "max": "10.6513333333334", "mean": "9.14346666666669", ...}
+   <wps:ComplexData mimeType="application/json" encoding="" schema="">
+   {"n": 115.0, "null_cells": 109.0, "cells": 224.0, "min": 7.07625000000003,...
    </wps:ComplexData>

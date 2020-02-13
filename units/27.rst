@@ -124,7 +124,7 @@ http://localhost:5000/wps?request=Execute&service=WPS&identifier=modis-v1&versio
 
 Example of response:
 
-.. code-block:: python
+.. code-block:: xml
 
    <wps:LiteralData dataType="string">
    Min: -8.3;Max: 12.6;Mean: 7.3

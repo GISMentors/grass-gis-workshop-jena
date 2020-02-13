@@ -8,7 +8,7 @@ class ModisV4(Process):
     def __init__(self):
         inputs = [ComplexInput('region', 'Input vector region',
                                supported_formats=[
-                                   Format('text/xml'), # requires QGIS WPS client
+                                   Format('text/xml'), # required by QGIS 2 WPS client
                                    Format('application/xml')]),
                   LiteralInput('start', 'Start date (eg. 2019-03-01)',
                                data_type='string'),
@@ -102,7 +102,7 @@ class ModisV4(Process):
         Module('v.out.ogr',
                input=output + '_zones',
                output='zones.gml',
-               format='GML')
+               format='GML', overwrite=True)
 
         response.outputs['zones'].file = 'zones.gml'
 

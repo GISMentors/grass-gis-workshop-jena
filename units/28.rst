@@ -29,10 +29,10 @@ http://localhost:5000/wps?request=Execute&service=WPS&identifier=modis-v2&versio
 
 Possible response.
 
-.. code-block:: python
+.. code-block:: xml
 
-   <wps:ComplexData mimeType="application/json">
-   {"count": 14, "max": 16.93, "mean": 6.598571428571452, "min": -1.22999999999996}
+   <wps:ComplexData mimeType="application/json" encoding="" schema="">
+   {"min": -0.309999999999945, "max": 17.97, "mean": 6.830000000000014, "count": 14}
    </wps:ComplexData>
 
 Try to improve the process in order to validate coordinates. Only

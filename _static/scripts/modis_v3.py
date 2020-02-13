@@ -82,6 +82,8 @@ class ModisV3(Process):
         )
 
         stats = gs.parse_key_val(ret.outputs.stdout)
+        # cast dict values to float
+        stats = dict(zip(stats.keys(), [float(value) for value in stats.values()]))
 
         response.outputs['stats'].data = json.dumps(stats)
 
