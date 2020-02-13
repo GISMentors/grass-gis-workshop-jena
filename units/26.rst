@@ -20,7 +20,7 @@ year 2019. We will also check if input dates are valid, see line
 
 .. tip::
 
-   You can globally set :param:`quiet` flag by :envvar:`GRASS_VERBOSE`
+   Verbosity level can be set globally by :envvar:`GRASS_VERBOSE`
    environment variable, see line :lcode:`47`.
     
 .. literalinclude:: ../_static/scripts/modis-date-stats.py
@@ -28,6 +28,9 @@ year 2019. We will also check if input dates are valid, see line
    :linenos:
    :emphasize-lines: 6, 9, 15, 31, 47, 50, 60, 66-68
 
+Sample script to download: `modis-date-stats.py
+<../_static/scripts/modis-date-stats.py>`__
+                     
 Example of usage:
 
 .. code-block:: bash
@@ -39,7 +42,3 @@ Example of usage:
    Min: -5.4
    Max: 13.8
    Mean: 8.0
-
-Sample script to download: `modis-date-stats.py
-<../_static/scripts/modis-date-stats.py>`__
-   

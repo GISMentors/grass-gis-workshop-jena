@@ -38,7 +38,7 @@ be installed.
 	
    .. code-block:: bash
 	
-      pip install sentinelsat
+      pip3 install sentinelsat
 	
    If you have not `pip` command, look `how install it
    <https://pip.pypa.io/en/stable/installing/>`__.
