@@ -10,9 +10,9 @@ class ModisV4(Process):
                                supported_formats=[
                                    Format('text/xml'), # requires QGIS WPS client
                                    Format('application/xml')]),
-                  LiteralInput('start', 'Start date (eg. 2017-03-01)',
+                  LiteralInput('start', 'Start date (eg. 2019-03-01)',
                                data_type='string'),
-                  LiteralInput('end', 'End date (eg. 2017-04-01)',
+                  LiteralInput('end', 'End date (eg. 2019-04-01)',
                                data_type='string')]
         outputs = [ComplexOutput('zones', 'Output LST zones',
                                 supported_formats=[Format('application/gml+xml')])
@@ -24,7 +24,7 @@ class ModisV4(Process):
             version='0.4',
             title="Modis process (v4)",
             abstract='The process uses the GRASS GIS to compute LST ' \
-            'statistics for given period in 2017 for Germany',
+            'statistics for given period in 2019 for Germany',
             profile='',
             inputs=inputs,
             outputs=outputs,
@@ -37,8 +37,8 @@ class ModisV4(Process):
         from datetime import datetime
 
         d = datetime.strptime(date_str, '%Y-%m-%d')
-        if d.year != 2017:
-            raise Exception("Only year 2017 allowed")
+        if d.year != 2019:
+            raise Exception("Only year 2019 allowed")
 
     def _handler(self, request, response):
         from subprocess import PIPE
