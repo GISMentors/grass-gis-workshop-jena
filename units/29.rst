@@ -1,7 +1,7 @@
 Unit 29 - PyWPS LST region stats
 ================================
 
-The third version of our process will return LST statistics for region
+A third version of the process will return LST statistics for region
 in Germany defined by input vector data. Input region is imported by
 :grasscmd:`v.import` (line :lcode:`62`), resultant statistics is
 computed by :grasscmd:`t.rast.series` (line :lcode:`68`) and

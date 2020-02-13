@@ -3,11 +3,11 @@ Unit 27 - PyWPS intro
 
 `PyWPS <http://pywps.org>`__ is a server side implementation of the
 `OGC Web Processing Service
-<http://www.opengeospatial.org/standards/wps>`__ (OGC WPS) standard,
-using the Python programming language.
+<http://www.opengeospatial.org/standards/wps>`__ (OGC WPS) standard
+implemented in the Python programming language.
 
 **OGC Web Processing Service** standard provides rules for
-standardizing how inputs and outputs (requests and responses) for
+standardizing inputs and outputs (requests and responses) for
 geospatial processing services. The standard also defines how a client
 can request the execution of a process, and how the output from the
 process is handled. It defines an interface that facilitates the
@@ -27,23 +27,23 @@ Install PyWPS and Flask dependency
 
 .. code-block:: bash
 
-   sudo pip install pywps flask
+   sudo pip3 install pywps flask
 
-Go to :file:`pywps-flask` directory and start your PyWPS demo server
+Go to :file:`pywps-flask` directory and start PyWPS demo server
 
 .. code-block:: bash
 
    python demo.py
 
 
-Go to http://127.0.0.1:5000 in order to see all available WPS demo
+Open http://127.0.0.1:5000 in order to see all available WPS demo
 processes. Let's request process description of selected process,
 eg. *say_hello* process. Try to run the process by ``execute``
 request.
 
 http://localhost:5000/wps?request=Execute&service=WPS&identifier=say_hello&version=1.0.0&datainputs=name=Martin
 
-You should get similar response as below.
+Example of response:
 
 .. code-block:: xml
 
@@ -51,29 +51,27 @@ You should get similar response as below.
    Hello Martin
    </wps:LiteralData>
 
-Well, we have working demo, so let's continue with creating our first
-WPS process.
+Let's continue with creating our own WPS process.
 
 MODIS process
 -------------
 
-Go to :file:`pywps-flask` directory and create your first process in
-:file:`processes` directory (you can use :file:`grassbuffer.py` as a
-template). Example of process below is based on the script created in
-:doc:`26`. Let's focus on important parts.
+Go to :file:`pywps-flask/processes` directory and create a new process
+(:file:`grassbuffer.py` can be used as a template). Example of process
+below is based on the script created in :doc:`26`. Let's focus on
+important parts.
 
 Process itself is defined as a Python class, :class:`ModisV1` in this
-case (line :lcode:`7`). In class constructor you define input (lines
-:lcode:`9` and :lcode:`11`) and output parameters (line
-:lcode:`14`). Every process has its identifier (line :lcode:`20`),
-title and abstract. The process will operate in GRASS location defined
-on line :lcode:`30`. On line :lcode:`61` is assumed that space time
-LST dataset is located in PERMANENT, see :doc:`25`. For each job
-(executed process by a client) PyWPS creates in this location a
-temporary mapset which is deleted when process is finished. Process
-body is implemented as ``_handler()`` method, see line
-:lcode:`40`. Resultant statistics is stored to response output as a
-simple string on line :lcode:`80`.
+case (line :lcode:`7`). In class constructor input (lines :lcode:`9`
+and :lcode:`11`) and output parameters (line :lcode:`14`) are
+defined. Every process has its identifier (line :lcode:`20`), title
+and abstract. The process will operate in GRASS location defined on
+line :lcode:`30`. On line :lcode:`61` is assumed that space time LST
+dataset is located in PERMANENT, see :doc:`25`. For each job (executed
+process by a client) PyWPS creates in this location a temporary mapset
+which is deleted when process is finished. Process body is implemented
+as ``_handler()`` method, see line :lcode:`40`. Resultant statistics
+is stored to response output as a simple string on line :lcode:`80`.
 
 .. literalinclude:: ../_static/scripts/modis_v1.py
    :language: python
@@ -85,9 +83,7 @@ Sample process to download: `modis_v1.py
 
 .. _process-import:
 
-We have to activate the process in :file:`demo.py` (which implements
-PyWPS demo server). Assuming that you named file with process as
-:file:`modis_v1.py`.
+The process has to be activated in :file:`demo.py`.
 
 .. code-block:: python
 
@@ -120,11 +116,11 @@ You should see your ``modis-v1`` process in the list. Click on
 
    .. code-block:: bash
                    
-      gisbase=/usr/lib/grass-7.4.0
+      gisbase=/usr/lib/grass79
 
-Now you can finally execute your first WPS process!
+Now execute the process:
 
-http://localhost:5000/wps?request=Execute&service=WPS&identifier=modis-v1&version=1.0.0&datainputs=start=2017-03-01;end=2017-04-01
+http://localhost:5000/wps?request=Execute&service=WPS&identifier=modis-v1&version=1.0.0&datainputs=start=2019-03-01;end=2019-04-01
 
 Example of response:
 
@@ -137,5 +133,5 @@ Example of response:
 .. tip:: When something goes wrong, check :file:`logs/pywps.log` for
    details.
 
-Try to improve process in order to return something more
-usable than a string, eg. :wikipedia-en:`JSON`.
+Try to improve process in order to return something more reasonable
+than a string, eg. :wikipedia:`JSON`.

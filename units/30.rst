@@ -1,8 +1,8 @@
 Unit 30 - PyWPS LST region zones
 ================================
 
-The last (fourth) version of the process will return for input region
-and dates, LST zones in vector format (:wikipedia-en:`GML`), see line
+A last (fourth) version of the process will return for input region
+and dates, LST zones in vector format (:wikipedia:`GML`), see line
 :lcode:`17`.  Zones are defined on line :lcode:`83` by
 :grasscmd:`r.recode`. Raster classes are convert to vector by
 :grasscmd:`r.to.vect` on line :lcode:`96`. Finally vector classes are

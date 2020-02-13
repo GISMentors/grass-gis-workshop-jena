@@ -1,10 +1,10 @@
 Unit 28 - PyWPS LST point stats
 ===============================
 
-Second version of our WPS process will return LST statistics for given
-point in Germany (referenced in :epsg:`3035`). Input parameters are
-defined on lines :lcode:`10, 12, 14`. The output is defined as
-:wikipedia-en:`JSON`, see line :lcode:`17`.
+A second version of the WPS process will return LST statistics for
+given point in Germany (referenced in :epsg:`3035`). Input parameters
+are defined on lines :lcode:`10, 12, 14`. The output is defined as
+:wikipedia:`JSON`, see line :lcode:`17`.
 
 The pixel extraction is done by :grasscmd:`t.rast.what` on line
 :lcode:`62`. Statistics is computed based on command output somehow
@@ -36,4 +36,4 @@ Possible response.
    </wps:ComplexData>
 
 Try to improve the process in order to validate coordinates. Only
-Germany area is supported.
+point located in Germany is allowed.
