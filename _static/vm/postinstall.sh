@@ -28,6 +28,9 @@ if [ ! -f /home/user/geodata/osm/counties.gpkg ] ; then
     wget http://geo102.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2020/counties.gpkg
 fi
 
+sudo ln -sf /opt/grass/dist.x86_64-pc-linux-gnu/ /usr/lib/grass79
+sudo ldconfig
+
 ###
 
 cd /opt

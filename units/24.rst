@@ -26,8 +26,9 @@ to ETRS89 / LAEA Europe :epsg:`3035`.
 
 .. _create-location-epsg:
 
-Create a new GRASS location (see :ref:`Unit 02 <create-location>`)
-using EPSG code (*Select EPSG code of spatial reference system*).
+Create a new GRASS location *germany-modis* (see :ref:`Unit 02
+<create-location>`) using EPSG code (*Select EPSG code of spatial
+reference system*).
 
 .. figure:: ../images/units/24/create-location-epsg-0.svg
 

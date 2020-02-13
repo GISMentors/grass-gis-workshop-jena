@@ -30,7 +30,7 @@ class ModisV4(Process):
             outputs=outputs,
             store_supported=True,
             status_supported=True,
-            grass_location="/opt/grassdata/germany-modis"
+            grass_location="/home/user/grassdata/germany-modis"
         )
 
     def check_date(self, date_str):

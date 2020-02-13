@@ -33,7 +33,7 @@ Go to :file:`pywps-flask` directory and start PyWPS demo server
 
 .. code-block:: bash
 
-   python demo.py
+   python3 demo.py
 
 
 Open http://127.0.0.1:5000 in order to see all available WPS demo
@@ -47,10 +47,10 @@ Example of response:
 
 .. code-block:: xml
 
-   <wps:LiteralData dataType="urn:ogc:def:dataType:OGC:1.1:string" uom="urn:ogc:def:uom:OGC:1.0:unity">
+   <wps:LiteralData uom="urn:ogc:def:uom:OGC:1.0:unity" dataType="string">
    Hello Martin
    </wps:LiteralData>
-
+                
 Let's continue with creating our own WPS process.
 
 MODIS process
