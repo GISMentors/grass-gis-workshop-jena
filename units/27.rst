@@ -126,8 +126,8 @@ Example of response:
 
 .. code-block:: python
 
-   <wps:LiteralData dataType="urn:ogc:def:dataType:OGC:1.1:string">
-   Min: -5.4;Max: 13.8;Mean: 8.0
+   <wps:LiteralData dataType="string">
+   Min: -8.3;Max: 12.6;Mean: 7.3
    </wps:LiteralData>
 
 .. tip:: When something goes wrong, check :file:`logs/pywps.log` for
