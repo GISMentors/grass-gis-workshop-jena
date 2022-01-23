@@ -62,10 +62,10 @@ Software used in this training materials
 .. figure:: ./images/grass-gis-logo.png
    :class: small
           
-* `GRASS GIS <http://grass.osgeo.org>`__ (recommended version 7.8) for
+* `GRASS GIS <http://grass.osgeo.org>`__ (recommended version 8.0) for
   geospatial raster, imagery, and vector data processing and providing
   spatial analysis.
-* `QGIS desktop <http://qgis.org>`__ (recommended version 3.4) for
+* `QGIS desktop <http://qgis.org>`__ (recommended version 3.16) for
   geospatial visualization, creating hardcopy outputs, and data
   publishing.
 * `GDAL library <http://gdal.org>`__ for reading and writing various
@@ -78,31 +78,43 @@ Software used in this training materials
   Service standard from the Open Geospatial Consortium written in
   Python.
 
-Virtual machine
-===============
+Installation notes
+------------------
 
-The simplest way how to follow this training. `VirtualBox
-<http://virtualbox.org>`__ must be installed on your PC, enable also
-*virtualization support* in BIOS. See `Virtualization Quickstart
-<https://live.osgeo.org/en/quickstart/virtualization_quickstart.html>`__
-for details.
+.. todo:: To be done...
 
-A customized virtual machine (VM) below is based on `OSGeoLive
-<http://live.osgeo.org>`__ version 13. This VM contains all software
-dependecies including sample dataset. See :file:`GRASS Jena Workshop`
-folder on the desktop.
+Debian/Ubuntu Linux
+^^^^^^^^^^^^^^^^^^^
 
-.. figure:: images/osgeolive.png
-   :class: middle
-        
-   Customized OSGeoLive VM
+MS Windows
+^^^^^^^^^^
 
-Download tailored virtual machine **including sample dataset** as `7z
-archive
-<http://geo102.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2020/osgeolive-13.0-amd64-jena.vmdk.7z>`__
-(10.4GB, 21GB uncompressed). Note that VM size can grow up to 40GB!
+..
+    Virtual machine
+    ===============
 
-.. note:: RAM 4GB minimum, at least 2 CPU cores
+    The simplest way how to follow this training. `VirtualBox
+    <http://virtualbox.org>`__ must be installed on your PC, enable also
+    *virtualization support* in BIOS. See `Virtualization Quickstart
+    <https://live.osgeo.org/en/quickstart/virtualization_quickstart.html>`__
+    for details.
+
+    A customized virtual machine (VM) below is based on `OSGeoLive
+    <http://live.osgeo.org>`__ version 13. This VM contains all software
+    dependecies including sample dataset. See :file:`GRASS Jena Workshop`
+    folder on the desktop.
+
+    .. figure:: images/osgeolive.png
+       :class: middle
+
+       Customized OSGeoLive VM
+
+    Download tailored virtual machine **including sample dataset** as `7z
+    archive
+    <http://geo102.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2020/osgeolive-13.0-amd64-jena.vmdk.7z>`__
+    (10.4GB, 21GB uncompressed). Note that VM size can grow up to 40GB!
+
+    .. note:: RAM 4GB minimum, at least 2 CPU cores
 
 Sample dataset
 ==============
@@ -124,15 +136,20 @@ specifically. See detailed description below.
   OpenStreetMap)
 * Sentinel-2 data (directory: :file:`sentinel`, source: `Copernicus
   Open Access Hub <https://scihub.copernicus.eu/>`__)
-          
-Sample dataset can be also download as `7z archive
-<http://geo102.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2020/jena-sample-data.7z>`__
-(6.1GB, 6.5GB uncompressed).
+
+.. todo:: Provide download link
+
+..
+   Sample dataset can be also download as `7z archive
+   <http://geo102.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2020/jena-sample-data.7z>`__
+   (6.1GB, 6.5GB uncompressed).
 
 Units
 =====
 
-See a `timetable <https://docs.google.com/spreadsheets/d/1usoz9TaWb2mlWtq5EgaHA6f3dB_oeBYMC_ovwPSB_Ns/edit?usp=sharing>`__
+.. todo:: Provide timetable link
+          
+.. See a `timetable <https://docs.google.com/spreadsheets/d/1usoz9TaWb2mlWtq5EgaHA6f3dB_oeBYMC_ovwPSB_Ns/edit?usp=sharing>`__
 
 .. toctree::
    :maxdepth: 2
