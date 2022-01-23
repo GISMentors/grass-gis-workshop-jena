@@ -1,80 +1,99 @@
 Unit 02 - First steps
 =====================
 
-
-Starting a GRASS session requires basic knowledge about software
-itself. It is an obstacle especially for newcomers. In other words
-GRASS forces organizing your data from early beginning.
-
-Before entering GRASS a startup screen appears, the user must define
-working project in which GRASS session will operate. Without this step
-you cannot enter GRASS. Such approach is not so common. Applications
-like Esri ArcGIS or QGIS just starts. The user loads different data
-from various data sources in different projections, and starts working
-on his/her project. GRASS is different, which makes this software
-harder to enter for newcomers. *But don't worry, we will enter our
-first GRASS sessions in few steps.*
+Starting a GRASS session requires basic knowledge about the software
+itself. GRASS motivates users to organize their data from an early
+beginning. GRASS uses a consistent structure of so-called
+**locations** and **mapsets** to organize its data. This has not 
+changed in GRASS 8.
 
 .. _location-mapset-section:
 
-The GRASS GIS startup screen requires to set up three items:
+The GRASS data structure has three levels:
 
 #. **Database directory.** A directory on local or network disc which
-   contains all data accessed by GRASS. It's usually directory called
-   :file:`grassdata` located in a user's home directory. *This item is
-   set up on Windows automatically, so usually you don't need to
-   care about it.*
+   contains all data accessed by GRASS. It's usually a directory called
+   :file:`grassdata` located in users' home directory. 
 
-#. **Location**. Plays a role of "a project". All geodata stored
-   within one location must have the same spatial coordinate system
-   (GRASS doesn't support on-the-fly projection from several reasons).
+#. **Location**. All geodata stored within one location must have the
+   same spatial coordinate system (GRASS doesn't support on-the-fly
+   projection for several reasons).
 
-#. **Mapset** Contains task-related data within one project. Helps
-   organizing data into logical groups or to separate parallel work of
-   more users on the same project.
+#. **Mapset**. Contains task-related data within one project. Helps
+    organizing data into logical groups or to separate parallel work of
+    different users on the same project.
 
-.. _startup0:
+.. note:: In GRASS 7, a startup screen (:numref:`startup7`) appeared 
+   before entering a session. The user had to define the working
+   environment in which the GRASS session started. This step 
+   was required to enter GRASS. Such an approach is not so
+   common. Applications like Esri ArcGIS or QGIS just start. Users
+   load different data from various sources in different
+   projections and start working on their project.
+
+   .. _startup7:
    
-.. figure:: ../images/units/02/startup-0.svg
+   .. figure:: ../images/units/02/grass7-start.png
 
-   GRASS GIS startup screen.
+      GRASS GIS startup screen in version 7.
 
-At first define database directory (:fignote:`1.`) if not already set
-up. Then a new location can be created (:fignote:`2a.`) or official
-GRASS sample location(s) downloaded (:fignote:`2b.`). Let's create our
-own location, a project related to *Jena region*.
+Obstacles (especially for newcomers) related to the startup screen have
+been reduced in GRASS 8. The startup screen has been
+replaced by a completely new mechanism. On the first launch, GRASS 8 
+sets up the *database directory* automatically and launches GUI in a
+default location *World LatLong WGS84*. Also, a sample *world* vector
+layer (in GRASS terminology *vector map*) is shown.
 
-.. note:: Download sample location functionality is available only in
-   GRASS 7.4+.
+GRASS GUI is designed as a *simple and lightweight* graphical user
+interface. Basically, it is a GUI front-end calling GRASS commands (see
+:ref:`grass-modules`) in the background. The GUI consists of two main
+windows, see :numref:`startup8`.
+
+.. _startup8:
+
+.. figure:: ../images/units/02/grass8-start.png
+   :class: large
+           
+   GRASS GIS 8 on startup.
+
+.. tip:: If GUI crashes, it can be started again by :grasscmd:`g.gui`
+   command from the underlying terminal (command prompt).
+         
+GRASS GUI guides users by means of tooltips as shown in
+:numref:`startup8`. The default location is not designed for real
+work. The next step is usually to create new "project(s)" (in GRASS
+terminology *a location*) with user-defined spatial coordinate systems.
 
 .. _create-location:
 
 Create a new location
 ---------------------
 
-A new GRASS location can be easily created by :wikipedia:`EPSG` code
-or available input geodata. After pressing :item:`New` button, see
-:numref:`startup0` (:fignote:`2a.`), the Location Wizard shows up.
+By clicking on :item:`Create new Location` button in the tooltip (or by
+|grass-location-add| from the toolbar) the wizard appears. A new GRASS
+location can be easily created using :wikipedia:`EPSG` codes or
+user-defined geodata.
 
-In the first page of a wizard, a location name is defined, optionally
-also short description can be added.
+In the first page of the location wizard, the location name is defined. 
+Optionally, also a short description can be added.
           
 .. figure:: ../images/units/02/create-location-0.png
 
-   Define a name for new GRASS location. 
+   Define a name for the new GRASS location.
 
-Then a method for creating new location is chosen. Usually a location
-is created using given EPSG code (*Select EPSG code of spatial
-reference system*) or from existing data (*Read projection and datum
-terms from a georeferenced data file*). In our case a new location
-will be created based on sample Jena administrative boundary vector
-layer.
-
+In the next page, a coordinate reference system (CRS) is chosen. CRS
+is usually defined by EPSG code (:item:`Select CRS from a list by EPSG
+or description`) or by user-defined geodata (:item:`Read CRS from a
+georeferenced data file`).
+   
 .. figure:: ../images/units/02/create-location-1.png
 
-   Choose method for creating a new GRASS location.
-
-In the next page define an input file.
+   Choose "Read CRS from a georeferenced data file" for creating a new
+   GRASS location.
+            
+In our case, a new location will be created by defining CRS from
+`jena_boundary.gpkg <../_static/data/jena_boundary.gpkg>`__ input
+file.
 
 .. figure:: ../images/units/02/create-location-2.png
 
@@ -120,91 +139,76 @@ Spatial reference system is chosen based on input file (UTM zone 32N
 :epsg:`32632`).
 
 .. figure:: ../images/units/02/create-location-3.png
-
+            
    Check the summary.
-
+   
+A new GRASS user-defined location will be created by clicking on
+:item:`Finish` button.
+      
 After creating a new location (:item:`Finish` button) the user can
 optionally import data used for defining the new location (in our case
 *jena_boundary.gpkg*).
 
-.. figure:: ../images/units/02/create-location-4.svg
+.. figure:: ../images/units/02/create-location-4.png
    :class: small
 
    Let's import data to simplify our first steps in GRASS GIS.
 
-Now we can *finally* start a GRASS session by entering our first GRASS
-location.
+By default GRASS creates a *PERMANENT mapset* in the new location.
+Here, all location settings are stored. This mapset is commonly used
+for importing input geodata used in the location.
 
-.. figure:: ../images/units/02/startup-1.svg
-
-   Entering a GRASS session.
-
-.. note:: By default GRASS creates in a new location a PERMANENT
-   mapset. Let's keep it simple at this moment and enter PERMANENT
-   mapset. Later we will try organizing our work into more mapsets.
+.. figure:: ../images/units/02/create-location-5.png
+   :class: large
+           
+   GRASS GUI automatically switches to the new location.
 
 Display data
 ------------
-
-GRASS GUI is designed as a *simple and lightweight* user
-interface. Basically it is just a GUI front-end calling GRASS commands
-(see :ref:`grass-modules`) in the background. After startup, the GUI
-appears. It consists of two main windows: *Layer Manager* and *Map
-Display*, see :numref:`gui-windows`.
-
-.. _gui-windows:
-
-.. figure:: ../images/units/02/gui-windows.svg
-   :class: large
-           
-   Main GUI components: Layer Manager and Map Display.
-
-.. tip:: If GUI crashes, it can be started again by :grasscmd:`g.gui`
-   command from underlaying terminal (command prompt).
-         
-Let's display already imported vector data layer
-:map:`jena_boundary`. Use :item:`Data` tab, main menu :menuselection:`File -->
-Map display --> Add vector` or a toolbar |grass-layer-vector-add|
-:sup:`Add vector map layer` icon.
+        
+Imported :map:`jena_boundary` data layer can be easily displayed from
+:item:`Data` tab.
 
 .. figure:: ../images/units/02/jena-boundary.png
    :class: large
            
    Display Jena city administrative boundary vector layer. Select
-   :menuselection:`Display layer` from contextual menu in Data tab or
-   simply use double-click on the desired layer.
+   :item:`Display layer` from contextual menu in Data tab or simply
+   use double-click on the specified layer.
 
-..                  
-   We can also add OSM WMS layer by |grass-layer-wms-add| :sup:`Add web
-   service layer` to ensure that our data is spatially correct. Let's use
-   WMS provided by *OSM-WMS-EUROPE* (http://129.206.228.72/cached/osm)
-   which can be added by :item:`Add default`.
+Let's also add a basemap from freely available OpenStreeMap map
+service. In our case *OpenStreetMap WMS* provided by `mundialis
+<https://mundialis.de>`__ company
+(http://ows.mundialis.de/services/service?). WMS layer can be added
+from :item:`Layers` tab |grass-layer-wms-add| :sup:`Add web service
+layer`.
 
-   After defining WMS URL in the dialog, a service can be connected and
-   desired layer chosen.
+.. figure:: ../images/units/02/d-wms-0.png
 
-   .. figure:: ../images/units/02/d-wms.svg
-            
-      Choose WMS layer to display. Don't forget to change source
-      projection to UTM zone 32N to avoid reprojection.
+   Connect to the defined WMS server.
 
-   Let's change map properties in order to display outline of Jena city
-   region polygon in red color. Switch to :item:`Layer` tab and choose
-   :item:`Properties` from contextual menu (right click on selected
-         layer). Set also :item:`Area fill color` to transparent.
+After connecting to the WMS server, desired layer can be chosen.
 
-   .. figure:: ../images/units/02/d-vect-colrs.png
-            
-      Change map layer properties.
+.. figure:: ../images/units/02/d-wms-1.png
 
-.. tip:: Unpack basemap layer from :file:`geodata/osm/basemap.pack`
-   (:menuselection:`File --> Import raster map --> Unpack raster
-   map`).
+   Choose WMS layer to be displayed.
 
-   .. figure:: ../images/units/02/jena-boundary-wms.png
-      :class: large
+In :item:`Layers` tab change order of layers (move
+:map:`jena-boundary` on the top) and tune display properities of
+:map:`jena-boundary` layer.
 
-      A map composition of basemap and boundary of Jena city region in
-      red color.
+.. figure:: ../images/units/02/d-vect-menu.png
 
-.. todo:: Fix WMS reprojection in GRASS GIS.
+   Choose :item:`Properties` from contextual menu (right click on
+   selected layer).
+
+.. figure:: ../images/units/02/d-vect-colrs.png
+
+   Change map layer properties: outline in blue color, fill color
+   transparent.
+   
+.. figure:: ../images/units/02/jena-boundary-wms.png
+   :class: large
+
+   A map composition of basemap and boundary of Jena city region in
+   blue color.
