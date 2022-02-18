@@ -65,7 +65,7 @@ Software used in this training materials
 * `GRASS GIS <http://grass.osgeo.org>`__ (recommended version 8.0) for
   geospatial raster, imagery, and vector data processing and providing
   spatial analysis.
-* `QGIS desktop <http://qgis.org>`__ (recommended version 3.16) for
+* `QGIS desktop <http://qgis.org>`__ (recommended version 3.22) for
   geospatial visualization, creating hardcopy outputs, and data
   publishing.
 * `GDAL library <http://gdal.org>`__ for reading and writing various
@@ -81,7 +81,18 @@ Software used in this training materials
 Installation notes
 ------------------
 
-.. todo:: To be done...
+Debian/Ubuntu Linux
+^^^^^^^^^^^^^^^^^^^
+
+.. code-block:: bash
+           
+   sudo apt install grass
+
+MS Windows
+^^^^^^^^^^
+
+* Install GRASS GIS 8 using `standalone installer
+  <https://grass.osgeo.org/grass80/binary/mswindows/native/WinGRASS-8.0.0-2-Setup.exe>`__
 
 Debian/Ubuntu Linux
 ^^^^^^^^^^^^^^^^^^^
@@ -119,6 +130,10 @@ MS Windows
 Sample dataset
 ==============
 
+**Download** sample dataset as `7z archive
+<http://geo.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2020/jena-sample-data.7z>`__
+(6.1GB, 6.5GB uncompressed).
+
 For purpose of this training materials a sample dataset has been
 created based on Open Data covering Germany and Jena region
 specifically. See detailed description below.
@@ -137,19 +152,12 @@ specifically. See detailed description below.
 * Sentinel-2 data (directory: :file:`sentinel`, source: `Copernicus
   Open Access Hub <https://scihub.copernicus.eu/>`__)
 
-.. todo:: Provide download link
-
-..
-   Sample dataset can be also download as `7z archive
-   <http://geo102.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2020/jena-sample-data.7z>`__
-   (6.1GB, 6.5GB uncompressed).
 
 Units
 =====
 
-.. todo:: Provide timetable link
-          
-.. See a `timetable <https://docs.google.com/spreadsheets/d/1usoz9TaWb2mlWtq5EgaHA6f3dB_oeBYMC_ovwPSB_Ns/edit?usp=sharing>`__
+`Time Schedule
+<https://docs.google.com/spreadsheets/d/1usoz9TaWb2mlWtq5EgaHA6f3dB_oeBYMC_ovwPSB_Ns/edit?usp=sharing>`__
 
 .. toctree::
    :maxdepth: 2
