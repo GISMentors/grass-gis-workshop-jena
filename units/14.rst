@@ -1,23 +1,22 @@
 Unit 14 - PyGRASS Vector Access
 ===============================
 
-PyGRASS allows directly accessing native GRASS raster and vector maps
-in the sense of Python objects. This unit shows how to deal with GRASS
-topological vector data by PyGRASS API, see :doc:`13` for raster data.
+PyGRASS allows to access GRASS raster and vector maps in the sense of
+Python objects. This unit shows how to deal with GRASS topological
+vector data by PyGRASS API.
 
 Let's import :file:`geodata/osm/counties.gpkg` into *jena-region*
-GRASS location.
+GRASS location as described in :doc:`03`.
 
-Vector data
------------
+.. todo:: explain re-projection and snapping
+          
+Vector data can be treated by :pygrass-vector:`Vector` class when
+dealing with basic vector primitives (points, lines, boundaries,
+centroids) or by :pygrass-vector:`VectorTopo` which allows accessing
+topological primitives like areas or isles. See
+:ref:`vector-topo-section` section for details.
 
-Vector map can be treated by :pygrass-vector:`Vector` when dealing
-with basic vector primitives (points, lines, boundaries, centroids) or
-by :pygrass-vector:`VectorTopo` which allows accessing topological
-primitives like areas or isles. See :ref:`vector-topo-section` section
-for details.
-
-Example below prints county names and their area size in hectares.
+Example below prints county names and area size in hectares.
 
 .. code-block:: python
                 
@@ -32,19 +31,27 @@ Example below prints county names and their area size in hectares.
    
    counties.close()
 
-..
-   .. figure:: ../images/units/14/pygrass-shell-vector.png
-   PyGRASS vector example in action.
+Example of output:
 
+::
+
+   Hamburg: 31.5ha
+   Hamburg: 26.6ha
+   Niedersachsen: 306.4ha
+   Niedersachsen: 279.2ha
+   Niedersachsen: 205.7ha   
+   ...
+
+.. task:: Modify the script to print overall area for each county.
+   
 Writing vector data
 --------------------
 
-In the example below a point vector data with an attribute table will
-be created.
+In the example below a point vector data with an attribute table is
+created.
 
 .. literalinclude:: ../_static/scripts/pygrass-write-vector.py
    :language: python
-   :lines: 3-18
 
 Sample script to download: `pygrass-write-vector.py
 <../_static/scripts/pygrass-write-vector.py>`__
@@ -53,23 +60,21 @@ Topology access example
 -----------------------
 
 In the following example is presented how to access vector topological
-primitives directly using PyGRASS. It requires full understanding of
-GRASS topological model, see :ref:`vector-topo-section` section in
-:doc:`03`.
+primitives directly using PyGRASS. See :ref:`vector-topo-section`
+section in :doc:`03`.
 
 Sample script below prints for each county number of its neighbours.
 
 #. Vector map :map:`Counties` is open on line :lcode:`3` by
    :pygrass-vector:`VectorTopo` and its method ``open()``.
-#. Features (areas in this case) are sequentially read by ``for`` loop
+#. Topological primitives (areas in this case) are sequentially read by ``for`` loop
    on line :lcode:`6`. Areas are interated by ``viter()`` function.
-#. For each feature (ie. county) its boudaries are looped, see line
-   :lcode:`8`. Each boundary has two neighbours (line :lcode:`9`): on
-   the left and right side (``-1`` for no area).
+#. For each county its boudaries are looped, see line :lcode:`8`. Each
+   boundary has two neighbours (line :lcode:`9`): on the left and right
+   side (``-1`` for no area).
 
 .. literalinclude:: ../_static/scripts/neighbours.py
    :language: python
-   :lines: 3-17
    :linenos:
    :emphasize-lines: 3-4, 6, 8, 9
 
@@ -80,6 +85,11 @@ Possible output:
 
 ::
 
-   Baden-Württemberg        : 4
-   Bayern                   : 6
-   Saarland                 : 2
+   Hamburg                  : 0
+   Hamburg                  : 1
+   Niedersachsen            : 1
+   Niedersachsen            : 1
+   Niedersachsen            : 1
+
+.. task:: Modify the script to print summary of neighbours for each
+   county.
