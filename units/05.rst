@@ -1,69 +1,64 @@
-Unit 05 - Simple computation
-============================
+Unit 05 - Raster processing
+===========================
 
-Computation of :wikipedia:`NDVI` is a well known "discipline" in
-remote sensing. It is a simple task which requires basic knowledge of
-*map algebra*. The key GRASS module related to map algebra is
-:grasscmd:`r.mapcalc`.
+Raster data processing is **always** limited to the current
+:ref:`computational region <region>`.
+     
+Let's demostrate raster processing on :wikipedia:`map algebra` based
+computation of :wikipedia:`NDVI` (Normalized difference vegetation
+index). The key GRASS module that allows a user to do the map algebra
+is :grasscmd:`r.mapcalc`. A GUI tool for map algebra can be launched
+from :menuselection:`Raster --> Raster map calculator` or by
+|grass-raster-calculator| :sup:`Raster map calculator` from the main
+toolbar.
 
-To compute NDVI, the red (VIS) and near-infrared (NIR) channels are
+To compute NDVI, the red (VIS) and near-infrared (NIR) bands are
 required. In the case of Sentinel-2, it refers to 4th and 8th
-band. The bands have been already imported into GRASS in :doc:`03`.
-
+band. Missing Sentinel-2 8th band can be imported as explained in
+:doc:`03` from :file:`L2A_T32UPB_20170706T102021_B08_10m.jp2` file.
+      
 .. math::
         
    NDVI = (NIR - VIS) / (NIR  + VIS)
 
-A GUI tool for map algebra can be launched from :menuselection:`Raster
---> Raster map calculator` or by |grass-raster-calculator|
-:sup:`Raster map calculator` from a main toolbar.
+.. figure:: ../images/units/05/mapcalc-gui.png
 
-.. important:: Be aware that :grasscmd:`r.mapcalc` as other raster
-   processing modules are sensitive to computational region which
-   **must to be set before any computation**, see :ref:`region` section
-   for details.
+   GUI map algebra tool. Compute NDVI by :item:`Expression`. Result of
+   computation is defined by :item:`Output` section.
 
-.. figure:: ../images/units/05/mapcalc-gui.svg
-
-   Compute NDVI using GUI raster map calculator by
-   :item:`Expression`. The result is defined by :item:`Output`
-   section.
-
-Corresponding command for CLI (map names shorten):
+Corresponding command (map names shorten):
 
 .. code-block:: bash
 
    r.mapcalc expression="ndvi = float(B08_10m - B04_10m) / ( B08_10m + B04_10m )"
 
 .. note:: Because all input raster maps are CELL type (integer) at
-          least one sub-result must be converted to floating-point (here
-          by ``float()`` function). Otherwise result would be also CELL map
-          (integer: -1, 0, 1).
+          least one sub-result must be converted to floating-point by
+          ``float()`` function. Otherwise result would be also CELL
+          map (integer: -1, 0, 1).
 
 .. figure:: ../images/units/05/ndvi-mapcalc.png
-   :class: middle
+   :class: large
            
    NDVI computed by :grasscmd:`r.mapcalc` map algebra module (Jena
    city in red color).
 
-Result is not perfect:
+Result requires some improvements:
 
 * default color table *viridis* is not suitable for NDVI values
-* NDVI has been computed also in cloudy areas
+* NDVI was computed also in cloudy areas
 
-The first issue can be easily fixed by :grasscmd:`r.colors`
-(:menuselection:`Raster --> Manage colors --> Color tables`), see
-:ref:`color-table` section. The second issue requires setting a mask
-to ignore cloudy areas in computation. This operation can be done by
-:grasscmd:`r.mask` module (:menuselection:`Raster --> Mask`).
+The first shortcoming can be easily solved by changing color table to
+`ndvi` as described in :ref:`color-table` section. The second requires
+setting a mask to ignore cloudy areas by the computation. Raster mask
+can be created by :grasscmd:`r.mask`. Like other modules from the
+``r.*`` family, it operates in the current computational region.
 
-A mask will defined base on cloud mask vector map in inverse
-manner. Note that mask as other raster processing is created only
-within the current computation region.
+Let's create raster mask from cloud mask vector map in inverse manner.
 
 .. figure:: ../images/units/05/r-mask.png
 
-   Creating mask from an input vector map.
+   Creating raster mask from an input vector map.
    
 .. code-block:: bash
 
@@ -72,7 +67,19 @@ within the current computation region.
 .. note:: Cloud mask provided by Sentinel products is not perfect, but
    it is a good starting point for us.
 
-There is also specialized module for computing various vegetation
+.. figure:: ../images/units/05/ndvi-vi.png
+   :class: large
+           
+   Final NDVI result with cloud mask and simple legend added to map
+   display by |grass-overlay-add| :sup:`Add map elements` (*Add raster
+   legend*) from Map Display toolbar.
+
+A mask can be deactivated ``r.mask -r`` command.
+
+Recommended approach for computing NDVI
+---------------------------------------
+
+Note that there is specialized module for computing various vegetation
 indices including NDVI - :grasscmd:`i.vi`. This module makes NDVI
 computing even simpler.
 
@@ -82,13 +89,3 @@ shorten):
 .. code-block:: bash
 
    i.vi red=B04_10m output=ndvi viname=ndvi nir=B08_10m
-
-.. tip:: Also a simple legend can be added to map display by
-   |grass-overlay-add| :sup:`Add map elements` (*Add raster legend*) from
-   Map Display toolbar.
-
-   .. figure:: ../images/units/05/ndvi-vi.png
-      :class: middle
-           
-      Final NDVI result with cloud mask and simple legend.
-
