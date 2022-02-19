@@ -130,7 +130,9 @@ Resultant NDVI raster map can be displayed easily by calling
 .. code-block:: python
 
    AddLayer('ndvi')                
-   
+
+.. todo:: Fix None
+          
 .. _modeler-python:
             
 Graphical Modeler and Python

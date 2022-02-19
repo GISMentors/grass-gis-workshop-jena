@@ -25,6 +25,6 @@ for row in ndvi:
 
 ndvi.close()
 
-print ("min={0:.6f} max={1:.6f} count={2} (no-data: {3})".format(
+print("min={0:.6f} max={1:.6f} count={2} (no-data: {3})".format(
     min, max, count, ncount)
 )
