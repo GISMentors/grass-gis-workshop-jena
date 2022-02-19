@@ -7,35 +7,34 @@ Accessing GRASS modules
 -----------------------
 
 GRASS GIS is a **modular system** which consists of several hundreds
-tools (called "modules"). Modules are accessible from the Layer
-Manager menu, :item:`Modules` tab, or from command prompt
-(:item:`Console` tab).
+*tools* ("modules" in GRASS terminology). Modules are accessible from
+the menu, :item:`Tools` tab, or from command prompt (:item:`Console`
+tab).
 
-Let's find a tool for clipping cloud mask vector map by Jena city
+Let's find a tool which clips cloud mask vector map by Jena city
 region.
 
-.. figure:: ../images/units/04/modules-tab.svg
+.. figure:: ../images/units/04/modules-tab.png
 
-   Searching module in Layer Manager by 'clip' keyword. The module
-   which we are looking for is :grasscmd:`v.clip`. Module dialog can
-   be open by :item:`Run` button.
+   Search for a tool by 'clip' keyword in :item:`Tools` tab. The
+   module which we are looking for is :grasscmd:`v.clip`. Module
+   dialog can be open by :item:`Run` button.
 
-.. note:: Module :grasscmd:`v.clip` has been introduce to GRASS in
-   version 7.4.0. In older versions more generic :grasscmd:`v.overlay`
-   module can be used.
+.. note:: Module :grasscmd:`v.clip` was introduced to GRASS in version
+   7.4.0. In older versions generic :grasscmd:`v.overlay` module can
+   be used.
    
 .. figure:: ../images/units/04/modules-cmd.png
 
-   Launching :grasscmd:`v.clip` module from Layer Manager console.
+   Launching :grasscmd:`v.clip` module from :item:`Console` tab.
 
-The commands (modules) can be called using GUI dialogs, from command
-line (:item:`Console` or "real" terminal), or by using Python API (see
-:doc:`10`). Figure bellow shows GUI dialog of :grasscmd:`v.clip`
-module.
+Tools (modules) can be run from GUI dialogs, from :item:`Console` tab,
+or by using Python API (see :doc:`10`). Figure bellow shows GUI dialog
+of :grasscmd:`v.clip` module.
 
 .. _v-clip:
 
-.. figure:: ../images/units/04/v-clip.svg
+.. figure:: ../images/units/04/v-clip.png
 
    GUI dialog for launching :grasscmd:`v.clip` module.
 
@@ -53,7 +52,7 @@ The corresponding command for console would be:
 
    Clipped clouds mask by Jena city region.
 
-Each GRASS command starts by a prefix. This prefix groups modules into
+Each GRASS module starts by a prefix. This prefix groups modules into
 several sections, see table below.
   
 .. cssclass:: border
@@ -85,7 +84,7 @@ several sections, see table below.
 Computational region
 --------------------
 
-Computation region is a **key issue** in GRASS raster
+Computational region is a **key issue** in GRASS raster
 processing. Unlike GIS software like Esri ArcGIS which sets
 computation region based on input data, GRASS is leaving this
 operation to the user.
@@ -111,7 +110,7 @@ processing modules (``v.*``) ignore computation region completely
 since there is no computation grid defined by them.
 
 Computational region can be easily set on existing raster or vector
-map from Layer Manager.
+map from :item:`Layer` tab.
 
 .. figure:: ../images/units/04/comp-region-raster.png
 
@@ -122,11 +121,12 @@ extent is adjusted. It's good idea to align the computational grid
 based on raster map used for computation (*Align computational region
 to selected map*).
           
-.. tip:: Current computation extent can be displayed in map window.
+Current computation region extent is by default displayed in map
+window as **a red box**.
 
-   .. figure:: ../images/units/04/show-comp-region.png
+.. figure:: ../images/units/04/show-comp-region.png
 
-      Show computation region extent in map display.
+   Show/Hide computational region extent in map display.
 
 Full flexibility for operating with computation region allows
 :grasscmd:`g.region` module (:menuselection:`Settings --> Computational
@@ -146,23 +146,25 @@ imported Sentinel band using histogram equalization (which is
 influenced by computation region as we already know) by using
 :grasscmd:`r.colors` command.
 
+.. figure:: ../images/units/04/r-colors-menu.png
+
+   Set color table from :item:`Layers` tab.
+
+Example of command:
+
 .. code-block:: bash
 
    r.colors map=L2A_T32UPB_20170706T102021_B04_10m color=grey.eq
 
-.. tip:: Color table can be easily set also from Layer Manager or
-         managed interactively by :menuselection:`Raster --> Manage
-         colors --> Manage color rules interactively`.
-
-         .. figure:: ../images/units/04/r-colors-menu.png
-
-            Set color table from Layer Manager.
-
 .. figure:: ../images/units/04/r-colors.png
 
-   Set 'grey.eq' color table.
+   Set 'grey.eq' (enhanced grey scale) color table.
    
 .. figure:: ../images/units/04/r-colors-jena.png
-   :class: middle
+   :class: large
    
    Sentinel 4th band with enhanced grey color table.
+
+.. tip:: Color table set also interactively in the case that
+         predefined color tables do not satisfy user's needs.
+   
