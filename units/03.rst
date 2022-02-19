@@ -1,39 +1,32 @@
 Unit 03 - Data Management
 =========================
 
-Data can be imported simply from toolbar by tools dedicated for
-:wikipedia:`raster <GIS_file_formats#Raster>` or :wikipedia:`vector
-<GIS_file_formats#Vector>` GIS data formats |grass-layer-import|. Basic
-knowledge of commonly used :wikipedia:`GIS file formats` is required.
+Data can be imported simply from toolbar in :item:`Data` tab by tools
+dedicated for :wikipedia:`raster <GIS_file_formats#Raster>`
+|grass-raster-import| or :wikipedia:`vector <GIS_file_formats#Vector>`
+|grass-vector-import| GIS data formats. Basic knowledge of commonly
+used :wikipedia:`GIS file formats` is required.
 
 .. note:: GRASS terminology differs from commonly used GIS
-          packages. To avoid confusion let's focus on the most
-          important terms. Commonly used term "a layer" is called in
-          GRASS "a map". While GRASS layer is a subset of features within
-          one "map". So "GRASS raster map" can be treated as "a raster
-          layer" in other GIS packages.
-
-Data import
------------
+   packages. To avoid confusion let's focus on the most
+   important terms. Commonly used term "a layer" is called in
+   GRASS "a map". While GRASS layer is a subset of features within
+   one "map". So "GRASS raster map" can be treated as "a raster
+   layer" in other GIS packages.
 
 Data used in this unit is located in :file:`geodata/sentinel/sample`
 directory of a sample dataset.
 
 Raster data
-^^^^^^^^^^^
+-----------
 
-Let's start with :file:`L2A_T32UPB_20170706T102021_B04_10m.jp2`
-file. Sentinel's 4th band is a :wikipedia:`JPEG2000` file, which is
-nowadays commonly used GIS *raster* format for imagery data.
-
-.. figure:: ../images/units/03/import-raster-toolbar.png
-
-   Import raster data from the main toolbar.
-
-.. note:: Dialog for importing raster data is also accessible from
-   menu :menuselection:`File --> Import raster data --> Simplified
-   raster import with reprojection` or from command line by
-   :grasscmd:`r.import` module.
+Let's import sample Sentinel-2 4th band
+:file:`L2A_T32UPB_20170706T102021_B04_10m.jp2` file.  Data is stored
+in :wikipedia:`JPEG2000` data format, which is nowadays commonly used
+GIS *raster* format for imagery data. Raster data can be imported into
+GRASS from the toolbar |grass-raster-import| :sup:`Import raster data
+[r.import]` or from the menu :menuselection:`File --> Import raster
+data --> Simplified raster import with reprojection`.
 
 Import dialog allows importing single raster file (:item:`File`) or
 multiple files from directory (:item:`Directory`). In our case single
@@ -41,116 +34,89 @@ file is planned to be imported.
 
 .. _import-raster:
 
-.. figure:: ../images/units/03/import-raster-dialog.svg
+.. figure:: ../images/units/03/import-raster-dialog.png
 
-   Dialog for importing raster file(s).
+   Select input raster file to be imported.
 
-.. important:: If a spatial reference system (SRS) of raster file
-   differs from GRASS location (:item:`Project match`) input raster
-   data are automatically reprojected into SRS of a current GRASS
+.. figure:: ../images/units/03/display-band4.png
+   :class: large
+
+   Imported raster data is automatically displayed in *Map Display*
+   window. Progress of import is shown in :item:`Console` tab.
+   Default color table is not perfect as you can see, color
+   interpretation will enhanced in :ref:`Unit 04 <color-table>`.
+           
+.. note:: GRASS imports/links RGB image as separate bands. Color
+   composition can be displayed using :grasscmd:`d.rgb`.
+   
+.. _raster-metadata:
+  
+Basic raster metadata can be printed by :grasscmd:`r.info` or from
+:item:`Layers` tab.
+
+.. figure:: ../images/units/03/raster-metadata.png
+
+   Show raster metadata from contextual menu.
+
+.. figure:: ../images/units/03/raster-metadata-cell.png
+
+   Detail of raster metadata.
+
+Raster maps are represented by regular grid. Three data types are
+supported:
+
+* CELL (integer)
+* FCELL (float)
+* DCELL (double)
+
+Vector data
+-----------
+
+Let's import sample vector cloud mask data layer from
+:file:`geodata/sentinel/sample/MSK_CLOUDS_B00.gml` :wikipedia:`GML`
+file (commonly used GIS exchange *vector* data format). Vector data can
+be imported into GRASS from the toolbar |grass-vector-import|
+:sup:`Import vector data [v.import]` or from the menu
+:menuselection:`File --> Import vector data --> Simplified vector
+import with reprojection`).
+
+.. figure:: ../images/units/03/import-raster-dialog.png
+
+   Select input vector file to be imported.
+
+.. figure:: ../images/units/03/display-band4-clouds.png
+   :class: large
+
+   Imported vector data is automatically displayed in *Map Display*
+   window. Progress of import is shown in :item:`Console` tab.
+   Map composition of Sentinel-2 4th band and cloud mask features.
+
+Notes
+-----
+
+.. important:: If a spatial reference system (SRS) of raster/vector
+   file differs from GRASS location (:item:`Project match`) input data
+   is automatically reprojected into SRS of the current GRASS
    location. Note that GRASS simply does not support on the fly
    transformation from several reasons.
 
 .. _import-no-srs:
 
 .. note:: In some cases SRS of imported file can be missing or
-          invalid. GRASS reports this issue as *In case of no
-          significant differences in the projection definitions, use
-          the -o flag to ignore them and use current location
-          definition.  Consider generating a new location from the
-          input dataset using the 'location' parameter.*
+   invalid. GRASS reports this issue as *In case of no
+   significant differences in the projection definitions, use
+   the -o flag to ignore them and use current location
+   definition.  Consider generating a new location from the
+   input dataset using the 'location' parameter.*
 
-          GRASS allows importing such file by overriding project check
-          (if you are really sure that SRS of input file is the same
-          as GRASS location).
-
-After successful operation imported data layer should be automatically
-displayed in Map Window.
-          
-.. figure:: ../images/units/03/display-band4.png
-   :class: large
-
-   Imported Sentinel band displayed in Map Window. Default grey color
-   table is not perfect as you can see, color interpretation will
-   enhanced in :ref:`Unit 04 <color-table>`.
-
-.. note:: GRASS imports/links RGB image as separate bands. Color
-   composition can be displayed using :grasscmd:`d.rgb`. By
-   :grasscmd:`r.composite` it is possible to create color composite as
-   a new raster map.
-   
-.. _raster-metadata:
-  
-Basic raster metadata can be printed by :grasscmd:`r.info` or from
-Layer Manager.
-
-.. figure:: ../images/units/03/raster-metadata.png
-
-   Display raster map metadata from Layer Manager.
-
-.. figure:: ../images/units/03/raster-metadata-cell.png
-
-   Raster metadata of imported file.
-
-Raster maps are represented by regular grid. Three different data
-types are supported:
-
-* CELL (integer)
-* FCELL (float)
-* DCELL (double)
-            
-Vector data
-^^^^^^^^^^^
-
-Let's import *vector* cloud mask data layer located in
-:file:`geodata/sentinel/sample` directory. Cloud mask is stored in
-:file:`MSK_CLOUDS_B00.gml` :wikipedia:`GML` file, which is a commonly
-used GIS exchange *vector* format.
-
-.. figure:: ../images/units/03/import-vector-toolbar.png
-
-   Import vector data from the main toolbar.
-
-.. note:: Dialog for importing vector data is also accessible from
-   menu :menuselection:`File --> Import vector data --> Simplified
-   vector import with reprojection` or from command line by
-   :grasscmd:`v.import` module.
-   
-.. figure:: ../images/units/03/import-vector-dialog.png
-
-   Dialog for importing vector file(s).
-
-..   
-   .. note:: In some cases SRS of imported file can be missing or
-          invalid. This is our case. GRASS reports this issue as *In
-          case of no significant differences in the projection
-          definitions, use the -o flag to ignore them and use current
-          location definition.  Consider generating a new location
-          from the input dataset using the 'location' parameter.*
-
-          GRASS allows importing such file by overriding project check
-          (if you are really sure that SRS of input file is the same
-          as GRASS location).
-
-          .. figure:: ../images/units/03/override-projection-check.svg
-
-             Override projection check to force import.
-
-After successful operation imported data layer should be automatically
-displayed in map window.
-   
-.. figure:: ../images/units/03/display-band4-clouds.png
-   :class: large
-   
-   Map composition of Sentinel band and cloud mask features.
-
-Vector metadata can be printed similarly to raster maps from Layer Manager
-by :item:`Metadata` or using :grasscmd:`v.info` module from console.
+   GRASS allows importing such file by overriding project check
+   (if you are really sure that SRS of input file is the same
+   as GRASS location).
 
 .. _vector-topo-section:
 
 Vector topology
----------------
+~~~~~~~~~~~~~~~
 
 Let's take a closer look at vector metadata of imported administrative
 regions. Instead of "polygons" there are "areas" and other kind of
@@ -167,7 +133,7 @@ GRASS GIS is a **topological GIS**. Importing vector data into GRASS also
 means converting features from simple feature model (points,
 linestrings, polygons, ...) into GRASS topological model.
 
-.. figure:: ../images/units/03/grass7-topo.png
+.. figure:: ../images/units/03/grass-topo.png
    :class: middle
                     
    GRASS topological model with primitives (nodes, lines,
@@ -179,38 +145,22 @@ importing data, be awere of :param:`snap` option of
 repair automatically without user specification can fixed using
 :grasscmd:`v.clean` module.
 
-.. _link-external:
+          .. _link-external:
 
 Linking external formats
-------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 To avoid data duplication GRASS also allows linking raster data using
 :grasscmd:`r.external` (*Link external raster data*) and vector data
-by :grasscmd:`v.external` (*Link external vector data*).
+by :grasscmd:`v.external` (*Link external vector data*) which are also
+accessible from the toolbar |grass-layer-import| in :item:`Data` tab.
 
 .. figure:: ../images/units/03/link-data-menu.png
-
-   Link raster or vector data from Layer Manager.
+   :class: middle
+           
+   Link raster or vector data.
 
 Linking data is mainly recommended when working with raster data such
 large datasets of imagery data. GRASS can handle linked raster data
 similarly as native raster maps. Both from point of stability and
 accessibility.
-
-GUI dialog for data linking is the same as for import, see
-:numref:`import-raster`. Let's create a link to 8th Sentinel band JP2
-file
-:file:`geodata/sentinel/sample/L2A_T32UPB_20170706T102021_B08_10m.jp2`.
-
-From metadata it is clear than 4th band was imported into native GRASS
-format, while 8th band was linked directly from original JPEG2000
-format.
-
-.. figure:: ../images/units/03/raster-linked.png
-
-   Linked raster file in external format by :grasscmd:`r.external`.
-
-.. figure:: ../images/units/03/raster-imported.png
-
-   Imported raster file in native GRASS format by
-   :grasscmd:`r.in.gdal` (or :grasscmd:`r.import`).
