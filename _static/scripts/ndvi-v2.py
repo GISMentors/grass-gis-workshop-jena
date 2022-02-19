@@ -12,6 +12,18 @@
 #
 ##############################################################################
 
+# %module
+# % description: NDVI model version 2
+# %end
+# %option
+# % key: voverlay1_ainput
+# % description: Name of input vector map (A)
+# % required: yes
+# % type: string
+# % key_desc: name
+# % answer: jena_boundary@PERMANENT
+# %end
+
 import sys
 import os
 import atexit
@@ -27,7 +39,7 @@ def cleanup():
 def main(options, flags):
     Module("v.overlay",
            overwrite = True,
-           ainput = "jena_boundary@PERMANENT",
+           ainput=options["voverlay1_ainput"],
            alayer = "1",
            atype = "auto",
            binput = "MaskFeature@PERMANENT",
