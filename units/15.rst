@@ -84,8 +84,6 @@ forget to enable :option:`-r` flag.
 Reproject DEM into target location
 ----------------------------------
 
-.. todo:: new mapset (?)
-          
 Now switch back to *jena-region* (target) location (PERMANENT mapset).
 
 .. figure:: ../images/units/15/switch-location.png
