@@ -1,12 +1,15 @@
 Unit 06 - Data export
 =====================
 
-Data produced by GRASS modules (like :grasscmd:`i.vi` in :doc:`05`) is
-stored always in the current mapset. *It is simply a rule.* Current
-mapset can be changed by :menuselection:`Settings --> GRASS working
-environment --> Change mapset`.
+Data produced by GRASS tools (like :grasscmd:`r.mapcalc` or
+:grasscmd:`i.vi` in :doc:`05`) is always stored in the current
+mapset.
 
-There are two fundamental modules for exporting data:
+.. Current mapset can be changed by :menuselection:`Settings -->
+   GRASS working environment --> Change mapset`.
+
+There are two fundamental tools for exporting data from GRASS to
+exchange data formats:
 
 * :grasscmd:`r.out.gdal` for exporting raster data
   (:menuselection:`File --> Export raster map --> Common export
@@ -14,44 +17,48 @@ There are two fundamental modules for exporting data:
 * :grasscmd:`v.out.ogr` for exporting vector data (:menuselection:`File
   --> Export vector map --> Common export formats`)
 
-Both the modules are based on well-known `GDAL <http://gdal.org>`__
-library for reading and writing raster and vector geospatial data
+These tools are based on well-known `GDAL <http://gdal.org>`__ library
+for reading and writing raster and vector geospatial data
 formats. Thanks to this library GRASS is able to export data into
 various GIS formats, see supported `raster
-<http://www.gdal.org/formats_list.html>`__ and `vector
-<http://www.gdal.org/ogr_formats.html>`__ formats.
+<https://gdal.org/drivers/raster/index.html>`__ and `vector
+<https://gdal.org/drivers/vector/index.html>`__ formats.
 
 .. figure:: ../images/units/06/export-menu.png
 
    Export raster map in Layer Manager.
 
-.. important:: Remember that raster export module **operates in a
-   current computation region**. So don't forget to set desired
-   computation region before exporting data. In this way, for example,
-   you can easily export only subregion or a tile.
+.. important:: Remember that raster export tools **operate in a
+   current computational region**. So don't forget to set desired
+   computational region before exporting raster data. In this way, for
+   example, you can easily export only subregion defining your area of
+   interest.
 
 .. figure:: ../images/units/06/raster-export.png
 
    Export NDVI raster into GeoTIFF format.
 
-Try to load created raster in some GIS software like Esri
-ArcGIS or QGIS. Note that color table is not exported in the case of
-floating-point data, so you need to set up suitable color
-interpretation in your software on your own.
+Try to load created raster in some GIS software like Esri ArcGIS or
+QGIS. Note that color table is not exported in the case of
+floating-point data. You need to set up suitable color interpretation
+in your software on your own.
 
 .. figure:: ../images/units/06/qgis-ndvi-tif.png
-   :class: middle
+   :class: large
       
    NDVI TIFF file loaded in QGIS.
 
+.. todo:: Update screenshot
+          
 .. _vector-notes:
 
-Useful notes
-------------
+Notes
+-----
 
-* Most of vector formats are based on **simple feature model**. It
-  means that GRASS export module converts topological primitives
-  (lines, boundaries, centroids, areas, isles) into simple features
+* Most of vector data formats (eg. Esri Shapefile, OCG GML or OGC
+  GeoPackage) are based on **simple feature model**. It means that
+  GRASS export tool converts topological primitives (lines,
+  boundaries, centroids, areas, isles) into simple features
   (linestrings, polygons). Points have no topology, so no conversion
   is involved.
 * GRASS does not distinguish between **single and multi parts**
@@ -60,44 +67,44 @@ Useful notes
   "category". More primitives can have the same category assigned, so
   the same attributes linked. This is a way how GRASS handles
   multiparts. By default :grasscmd:`v.out.ogr` exports such primitives
-  like single parts, ie. featutes. Multi parts (multifeatures) are
+  as single parts, ie. features. Multi parts (multifeatures) are
   written only when :param:`-m` flag is given.
 * GRASS supports also one of few topological formats, **PostGIS
   Topology**, see :grasscmd:`v.out.postgis` for details.
-* To increase interoperability with your Esri-based colleagues, GRASS data
-  can be exported directly also to **Esri File Geodatabase
+* To increase interoperability with your Esri-based colleagues, GRASS
+  data can be exported directly also to **Esri File Geodatabase
   format**. This requires GDAL with `FileGDB
   <http://gdal.org/drv_filegdb.html>`__ support. But we highly
   recommend to use for data exchange open standards like **OGC
-  GeoPackage** which Esri products can (usually) read. BTW, this
-  format is default for :grasscmd:`v.out.ogr` since GRASS 7.4.
+  GeoPackage** which Esri products can read. OGC GeoPackage is default
+  output format in :grasscmd:`v.out.ogr` since GRASS 7.4.
 
 Interoperability with Esri ArcGIS
----------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                
-GRASS is able to read data stored in Esri File Geodatabase out of the
-box thanks to GDAL library which comes with `OpenFileGDB
-<http://gdal.org/drv_openfilegdb.html>`__ support. Note that only
-vector data (feature classes) are supported, it's not possible to read
-raster data from this format. As already noted in :ref:`vector-notes`,
-vector data can be written to Esri File Geodatabase format only when
-GDAL is installed with proprietary-based `FileGDB
-<http://gdal.org/drv_filegdb.html>`__ support.
+GRASS is able to read data stored in Esri Shapefile (SHP) or File
+Geodatabase (FileGDB) out of the box thanks to GDAL library. Note that
+in the case of FileGDB only vector data (feature classes) are
+supported, it's not possible to read raster data from this
+format. Vector data can be written by GRASS to Esri FileGDB format
+only when GDAL is installed with proprietary-based `FileGDB
+<https://gdal.org/drivers/vector/filegdb.html>`__ support.
 
-In any case we recommend modern OGC-based **OGC GeoPackage** format for
-exchanging data between various GIS packages. This format allows to
-store multiple raster or vector layers in one file (GeoPackage is
-based on file-based SQLite DB format).
+In any case it is recommended to use modern OGC-based **OGC
+GeoPackage** format for exchanging data between various GIS
+packages. This format allows to store multiple raster or vector layers
+in one file (GeoPackage is based on file-based SQLite DB format). In
+the case of raster data also **GeoTIFF** format can be used.
   
-Output data in external formats
--------------------------------
+Switch from GRASS native format to external formats
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-GRASS environment can be set to produce data directly in external
+GRASS environment can be set to produce data directly in external data
 formats. It can be useful at the end of a workflow when final output
-data is produced. Writing output data directly to desired format
-saves one step, exporting data outside GRASS (:grasscmd:`r.out.gdal`,
-:grasscmd:`v.out.ogr`). External format can be set using
-:grasscmd:`r.external.out` for raster outputs or by
+data is produced. Writing output data directly to desired format saves
+one step, exporting data to target data formats by
+:grasscmd:`r.out.gdal` or :grasscmd:`v.out.ogr`. External format can
+be set by :grasscmd:`r.external.out` for raster outputs or by
 :grasscmd:`v.external.out` in the case of vector outputs.
 
 Example for our workflow (map names shorten):
@@ -109,9 +116,11 @@ Example for our workflow (map names shorten):
    r.external.out directory=/home/user format=GTiff extension=tif
    i.vi red=B04_10m output=ndvi nir=B08_10m
 
-.. todo:: Fix "OGR can't parse PROJ.4-style parameter string" issue
-
 Produced data is stored directly (without any data conversion) in
 external format (GeoTIFF in this case). GRASS also creates
 automatically link to such data (similarly as :grasscmd:`r.external`
-does), so produced data can be accessed as "normal" raster maps.
+does), so produced data can be accessed as "normal" raster maps by
+GRASS for further computation.
+
+Default raster format can be reverted to GRASS native format by
+``r.external.out -r`` command.
