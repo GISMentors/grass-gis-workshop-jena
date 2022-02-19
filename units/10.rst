@@ -146,3 +146,5 @@ tab.
    
    Python editor integrated in Graphical Modeler. Python code can be
    modified, run or saved into file.
+
+.. todo:: Fix GRASS Modeler (no spaces in UI)
