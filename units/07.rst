@@ -1,6 +1,8 @@
 Unit 07 - QGIS loves GRASS
 ==========================
 
+.. todo:: To be reviewed
+          
 Let's step out of the GRASS GIS for a moment. `QGIS
 <http://qgis.org>`__ is a very popular open source GIS package which
 made a significant progress in the last years. Nowadays it's used in
