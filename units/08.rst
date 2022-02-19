@@ -1,9 +1,9 @@
 Unit 08 - Modeler
 =================
 
-**Graphical Modeler** allows creating, editing, and managing complex
-models in easy-to-use graphical user interface. Using Graphical
-Modeler a chain of processes (ie. GRASS modules) can be wrapped
+The **Graphical Modeler** allows creating, editing, and managing complex
+models in an easy-to-use graphical user interface. Using the Graphical
+Modeler, a chain of tools (ie. GRASS modules) can be wrapped
 into one process (a model). A model can be executed repeatedly with
 slightly different inputs or parameters.
 
@@ -22,18 +22,19 @@ module from console).
 
    Graphical Modeler.
    
-GRASS modules can be added to the model from menu
+GRASS tools can be added to the model from menu
 :menuselection:`Model --> Add command` or by |grass-module-add|
-:sup:`Add command (GRASS module) to the model` from the main toolbar.
+:sup:`Add GRASS tool (module) to model` from the main toolbar.
 
 .. figure:: ../images/units/08/add-module.png
    :class: small
    
-   Add command (GRASS module) to the model, in this case :grasscmd:`r.mask`.
+   Add GRASS tool (module) to model, in this case :grasscmd:`r.mask`.
 
 After adding :grasscmd:`r.mask` module to the model let's open its
 properties dialog by double-click and enter vector map to be used as a
-mask. Don't forget to enable inverse mask by :param:`-i` flag.
+mask. Don't forget to enable inverse mask by :param:`-i` flag in
+:item:`Create` tab.
 
 .. figure:: ../images/units/08/module-props.png
    :class: middle
@@ -41,9 +42,9 @@ mask. Don't forget to enable inverse mask by :param:`-i` flag.
    Define parameters for :grasscmd:`r.mask`, a vector map used for
    creating a mask.
 
-In similar way will be added to the model the second command
-:grasscmd:`i.vi` (properties dialog for this command is open
-automatically because there are required options which must be set).
+In similar way will be added to model :grasscmd:`i.vi`
+tool. Properties dialog for this command is open automatically because
+there are required options which must be set.
 
 .. figure:: ../images/units/08/model-v1.png
 
@@ -52,7 +53,7 @@ automatically because there are required options which must be set).
 It's a good idea to set metadata for the model and enable overwriting
 data produced by model (:menuselection:`Model --> Model properties`).
 
-.. figure:: ../images/units/08/model-v1-props.svg
+.. figure:: ../images/units/08/model-v1-props.png
    :class: small
    
    Define model properties and enable overwriting data produced by
@@ -71,18 +72,19 @@ is printed into :item:`Command output`.
    Model computation progress.
 
 .. figure:: ../images/units/08/model-v1-display.png
-   :class: middle
+   :class: large
    
-   New NDVI raster map computed by the modeler.
+   NDVI raster map computed by the modeler.
 
-Run the model repeatedly on different computation regions.
+.. task:: Run the model repeatedly using different computation regions.
 
-.. tip:: Current computation region can be change easily by *Set
+.. tip:: Current computation region can be changed easily by *Set
    computation region extent interactively* from |grass-zoom-more|
    :sup:`Various zoom options` in Map Display.
 
 .. figure:: ../images/units/08/model-v1-region.png
-
+   :class: large
+           
    Change computation region before running the modeler.
 
 .. important:: Before changing the region it's a good idea to remove mask if
