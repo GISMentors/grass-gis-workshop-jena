@@ -1,5 +1,5 @@
-Unit 15 - DTM reprojection
-==========================
+Unit 15 - Data reprojection
+===========================
 
 In this unit EU-DEM global dataset provided by `Copernicus programme
 <https://www.eea.europa.eu/data-and-maps/data/copernicus-land-monitoring-service-eu-dem#tab-gis-data>`__
@@ -7,15 +7,16 @@ will be used. Jena region is covered by tile E40N30. Be aware that
 EU-DEM tiles covers large regions (4GB per tile).
 
 Normally :grasscmd:`r.import` could be used to import and
-automatically reproject data into target location. In this case there
+automatically reproject data into target location. In our case there
 is no need to import into GRASS a whole big DEM tile. By using ``-r``
 flag of :grasscmd:`r.in.gdal` GRASS module only a subregion covering
-AOI could be imported. Unfortunately :grasscmd:`r.import` do not offer
-such flag. In this unit manual reprojection will be presented. A new
-location for imported data (:epsg:`4258`) must be created and data
-reprojected into target *jena-region* (:epsg:`32632`) location manually.
+AOI can be imported. Unfortunately :grasscmd:`r.import` do not offer
+such flag. This is a reason why data will be reprojected
+manually. Input data will be imported into a new location
+(:epsg:`4258`). In the next step imported data will be reprojected
+into target *jena-region* (:epsg:`32632`).
 
-.. note:: In order to save space of disk the original EU-DEM tile was
+.. note:: In order to save disk space the original EU-DEM tile was
    clipped by larger region than Jena AOI. Modified tile is available
    from :file:`geodata/eu-dem` directory.
 
@@ -24,43 +25,40 @@ Create location for data import
 
 EU-DEM dataset is provided in ETRS-89 (:epsg:`4258`). Start a new
 GRASS session and create a new location *jena-eu-dem* based on input
-:file:`geodata/eu-dem/dem_sample.tif` data (similarly as done in
-:ref:`Unit 02 <create-location>`). Skip data import provided by
-location wizard since only subregion defined by Jena city region is
-planned to be imported.
+:file:`geodata/eu-dem/dem_sample.tif` file as described in :ref:`Unit
+02 <create-location>`).
 
-.. figure:: ../images/units/15/create-location-0.png
+.. important:: Skip data import provided by
+               location wizard since only subregion defined by Jena city region is
+               planned to be imported.
 
-   Define name for a new location.
-   
-Location will be created based on input sample DEM file (*Read
-projection and datum terms from a georeferenced data file*).
-
-.. figure:: ../images/units/15/create-location-1.png
-
-   Create a new location based on a sample DEM file.
-
-.. figure:: ../images/units/15/create-location-2.svg
-	      
-   Don't import input data from Location Wizard.
-
-Enter new location (PERMANENT mapset) and reproject Jena region vector
-map by :grasscmd:`v.proj` (:menuselection:`Vector --> Develop vector
-map --> Reproject vector map from different GRASS location`) or simply
-from :item:`Data` tab in Layer Manager just by copying and pasting the
-maps, see :numref:`data-reproject-fig`.
+Enter new location (PERMANENT mapset) and copy (ie. reproject)
+:map:`jena_boundary` into the current location.
 
 .. _data-reproject-fig:
 
 .. figure:: ../images/units/15/data-reproject.png
+   :class: middle
+           
+.. figure:: ../images/units/15/data-reproject-1.png
+   :class: middle
+           
+   Copy :map:`jena_boundary` vector map from `jena-region` location
+   (:epsg:`32632`) to the current location (:epsg:`4258`).
 
-   Easy and quick way to reproject (copy-and-paste) raster or vector
-   maps across locations from :item:`Data` tab in Layer Manager.
+.. figure:: ../images/units/15/data-reproject-dialog.png
+   :class: small
+           
+   Reprojection and default maximum segment must be confirmed.
+   
+.. note:: The same operation can be done by :grasscmd:`v.proj`:
 
-.. code-block:: bash
+   .. code-block:: bash
+                          
+      v.proj location=jena-region mapset=PERMANENT input=jena_boundary
 
-   v.proj location=jena-region mapset=PERMANENT input=jena_boundary
-
+.. todo:: jena_boundary set epsg code (?)
+          
 Before importing DEM set computation region extent based on
 reprojected Jena city region.
       
@@ -78,27 +76,27 @@ forget to enable :option:`-r` flag.
    r.in.gdal -r input=/home/user/geodata/eu-dem/dem_sample.tif output=dem 
 
 .. figure:: ../images/units/15/dem-imported.png
-   :class: large
-	   
-   Imported DEM limited to current region extent. Displayed with
+   :class: middle
+           
+   Imported DEM limited to current region extent. Visualized using
    ``elevation`` color table.
 
 Reproject DEM into target location
 ----------------------------------
-   
-Now switch back to *jena-region* location (:menuselection:`Settings
---> GRASS working environment --> Change location and mapset`).
+
+.. todo:: new mapset (?)
+          
+Now switch back to *jena-region* (target) location (PERMANENT mapset).
 
 .. figure:: ../images/units/15/switch-location.png
-   :class: small
+   :class: middle
 	   
-   Switch GRASS to jena-region location and PERMANENT mapset.
+   Switch to jena-region location and PERMANENT mapset from
+   :item:`Data` tab.
 
-Reproject DEM from *jena-eu-dem* location by :grasscmd:`r.proj`
-(:menuselection:`Raster --> Develop raster map --> Reproject raster
-map from different GRASS location`) or directly from :item:`Data` tab
-in Layer Manager. Set desired resolution (25m) and choose appropriate
-resampling method (in our case *bilinear*).
+Reproject DEM from *jena-eu-dem* location by copying in :item:`Data`
+tab. Set desired resolution (25m) and choose appropriate resampling
+method (in our case *bilinear*).
 
 .. note:: If a mask is enabled, it's good idea to remove it before
    importing.
@@ -106,16 +104,16 @@ resampling method (in our case *bilinear*).
 .. figure:: ../images/units/15/data-reproject-raster.png
    :class: small
 	   
-   Reproject raster data in Layer Manager.
+   Reproject raster data by specifying target resolution and
+   resampling method.
   
-Example of reprojecting raster data using :grasscmd:`r.proj` command
-below.
+.. note:: The same operation can be done by :grasscmd:`r.proj`:
 
-.. code-block:: bash
+   .. code-block:: bash
 		
-   r.proj location=jena-eu-dem mapset=PERMANENT input=dem method=bilinear resolution=25
+      r.proj location=jena-eu-dem mapset=PERMANENT input=dem method=bilinear resolution=25
 
-.. figure:: ../images/units/15/dem-3d.svg
+.. figure:: ../images/units/15/dem-3d.png
    :class: large
 	   
-   DTM in 3D view.
+   Imported DEM in 3D view. Jena city region by blue color.
