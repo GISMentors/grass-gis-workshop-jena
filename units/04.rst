@@ -84,51 +84,51 @@ several sections, see table below.
 Computational region
 --------------------
 
-Computational region is a **key issue** in GRASS raster
-processing. Unlike GIS software like Esri ArcGIS which sets
-computation region based on input data, GRASS is leaving this
+The computational region is a **key element** in GRASS raster
+processing. Unlike other GIS software such as Esri ArcGIS which sets
+the computational region based on input data, GRASS is leaving this
 operation to the user.
 
-.. important:: **The user must define computation region before any
+.. important:: **The user must define computational region before any
    raster computation is performed!**
 
-Computational region is defined by *extent* (north, south, east, west)
-and by *spatial resolution* in the both directions (east-west,
+The computational region is defined by *extent* (north, south, east, west)
+and by *spatial resolution* in both directions (east-west,
 north-south). Note that GRASS supports only regular grids.
 
 .. figure:: ../images/units/04/region2d.png
               
-   2D computation region grid.
+   2D computational region grid.
 
 .. note:: For 3D raster data (known as "volumes") there is an
-   extension to 3D computation grid.
+   extension to the 3D computation grid.
 
-Majority of raster processing GRASS modules (``r.*``) respect
-computational region, there are a few exceptions like import modules
-(eg. :grasscmd:`r.import`). On the other hand, the most of vector
-processing modules (``v.*``) ignore computation region completely
-since there is no computation grid defined by them.
+The great majority of raster processing modules (``r.*``) respect the 
+computational region. There are a few exceptions like import modules
+(eg. :grasscmd:`r.import`). On the other hand, most vector
+processing modules (``v.*``) ignore the computational region completely
+since there is no computation grid defined for them.
 
-Computational region can be easily set on existing raster or vector
+The computational region can be easily set on existing raster or vector
 map from :item:`Layer` tab.
 
 .. figure:: ../images/units/04/comp-region-raster.png
 
    Set computational region from raster map.
 
-Note that when setting up computational region from vector map, only
-extent is adjusted. It's good idea to align the computational grid
-based on raster map used for computation (*Align computational region
+Note that when setting up the computational region from a vector map, only
+the extent is adjusted. It's a good idea to align the computational grid
+based on the raster map used for computation (*Align computational region
 to selected map*).
           
-Current computation region extent is by default displayed in map
-window as **a red box**.
+Current computation region extent is by default visualized in map
+window as **a red rectangle**.
 
 .. figure:: ../images/units/04/show-comp-region.png
 
    Show/Hide computational region extent in map display.
 
-Full flexibility for operating with computation region allows
+Full flexibility for operating with computational region is allowed via the 
 :grasscmd:`g.region` module (:menuselection:`Settings --> Computational
 region --> Set region`). Example below:
 
@@ -141,10 +141,11 @@ region --> Set region`). Example below:
 Color table
 -----------
 
-With knowledge of computational region let's enhance color table of
-imported Sentinel band using histogram equalization (which is
-influenced by computation region as we already know) by using
-:grasscmd:`r.colors` command.
+The color table of raster maps can be changed by the
+:grasscmd:`r.colors` command. With knowledge of computational region
+let's enhance color table of imported Sentinel band using histogram
+equalization (which is influenced by computation region as we already
+know).
 
 .. figure:: ../images/units/04/r-colors-menu.png
 
@@ -158,7 +159,8 @@ Example of command:
 
 .. figure:: ../images/units/04/r-colors.png
 
-   Set 'grey.eq' (enhanced grey scale) color table.
+   Choose the predefined 'grey.eq' (enhanced grey scale) color table
+   in the :item:`Define` tab.
    
 .. figure:: ../images/units/04/r-colors-jena.png
    :class: large
