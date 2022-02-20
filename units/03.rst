@@ -80,7 +80,7 @@ be imported into GRASS from the toolbar |grass-vector-import|
 :menuselection:`File --> Import vector data --> Simplified vector
 import with reprojection`).
 
-.. figure:: ../images/units/03/import-raster-dialog.png
+.. figure:: ../images/units/03/import-vector-dialog.png
 
    Select input vector file to be imported.
 
