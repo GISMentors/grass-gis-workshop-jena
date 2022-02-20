@@ -36,21 +36,42 @@ For importing LAS/LAZ data there are available two GRASS modules:
       Max X Y Z:                   681999.990 5644999.990 968.621
       ...
 
-.. tip:: There are also new modules available
-   :grasscmdaddons:`r.in.pdal` and :grasscmd:`v.in.pdal` which are
-   based on `PDAL <https://pdal.io/>`__ library.
-         
+   There is also a new generation of Lidar modules based on `PDAL
+   <https://pdal.io/>`__ library: :grasscmd:`r.in.pdal` and
+   :grasscmd:`v.in.pdal`.
+
+.. important:: Unfortunately on MS Windows PDAL-based modules are
+   missing due to compilation problems (`#1821
+   <https://github.com/OSGeo/grass/issues/1821>`__) and libLAS-based
+   modules lack compression support. This a reason why we will use
+   data in uncompressed LAS format: `lidar_las.7z
+   <http://geo.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2020/lidar_las.7z>`__
+   (541MB, 2.7GB uncompressed).
+
+   Data can be converted from LAZ to LAS by :program:`pdal`
+   command-line tool:
+
+   .. code-block:: sh
+
+      pdal translate las_681_5644_1_th_2014-2019.laz las_681_5644_1_th_2014-2019.las
+               
 Vector import
 ^^^^^^^^^^^^^
 
-Let's create a new GRASS location defined by :epsg:`25832` and import
-selected tile into vector point map first. By Flag :param:`-t`
-creation of attribute table is skipped. The import process will be
-significantly faster. Another flag which will speed up the import
-process is :param:`-b`. It skips building :ref:`topology
-<vector-topo-section>` (which is not needed for point features
-anyway). Information about data SRS can be missing, projection check
-can be skipped by :param:`-o` flag.
+Let's create a new GRASS location *jena-lidar* defined by
+:epsg:`25832`.
+
+.. figure:: ../images/units/18/create-location-epsg.png
+
+   Create a new GRASS location by specifying EPSG code (*Select CRS
+   from a list by EPSG or description*).
+
+Let's import selected tile into GRASS as vector point map. By
+:param:`-t` flag creation of attribute table is skipped. By
+:param:`-b` flag also building :ref:`topology <vector-topo-section>`
+will be skipped. The import process will be significantly faster.
+Information about data SRS can be missing, in this case use
+:param:`-o` flag to skip projection check.
 
 .. code-block:: bash
                 
@@ -76,10 +97,10 @@ map. That is reason why :grasscmd:`g.region` can run for a while.
    Estimated point density: 8.937
    Estimated mean distance between points: 0.3345
 
-.. note:: Point density is calculated for map (square) unit.
+Point density is calculated for map (square) unit.
 
 Basic metadata can be printed by :grasscmd:`v.info` (since no topology
-is built, the module must scan all features in the map):
+is built, the module must scan all points in the map):
 
 .. code-block:: bash
                    
@@ -98,18 +119,20 @@ is built, the module must scan all features in the map):
    |               E:         681999.99    W:            681000                 |
    |               B:           -43.382    T:           968.621                 |
    ...
-   
+
+.. todo:: Fix missing extent
+          
 Raster import
 ^^^^^^^^^^^^^
 
 Input point cloud can be imported by :grasscmd:`r.in.lidar` into
 raster map. Flag :param:`-e` extends current computational region to
-cover all imported points. Otherwise user needs to set up
-computational region by :grasscmd:`g.region`. Spatial resolution for
-output raster map is defined by :param:`resolution` option. By
-default, for cells with more points involved, the value is computed by
-mean value, see :param:`method` option. Cells covered by no points
-will get NULL values assigned.
+cover all imported points. Otherwise user would need to set up
+computational region by :grasscmd:`g.region` before importing
+data. Spatial resolution for output raster map is defined by
+:param:`resolution` option. By default, for cells with more points
+involved, the value is computed by mean value, see :param:`method`
+option. Cells covered by no points will get NULL (no-data) value assigned.
    
 .. code-block:: bash
 
@@ -131,7 +154,8 @@ Basic metadata about created raster map can be obtained by
    ...
 
 .. figure:: ../images/units/18/import-rast-vect.png
-
+   :class: middle
+           
    Imported data as vector points. Raster map with 1m resolution in the
    background.
 
@@ -151,7 +175,8 @@ cells with no-data value will be modified.
    r.fill.stats -k input=las_681_5644 output=las_681_5644_no_gaps
 
 .. figure:: ../images/units/18/rast-gaps-fill.png
-
+   :class: middle
+           
    NULL values (on left part) filled by :grasscmd:`r.fill.stats`
    (right part).
 
@@ -163,7 +188,8 @@ cells with no-data value will be modified.
    .. _lidar-gaps:
 
    .. figure:: ../images/units/18/rast-gaps.png
-
+      :class: middle
+           
       Cells out of distance not filled.
 
 .. _edge-detection:
@@ -175,14 +201,14 @@ Digital Surface Model (DSM) can be interpolated by
 :grasscmd:`v.surf.rst` using regularized spline with tension
 approximation. Output resolution set to 0.5 meter. The computation can
 be really slow. The computation time becomes more reasonable by
-running in parallel, see :option:`nprocs` option (GRASS 7.4+ only).
+running in parallel, see :option:`nprocs` option.
 
 .. code-block:: bash
 
    g.region vector=las_681_5644 res=0.5 -pa
-   v.surf.rst input=las_681_5644 elevation=dsm_681_5644 npmin=80 tension=20 smooth=1 nprocs=5
+   v.surf.rst input=las_681_5644 elevation=dsm_681_5644 npmin=80 tension=20 smooth=1 nprocs=6
 
-.. tip:: Try also to set higher npmin to reduce artifacts.
+.. task:: Try also to set higher npmin to reduce artifacts.
       
 .. figure:: ../images/units/18/dsm-3d.png
    :class: middle
@@ -205,8 +231,7 @@ running in parallel, see :option:`nprocs` option (GRASS 7.4+ only).
    :grasscmd:`v.lidar.edgedetection` manual page) Example of simple
    workflow based on :grasscmd:`v.lidar.edgedetection`,
    :grasscmd:`v.lidar.growing` and :grasscmd:`v.lidar.correction`
-   below. Note that edge detection is usually a time and RAM consuming task,
-   and the result is not perfect.
+   below. Note that edge detection is usually a time and RAM consuming task.
    
    .. code-block:: bash
 
