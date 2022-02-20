@@ -1,15 +1,19 @@
 Unit 22 - Spatio-temporal scripting
 ===================================
 
-There is another GRASS Python library to be introduced -
-:grasscmd2:`GRASS GIS Temporal Framework
-<libpython/temporal_framework.html>`.
+GRASS offers a Python API for :grasscmd2:`space-time processing
+<libpython/temporal_framework.html>`. The usage is presented in the
+script described below.
 
-In a script below similar computation like in :doc:`11` and :doc:`12`
+In the script below similar computation to :doc:`11` and :doc:`12`
 will be performed. But instead of processing single Sentinel scene, a
-spatio-temporal dataset of multiple Sentinel scenes will be processed.
+spatio-temporal dataset containing multiple Sentinel scenes will be
+processed.
 
-Let's define input and output parameters:
+UI
+--
+
+Let's define input and output parameters of the script:
 
 * :param:`b4` - Name of input 4th band space time raster dataset (line
   :lcode:`19`)
@@ -23,6 +27,9 @@ Let's define input and output parameters:
 * :param:`threshold` - Threshold for removing small areas (line
   :lcode:`38`)
 
+Python Temporal API
+-------------------
+         
 .. _temporal-api:
 
 Focus on functions used from :grasscmd2:`GRASS GIS Temporal Framework
@@ -79,3 +86,5 @@ Possible output:
    NDVI class 1: -0.2253 (min) 0.7481 (max) 0.0457 (mean)
    NDVI class 2: -1.0000 (min) 0.9994 (max) 0.2999 (mean)
    NDVI class 3: -0.9978 (min) 0.9994 (max) 0.6992 (mean)
+
+.. todo:: Review script (ODSE 2021)
