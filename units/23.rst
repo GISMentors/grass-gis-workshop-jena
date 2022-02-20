@@ -1,17 +1,16 @@
 Unit 23 - Spatio-temporal parallelization
 =========================================
 
-This unit is focused on improving script created in :doc:`22` by
-processing Sentinel scenes in parallel. The paralelization is done by
-:pygrass-modules:`ParallelModuleQueue`, see line :lcode:`217`
-similarly to :doc:`19`.
+This unit is focused on improving the script created in :doc:`22` by
+processing Sentinel scenes in parallel. Paralelization is performed by
+:pygrass-modules:`ParallelModuleQueue` similarly as in :doc:`19`, see
+line :lcode:`207`.
 
-New feature of PyGRASS library is introduced on line :lcode:`146`. By
-:pygrass-modules:`MultiModule` you can define list of modules which
-will work as isolated units not influenced by other processes running
-parallel. By setting ``set_temp_region`` the computation region
-settings will be not influenced by other processes running in
-parallel.
+New PyGRASS functionality is introduced on line :lcode:`136`. By
+:pygrass-modules:`MultiModule` it is possible to define a list of
+modules which will work as isolated units not influenced by other
+processes running parallel. By setting ``set_temp_region`` computation
+region settings will be also isolated from other processes.
 
 The option :param:`ncproc` on line :lcode:`43` enables controlling
 number of processes running in parallel.
@@ -19,7 +18,9 @@ number of processes running in parallel.
 .. literalinclude:: ../_static/scripts/ndvi-tgrass-v2.py
    :language: python
    :linenos:
-   :emphasize-lines: 43, 146, 217
+   :emphasize-lines: 43, 136, 207
                      
 Sample script to download: `ndvi-tgrass-v2.py
 <../_static/scripts/ndvi-tgrass-v2.py>`__
+
+.. todo:: Compare v1/v2 time
