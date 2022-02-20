@@ -1,7 +1,7 @@
 Unit 19 - DTM script parallelization
 ====================================
 
-This unit is focused on **computing parallelization**. Sample script
+This unit is focused on **parallel computing**. Sample script
 below produces seamless DTM (Digital Terrain Model, see :doc:`18`)
 from bunch of LAS/LAZ files. Computation will be split into tiles and
 performed in parallel.
@@ -9,7 +9,7 @@ performed in parallel.
 DTM interpolation in parallel
 -----------------------------
 
-User interface contains two major parameters, :param:`directory` (line
+User interface defines two parameters, :param:`directory` (line
 :lcode:`6`) for input directory with input LAS/LAZ files, and
 :param:`elevation` (line :lcode:`9`) name for output elevation raster
 map mosaics. The resolution of output DTM is defined by
@@ -20,7 +20,7 @@ of processes running in parallel will be controlled by :param:`nproc`
 A script consists of three main functions:
 
 1. ``import_files()`` to import input LAS/LAZ files (line
-:lcode:`33`). Import process can be done in parallel by
+:lcode:`33`). Import process can be performed in parallel by
 :pygrass-modules:`ParallelModuleQueue` from PyGRASS library (see
 :doc:`11` for PyGRASS introduction), lines :lcode:`37, 42, 57-58, 60`.
 
@@ -47,15 +47,6 @@ Sample script to download: `create-dtm.py <../_static/scripts/create-dtm.py>`__
 	The script is taking a long time with all the tiles from
 	:file:`/home/user/geodata/lidar` directory. Choose few tiles
 	for testing.
-
-	Create a new directory eg. :file:`/tmp/lidar` and link some (2
-	or 3) of the LAZ files with
-	
-	.. code-block:: bash
-		
-		ln -s /home/user/geodata/lidar/las_681_5644_1_th_2014-2019.laz /tmp/lidar/
-
-	Use :file:`/tmp/lidar` as :option:`input` in the :file:`create-dtm.py` script
 	
 .. figure:: ../images/units/19/dtm_patched.png
    :class: middle
@@ -70,12 +61,12 @@ Sample script to download: `create-dtm.py <../_static/scripts/create-dtm.py>`__
 DTM comparision
 ---------------
 
-In this session we are going to calculate the Canopy Height Model
-(CHM), as the difference between interpolated DSM and imported EU-DEM
-DTM from :doc:`15`.
+In this session we will compute the Canopy Height Model (CHM), as the
+difference between interpolated DSM and imported EU-DEM DTM from
+:doc:`15`.
 
 The CHM is computed using :grasscmd:`r.mapcalc`, executing the difference between
-DSM and DTM
+DSM and DTM.
 
 .. code-block:: bash
 
