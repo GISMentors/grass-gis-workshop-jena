@@ -86,6 +86,8 @@ Reproject DEM into target location
 
 Now switch back to *jena-region* (target) location (PERMANENT mapset).
 
+.. _switch-location:
+
 .. figure:: ../images/units/15/switch-location.png
    :class: middle
 	   
