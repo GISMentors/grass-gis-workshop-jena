@@ -64,6 +64,10 @@ GRASS GUI guides users by means of tooltips as shown in
 work. The next step is usually to create new "project(s)" (in GRASS
 terminology *a location*) with user-defined spatial coordinate systems.
 
+.. note:: Consider changing language settings to English in
+   :menuselection:`Settings --> Preferences --> Appearance`. Change
+   `Language settings` to ``en`` and restart GRASS.
+
 .. _create-location:
 
 Create a new location
