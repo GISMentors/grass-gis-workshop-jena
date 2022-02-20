@@ -1,18 +1,18 @@
 Unit 17 - Spatio-temporal intro
 ===============================
 
-GRASS GIS offers high quality tools for spatio-temporal data
+GRASS GIS offers specialized tools for spatio-temporal data
 processing, see :grasscmd:`GRASS documentation <temporalintro>` for
 details.
 
-GRASS introduces three spatio-temporal datasets that are designed to
-handle time series data:
+GRASS introduces three special data types that are designed to handle
+time-series data:
 
-* *Space time raster datasets* (``strds``) for managing raster map
+* *Space-time raster datasets* (``strds``) for managing raster map
   time series.
-* *Space time 3D raster datasets* (``str3ds``) for managing 3D raster
+* *Space-time 3D raster datasets* (``str3ds``) for managing 3D raster
   map time series.
-* *Space time vector datasets* (``stvds``) for managing vector map time
+* *Space-time vector datasets* (``stvds``) for managing vector map time
   series.
             
 Spatio-temporal flooding simulation

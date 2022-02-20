@@ -1,12 +1,12 @@
 Unit 20 - Sentinel downloader
 =============================
 
-There are plenty of libraries or tools which allows downloading
+There are plenty of libraries or tools which allow downloading
 Sentinel products from `Copernicus Open Access Hub
 <https://scihub.copernicus.eu/>`__.
 
-For GRASS GIS there is :grasscmdaddons:`i.sentinel` Addon
-extension. It consists of six GRASS modules:
+For GRASS GIS there is the :grasscmdaddons:`i.sentinel` toolbox.
+It consists of six GRASS addon modules:
 
 * :grasscmdaddons:`i.sentinel.coverage`
 * :grasscmdaddons:`i.sentinel.download`
@@ -32,43 +32,45 @@ Note that :grasscmdaddons:`i.sentinel.download` requires also
 `sentinelsat library <https://pypi.python.org/pypi/sentinelsat>`__ to
 be installed.
 
-.. note::
-
-   In order to install Sentinelsat library go to :item:`Console` tab
-   and run:
+.. note:: Sentinelsat library can be easily installed from the
+   :item:`Console` tab by entering the command below.
 	
    .. code-block:: bash
 	
       python3 -m pip install sentinelsat
 
 :ref:`Switch <switch-location>` to `jena-region` location.
-      
-Let's download suitable Sentinel products for our area of interest
-(AOI) and perform NDVI calculation as described in :doc:`05`
-(implemented as a model in :doc:`08` or as a Python script in
-:doc:`11`).
 
-In our case AOI region is defined by Jena city region imported in
+Download data
+-------------
+
+.. important:: Pre-downloaded Sentinel scenes are available in the
+   sample dataset :file:`geodata/sentinel`. Readers can continue
+   with :ref:`importing sample data <sentinel-import>`.
+
+Let's download suitable Sentinel products for our area of interest
+(AOI) and perform the NDVI calculation as described in :doc:`05`
+(implemented as a model in :doc:`08` or as a Python script in
+:doc:`11`). AOI region is defined by Jena city region created in
 :doc:`03`.
 
 `Sentinel-2 L2A products
-<https://medium.com/sentinel-hub/sentinel-2-l2a-products-available-on-sentinel-hub-beab58903285>`__
-will be used to avoid need of computing atmospheric corrections at
-this moment. Let's search for latest available product by
-:grasscmd:`i.sentinel.download`. At first with :param:`-l` flag given,
-just to print results, download procedure will be performed later. In
-order to search and download Sentinel products, you have to create an
-user account in Copernicus Open Access Hub, see manual page of
-:grasscmd:`i.sentinel.download` module for details. Create a new file
-:file:`sentinel.txt` containing two lines (username and password).
+<https://www.sentinel-hub.com/blog/sentinel-2-l2a-products-available-sentinel-hub>`__
+will be used to avoid computing atmospheric corrections. Let's
+search for the latest available product by means of
+:grasscmd:`i.sentinel.download`. Setting the :param:`-l` flag, the result will only
+be printed. The download procedure will be performed later. In order to
+search and download Sentinel products from the Copernicus Open Access Hub, 
+you have to create an account first. See the manual page of
+:grasscmd:`i.sentinel.download` module for details. Create a new text
+file :file:`sentinel.txt` containing two lines (username and
+password).
 
 .. note::
-	
-	To get username and password you need to register to the 
-	`Copernicus Open Access Hub <https://scihub.copernicus.eu/>`__,
-	see `Register new account <https://scihub.copernicus.eu/dhus/#/self-registration>`__
-	page for signing up.
-
+   To get username and password you need to register at the 
+   `Copernicus Open Access Hub <https://scihub.copernicus.eu/>`__,
+   see `Register new account <https://scihub.copernicus.eu/dhus/#/self-registration>`__
+   page for signing up.
 
 .. code-block:: bash
 
@@ -82,11 +84,11 @@ user account in Copernicus Open Access Hub, see manual page of
    f2a604a6-8e50-4c62-b98b-22077365df7a ... 2022-01-21T10:23:31Z 65% S2MSI2A 933.01 MB
    ...
 
-By default the module returns products for last 60 days. Let's change
-search period by :param:`start` and :param:`end` options. To be sure
-that our AOI is fully covered by a Sentinel product we also set
-:param:`area_relation` option. We can also limit products by
-:param:`clouds` coverage percentage threshold.
+By default the module returns products for the last 60 days. Let's
+change the search period setting :param:`start` and :param:`end`
+options. To be sure that our AOI is fully covered by a Sentinel
+product we also set :param:`area_relation` option.  We will also limit
+products by :param:`clouds` coverage percentage threshold
        
 .. code-block:: bash
                 
@@ -105,9 +107,9 @@ that our AOI is fully covered by a Sentinel product we also set
    .. tip:: If more products have been found you can limit search by
    :param:`limit` option.
 
-Let's download desired product(s). Just remove :param:`-l` flag and
-add :param:`output` option in order to define path to output directory
-where data will be saved.
+Let's download the desired product(s). Just remove the :param:`-l` flag and
+add the :param:`output` option in order to define the path to the output directory
+where data should be saved.
 
 .. code-block:: bash
 
@@ -120,36 +122,45 @@ where data will be saved.
    a844500a-049f-46a3-92de-bcda2c38fc3c is not
    online. Triggering retrieval from long term archive.`` error
    message. In this case try to download affected product in the next days.
-          
-For simplification already downloaded Sentinel scene is available in
-sample dataset:
-   
-   :file:`geodata/sentinel/2019/S2A_MSIL2A_20190626T102031_N0212_R065_T32UPB_20190626T125319.SAFE`.
 
-.. tip:: Before importing data into GRASS try to print list of
-   filtered raster files including projection match (second column: 1
-   for match otherwise 0). If projection of input data differs from
-   current location consider reprojection (:param:`-r`) or creating a
-   new location for import.
+.. todo:: Fix :grasscmdaddons:`i.sentinel.import` in order to continue
+          downloading remaining products.
 
-   .. code-block:: bash
+Import data
+-----------
+
+.. _sentinel-import:
+
+
+Before importing or linking Sentinel data try to print a list of
+filtered raster files including projection match (second column, 1 for
+match otherwise 0). If the CRS of input data differs from the current location
+consider reprojection (:param:`-r`) or creating a new location for
+import.
+
+Data will be imported into the GRASS location by means of the
+:grasscmdaddons:`i.sentinel.import` tool. The command will import
+**all** Sentinel bands from :param:`input` directory
+recursively. Before importing data let's check content of the input
+directory by :param:`-p` flag. The import procedure will be limited to
+the 4th and 8th bands in 10m spatial resolution by :param:`pattern`
+option.
+
+.. code-block:: bash
  
-      i.sentinel.import -p input=/home/user/geodata/sentinel/2019 pattern="20190626T102031_B0(4|8)_10m"
+   i.sentinel.import -p input=/home/user/geodata/sentinel/2019 pattern="20190626T102031_B0(4|8)_10m"
 
-   ::
+::
 
-      ...L2A_T32UPB_A020940_20190626T102028/IMG_DATA/R10m/T32UPB_20190626T102031_B08_10m.jp2 1 (EPSG: 32632)
-      ...L2A_T32UPB_A020940_20190626T102028/IMG_DATA/R10m/T32UPB_20190626T102031_B04_10m.jp2 1 (EPSG: 32632)
+   ...L2A_T32UPB_A020940_20190626T102028/IMG_DATA/R10m/T32UPB_20190626T102031_B08_10m.jp2 1 (EPSG: 32632)
+   ...L2A_T32UPB_A020940_20190626T102028/IMG_DATA/R10m/T32UPB_20190626T102031_B04_10m.jp2 1 (EPSG: 32632)
 
-In the next step downloaded data can be imported to GRASS by
-:grasscmdaddons:`i.sentinel.import`. The command will import **all**
-Sentinel bands from :param:`input` directory recursively. Sentinel
-bands to be imported can be optionally filtered by :param:`pattern`
-option. In example below 4th and 8th bands in 10m resolution will be
-imported. By default input data is imported into GRASS format,
-alternatively data can be linked if :param:`-l` is given (recommended
-in order to avoid data duplication on your disk). It is also useful to
-import cloud mask vector features by :param:`-c` flag.
+
+By default, input data are imported into GRASS data format.
+Alternatively, data can be linked if :param:`-l` is given. It is also
+useful to import cloud mask vector features by :param:`-c` flag. We also use 
+:param:`register_output` option to produce a timestamp plain text file 
+which will be used in :doc:`21`.
 
 .. code-block:: bash
 
@@ -162,9 +173,8 @@ import cloud mask vector features by :param:`-c` flag.
 .. todo:: Fix :grasscmdaddons:`i.sentinel.import` :option:`-c` flag to
           respect :option:`pattern` parameter.
           
-Now start our NDVI sample script created in :doc:`12` (`ndvi-v3.py
-<../_static/scripts/ndvi-v3.py>`__), enter input parameters and run
-the script.
+Now launch the NDVI sample script created in :doc:`12` (`ndvi-v3.py
+<../_static/scripts/ndvi-v3.py>`__) in order to compute NDVI classes.
    
 .. figure:: ../images/units/20/run-script.png
         
