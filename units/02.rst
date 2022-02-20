@@ -197,7 +197,7 @@ After connecting to the WMS server, desired layer can be chosen.
 
    Choose WMS layer to be displayed.
 
-.. note:: On MS Windows is currently WMS functionality broken. Use
+.. warning:: On MS Windows is currently WMS functionality broken. Use
    :file:`geodata/osm/basemap.pack` file which can be loaded into
    GRASS in :item:`Data` tab by |grass-layer-import| :sup:`Unpack
    GRASS raster map [r.unpack]`. New raster map :map:`basemap` should
