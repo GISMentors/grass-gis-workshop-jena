@@ -1,0 +1,2 @@
+* broken WMS on Windows
+* r.unpack -> refresh Data tab
