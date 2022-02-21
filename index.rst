@@ -92,7 +92,7 @@ MS Windows
 ^^^^^^^^^^
 
 * Install GRASS GIS 8 using `standalone installer
-  <https://grass.osgeo.org/grass80/binary/mswindows/native/WinGRASS-8.0.0-2-Setup.exe>`__
+  <https://grass.osgeo.org/download/windows/#standalone-installers>`__
 
 Debian/Ubuntu Linux
 ^^^^^^^^^^^^^^^^^^^
@@ -130,13 +130,18 @@ MS Windows
 Sample dataset
 ==============
 
-**Download** sample dataset as `7z archive
-<http://geo.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2020/jena-sample-data.7z>`__
-(6.1GB, 6.5GB uncompressed).
-
 For purpose of this training materials a sample dataset has been
 created based on Open Data covering Germany and Jena region
-specifically. See detailed description below.
+specifically. Sample dataset is split into four parts:
+
+* `jena-sample-data-base.7z <https://geo.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2022/jena-sample-data-base.7z>`__ (294MB)
+* `jena-sample-data-lidar.7z <https://geo.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2022/jena-sample-data-lidar.7z>`__ (541MB)
+* `jena-sample-data-sentinel.7z <https://geo.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2022/jena-sample-data-sentinel.7z>`__ (1.7GB)
+* `jena-sample-data-modis.7z <https://geo.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2022/jena-sample-data-modis.7z>`__ (1.0GB)
+  
+You need at least 15GB free space on your disk (GRASS + sample data + computation).
+
+List of data sources:
 
 * EU-DEM (directory: :file:`eu-dem`, source: `Copernicus Land Monitoring
   Service - EU-DEM
