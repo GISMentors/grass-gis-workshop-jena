@@ -48,8 +48,6 @@ in your software on your own.
       
    NDVI TIFF file loaded in QGIS.
 
-.. todo:: Update screenshot
-          
 .. _vector-notes:
 
 Notes
