@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE gxm SYSTEM "grass-gxm.dtd">
 <gxm>
-    <window pos="623,226" size="985,767" />
+    <window pos="46,303" size="985,767" />
     <properties>
-        <name>ndvi-v3</name>
-        <description>NDVI model version 3</description>
+        <name>ndvi-v2</name>
+        <description>NDVI model version 2</description>
         <author>martin</author>
         <flag name="overwrite" />
     </properties>
     <action id="1" name="v.overlay" pos="375,35" size="125,50">
         <task name="v.overlay">
+            <flag name="overwrite" />
             <parameter name="ainput">
                 <parameterized />
                 <value>jena_boundary@PERMANENT</value>
@@ -41,22 +42,22 @@
             <parameter name="snap">
                 <value>1e-8</value>
             </parameter>
-            <flag name="overwrite" />
         </task>
     </action>
     <action id="2" name="g.region" pos="845,75" size="125,50">
         <task name="g.region">
+            <flag name="overwrite" />
             <parameter name="vector">
                 <value>region_mask</value>
             </parameter>
             <parameter name="align">
                 <value>L2A_T32UPB_20170706T102021_B04_10m@PERMANENT</value>
             </parameter>
-            <flag name="overwrite" />
         </task>
     </action>
     <action id="3" name="r.mask" pos="375,110" size="125,50">
         <task name="r.mask">
+            <flag name="overwrite" />
             <parameter name="maskcats">
                 <value>*</value>
             </parameter>
@@ -66,19 +67,19 @@
             <parameter name="layer">
                 <value>1</value>
             </parameter>
-            <flag name="overwrite" />
         </task>
     </action>
     <action id="4" name="i.vi" pos="375,185" size="125,50">
         <task name="i.vi">
-            <parameter name="red">
-                <value>L2A_T32UPB_20170706T102021_B04_10m@PERMANENT</value>
-            </parameter>
+            <flag name="overwrite" />
             <parameter name="output">
                 <value>ndvi</value>
             </parameter>
             <parameter name="viname">
                 <value>ndvi</value>
+            </parameter>
+            <parameter name="red">
+                <value>L2A_T32UPB_20170706T102021_B04_10m@PERMANENT</value>
             </parameter>
             <parameter name="nir">
                 <value>L2A_T32UPB_20170706T102021_B08_10m@PERMANENT</value>
@@ -86,11 +87,11 @@
             <parameter name="storage_bit">
                 <value>8</value>
             </parameter>
-            <flag name="overwrite" />
         </task>
     </action>
     <action id="5" name="r.recode" pos="605,290" size="125,50">
         <task name="r.recode">
+            <flag name="overwrite" />
             <parameter name="input">
                 <value>ndvi</value>
             </parameter>
@@ -100,7 +101,6 @@
             <parameter name="rules">
                 <value>/home/user/geodata/models/reclass.txt</value>
             </parameter>
-            <flag name="overwrite" />
         </task>
     </action>
     <action id="6" name="r.colors" pos="830,410" size="125,50">
@@ -115,6 +115,9 @@
     </action>
     <action id="7" name="r.to.vect" pos="385,410" size="125,50">
         <task name="r.to.vect">
+            <flag name="s" />
+            <flag name="v" />
+            <flag name="overwrite" />
             <parameter name="input">
                 <value>ndvi_class</value>
             </parameter>
@@ -127,13 +130,11 @@
             <parameter name="column">
                 <value>value</value>
             </parameter>
-            <flag name="s" />
-            <flag name="v" />
-            <flag name="overwrite" />
         </task>
     </action>
     <action id="8" name="v.clean" pos="150,510" size="125,50">
         <task name="v.clean">
+            <flag name="overwrite" />
             <parameter name="input">
                 <value>ndvi_class</value>
             </parameter>
@@ -153,7 +154,22 @@
                 <parameterized />
                 <value>1600</value>
             </parameter>
-            <flag name="overwrite" />
+        </task>
+    </action>
+    <action id="9" name="v.colors" pos="605,510" size="125,50">
+        <task name="v.colors">
+            <parameter name="map">
+                <value>ndvi_vector</value>
+            </parameter>
+            <parameter name="layer">
+                <value>1</value>
+            </parameter>
+            <parameter name="use">
+                <value>cat</value>
+            </parameter>
+            <parameter name="raster">
+                <value>ndvi_class</value>
+            </parameter>
         </task>
     </action>
     <data pos="135,35" size="175,50">
@@ -214,6 +230,8 @@
         </relation>
         <relation dir="from" id="6" name="map">
         </relation>
+        <relation dir="from" id="9" name="raster">
+        </relation>
         <relation dir="to" id="5" name="output">
         </relation>
     </data>
@@ -230,6 +248,8 @@
         <data-parameter prompt="vector">
             <value>ndvi_vector</value>
         </data-parameter>
+        <relation dir="from" id="9" name="map">
+        </relation>
         <relation dir="to" id="8" name="output">
         </relation>
     </data>
