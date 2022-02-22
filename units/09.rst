@@ -32,7 +32,8 @@ following steps:
    (:grasscmd:`r.colors`)
 #. Convert raster classes into vector areas (:grasscmd:`r.to.vect`)
 #. Remove small areas (join them with adjacent areas by :grasscmd:`v.clean`)
-
+#. Set color table based on NDVI raster classes (:grasscmd:`v.colors`)
+   
 Overview of commands below:
 
 .. code-block:: bash
@@ -45,8 +46,16 @@ Overview of commands below:
    r.colors map=ndvi_class rules=colors.txt
    r.to.vect -s -v input=ndvi_class output=ndvi_class type=area
    v.clean input=ndvi_class output=ndvi_vector tool=rmarea threshold=1600
+   v.colors map=ndvi_class raster=ndvi_class
 
-.. todo:: Add v.colors
+.. note::
+
+   Small areas can be also removed by raster-based workflow:
+
+   .. code-block:: bash
+
+      r.reclass.area input=ndvi_class output=ndvi_class2 mode=greater value=0.12
+      r.grow.distance input=ndvi_class2 value=ndvi_class_c
           
 The tools can be added to the existing model by |grass-module-add|
 :sup:`Add GRASS tool (module) to model`. Note that newly added tools
