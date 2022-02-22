@@ -38,7 +38,7 @@ Overview of commands below:
 
 .. code-block:: bash
 
-   v.overlay ainput=jena_region binput=MaskFeature operator=not output=region_mask
+   v.overlay ainput=jena_boundary binput=MaskFeature operator=not output=region_mask
    g.region vector=region_mask align=L2A_T32UPB_20170706T102021_B04_10m
    r.mask vector=region_mask
    i.vi red=L2A_T32UPB_20170706T102021_B04_10m output=ndvi nir=L2A_T32UPB_20170706T102021_B08_10m
