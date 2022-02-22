@@ -46,7 +46,7 @@ Overview of commands below:
    r.colors map=ndvi_class rules=colors.txt
    r.to.vect -s -v input=ndvi_class output=ndvi_class type=area
    v.clean input=ndvi_class output=ndvi_vector tool=rmarea threshold=1600
-   v.colors map=ndvi_class raster=ndvi_class
+   v.colors map=ndvi_vector raster=ndvi_class
 
 .. note::
 
