@@ -1,3 +1,6 @@
 * broken WMS on Windows
 * r.unpack -> refresh Data tab
 * r.external.out seems not work on Windows
+* python tab: avoid None
+* modeler: spaces in UI
+* modeler: pygrass support

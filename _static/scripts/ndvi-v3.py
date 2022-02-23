@@ -15,29 +15,21 @@
 #%module
 #% description: NDVI model version 3
 #%end
-#%option G_OPT_V_INPUT
-#% key: region
-#% description: Name of input vector region map 
-#%end
-#%option G_OPT_V_INPUT
-#% key: clouds
-#% description: Name of input vector clouds map 
-#%end
-#%option G_OPT_R_INPUT
-#% key: red
-#% description: Name of input red channel
-#%end
-#%option G_OPT_R_INPUT
-#% key: nir
-#% description: Name of input NIR channel
-#%end
 #%option
-#% key: threshold
-#% description: Threshold for removing small areas
-#% answer: 1600
+#% key: voverlay1_ainput
+#% description: Name of input vector map (A)
+#% required: yes
+#% type: string
+#% key_desc: name
+#% answer: jena_boundary@PERMANENT
 #%end
-#%option G_OPT_V_OUTPUT
-#%end
+# %option
+# % key: vclean8_threshold
+# % description: Threshold in map units, one value for each tool
+# % required: yes
+# % type: double
+# % answer: 1600
+# %end
 
 import sys
 import os
@@ -49,18 +41,15 @@ from grass.script import parser, parse_key_val
 from grass.pygrass.modules import Module
 
 def cleanup():
-    Module('g.remove', flags='f', name='region_mask', type='vector')
-    Module('g.remove', flags='f', name='ndvi', type='raster')
-    Module('g.remove', flags='f', name='ndvi_class', type='raster')
-    Module('g.remove', flags='f', name='ndvi_class', type='vector')
+    pass
 
 def main(options, flags):
     Module("v.overlay",
            overwrite = True,
-           ainput = options["region"],
+           ainput=options["voverlay1_ainput"],
            alayer = "1",
            atype = "auto",
-           binput = options["clouds"],
+           binput = "MaskFeature@PERMANENT",
            blayer = "1",
            btype = "area",
            operator = "not",
@@ -71,7 +60,7 @@ def main(options, flags):
     Module("g.region",
            overwrite = True,
            vector = "region_mask",
-           align = options["red"])
+           align = "L2A_T32UPB_20170706T102021_B04_10m@PERMANENT")
 
     Module("r.mask",
            overwrite = True,
@@ -81,23 +70,21 @@ def main(options, flags):
 
     Module("i.vi",
            overwrite = True,
-           red = options["red"],
+           red = "L2A_T32UPB_20170706T102021_B04_10m@PERMANENT",
            output = "ndvi",
            viname = "ndvi",
-           nir = options["nir"],
+           nir = "L2A_T32UPB_20170706T102021_B08_10m@PERMANENT",
            storage_bit = 8)
 
     Module("r.recode",
            overwrite = True,
            input = "ndvi",
            output = "ndvi_class",
-           rules = "-",
-           stdin_ = "-1:0.1:1\n0.1:0.5:2\n0.5:1:3")
+           rules = "/home/user/geodata/models/reclass.txt")
 
     Module("r.colors",
            map = "ndvi_class",
-           rules = "-",
-           stdin_ = "1 grey\n2 255 255 0\n3 green")
+           rules = "/home/user/geodata/models/colors.txt")
 
     Module("r.to.vect",
            flags = 'sv',
@@ -112,10 +99,16 @@ def main(options, flags):
            input = "ndvi_class",
            layer = "-1",
            type = ["point","line","boundary","centroid","area","face","kernel"],
-           output = options["output"],
+           output = "ndvi_vector",
            tool = "rmarea",
-           threshold = options["threshold"])
+           threshold = 1600)
 
+    Module("v.colors",
+           map="ndvi_vector",
+           layer="1",
+           use="cat",
+           raster="ndvi_class")
+    
     ret = Module('r.univar', flags='g', map='ndvi', stdout_=PIPE)
     stats = parse_key_val(ret.outputs.stdout)
     print ('-' * 80)
@@ -128,7 +121,7 @@ def main(options, flags):
     print ('-' * 80)
     print ('NDVI class statistics')
     print ('-' * 80)
-    ret = Module('v.report', map=options['output'], option='area', stdout_=PIPE)
+    ret = Module('v.report', map='ndvi_vector', option='area', stdout_=PIPE)
     for line in ret.outputs.stdout.splitlines()[1:]: # skip first line (cat|label|area)
         # parse line (eg. 1||2712850)
         data = line.split('|')
@@ -137,10 +130,10 @@ def main(options, flags):
         print ('NDVI class {0}: {1:.1f} ha'.format(cat, area/1e4)) 
 
     # v.to.rast: use -c flag for updating statistics if exists
-    Module('v.rast.stats', flags='c', map=options['output'], raster='ndvi',
+    Module('v.rast.stats', flags='c', map='ndvi_vector', raster='ndvi',
            column_prefix='ndvi', method=['minimum','maximum','average'])
     # v.db.select: don't print column names (-c)
-    ret = Module('v.db.select', flags='c', map=options['output'], separator='comma', stdout_=PIPE)
+    ret = Module('v.db.select', flags='c', map='ndvi_vector', separator='comma', stdout_=PIPE)
     for line in ret.outputs.stdout.splitlines():
         # parse line (eg. 1,,-0.433962264150943,0.740350877192983,0.051388909449992)
         cat,label,min,max,mean = line.split(',')

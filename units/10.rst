@@ -131,22 +131,18 @@ Resultant NDVI raster map can be displayed easily by calling
 
    AddLayer('ndvi')                
 
-.. todo:: Fix None
-          
 .. _modeler-python:
             
 Graphical Modeler and Python
 ----------------------------
 
 Model created in Graphical Modeler can be easily converted into Python
-script. Let's open the model created in :doc:`09`: `ndvi-v2.gxm
-<../_static/models/ndvi-v2.gxm>`__ and switch to :item:`Python editor`
+script. Let's open the model created in :doc:`09`: `ndvi-v3.gxm
+<../_static/models/ndvi-v3.gxm>`__ and switch to :item:`Python editor`
 tab.
 
 .. figure:: ../images/units/10/model-python-editor.png
    :class: large
    
    Python editor integrated in Graphical Modeler. Python code can be
-   modified, run or saved into file.
-
-.. todo:: Fix GRASS Modeler (no spaces in UI)
+   modified, run or saved into file (:file:`ndvi-v3.py`).
