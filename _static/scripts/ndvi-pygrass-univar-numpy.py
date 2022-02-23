@@ -10,6 +10,6 @@ array = numpy.array(ndvi)
 ndvi.close()
 
 print("min={0:.6f} max={1:.6f} count={2} (no-data: {3})".format(
-    array.min(), array.max(), array.size,
+    numpy.nanmin(array), numpy.nanmax(array), array.size,
     numpy.count_nonzero(numpy.isnan(array)))
 )
