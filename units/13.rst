@@ -51,8 +51,6 @@ Optimized version based on `NumPy <https://numpy.org>`__ library:
 .. literalinclude:: ../_static/scripts/ndvi-pygrass-univar-numpy.py
    :language: python
 
-.. todo:: Fix min/max=nan
-          
 Sample script to download: `ndvi-pygrass-univar-numpy.py
 <../_static/scripts/ndvi-pygrass-univar-numpy.py>`__
 
