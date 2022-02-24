@@ -54,7 +54,7 @@ Overview of commands below:
 
    .. code-block:: bash
 
-      r.reclass.area input=ndvi_class output=ndvi_class2 mode=greater value=0.12
+      r.reclass.area input=ndvi_class output=ndvi_class2 mode=greater value=0.16
       r.grow.distance input=ndvi_class2 value=ndvi_class_c
           
 The tools can be added to the existing model by |grass-module-add|
@@ -112,7 +112,7 @@ control input parameters before running model.
 In Graphical Modeler a user input can be defined by two mechanisms:
 
 * **parametrization** of tools parameters 
-* using self-defined **variables** (ideal when multiple tools are
+* using user-defined **variables** (ideal when multiple tools are
   sharing same user-defined input value)
 
 Let's start with parametrization. Change the model in order to provide

@@ -4,3 +4,4 @@
 * python tab: avoid None
 * modeler: spaces in UI
 * modeler: pygrass support
+* modeler: windows paths (r)
