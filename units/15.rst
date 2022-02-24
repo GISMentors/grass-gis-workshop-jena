@@ -13,8 +13,9 @@ flag of :grasscmd:`r.in.gdal` GRASS module only a subregion covering
 AOI can be imported. Unfortunately :grasscmd:`r.import` do not offer
 such flag. This is a reason why data will be reprojected
 manually. Input data will be imported into a new location
-(:epsg:`4258`). In the next step imported data will be reprojected
-into target *jena-region* (:epsg:`32632`).
+(ETRS89-extended / LAEA Europe :epsg:`3035`). In the next step
+imported data will be reprojected into target *jena-region*
+(WGS 84 / UTM zone 32N :epsg:`32632`).
 
 .. note:: In order to save disk space the original EU-DEM tile was
    clipped by larger region than Jena AOI. Modified tile is available
@@ -23,10 +24,10 @@ into target *jena-region* (:epsg:`32632`).
 Create location for data import
 -------------------------------
 
-EU-DEM dataset is provided in ETRS-89 (:epsg:`4258`). Start a new
-GRASS session and create a new location *jena-eu-dem* based on input
-:file:`geodata/eu-dem/dem_sample.tif` file as described in :ref:`Unit
-02 <create-location>`).
+EU-DEM dataset is provided in ETRS89-extended / LAEA Europe
+(:epsg:`3035`). Start a new GRASS session and create a new location
+*jena-eu-dem* based on input :file:`geodata/eu-dem/dem_sample.tif`
+file as described in :ref:`Unit 02 <create-location>`) or from EPSG code.
 
 .. important:: Skip data import provided by
                location wizard since only subregion defined by Jena city region is
@@ -44,7 +45,7 @@ Enter new location (PERMANENT mapset) and copy (ie. reproject)
    :class: middle
            
    Copy :map:`jena_boundary` vector map from `jena-region` location
-   (:epsg:`32632`) to the current location (:epsg:`4258`).
+   (:epsg:`32632`) to the current location (:epsg:`3035`).
 
 .. figure:: ../images/units/15/data-reproject-dialog.png
    :class: small
@@ -57,8 +58,6 @@ Enter new location (PERMANENT mapset) and copy (ie. reproject)
                           
       v.proj location=jena-region mapset=PERMANENT input=jena_boundary
 
-.. todo:: jena_boundary set epsg code (?)
-          
 Before importing DEM set computation region extent based on
 reprojected Jena city region.
       
