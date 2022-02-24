@@ -11,7 +11,8 @@ below (:option:`rules` option):
 .. literalinclude:: ../_static/scripts/ndvi-v3.py
    :language: python
    :lines: 79-87
-
+   :emphasize-lines: 5, 9
+                     
 Content of input files can be defined as a string object and transfered
 to the command via standard input (``stdin_``). See a sample code
 below:
@@ -19,7 +20,8 @@ below:
 .. literalinclude:: ../_static/scripts/ndvi-v4.py
    :language: python
    :lines:  90-100
-
+   :emphasize-lines: 6, 11
+                     
 Note that many of GRASS modules allows sending data via standard input
 by option value ``-`` (dash). In our case the both commands will be
 changed to use ``rules="-"`` syntax.
