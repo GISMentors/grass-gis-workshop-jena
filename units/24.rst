@@ -58,7 +58,9 @@ Let's download desired tiles (h18v03 and h18v04) for year 2019 by
 :grasscmdaddons:`i.modis.download`. 
   
 .. note:: Already downloaded MODIS can be found in sample dataset
-   in :file:`geodata/modis` directory.
+   `jena-sample-data-modis.7z
+   <https://geo.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2022/jena-sample-data-modis.7z>`__
+   (1.0GB) :file:`geodata/modis` directory.
 
 Land Surface Temperature eight day 1 Km (Terra/Aqua) product will be
 downloaded.

@@ -45,8 +45,10 @@ Download data
 -------------
 
 .. important:: Pre-downloaded Sentinel scenes are available in the
-   sample dataset :file:`geodata/sentinel`. Readers can continue
-   with :ref:`importing sample data <sentinel-import>`.
+   sample dataset `jena-sample-data-sentinel.7z
+   <https://geo.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2022/jena-sample-data-sentinel.7z>`__
+   (1.7GB) :file:`geodata/sentinel`. Readers can continue with
+   :ref:`importing sample data <sentinel-import>`.
 
 Let's download suitable Sentinel products for our area of interest
 (AOI) and perform the NDVI calculation as described in :doc:`05`

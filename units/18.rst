@@ -11,6 +11,10 @@ directory. Data is stored in LAZ format (compressed LAS format).
    <http://www.geoportal-th.de/de-de/Downloadbereiche/Download-Offene-Geodaten-Th%C3%BCringen/Download-H%C3%B6hendaten>`__,
    choose region in map viewer and download selected tiles.
 
+Download sample data for this unit: `jena-sample-data-lidar.7z
+<https://geo.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2022/jena-sample-data-lidar.7z>`__
+(541MB)
+   
 
 Data import
 -----------
