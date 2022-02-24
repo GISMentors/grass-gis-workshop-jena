@@ -7,14 +7,18 @@ vector data by PyGRASS API.
 
 Let's import :file:`geodata/osm/counties.gpkg` into *jena-region*
 GRASS location as described in :doc:`03`. In this case coordinate
-reference system (CRS) of input data differs from *jena-region* CRS
-definition. GRASS will apply transformation of input data into target
-CRS provided by the current location. This operation needs to be
-confirmed by the users as shown in :numref:`confirm-reprojection`.
+reference system (CRS) of input data (:epsg:`3035`) differs from
+*jena-region* CRS definition (:epsg:`32632`). GRASS will apply
+transformation of input data into target CRS provided by the current
+location (``Projection match: No``). This operation needs to be
+confirmed by a user, see :numref:`confirm-reprojection`.
 
 .. _confirm-reprojection:
 
-.. todo:: add screenshot
+.. figure:: ../images/units/14/reproject.png
+   :class: small
+           
+   Confirm reprojection of input data.
 
 Data incosistency can cause significant topological errors when
 importing vector data into GRASS (as in our case
@@ -22,12 +26,20 @@ importing vector data into GRASS (as in our case
 
 .. _topo-errors:
 
-.. todo:: add screenshot
+.. figure:: ../images/units/14/counties-broken.png
+   :class: middle
+           
+   Topological errors detected by import process.
 
-In many cases can help to set up a "reasonable" snapping threshold
-before importing data into GRASS, see :numref:`import-snap`.
+Usually helps to set up a "reasonable" snapping threshold when
+importing data into GRASS, see :numref:`import-snap`.
 
-.. todo:: add screenshot
+.. _import-snap:
+
+.. figure:: ../images/units/14/threshold_snap.png
+
+   Set threshold for snapping before data import in :item:`Import
+   settings` tab.
           
 Vector data can be treated by :pygrass-vector:`Vector` class when
 dealing with basic vector primitives (points, lines, boundaries,
@@ -46,7 +58,7 @@ Example below prints county names and area size in hectares.
    for feat in counties.viter('areas'):
        if not feat.attrs:
            continue
-       print (u'{0}: {1:.1f}ha'.format(feat.attrs['name'], feat.area() / 10e4))
+       print ('{0}: {1:.1f}ha'.format(feat.attrs['name'], feat.area() / 10e4))
    
    counties.close()
 
