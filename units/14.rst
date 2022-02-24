@@ -6,9 +6,28 @@ Python objects. This unit shows how to deal with GRASS topological
 vector data by PyGRASS API.
 
 Let's import :file:`geodata/osm/counties.gpkg` into *jena-region*
-GRASS location as described in :doc:`03`.
+GRASS location as described in :doc:`03`. In this case coordinate
+reference system (CRS) of input data differs from *jena-region* CRS
+definition. GRASS will apply transformation of input data into target
+CRS provided by the current location. This operation needs to be
+confirmed by the users as shown in :numref:`confirm-reprojection`.
 
-.. todo:: explain re-projection and snapping
+.. _confirm-reprojection:
+
+.. todo:: add screenshot
+
+Data incosistency can cause significant topological errors when
+importing vector data into GRASS (as in our case
+:numref:`topo-errors`).
+
+.. _topo-errors:
+
+.. todo:: add screenshot
+
+In many cases can help to set up a "reasonable" snapping threshold
+before importing data into GRASS, see :numref:`import-snap`.
+
+.. todo:: add screenshot
           
 Vector data can be treated by :pygrass-vector:`Vector` class when
 dealing with basic vector primitives (points, lines, boundaries,
