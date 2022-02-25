@@ -5,3 +5,4 @@
 * modeler: spaces in UI
 * modeler: pygrass support
 * modeler: windows paths (r)
+* v.outlier broken on Windows

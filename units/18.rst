@@ -124,8 +124,6 @@ is built, the module must scan all points in the map):
    |               B:           -43.382    T:           968.621                 |
    ...
 
-.. todo:: Fix missing extent
-          
 Raster import
 ^^^^^^^^^^^^^
 
