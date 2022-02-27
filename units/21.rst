@@ -12,7 +12,7 @@ Download data
 -------------
 
 .. important:: Pre-downloaded Sentinel scenes are available in the
-   sample dataset :file:`geodata/sentinel`. Readerscan continue
+   sample dataset :file:`geodata/sentinel`. Readers can continue
    with :ref:`importing sample data <sentinel-import-st>`.
 
 Let's download Sentinel L2A products for spring/summer
@@ -41,8 +41,6 @@ Download selected Sentinel scenes:
    start=2021-04-01 end=2021-10-31 producttype=S2MSI2A clouds=10 \
    output=geodata/sentinel/2021
 
-.. todo:: Pre-download scenes
-
 .. _sentinel-import-st:
 
 Import data
@@ -57,9 +55,9 @@ raster dataset.
 
 .. code-block:: bash
 
-   i.sentinel.import -p input=/home/user/geodata/sentinel/2019 pattern="B0(4|8)_10m"
+   i.sentinel.import -p input=/home/user/geodata/sentinel/2019 pattern="B0[4|8]_10m"
    
-   i.sentinel.import -l -c input=/home/user/geodata/sentinel/2019 pattern="B0(4|8)_10m" \
+   i.sentinel.import -l -c input=/home/user/geodata/sentinel/2019 pattern="B0[4|8]_10m" \
    register_output=/home/user/sentinel-timestamps.txt
 
 Example of created timestamp file:
@@ -201,8 +199,6 @@ When computation is finished *ndvi* color table can be set with
 Cloud mask
 ^^^^^^^^^^
 
-.. todo:: Generate raster mask by :grasscmdaddons:`i.sentinel.import` (?)
-
 Let's apply the cloud masks on our NDVI space-time dataset. At first, we will create
 a new space-time dataset containing computed raster masks. A sample
 Python script has been designed for this purpose below. Masks can
@@ -222,7 +218,7 @@ Sample script to download: `sentinel-cloud-mask.py
 	     
 .. code-block:: bash
 		
-   sentinel-cloud-mask.py map=jena_boundary output=cloud-timestamps.txt
+   sentinel-cloud-mask.py map=jena_boundary input=b4 output=cloud-timestamps.txt
 
 Now we can create a new space-time dataset and register the raster cloud masks
 created before.
