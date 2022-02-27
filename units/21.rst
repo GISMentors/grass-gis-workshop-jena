@@ -243,7 +243,7 @@ We now apply the cloud masks map by map using :grasscmd:`t.rast.algebra` and set
    expression="ndvi_masked = if(isnull(clouds), null(), float(b8 - b4) / ( b8 + b4 ))" \
    nprocs=3
 
-   t.rast.colors in=ndvi color=ndvi
+   t.rast.colors in=ndvi_masked color=ndvi
 
 .. figure:: ../images/units/21/simple-animation-clouds.gif
    :class: middle
