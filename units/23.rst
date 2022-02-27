@@ -23,4 +23,6 @@ number of processes running in parallel.
 Sample script to download: `ndvi-tgrass-v2.py
 <../_static/scripts/ndvi-tgrass-v2.py>`__
 
-.. todo:: Compare v1/v2 time
+.. task:: Compare `ndvi-tgrass-v1.py
+          <../_static/scripts/ndvi-tgrass-v1.py>`__ / `ndvi-tgrass-v2.py
+          <../_static/scripts/ndvi-tgrass-v2.py>`__ processing time

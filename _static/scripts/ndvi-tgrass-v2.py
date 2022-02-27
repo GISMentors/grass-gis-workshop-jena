@@ -137,11 +137,11 @@ def compute(b4, b8, msk, output, idx):
 
 def stats(output, date, fd):
     fd.write('-' * 80)
-    fd.write(os.linesep)
+    fd.write('\n')
     fd.write('NDVI class statistics ({0}: {1})'.format(output, date))
-    fd.write(os.linesep)
+    fd.write('\n')
     fd.write('-' * 80)
-    fd.write(os.linesep)
+    fd.write('\n')
     from subprocess import PIPE
     ret = Module('v.report', map=output, option='area',
                  stdout_=PIPE)
@@ -151,14 +151,14 @@ def stats(output, date, fd):
         cat = data[0]
         area = float(data[-1])
         fd.write('NDVI class {0}: {1:.1f} ha'.format(cat, area/1e4))
-        fd.write(os.linesep)
+        fd.write('\n')
 
     data = vector_db_select(output)
     for vals in data['values'].values():
         # unfortunately we need to cast values by float
         fd.write('NDVI class {0}: {1:.4f} (min) {2:.4f} (max) {3:.4f} (mean)'.format(
             vals[0], float(vals[2]), float(vals[3]), float(vals[4])))
-        fd.write(os.linesep)
+        fd.write('\n')
         
 def main():
     import grass.temporal as tgis
