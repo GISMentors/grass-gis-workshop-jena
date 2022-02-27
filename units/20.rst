@@ -37,7 +37,7 @@ be installed.
 	
    .. code-block:: bash
 	
-      python3 -m pip install sentinelsat
+      python3 -m pip install sentinelsat pandas
 
 :ref:`Switch <switch-location>` to `jena-region` location.
 
@@ -125,9 +125,6 @@ where data should be saved.
    online. Triggering retrieval from long term archive.`` error
    message. In this case try to download affected product in the next days.
 
-.. todo:: Fix :grasscmdaddons:`i.sentinel.import` in order to continue
-          downloading remaining products.
-
 Import data
 -----------
 
@@ -150,7 +147,7 @@ option.
 
 .. code-block:: bash
  
-   i.sentinel.import -p input=/home/user/geodata/sentinel/2019 pattern="20190626T102031_B0(4|8)_10m"
+   i.sentinel.import -p input=/home/user/geodata/sentinel/2019 pattern="20190626T102031_B0[4|8]_10m"
 
 ::
 
@@ -175,8 +172,8 @@ which will be used in :doc:`21`.
 .. todo:: Fix :grasscmdaddons:`i.sentinel.import` :option:`-c` flag to
           respect :option:`pattern` parameter.
           
-Now launch the NDVI sample script created in :doc:`12` (`ndvi-v3.py
-<../_static/scripts/ndvi-v3.py>`__) in order to compute NDVI classes.
+Now launch the NDVI sample script created in :doc:`12` (`ndvi-v4.py
+<../_static/scripts/ndvi-v4.py>`__) in order to compute NDVI classes.
    
 .. figure:: ../images/units/20/run-script.png
         

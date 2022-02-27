@@ -6,3 +6,7 @@
 * modeler: pygrass support
 * modeler: windows paths (r)
 * v.outlier broken on Windows
+* i.sentinel.download continue downloading remaining products on online error
+* i.sentinel.import: pattern="20190626T102031_B0(4|8)_10m" not working on Windows
+* i.sentinel.import produces clouds only in current region(!)
+
