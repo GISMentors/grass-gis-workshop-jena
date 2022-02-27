@@ -47,10 +47,7 @@ For importing LAS/LAZ data there are available two GRASS modules:
 .. important:: Unfortunately on MS Windows PDAL-based modules are
    missing due to compilation problems (`#1821
    <https://github.com/OSGeo/grass/issues/1821>`__) and libLAS-based
-   modules lack compression support. This a reason why we will use
-   data in uncompressed LAS format: `lidar_las.7z
-   <http://geo.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2020/lidar_las.7z>`__
-   (541MB, 2.7GB uncompressed).
+   modules lack compression support.
 
    Data can be converted from LAZ to LAS by :program:`pdal`
    command-line tool:
