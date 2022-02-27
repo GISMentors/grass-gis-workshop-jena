@@ -50,7 +50,7 @@ def main():
             Module('r.mask', vector=mask_vect, overwrite=True)
             Module('g.remove', flags='f', type='vector', name=mask_vect)
             Module('g.rename', raster=['MASK', mask_vect])
-            fd.write("{}|{}{}\n".format(
+            fd.write("{}|{}\n".format(
                 mask_vect,
                 d.strftime('%Y-%m-%d %H:%M:%S.%f'),
             ))
