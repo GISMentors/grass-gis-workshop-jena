@@ -19,9 +19,9 @@ Let's define input and output parameters of the script:
   :lcode:`19`)
 * :param:`b8` - Name of input 8th band space time raster dataset (line
   :lcode:`23`)
-* :param:`clouds` - Name of the input mask (region+clouds) space time raster dataset
+* :param:`mask` - Name of the input mask (region+clouds) space time raster dataset
   (line :lcode:`27`)
-* :param:`clouds` - Name for output stats file (line :lcode:`30`)
+* :param:`output` - Name for output stats file (line :lcode:`30`)
 * :param:`basename` - Basename for output raster maps (line
   :lcode:`33`)
 * :param:`threshold` - Threshold for removing small areas (line
@@ -32,7 +32,7 @@ Python Temporal API
          
 .. _temporal-api:
 
-Focus on functions used from :grasscmd2:`GRASS GIS Temporal Framework
+Functions from :grasscmd2:`GRASS GIS Temporal Framework
 <libpython/temporal_framework.html>`:
 
 * initialization must be done by :grasscmd2:`init
@@ -86,5 +86,3 @@ Possible output:
    NDVI class 1: -0.2253 (min) 0.7481 (max) 0.0457 (mean)
    NDVI class 2: -1.0000 (min) 0.9994 (max) 0.2999 (mean)
    NDVI class 3: -0.9978 (min) 0.9994 (max) 0.6992 (mean)
-
-.. todo:: Review script (ODSE 2021)
