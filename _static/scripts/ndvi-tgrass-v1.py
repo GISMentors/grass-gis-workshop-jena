@@ -103,6 +103,12 @@ def compute(b4, b8, msk, output):
            tool = "rmarea",
            threshold = options['threshold'])
 
+    Module("v.colors",
+           map=output,
+           layer="1",
+           use="cat",
+           raster="ndvi_class")
+    
 def stats(output, date, fd):
     fd.write('-' * 80)
     fd.write('\n')

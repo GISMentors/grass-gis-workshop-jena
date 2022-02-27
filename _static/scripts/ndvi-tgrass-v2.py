@@ -21,7 +21,7 @@
 #%end
 #%option G_OPT_STRDS_INPUT
 #% key: b8
-#% description: Name of the input 4th band space time raster dataset
+#% description: Name of the input 8th band space time raster dataset
 #%end
 #%option G_OPT_STRDS_INPUT
 #% key: mask
@@ -121,6 +121,14 @@ def compute(b4, b8, msk, output, idx):
                tool = "rmarea",
                threshold = options['threshold'],
                run_ = False)
+    )
+
+    modules.append(    
+        Module("v.colors",
+               map=output,
+               layer="1",
+               use="cat",
+               raster="ndvi_class")
     )
 
     modules.append(
