@@ -38,6 +38,6 @@ Example of usage:
 
 ::
    
-   Min: -5.4
-   Max: 13.8
-   Mean: 8.0
+   Min: -8.3
+   Max: 12.6
+   Mean: 7.3

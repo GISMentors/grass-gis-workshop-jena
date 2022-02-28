@@ -115,8 +115,8 @@ datasets containing data of different satellite and datetime.
 
    t.info input=modis_terra_day
 
-Map algebra
------------
+LST
+---
 
 Digital numbers (DN) need to be converted into Celsius scale as done
 in :ref:`Unit 24 <modis-dn-c>`. Instead of running
@@ -252,12 +252,14 @@ values.
 
    Monthly average dataset animation with celsius color table applied.
 
-The second tool, :grasscmd:`g.gui.tplot`, allows plotting the time
-series of defined variable of interest for a specific point or area of
-a study region. In example below coordinates of Jena venue
-are used.
 
-.. code-block:: bash
+..
+   The second tool, :grasscmd:`g.gui.tplot`, allows plotting the time
+   series of defined variable of interest for a specific point or area of
+   a study region. In example below coordinates of Jena venue
+   are used.
+
+   .. code-block:: bash
 
    g.gui.tplot strds=modis_c coordinates=4432436.61,3091484.74
 

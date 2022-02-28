@@ -216,7 +216,7 @@ Let's check range values of new LST data layer.
 
 .. code-block:: bash
 
-   r.info -r map=MOD11A2.A2017001_mosaic_LST_Day_1km_celsius
+   r.info -r map=MOD11A2.A2019001_mosaic_LST_Day_1km_c
 
 ::
 
