@@ -163,7 +163,7 @@ which will be used in :doc:`21`.
 
 .. code-block:: bash
 
-   i.sentinel.import -l -c input=/home/user/geodata/sentinel/2019 pattern="20190626T102031_B0(4|8)_10m"
+   i.sentinel.import -l -c input=/home/user/geodata/sentinel/2019 pattern="20190626T102031_B0[4|8]_10m"
 
 .. note:: Cloud mask is computed by
    :grasscmdaddons:`i.sentinel.import`, the module doesn't use cloud
