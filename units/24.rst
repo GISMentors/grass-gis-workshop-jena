@@ -104,6 +104,10 @@ by :grasscmdaddons:`i.modis.import`.
 If ``-m`` flag is given mosaic from input tiles is created
 automatically, see :numref:`modis-mosaics`.
 
+.. note:: See relevant `source code
+   <https://github.com/OSGeo/grass-addons/blob/grass8/src/imagery/i.modis/libmodis/rmodislib.py#L78>`__
+   related to :option:`spectral` option.
+          
 .. _modis-mosaics:
 
 .. figure:: ../images/units/24/modis-mosaics.png
