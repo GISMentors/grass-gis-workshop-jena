@@ -4,14 +4,14 @@ Unit 25 - MODIS ST
 In this unit time-series computation based LST reconstruction will be
 performed.
 
-In :doc:`24` the input MODIS data has been :ref:`imported
-<modis-import>` into GRASS by :grasscmdaddons:`i.modis.import`. The
-command was called with :param:`-w` flag and :param:`outfile`
-parameter to generate timestamp file which can be later used for
-creating space-time raster dataset (strds).
+In :doc:`24` the input MODIS data was :ref:`imported <modis-import>`
+into GRASS by :grasscmdaddons:`i.modis.import`. The command was called
+with :param:`-w` flag and :param:`outfile` parameter to generate
+a timestamp file which can be later used for creating space-time raster
+dataset (strds).
 
 Creation of space time dataset including basic operations is explained
-in :doc:`17`.
+in :doc:`17` and :doc:`21`.
 
 A new space time raster datasets is created by :grasscmd:`t.create`.
 
@@ -45,7 +45,7 @@ Let's check basic metedata about created dataset by
 
 .. _t-register-file:
    
-.. note:: See granularity. In this case a composed product from the
+.. note:: Check granularity. In this case a composed product from the
    daily 1-kilometer LST product (MOD11A1/MYD11A1) stored on a 1-km
    Sinusoidal grid as the average values of clear-sky LSTs during an
    8-day period is used.
@@ -68,15 +68,15 @@ Data querying
 -------------
 
 List of registered raster maps in spatio-temporal dataset can be
-printed by :grasscmd:`t.rast.list`. Here only relevant data from March
-2019 will be listed.
+printed by :grasscmd:`t.rast.list`. In example below only relevant
+data from March 2019 will be listed.
 
 .. code-block:: bash
                 
    t.rast.list input=modis order=start_time \
    where="start_time > '2019-03-01' and start_time < '2019-04-01'"
 
-In the next example only raster maps coming from Aqua satellite are
+In the example below only raster maps coming from Aqua satellite are
 printed.
 
 .. code-block:: bash
@@ -100,7 +100,7 @@ similarly as :grasscmd:`r.univar` does.
 Data extracting
 ---------------
 
-Raster spatio-temporal data can be extracted into new dataset using
+Raster spatio-temporal data can be extracted into a new dataset using
 :grasscmd:`t.rast.extract`. In the example below are created four new
 datasets containing data of different satellite and datetime.
 
@@ -118,8 +118,8 @@ datasets containing data of different satellite and datetime.
 Map algebra
 -----------
 
-Digital numbers (DN) need to be converted into Celsius scale
-similarly as done in :ref:`Unit 24 <modis-dn-c>`. Instead of running
+Digital numbers (DN) need to be converted into Celsius scale as done
+in :ref:`Unit 24 <modis-dn-c>`. Instead of running
 :grasscmd:`r.mapcalc` repeatedly there is a specialized temporal
 command :grasscmd:`t.rast.mapcalc` which applies map algebra to all
 the maps registered in input space time dataset.
@@ -135,8 +135,8 @@ the maps registered in input space time dataset.
 
 The command will create a new space time raster dataset with raster
 maps in Celsius scale. Since new raster maps will be created, the
-command requires to define :param:`basename` for them. Note that new
-raster maps will be produced in the current computation region with mask
+command requires to define :param:`basename`. Note that new raster
+maps will be produced in the current computation region with mask
 respected.
 
 .. code-block:: bash
@@ -148,9 +148,9 @@ respected.
    id|start|end|mean|min|max|mean_of_abs|stddev|variance|coeff_var|sum|null_cells|cells
    c_033@PERMANENT|2019-03-06 00:00:00|2019-03-14 00:00:00|8.38271624724276|-20.35|17.81|...
 
-Color table for all the maps in a space time raster dataset can be
-easily set by :grasscmd:`t.rast.colors` similarly as
-:grasscmd:`r.colors` does for a single raster map.
+Color table for all the maps in a space time raster dataset can be set
+by :grasscmd:`t.rast.colors` similarly as :grasscmd:`r.colors` does
+for a single raster map.
 
 .. code-block:: bash
 
@@ -159,8 +159,7 @@ easily set by :grasscmd:`t.rast.colors` similarly as
 Data aggregation
 ----------------
 
-The temporal framework enables the user to perform data aggregation in
-a really simple way. The command to be used is
+The temporal framework enables a user to perform data aggregation by
 :grasscmd:`t.rast.aggregate`. Based on specified :param:`granularity`
 a new temporal dataset with aggregated data is created.
 
@@ -227,7 +226,7 @@ values can be calculated by :grasscmd:`r.univar`.
    mean: 10.7001
 
 .. figure:: ../images/units/25/spring_avg.png
-   :class: middle
+   :class: large
            
    Average temperature for spring 2019.
 
@@ -249,7 +248,7 @@ values.
    g.gui.animation strds=modis_cm
 
 .. figure:: ../images/units/25/modis-animation.gif
-   :class: middle
+   :class: large
 
    Monthly average dataset animation with celsius color table applied.
 
@@ -264,6 +263,6 @@ are used.
 
 .. todo                
    .. figure:: ../images/units/22/tplot_modis.png
-   :class: middle
+   :class: large
 
    The plot of MODIS monthly average temperature @ Studenterhytta
