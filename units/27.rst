@@ -34,7 +34,7 @@ Install PyWPS and Flask dependency from GRASS :item:`Console` tab.
 
 .. code-block:: bash
 
-   python3 -m pip install flask==1.1.4 werkzeug==1.0.1 pywps==4.2.11
+   python3 -m pip install flask==1.1.4 werkzeug==1.0.1 pywps==4.2.11 markupsafe==2.0.1
 
 Go to :file:`pywps-flask` directory and start PyWPS demo server
 
@@ -125,6 +125,12 @@ You should see your ``modis-v1`` process in the list. Click on
                    
       gisbase=/usr/lib/grass80
 
+   On Windows specify path in Unix-like style:
+
+   .. code-block:: bash
+                
+      gisbase=/C/Program Files/GRASS GIS 8.0
+   
 Now execute the process:
 
 http://localhost:5000/wps?request=Execute&service=WPS&identifier=modis-v1&version=1.0.0&datainputs=start=2019-03-01;end=2019-04-01

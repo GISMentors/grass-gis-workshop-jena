@@ -24,8 +24,6 @@ Execute process:
       
 http://localhost:5000/wps?request=Execute&service=WPS&identifier=modis-v4&version=1.0.0&datainputs=start=2019-03-01;end=2019-04-01;region=@xlink:href=http://localhost:5000/static/data/jena_boundary.gpkg
 
-.. todo:: PyWPS fails with segmentation fault
-          
 Compare with (output return as reference):
 
 http://localhost:5000/wps?request=Execute&service=WPS&identifier=modis-v4&version=1.0.0&datainputs=start=2019-03-01;end=2019-04-01;region=@xlink:href=http://localhost:5000/static/data/jena_boundary.gpkg&responsedocument=zones=@asReference=true
