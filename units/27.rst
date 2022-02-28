@@ -18,16 +18,16 @@ server. (source: `PyWPS documentation
 <http://pywps.readthedocs.io/en/master/wps.html>`__)
 
 This unit shows how to write your own WPS processes. The processes
-will be tested in simple environment of `PyWPS demo
-<https://github.com/geopython/pywps-flask>`__. `Download
+will be tested in `PyWPS demo
+<https://github.com/geopython/pywps-flask>`__ environment. `Download
 <https://github.com/geopython/pywps-flask/archive/master.zip>`__ the
 demo and extract into your working directory.
 
-Install PyWPS and Flask dependency
+Install PyWPS and Flask dependency from GRASS :item:`Console` tab.
 
 .. code-block:: bash
 
-   sudo pip3 install pywps flask
+   python3 -m pip install pywps flask
 
 Go to :file:`pywps-flask` directory and start PyWPS demo server
 
@@ -101,7 +101,7 @@ Stop running demo PyWPS server by :kbd:`Ctrl+C` and start again.
 .. code-block:: bash
 
                 
-   python ./demo.py
+   python3 ./demo.py
 
 You should see your ``modis-v1`` process in the list. Click on
 ``DescribeProcess`` to check input and outputs parameters description.
@@ -116,7 +116,7 @@ You should see your ``modis-v1`` process in the list. Click on
 
    .. code-block:: bash
                    
-      gisbase=/usr/lib/grass79
+      gisbase=/usr/lib/grass80
 
 Now execute the process:
 
@@ -133,5 +133,5 @@ Example of response:
 .. tip:: When something goes wrong, check :file:`logs/pywps.log` for
    details.
 
-Try to improve process in order to return something more reasonable
-than a string, eg. :wikipedia:`JSON`.
+.. task:: Try to improve the process in order to return something more
+   reasonable than a string, eg. :wikipedia:`JSON`.

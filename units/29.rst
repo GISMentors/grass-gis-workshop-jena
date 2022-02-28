@@ -2,10 +2,10 @@ Unit 29 - PyWPS LST region stats
 ================================
 
 A third version of the process will return LST statistics for region
-in Germany defined by input vector data. Input region is imported by
-:grasscmd:`v.import` (line :lcode:`62`), resultant statistics is
-computed by :grasscmd:`t.rast.series` (line :lcode:`68`) and
-:grasscmd:`r.univar` (line :lcode:`78`).
+in Germany defined by input vector (polygon) data. Input area of
+interest is imported by :grasscmd:`v.import` (line :lcode:`62`),
+resultant statistics is computed by :grasscmd:`t.rast.series` (line
+:lcode:`68`) and :grasscmd:`r.univar` (line :lcode:`78`).
 
 .. literalinclude:: ../_static/scripts/modis_v3.py
    :language: python

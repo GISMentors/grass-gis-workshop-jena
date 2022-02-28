@@ -35,5 +35,5 @@ Possible response.
    {"min": -0.309999999999945, "max": 17.97, "mean": 6.830000000000014, "count": 14}
    </wps:ComplexData>
 
-Try to improve the process in order to validate coordinates. Only
-point located in Germany is allowed.
+.. task:: Try to improve the process in order to validate
+   coordinates. Only point located in Germany is allowed.
