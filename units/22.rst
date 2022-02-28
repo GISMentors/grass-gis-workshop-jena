@@ -37,22 +37,22 @@ Functions from :grasscmd2:`GRASS GIS Temporal Framework
 
 * initialization must be done by :grasscmd2:`init
   <libpython/temporal.html#temporal.core.init>` function, see line
-  :lcode:`138`
-* space time datasets are open on lines :lcode:`140-142` by
+  :lcode:`144`
+* space time datasets are open on lines :lcode:`146-148` by
   :grasscmd2:`open_old_stds
   <libpython/temporal.html#temporal.open_stds.open_old_stds>`
 * raster maps registered in reference dataset (b4) are listed on line
-  :lcode:`146` by :grasscmd2:`get_registered_maps
+  :lcode:`152` by :grasscmd2:`get_registered_maps
   <libpython/temporal.html#temporal.abstract_space_time_dataset.AbstractSpaceTimeDataset.get_registered_maps>`
 * related raster maps in two other datasets (b8, cl) are searched on
-  lines :lcode:`149-152` by :grasscmd2:`get_registered_maps
+  lines :lcode:`155-158` by :grasscmd2:`get_registered_maps
   <libpython/temporal.html#temporal.abstract_space_time_dataset.AbstractSpaceTimeDataset.get_registered_maps>`
   with ``where`` parameter
 
 .. literalinclude:: ../_static/scripts/ndvi-tgrass-v1.py
    :language: python
    :linenos:
-   :emphasize-lines: 19, 23, 27, 30, 33, 38, 138, 140-142, 146, 149-152
+   :emphasize-lines: 19, 23, 27, 30, 33, 38, 144, 146-148, 152, 155-158
 
 Sample script to download: `ndvi-tgrass-v1.py
 <../_static/scripts/ndvi-tgrass-v1.py>`__
