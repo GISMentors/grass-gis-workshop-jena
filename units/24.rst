@@ -44,7 +44,8 @@ MODIS data (note that you have to install also `pyMODIS Python Library
 
 .. code-block:: bash
 
-   python3 -m pip install pymodis
+   python3 -m pip install setuptools slugify pymodis
+   
    g.extension extension=i.modis
 
 GRASS MODIS addon consists of two modules:
