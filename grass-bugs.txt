@@ -13,3 +13,4 @@
 * pycharm file asociation problem
 * i.sentinel.import should also register cloud mask maps register_output
 * u21: why granularity is one second (?)
+* g.proj -w fails from GUI but not from terminal (see wms)
