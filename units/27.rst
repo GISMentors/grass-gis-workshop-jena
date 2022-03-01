@@ -6,6 +6,16 @@ Unit 27 - PyWPS intro
 <http://www.opengeospatial.org/standards/wps>`__ (OGC WPS) standard
 implemented in the Python programming language.
 
+.. figure:: ../images/units/27/server-based-network.png
+   :class: small
+           
+   Server-client architecture.
+
+.. figure:: ../images/units/27/map-servers.png
+
+   OGC Web Map Service example.
+
+   
 **OGC Web Processing Service** standard provides rules for
 standardizing inputs and outputs (requests and responses) for
 geospatial processing services. The standard also defines how a client
@@ -16,6 +26,10 @@ binding to those processes. The data required by the WPS can be
 delivered across a network or they can be available at the
 server. (source: `PyWPS documentation
 <http://pywps.readthedocs.io/en/master/wps.html>`__)
+
+.. figure:: ../images/units/27/processing-servers.png
+
+   OGC Web Processing Service example.
 
 This unit shows how to write your own WPS processes. The processes
 will be tested in `PyWPS demo
@@ -113,7 +127,7 @@ Stop running demo PyWPS server by :kbd:`Ctrl+C` and start again.
 You should see your ``modis-v1`` process in the list. Click on
 ``DescribeProcess`` to check input and outputs parameters description.
 
-.. figure:: ../images/units/27/modis-v1.svg
+.. figure:: ../images/units/27/modis-v1.png
 
    Process modis-v1 available on PyWPS demo server.
 

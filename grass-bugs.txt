@@ -14,3 +14,5 @@
 * i.sentinel.import should also register cloud mask maps register_output
 * u21: why granularity is one second (?)
 * g.proj -w fails from GUI but not from terminal (see wms)
+* i.modis.import: load button modify original text file (extra empty spaces...)
+* timeline+timeplot broken on Windows (modis data)
