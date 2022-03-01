@@ -139,7 +139,7 @@ specifically. Sample dataset is split into four parts:
 * `jena-sample-data-sentinel.7z <https://geo.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2022/jena-sample-data-sentinel.7z>`__ (1.7GB)
 * `jena-sample-data-modis.7z <https://geo.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2022/jena-sample-data-modis.7z>`__ (1.0GB)
   
-You need at least 15GB free space on your disk (GRASS + sample data + computation).
+You need at least 10GB free space on your disk (GRASS + sample data + computation).
 
 List of data sources:
 
