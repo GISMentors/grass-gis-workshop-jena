@@ -7,7 +7,7 @@ __author__ = 'Martin Landa'
 
 class ModisV2(Process):
     def __init__(self):
-        inputs = [LiteralInput('coords', 'UTM coordinates',
+        inputs = [LiteralInput('coords', 'ETRS-89 coordinates',
                                data_type='string'),
                   LiteralInput('start', 'Start date (eg. 2019-03-01)',
                                data_type='string'),
