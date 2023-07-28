@@ -1,0 +1,294 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Unit 13 - PyGRASS Raster Access &#8212; Jena GRASS GIS Workshop</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gismentors.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Unit 14 - PyGRASS Vector Access" href="14.html" />
+    <link rel="prev" title="Unit 12 - Script User Interface" href="12.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html">Jena GRASS GIS Workshop</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="12.html" title="Unit 12 - Script User Interface"
+             accesskey="P">previous</a> |
+          <a href="14.html" title="Unit 14 - PyGRASS Vector Access"
+             accesskey="N">next</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="unit-13-pygrass-raster-access">
+<h1>Unit 13 - PyGRASS Raster Access<a class="headerlink" href="#unit-13-pygrass-raster-access" title="Permalink to this heading">¶</a></h1>
+<p>PyGRASS allows to access GRASS raster and vector maps in the sense of
+Python objects. This unit shows how to deal with GRASS raster data by
+PyGRASS API.</p>
+<p>Raster map can be treated by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/libpython/pygrass.raster.html#pygrass.raster.RasterRow">RasterRow</a> for reading
+raster data row by row. There is also <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/libpython/pygrass.raster.html#pygrass.raster.RasterSegment">RasterSegment</a>
+which allows reading data by user-defined segments (tiles).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">grass.pygrass.raster</span> <span class="kn">import</span> <span class="n">RasterRow</span>
+
+<span class="n">ndvi</span> <span class="o">=</span> <span class="n">RasterRow</span><span class="p">(</span><span class="s1">&#39;ndvi&#39;</span><span class="p">)</span>
+<span class="n">ndvi</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Raster map is open by <code class="docutils literal notranslate"><span class="pre">open()</span></code> method. The sample code also prints
+basic information as number of columns and rows, min and max values,
+range.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">ndvi</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">cols</span><span class="p">,</span> <span class="n">ndvi</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">rows</span><span class="p">)</span>
+<span class="nb">min</span><span class="p">,</span> <span class="nb">max</span> <span class="o">=</span> <span class="n">ndvi</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">range</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">min</span><span class="p">,</span> <span class="nb">max</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">max</span> <span class="o">-</span> <span class="nb">min</span><span class="p">)</span>
+</pre></div>
+</div>
+<figure class="align-center" id="id1">
+<img alt="../_images/pygrass-shell.png" src="../_images/pygrass-shell.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 81 </span><span class="caption-text">Running PyGRASS code from <span class="item">Python</span> tab.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>Don’t forget to close the raster map at the end.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ndvi</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<section id="raster-statistics-example">
+<h2>Raster statistics example<a class="headerlink" href="#raster-statistics-example" title="Permalink to this heading">¶</a></h2>
+<p>A simple PyGRASS script for computing basic univariate raster
+statistics below.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python3</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span>
+
+<span class="kn">from</span> <span class="nn">grass.pygrass.raster</span> <span class="kn">import</span> <span class="n">RasterRow</span>
+
+<span class="n">ndvi</span> <span class="o">=</span> <span class="n">RasterRow</span><span class="p">(</span><span class="s1">&#39;ndvi&#39;</span><span class="p">)</span>
+<span class="n">ndvi</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
+
+<span class="nb">min</span> <span class="o">=</span> <span class="nb">max</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">count</span> <span class="o">=</span> <span class="n">ncount</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">ndvi</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">row</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">numpy</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+            <span class="n">ncount</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">min</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="nb">min</span> <span class="o">=</span> <span class="nb">max</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">min</span> <span class="o">&gt;</span> <span class="n">value</span><span class="p">:</span>
+                    <span class="nb">min</span> <span class="o">=</span> <span class="n">value</span>
+                <span class="k">elif</span> <span class="nb">max</span> <span class="o">&lt;</span> <span class="n">value</span><span class="p">:</span>
+                    <span class="nb">max</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="n">ndvi</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;min=</span><span class="si">{0:.6f}</span><span class="s2"> max=</span><span class="si">{1:.6f}</span><span class="s2"> count=</span><span class="si">{2}</span><span class="s2"> (no-data: </span><span class="si">{3}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="nb">min</span><span class="p">,</span> <span class="nb">max</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">ncount</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Sample script to download: <a class="reference external" href="../_static/scripts/ndvi-pygrass-univar.py">ndvi-pygrass-univar.py</a></p>
+<p>Optimized version based on <a class="reference external" href="https://numpy.org">NumPy</a> library:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python3</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span>
+
+<span class="kn">from</span> <span class="nn">grass.pygrass.raster</span> <span class="kn">import</span> <span class="n">RasterRow</span>
+
+<span class="n">ndvi</span> <span class="o">=</span> <span class="n">RasterRow</span><span class="p">(</span><span class="s1">&#39;ndvi&#39;</span><span class="p">)</span>
+<span class="n">ndvi</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
+<span class="n">array</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ndvi</span><span class="p">)</span>
+<span class="n">ndvi</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;min=</span><span class="si">{0:.6f}</span><span class="s2"> max=</span><span class="si">{1:.6f}</span><span class="s2"> count=</span><span class="si">{2}</span><span class="s2"> (no-data: </span><span class="si">{3}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="n">numpy</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">array</span><span class="p">),</span> <span class="n">numpy</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">array</span><span class="p">),</span> <span class="n">array</span><span class="o">.</span><span class="n">size</span><span class="p">,</span>
+    <span class="n">numpy</span><span class="o">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">array</span><span class="p">)))</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Sample script to download: <a class="reference external" href="../_static/scripts/ndvi-pygrass-univar-numpy.py">ndvi-pygrass-univar-numpy.py</a></p>
+<div class="task admonition">
+<p class="admonition-title">Úkol</p>
+<p>Compare computation speed of two sample scripts with C-based
+<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.univar.html">r.univar</a> module.</p>
+</div>
+</section>
+<section id="writing-raster-data">
+<h2>Writing raster data<a class="headerlink" href="#writing-raster-data" title="Permalink to this heading">¶</a></h2>
+<p>PyGRASS allows also writing raster data. In the example below a NDVI
+map will be computed from Sentinel-2 red and near-infrated channels
+similarly as in <a class="reference internal" href="05.html"><span class="doc">Unit 05 - Raster processing</span></a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python3</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span>
+
+<span class="kn">from</span> <span class="nn">grass.pygrass.raster</span> <span class="kn">import</span> <span class="n">RasterRow</span>
+
+<span class="n">b04</span> <span class="o">=</span> <span class="n">RasterRow</span><span class="p">(</span><span class="s1">&#39;L2A_T32UPB_20170706T102021_B04_10m&#39;</span><span class="p">)</span>
+<span class="n">b04</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
+<span class="n">b08</span> <span class="o">=</span> <span class="n">RasterRow</span><span class="p">(</span><span class="s1">&#39;L2A_T32UPB_20170706T102021_B08_10m&#39;</span><span class="p">)</span>
+<span class="n">b08</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
+<span class="n">ndvi</span> <span class="o">=</span> <span class="n">RasterRow</span><span class="p">(</span><span class="s1">&#39;ndvi_pyrass&#39;</span><span class="p">)</span>
+<span class="n">ndvi</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">mtype</span><span class="o">=</span><span class="s1">&#39;FCELL&#39;</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">b04</span><span class="p">)):</span>
+    <span class="n">row_b04</span> <span class="o">=</span> <span class="n">b04</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">row_b08</span> <span class="o">=</span> <span class="n">b08</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">rowb04</span> <span class="o">=</span> <span class="n">row_b04</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+    <span class="n">rowb08</span> <span class="o">=</span> <span class="n">row_b08</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+    <span class="n">row_new</span> <span class="o">=</span> <span class="p">(</span><span class="n">rowb08</span> <span class="o">-</span> <span class="n">rowb04</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">rowb08</span> <span class="o">+</span> <span class="n">rowb04</span><span class="p">)</span>
+    <span class="n">ndvi</span><span class="o">.</span><span class="n">put_row</span><span class="p">(</span><span class="n">row_new</span><span class="p">)</span>
+    
+<span class="n">ndvi</span><span class="o">.</span><span class="n">close</span><span class="p">()</span> 
+<span class="n">b04</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">b08</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Sample script to download: <a class="reference external" href="../_static/scripts/ndvi-pygrass.py">ndvi-pygrass.py</a></p>
+<div class="task admonition">
+<p class="admonition-title">Úkol</p>
+<p>Create a raster map from scratch. Raster row is represented by
+Buffer object in PyGRASS.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python3</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span>
+
+<span class="kn">from</span> <span class="nn">grass.pygrass.raster</span> <span class="kn">import</span> <span class="n">RasterRow</span>
+
+<span class="n">newscratch</span> <span class="o">=</span> <span class="n">RasterRow</span><span class="p">(</span><span class="s1">&#39;newscratch&#39;</span><span class="p">)</span>
+<span class="n">newscratch</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># get computational region info</span>
+<span class="kn">from</span> <span class="nn">grass.pygrass.gis.region</span> <span class="kn">import</span> <span class="n">Region</span>
+<span class="n">reg</span> <span class="o">=</span> <span class="n">Region</span><span class="p">()</span>
+
+<span class="c1"># import buffer and create empty row</span>
+<span class="kn">from</span> <span class="nn">grass.pygrass.raster.buffer</span> <span class="kn">import</span> <span class="n">Buffer</span>
+<span class="n">newrow</span> <span class="o">=</span> <span class="n">Buffer</span><span class="p">((</span><span class="n">reg</span><span class="o">.</span><span class="n">cols</span><span class="p">,),</span> <span class="n">mtype</span><span class="o">=</span><span class="s1">&#39;CELL&#39;</span><span class="p">)</span>
+
+<span class="c1"># we create a raster to fill all the GRASS GIS region</span>
+<span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">reg</span><span class="o">.</span><span class="n">rows</span><span class="p">):</span>
+    <span class="n">newrow</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1001</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">newrow</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+    <span class="n">newscratch</span><span class="o">.</span><span class="n">put_row</span><span class="p">(</span><span class="n">newrow</span><span class="p">)</span>
+          
+<span class="n">newscratch</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<figure class="align-center" id="id2">
+<img alt="../_images/newscratch.png" src="../_images/newscratch.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 82 </span><span class="caption-text">Example of created raster map.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>Sample script to download: <a class="reference external" href="../_static/scripts/pygrass-write-raster.py">pygrass-write-raster.py</a></p>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>Table of Contents</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS GIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02.html">Unit 02 - First steps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03.html">Unit 03 - Data Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Modules, Region</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05.html">Unit 05 - Raster processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06.html">Unit 06 - Data export</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07.html">Unit 07 - QGIS loves GRASS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08.html">Unit 08 - Modeler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09.html">Unit 09 - Model tuning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10.html">Unit 10 - Python intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11.html">Unit 11 - PyGRASS scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12.html">Unit 12 - Script User Interface</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Unit 13 - PyGRASS Raster Access</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#raster-statistics-example">Raster statistics example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#writing-raster-data">Writing raster data</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="14.html">Unit 14 - PyGRASS Vector Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15.html">Unit 15 - Data reprojection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16.html">Unit 16 - Flooding simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17.html">Unit 17 - Spatio-temporal intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18.html">Unit 18 - Lidar, DTM interpolation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19.html">Unit 19 - DTM script parallelization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20.html">Unit 20 - Sentinel downloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="21.html">Unit 21 - Sentinel spatio-temporal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22.html">Unit 22 - Spatio-temporal scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23.html">Unit 23 - Spatio-temporal parallelization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="24.html">Unit 24 - MODIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="25.html">Unit 25 - MODIS ST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="26.html">Unit 26 - MODIS ST scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="27.html">Unit 27 - PyWPS intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="28.html">Unit 28 - PyWPS LST point stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="29.html">Unit 29 - PyWPS LST region stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="30.html">Unit 30 - PyWPS LST region zones</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Search</h3>
+            <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="Go" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="12.html" title="Unit 12 - Script User Interface"
+              >previous</a> |
+            <a href="14.html" title="Unit 14 - PyGRASS Vector Access"
+              >next</a>
+          </div>
+          <div role="note" aria-label="source link">
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018-2023 Martin Landa and GISMentors.eu.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

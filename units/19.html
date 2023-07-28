@@ -1,0 +1,303 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Unit 19 - DTM script parallelization &#8212; Jena GRASS GIS Workshop</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gismentors.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Unit 20 - Sentinel downloader" href="20.html" />
+    <link rel="prev" title="Unit 18 - Lidar, DTM interpolation" href="18.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html">Jena GRASS GIS Workshop</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="18.html" title="Unit 18 - Lidar, DTM interpolation"
+             accesskey="P">previous</a> |
+          <a href="20.html" title="Unit 20 - Sentinel downloader"
+             accesskey="N">next</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="unit-19-dtm-script-parallelization">
+<h1>Unit 19 - DTM script parallelization<a class="headerlink" href="#unit-19-dtm-script-parallelization" title="Permalink to this heading">¶</a></h1>
+<p>This unit is focused on <strong>parallel computing</strong>. Sample script
+below produces seamless DTM (Digital Terrain Model, see <a class="reference internal" href="18.html"><span class="doc">Unit 18 - Lidar, DTM interpolation</span></a>)
+from bunch of LAS/LAZ files. Computation will be split into tiles and
+performed in parallel.</p>
+<section id="dtm-interpolation-in-parallel">
+<h2>DTM interpolation in parallel<a class="headerlink" href="#dtm-interpolation-in-parallel" title="Permalink to this heading">¶</a></h2>
+<p>User interface defines two parameters, <span class="param">directory</span> (line
+<span class="lcode">6</span>) for input directory with input LAS/LAZ files, and
+<span class="param">elevation</span> (line <span class="lcode">9</span>) name for output elevation raster
+map mosaics. The resolution of output DTM is defined by
+<span class="param">resolution</span> parameter (line <span class="lcode">13</span>). And finally number
+of processes running in parallel will be controlled by <span class="param">nproc</span>
+(line <span class="lcode">18</span>) parameter.</p>
+<p>A script consists of three main functions:</p>
+<p>1. <code class="docutils literal notranslate"><span class="pre">import_files()</span></code> to import input LAS/LAZ files (line
+<span class="lcode">33</span>). Import process can be performed in parallel by
+<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/libpython/pygrass.modules.interface.html#pygrass.modules.interface.module.ParallelModuleQueue">ParallelModuleQueue</a> from PyGRASS library (see
+<a class="reference internal" href="11.html"><span class="doc">Unit 11 - PyGRASS scripting</span></a> for PyGRASS introduction), lines <span class="lcode">37, 42, 57-58, 60</span>.</p>
+<p>2. <code class="docutils literal notranslate"><span class="pre">create_dtm_tiles()</span></code> to compute DTM per tile (line <span class="lcode">67</span>)
+using <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/v.surf.rst.html">v.surf.rst</a>. DTM tiles need to be computed with a
+reasonable overlap in order to create seamless mosaics, see
+<span class="lcode">73-76</span>. Tiles can be processed in parallel too, see
+<span class="param">nproc</span> option on line <span class="lcode">82</span>.</p>
+<p>3. <code class="docutils literal notranslate"><span class="pre">patch_tiles()</span></code> to patch DTM tiles together by
+<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.series.html">r.series</a>, see <span class="lcode">86</span>. From overlapping cell values is
+computed an average value. This is main reason why <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.patch.html">r.patch</a>
+is not used here.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">  1</span><span class="ch">#!/usr/bin/env python3</span>
+<span class="linenos">  2</span>
+<span class="linenos">  3</span><span class="c1">#%module</span>
+<span class="linenos">  4</span><span class="c1">#% description: Creates DTM from input LAS tiles.</span>
+<span class="linenos">  5</span><span class="c1">#%end</span>
+<span class="hll"><span class="linenos">  6</span><span class="c1">#%option G_OPT_M_DIR</span>
+</span><span class="linenos">  7</span><span class="c1">#% required: yes</span>
+<span class="linenos">  8</span><span class="c1">#%end</span>
+<span class="hll"><span class="linenos">  9</span><span class="c1">#%option G_OPT_R_ELEV</span>
+</span><span class="linenos"> 10</span><span class="c1">#% description: Name for output elevation raster map mosaics</span>
+<span class="linenos"> 11</span><span class="c1">#%end</span>
+<span class="linenos"> 12</span><span class="c1">#%option</span>
+<span class="hll"><span class="linenos"> 13</span><span class="c1">#% key: resolution</span>
+</span><span class="linenos"> 14</span><span class="c1">#% description: Output resolution</span>
+<span class="linenos"> 15</span><span class="c1">#% type: double</span>
+<span class="linenos"> 16</span><span class="c1">#%end</span>
+<span class="linenos"> 17</span><span class="c1">#%option</span>
+<span class="hll"><span class="linenos"> 18</span><span class="c1">#% key: nprocs</span>
+</span><span class="linenos"> 19</span><span class="c1">#% description: Number of processes per tile</span>
+<span class="linenos"> 20</span><span class="c1">#% answer: 1</span>
+<span class="linenos"> 21</span><span class="c1">#% type: integer</span>
+<span class="linenos"> 22</span><span class="c1">#%end</span>
+<span class="linenos"> 23</span>
+<span class="linenos"> 24</span><span class="kn">import</span> <span class="nn">os</span>
+<span class="linenos"> 25</span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="linenos"> 26</span><span class="kn">import</span> <span class="nn">time</span>
+<span class="linenos"> 27</span><span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
+<span class="linenos"> 28</span>
+<span class="linenos"> 29</span><span class="kn">import</span> <span class="nn">grass.script</span> <span class="k">as</span> <span class="nn">gs</span>
+<span class="linenos"> 30</span>
+<span class="linenos"> 31</span><span class="kn">from</span> <span class="nn">grass.pygrass.modules</span> <span class="kn">import</span> <span class="n">Module</span><span class="p">,</span> <span class="n">ParallelModuleQueue</span>
+<span class="linenos"> 32</span>
+<span class="hll"><span class="linenos"> 33</span><span class="k">def</span> <span class="nf">import_files</span><span class="p">(</span><span class="n">directory</span><span class="p">):</span>
+</span><span class="linenos"> 34</span>    <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="linenos"> 35</span>
+<span class="linenos"> 36</span>    <span class="c1"># queue for parallel jobs</span>
+<span class="hll"><span class="linenos"> 37</span>    <span class="n">queue</span> <span class="o">=</span> <span class="n">ParallelModuleQueue</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;nprocs&#39;</span><span class="p">]))</span>
+</span><span class="linenos"> 38</span>
+<span class="linenos"> 39</span>    <span class="n">import_module</span> <span class="o">=</span> <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;v.in.lidar&#39;</span><span class="p">,</span>
+<span class="linenos"> 40</span>                           <span class="n">flags</span><span class="o">=</span><span class="s1">&#39;otb&#39;</span><span class="p">,</span>
+<span class="linenos"> 41</span>                           <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="hll"><span class="linenos"> 42</span>                           <span class="n">run_</span><span class="o">=</span><span class="kc">False</span>
+</span><span class="linenos"> 43</span>    <span class="p">)</span>
+<span class="linenos"> 44</span>
+<span class="linenos"> 45</span>    <span class="n">maps</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="linenos"> 46</span>    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">directory</span><span class="p">):</span>
+<span class="linenos"> 47</span>        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">f</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;.laz&#39;</span><span class="p">:</span>
+<span class="linenos"> 48</span>            <span class="k">continue</span>
+<span class="linenos"> 49</span>        <span class="n">fullname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+<span class="linenos"> 50</span>        <span class="n">basename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="linenos"> 51</span>        <span class="c1"># &#39;-&#39; is not valid for vector map names</span>
+<span class="linenos"> 52</span>        <span class="c1"># vector map names cannot start with number</span>
+<span class="linenos"> 53</span>        <span class="n">mapname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">basename</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">)</span>
+<span class="linenos"> 54</span>        
+<span class="linenos"> 55</span>        <span class="n">maps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mapname</span><span class="p">)</span>
+<span class="linenos"> 56</span>        <span class="n">gs</span><span class="o">.</span><span class="n">message</span><span class="p">(</span><span class="s2">&quot;Importing &lt;</span><span class="si">{}</span><span class="s2">&gt;...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fullname</span><span class="p">))</span>
+<span class="hll"><span class="linenos"> 57</span>        <span class="n">import_task</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">import_module</span><span class="p">)</span>
+</span><span class="hll"><span class="linenos"> 58</span>        <span class="n">queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">import_task</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="n">fullname</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="n">mapname</span><span class="p">))</span>
+</span><span class="linenos"> 59</span>    
+<span class="hll"><span class="linenos"> 60</span>    <span class="n">queue</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+</span><span class="linenos"> 61</span>
+<span class="linenos"> 62</span>    <span class="k">if</span> <span class="ow">not</span> <span class="n">maps</span><span class="p">:</span>
+<span class="linenos"> 63</span>        <span class="n">gs</span><span class="o">.</span><span class="n">fatal</span><span class="p">(</span><span class="s2">&quot;No input files found&quot;</span><span class="p">)</span>
+<span class="linenos"> 64</span>
+<span class="linenos"> 65</span>    <span class="k">return</span> <span class="n">maps</span>
+<span class="linenos"> 66</span>
+<span class="hll"><span class="linenos"> 67</span><span class="k">def</span> <span class="nf">create_dtm_tiles</span><span class="p">(</span><span class="n">maps</span><span class="p">,</span> <span class="n">res</span><span class="p">,</span> <span class="n">nprocs</span><span class="p">,</span> <span class="n">offset_multiplier</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+</span><span class="linenos"> 68</span>    <span class="n">offset</span><span class="o">=</span><span class="n">res</span> <span class="o">*</span> <span class="n">offset_multiplier</span>
+<span class="linenos"> 69</span>
+<span class="linenos"> 70</span>    <span class="k">for</span> <span class="n">mapname</span> <span class="ow">in</span> <span class="n">maps</span><span class="p">:</span>
+<span class="linenos"> 71</span>        <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;g.region&#39;</span><span class="p">,</span>
+<span class="linenos"> 72</span>               <span class="n">vector</span><span class="o">=</span><span class="n">mapname</span><span class="p">,</span>
+<span class="hll"><span class="linenos"> 73</span>               <span class="n">n</span><span class="o">=</span><span class="s1">&#39;n+</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">offset</span><span class="p">),</span>
+</span><span class="hll"><span class="linenos"> 74</span>               <span class="n">s</span><span class="o">=</span><span class="s1">&#39;s-</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">offset</span><span class="p">),</span>
+</span><span class="hll"><span class="linenos"> 75</span>               <span class="n">e</span><span class="o">=</span><span class="s1">&#39;e+</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">offset</span><span class="p">),</span>
+</span><span class="hll"><span class="linenos"> 76</span>               <span class="n">w</span><span class="o">=</span><span class="s1">&#39;w-</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
+</span><span class="linenos"> 77</span>        <span class="p">)</span>
+<span class="linenos"> 78</span>        
+<span class="linenos"> 79</span>        <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;v.surf.rst&#39;</span><span class="p">,</span>
+<span class="linenos"> 80</span>               <span class="nb">input</span><span class="o">=</span><span class="n">mapname</span><span class="p">,</span>
+<span class="linenos"> 81</span>               <span class="n">elevation</span><span class="o">=</span><span class="n">mapname</span><span class="p">,</span>
+<span class="hll"><span class="linenos"> 82</span>               <span class="n">nprocs</span><span class="o">=</span><span class="n">nprocs</span><span class="p">,</span>
+</span><span class="linenos"> 83</span>               <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span>
+<span class="linenos"> 84</span>        <span class="p">)</span>
+<span class="linenos"> 85</span>
+<span class="hll"><span class="linenos"> 86</span><span class="k">def</span> <span class="nf">patch_tiles</span><span class="p">(</span><span class="n">maps</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">resolution</span><span class="p">):</span>
+</span><span class="linenos"> 87</span>    <span class="n">gs</span><span class="o">.</span><span class="n">message</span><span class="p">(</span><span class="s2">&quot;Patching tiles &lt;</span><span class="si">{}</span><span class="s2">&gt;...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">maps</span><span class="p">)))</span>
+<span class="linenos"> 88</span>    <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;g.region&#39;</span><span class="p">,</span> <span class="n">raster</span><span class="o">=</span><span class="n">maps</span><span class="p">,</span> <span class="n">res</span><span class="o">=</span><span class="n">resolution</span><span class="p">)</span>
+<span class="linenos"> 89</span>    <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;r.series&#39;</span><span class="p">,</span> <span class="nb">input</span><span class="o">=</span><span class="n">maps</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="n">output</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;average&#39;</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="linenos"> 90</span>    <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;r.colors&#39;</span><span class="p">,</span> <span class="nb">map</span><span class="o">=</span><span class="n">output</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;elevation&#39;</span><span class="p">)</span>
+<span class="linenos"> 91</span>
+<span class="linenos"> 92</span><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<span class="linenos"> 93</span>    <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="linenos"> 94</span>
+<span class="linenos"> 95</span>    <span class="n">maps</span> <span class="o">=</span> <span class="n">import_files</span><span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;input&#39;</span><span class="p">])</span>
+<span class="linenos"> 96</span>    <span class="n">create_dtm_tiles</span><span class="p">(</span><span class="n">maps</span><span class="p">,</span>
+<span class="linenos"> 97</span>                     <span class="nb">float</span><span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;resolution&#39;</span><span class="p">]),</span>
+<span class="linenos"> 98</span>                     <span class="nb">int</span><span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;nprocs&#39;</span><span class="p">])</span>
+<span class="linenos"> 99</span>    <span class="p">)</span>
+<span class="linenos">100</span>    <span class="n">patch_tiles</span><span class="p">(</span><span class="n">maps</span><span class="p">,</span>
+<span class="linenos">101</span>                <span class="n">options</span><span class="p">[</span><span class="s1">&#39;elevation&#39;</span><span class="p">],</span>
+<span class="linenos">102</span>                <span class="n">options</span><span class="p">[</span><span class="s1">&#39;resolution&#39;</span><span class="p">]</span>
+<span class="linenos">103</span>    <span class="p">)</span>
+<span class="linenos">104</span>
+<span class="linenos">105</span>    <span class="n">gs</span><span class="o">.</span><span class="n">message</span><span class="p">(</span><span class="s2">&quot;Done in </span><span class="si">{:.0f}</span><span class="s2"> min&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">((</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span> <span class="o">/</span> <span class="mf">60.</span><span class="p">))</span>
+<span class="linenos">106</span>    
+<span class="linenos">107</span>    <span class="k">return</span> <span class="mi">0</span>
+<span class="linenos">108</span>
+<span class="linenos">109</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="linenos">110</span>    <span class="n">options</span><span class="p">,</span> <span class="n">flags</span> <span class="o">=</span> <span class="n">gs</span><span class="o">.</span><span class="n">parser</span><span class="p">()</span>
+<span class="linenos">111</span>
+<span class="linenos">112</span>    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>Sample script to download: <a class="reference external" href="../_static/scripts/create-dtm.py">create-dtm.py</a></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The script is taking a long time with all the tiles from
+<code class="file docutils literal notranslate"><span class="pre">/home/user/geodata/lidar</span></code> directory. Choose few tiles
+for testing.</p>
+</div>
+<figure class="align-center" id="id1">
+<img alt="../_images/dtm_patched.png" class="middle" src="../_images/dtm_patched.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 108 </span><span class="caption-text">DTM created from all available tiles.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="dtm-comparision">
+<span id="dmt-comparision"></span><h2>DTM comparision<a class="headerlink" href="#dtm-comparision" title="Permalink to this heading">¶</a></h2>
+<p>In this session we will compute the Canopy Height Model (CHM), as the
+difference between interpolated DSM and imported EU-DEM DTM from
+<a class="reference internal" href="15.html"><span class="doc">Unit 15 - Data reprojection</span></a>.</p>
+<p>The CHM is computed using <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.mapcalc.html">r.mapcalc</a>, executing the difference between
+DSM and DTM.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.mapcalc<span class="w"> </span><span class="nv">expression</span><span class="o">=</span><span class="s2">&quot;chm = dtm_laz - dem&quot;</span>
+</pre></div>
+</div>
+<figure class="align-center" id="id2">
+<img alt="../_images/chm.png" class="middle" src="../_images/chm.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 109 </span><span class="caption-text">The CHM map.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>Table of Contents</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS GIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02.html">Unit 02 - First steps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03.html">Unit 03 - Data Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Modules, Region</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05.html">Unit 05 - Raster processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06.html">Unit 06 - Data export</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07.html">Unit 07 - QGIS loves GRASS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08.html">Unit 08 - Modeler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09.html">Unit 09 - Model tuning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10.html">Unit 10 - Python intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11.html">Unit 11 - PyGRASS scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12.html">Unit 12 - Script User Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13.html">Unit 13 - PyGRASS Raster Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14.html">Unit 14 - PyGRASS Vector Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15.html">Unit 15 - Data reprojection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16.html">Unit 16 - Flooding simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17.html">Unit 17 - Spatio-temporal intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18.html">Unit 18 - Lidar, DTM interpolation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Unit 19 - DTM script parallelization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#dtm-interpolation-in-parallel">DTM interpolation in parallel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dtm-comparision">DTM comparision</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="20.html">Unit 20 - Sentinel downloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="21.html">Unit 21 - Sentinel spatio-temporal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22.html">Unit 22 - Spatio-temporal scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23.html">Unit 23 - Spatio-temporal parallelization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="24.html">Unit 24 - MODIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="25.html">Unit 25 - MODIS ST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="26.html">Unit 26 - MODIS ST scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="27.html">Unit 27 - PyWPS intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="28.html">Unit 28 - PyWPS LST point stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="29.html">Unit 29 - PyWPS LST region stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="30.html">Unit 30 - PyWPS LST region zones</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Search</h3>
+            <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="Go" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="18.html" title="Unit 18 - Lidar, DTM interpolation"
+              >previous</a> |
+            <a href="20.html" title="Unit 20 - Sentinel downloader"
+              >next</a>
+          </div>
+          <div role="note" aria-label="source link">
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018-2023 Martin Landa and GISMentors.eu.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

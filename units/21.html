@@ -1,0 +1,389 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Unit 21 - Sentinel spatio-temporal &#8212; Jena GRASS GIS Workshop</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gismentors.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Unit 22 - Spatio-temporal scripting" href="22.html" />
+    <link rel="prev" title="Unit 20 - Sentinel downloader" href="20.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html">Jena GRASS GIS Workshop</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="20.html" title="Unit 20 - Sentinel downloader"
+             accesskey="P">previous</a> |
+          <a href="22.html" title="Unit 22 - Spatio-temporal scripting"
+             accesskey="N">next</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="unit-21-sentinel-spatio-temporal">
+<h1>Unit 21 - Sentinel spatio-temporal<a class="headerlink" href="#unit-21-sentinel-spatio-temporal" title="Permalink to this heading">¶</a></h1>
+<p><a class="reference internal" href="16.html#create-mapset"><span class="std std-ref">Create a new mapset</span></a> in <em>jena-region</em> location:
+<cite>sentinel_ndvi</cite> (don’t use dashes in the mapset name otherwise
+<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/t.rast.algebra.html">t.rast.algebra</a> will most probably fail).</p>
+<div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p>Fix <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/t.rast.algebra.html">t.rast.algebra</a> to support also mapsets
+containing dash(es) in the name.</p>
+</div>
+<section id="download-data">
+<h2>Download data<a class="headerlink" href="#download-data" title="Permalink to this heading">¶</a></h2>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Pre-downloaded Sentinel scenes are available in the
+sample dataset <code class="file docutils literal notranslate"><span class="pre">geodata/sentinel</span></code>. Readers can continue
+with <a class="reference internal" href="#sentinel-import-st"><span class="std std-ref">importing sample data</span></a>.</p>
+</div>
+<p>Let’s download Sentinel L2A products for spring/summer
+2021. There are 6 products available as shown below.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>i.sentinel.download<span class="w"> </span>-l<span class="w"> </span><span class="nv">settings</span><span class="o">=</span>sentinel.txt<span class="w"> </span><span class="nv">map</span><span class="o">=</span>jena_boundary<span class="w"> </span><span class="nv">area_relation</span><span class="o">=</span>Contains<span class="w"> </span><span class="se">\</span>
+<span class="nv">start</span><span class="o">=</span><span class="m">2021</span>-04-01<span class="w"> </span><span class="nv">end</span><span class="o">=</span><span class="m">2021</span>-10-31<span class="w"> </span><span class="nv">producttype</span><span class="o">=</span>S2MSI2A<span class="w"> </span><span class="nv">clouds</span><span class="o">=</span><span class="m">10</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">6</span> <span class="n">Sentinel</span> <span class="n">product</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">found</span>
+<span class="n">a844500a</span><span class="o">-</span><span class="mi">049</span><span class="n">f</span><span class="o">-</span><span class="mi">46</span><span class="n">a3</span><span class="o">-</span><span class="mi">92</span><span class="n">de</span><span class="o">-</span><span class="n">bcda2c38fc3c</span> <span class="o">...</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">31</span><span class="n">T10</span><span class="p">:</span><span class="mi">15</span><span class="p">:</span><span class="mi">59</span><span class="n">Z</span>  <span class="mi">2</span><span class="o">%</span> <span class="n">S2MSI2A</span> <span class="mf">1.09</span> <span class="n">GB</span>
+<span class="n">d5b73db9</span><span class="o">-</span><span class="mi">0</span><span class="n">acf</span><span class="o">-</span><span class="mi">401</span><span class="n">d</span><span class="o">-</span><span class="mi">9</span><span class="n">bf4</span><span class="o">-</span><span class="n">a6f199df1119</span> <span class="o">...</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">08</span><span class="n">T10</span><span class="p">:</span><span class="mi">15</span><span class="p">:</span><span class="mi">59</span><span class="n">Z</span>  <span class="mi">3</span><span class="o">%</span> <span class="n">S2MSI2A</span> <span class="mf">1.09</span> <span class="n">GB</span>
+<span class="n">b00d5dfd</span><span class="o">-</span><span class="mi">9</span><span class="n">cce</span><span class="o">-</span><span class="mi">48</span><span class="n">c6</span><span class="o">-</span><span class="n">a011</span><span class="o">-</span><span class="n">fd46b85de814</span> <span class="o">...</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">03</span><span class="n">T10</span><span class="p">:</span><span class="mi">20</span><span class="p">:</span><span class="mi">21</span><span class="n">Z</span>  <span class="mi">3</span><span class="o">%</span> <span class="n">S2MSI2A</span> <span class="mf">1.09</span> <span class="n">GB</span>
+<span class="mi">44644895</span><span class="o">-</span><span class="n">f6f9</span><span class="o">-</span><span class="mi">4963</span><span class="o">-</span><span class="n">ab47</span><span class="o">-</span><span class="n">b5e122d3bf41</span> <span class="o">...</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">14</span><span class="n">T10</span><span class="p">:</span><span class="mi">20</span><span class="p">:</span><span class="mi">31</span><span class="n">Z</span>  <span class="mi">5</span><span class="o">%</span> <span class="n">S2MSI2A</span> <span class="mf">1.10</span> <span class="n">GB</span>
+<span class="n">dc92df2b</span><span class="o">-</span><span class="n">b69e</span><span class="o">-</span><span class="mi">4081</span><span class="o">-</span><span class="mi">88</span><span class="n">a6</span><span class="o">-</span><span class="n">bd4b95e4fc78</span> <span class="o">...</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">21</span><span class="n">T10</span><span class="p">:</span><span class="mi">15</span><span class="p">:</span><span class="mi">49</span><span class="n">Z</span>  <span class="mi">8</span><span class="o">%</span> <span class="n">S2MSI2A</span> <span class="mf">1.08</span> <span class="n">GB</span>
+<span class="mi">2</span><span class="n">c02ac80</span><span class="o">-</span><span class="mi">60</span><span class="n">ae</span><span class="o">-</span><span class="mi">4376</span><span class="o">-</span><span class="mi">9099</span><span class="o">-</span><span class="mi">2267</span><span class="n">ad3a96b5</span> <span class="o">...</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">26</span><span class="n">T10</span><span class="p">:</span><span class="mi">20</span><span class="p">:</span><span class="mi">21</span><span class="n">Z</span>  <span class="mi">9</span><span class="o">%</span> <span class="n">S2MSI2A</span> <span class="mf">1.09</span> <span class="n">GB</span>
+</pre></div>
+</div>
+<p>Download selected Sentinel scenes:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>i.sentinel.download<span class="w"> </span><span class="nv">settings</span><span class="o">=</span>sentinel.txt<span class="w"> </span><span class="nv">map</span><span class="o">=</span>jena_boundary<span class="w"> </span><span class="nv">area_relation</span><span class="o">=</span>Contains<span class="w"> </span><span class="se">\</span>
+<span class="nv">start</span><span class="o">=</span><span class="m">2021</span>-04-01<span class="w"> </span><span class="nv">end</span><span class="o">=</span><span class="m">2021</span>-10-31<span class="w"> </span><span class="nv">producttype</span><span class="o">=</span>S2MSI2A<span class="w"> </span><span class="nv">clouds</span><span class="o">=</span><span class="m">10</span><span class="w"> </span><span class="se">\</span>
+<span class="nv">output</span><span class="o">=</span>geodata/sentinel/2021
+</pre></div>
+</div>
+</section>
+<section id="import-data">
+<span id="sentinel-import-st"></span><h2>Import data<a class="headerlink" href="#import-data" title="Permalink to this heading">¶</a></h2>
+<p>Data can be imported by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/i.sentinel.import.html">i.sentinel.import</a> similarly as
+done in <a class="reference internal" href="20.html"><span class="doc">Unit 20 - Sentinel downloader</span></a>. At fisrt check list of bands to be imported by
+<span class="param">-p</span> flag. Since NDVI is computed only 4th and 8th band are
+selected. Use <code class="xref std std-option docutils literal notranslate"><span class="pre">register_output</span></code> in order to create timestamps
+file. This file will be used for registering bands into space-time
+raster dataset.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>i.sentinel.import<span class="w"> </span>-p<span class="w"> </span><span class="nv">input</span><span class="o">=</span>/home/user/geodata/sentinel/2019<span class="w"> </span><span class="nv">pattern</span><span class="o">=</span><span class="s2">&quot;B0[4|8]_10m&quot;</span>
+
+i.sentinel.import<span class="w"> </span>-l<span class="w"> </span>-c<span class="w"> </span><span class="nv">input</span><span class="o">=</span>/home/user/geodata/sentinel/2019<span class="w"> </span><span class="nv">pattern</span><span class="o">=</span><span class="s2">&quot;B0[4|8]_10m&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="nv">register_output</span><span class="o">=</span>/home/user/sentinel-timestamps.txt
+</pre></div>
+</div>
+<p>Example of created timestamp file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">T32UPB_20190407T102021_B04_10m</span><span class="o">|</span><span class="mi">2019</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">07</span> <span class="mi">10</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">45.035007</span><span class="o">|</span><span class="n">S2_4</span>
+<span class="n">T32UPB_20190407T102021_B08_10m</span><span class="o">|</span><span class="mi">2019</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">07</span> <span class="mi">10</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">45.035007</span><span class="o">|</span><span class="n">S2_8</span>
+<span class="n">T32UPB_20190422T102029_B04_10m</span><span class="o">|</span><span class="mi">2019</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">22</span> <span class="mi">10</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">50.312683</span><span class="o">|</span><span class="n">S2_4</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+</section>
+<section id="create-space-time-dataset">
+<h2>Create space-time dataset<a class="headerlink" href="#create-space-time-dataset" title="Permalink to this heading">¶</a></h2>
+<p>At this moment a new space-time dataset can be created by means of
+<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/t.create.html">t.create</a> and all imported Sentinel bands registered with
+<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/t.register.html">t.register</a>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.create<span class="w"> </span><span class="nv">output</span><span class="o">=</span>sentinel<span class="w"> </span><span class="nv">title</span><span class="o">=</span><span class="s2">&quot;Sentinel L2A 2019&quot;</span><span class="w"> </span><span class="nv">desc</span><span class="o">=</span><span class="s2">&quot;Jena region&quot;</span>
+t.register<span class="w"> </span><span class="nv">input</span><span class="o">=</span>sentinel<span class="w"> </span><span class="nv">file</span><span class="o">=</span>/home/user/sentinel-timestamps.txt
+</pre></div>
+</div>
+<p>Let’s check basic metadata (<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/t.info.html">t.info</a>) and list the registered
+maps (<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/t.rast.list.html">t.rast.list</a>).</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.info<span class="w"> </span><span class="nv">input</span><span class="o">=</span>sentinel
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">...</span>
+<span class="o">|</span> <span class="n">Start</span> <span class="n">time</span><span class="p">:</span><span class="o">.................</span> <span class="mi">2019</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">07</span> <span class="mi">10</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">45.035007</span>
+<span class="o">|</span> <span class="n">End</span> <span class="n">time</span><span class="p">:</span><span class="o">...................</span> <span class="mi">2019</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">14</span> <span class="mi">10</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">46.742599</span>
+<span class="o">...</span>
+<span class="o">|</span> <span class="n">Number</span> <span class="n">of</span> <span class="n">registered</span> <span class="n">maps</span><span class="p">:</span><span class="o">..</span> <span class="mi">14</span>
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.list<span class="w"> </span><span class="nv">input</span><span class="o">=</span>sentinel
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">name</span><span class="o">|</span><span class="n">mapset</span><span class="o">|</span><span class="n">start_time</span><span class="o">|</span><span class="n">end_time</span>
+<span class="n">T32UPB_20190407T102021_B04_10m</span><span class="o">|</span><span class="n">sentinel</span><span class="o">|</span><span class="mi">2019</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">07</span> <span class="mi">10</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">45.035007</span><span class="o">|</span><span class="kc">None</span>
+<span class="n">T32UPB_20190407T102021_B08_10m</span><span class="o">|</span><span class="n">sentinel</span><span class="o">|</span><span class="mi">2019</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">07</span> <span class="mi">10</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">45.035007</span><span class="o">|</span><span class="kc">None</span>
+<span class="n">T32UPB_20190417T102031_B04_10m</span><span class="o">|</span><span class="n">sentinel</span><span class="o">|</span><span class="mi">2019</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">17</span> <span class="mi">10</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">46.415802</span><span class="o">|</span><span class="kc">None</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+</section>
+<section id="ndvi-st-computation">
+<h2>NDVI ST computation<a class="headerlink" href="#ndvi-st-computation" title="Permalink to this heading">¶</a></h2>
+<p>For NDVI computation 4th and 8th bands are required (<a class="reference internal" href="05.html"><span class="doc">Unit 05 - Raster processing</span></a>). Map
+algebra for spatio-temporal data is performed by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/t.rast.algebra.html">t.rast.algebra</a>
+which requires bands separated into different
+spatio-temporal datasets (see example in <a class="reference internal" href="22.html"><span class="doc">Unit 22 - Spatio-temporal scripting</span></a>). Such datasets can
+be prepared by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/t.rast.extract.html">t.rast.extract</a>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>sentinel<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;name like &#39;%B04%&#39;&quot;</span><span class="w"> </span><span class="nv">output</span><span class="o">=</span>b4
+t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>sentinel<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;name like &#39;%B08%&#39;&quot;</span><span class="w"> </span><span class="nv">output</span><span class="o">=</span>b8
+</pre></div>
+</div>
+<p>Let’s check content of the new datasets by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/t.rast.list.html">t.rast.list</a>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.list<span class="w"> </span><span class="nv">input</span><span class="o">=</span>b4
+t.rast.list<span class="w"> </span><span class="nv">input</span><span class="o">=</span>b8
+</pre></div>
+</div>
+<p>Set computational region by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/g.region.html">g.region</a> including mask for
+area of interest by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.mask.html">r.mask</a>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>g.region<span class="w"> </span><span class="nv">vector</span><span class="o">=</span>jena_boundary<span class="w"> </span><span class="nv">align</span><span class="o">=</span>T32UPB_20190407T102021_B04_10m
+r.mask<span class="w"> </span><span class="nv">vector</span><span class="o">=</span>jena_boundary
+</pre></div>
+</div>
+<p>NDVI (see <a class="reference internal" href="05.html"><span class="doc">Unit 05 - Raster processing</span></a>) computation on spatio-temporal datasets can be
+performed in parallel (<span class="param">nproc</span>).</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.algebra<span class="w"> </span><span class="nv">basename</span><span class="o">=</span>ndvi<span class="w"> </span><span class="nv">expression</span><span class="o">=</span><span class="s2">&quot;ndvi = float(b8 - b4) / ( b8 + b4 )&quot;</span><span class="w"> </span><span class="nv">nprocs</span><span class="o">=</span><span class="m">3</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>GRASS 8 adds mechanism of semantic labels which makes
+computation much more straighforward using
+<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/t.rast.mapcalc.html">t.rast.mapcalc</a>. NDVI can be computed directly using
+<span class="map">sentinel</span> space-time dataset. No need for creating time
+series subsets as described above.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.mapcalc<span class="w"> </span><span class="nv">inputs</span><span class="o">=</span>sentinel.S2_8,sentinel.S2_4<span class="w"> </span><span class="nv">output</span><span class="o">=</span>ndvi<span class="w"> </span><span class="nv">basename</span><span class="o">=</span>ndvi<span class="w"> </span><span class="se">\</span>
+<span class="nv">expression</span><span class="o">=</span><span class="s2">&quot;float(sentinel.S2_8 - sentinel.S2_4) / (sentinel.S2_8 + sentinel.S2_4)&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="nv">nprocs</span><span class="o">=</span><span class="m">3</span>
+</pre></div>
+</div>
+</div>
+<p>When computation is finished <em>ndvi</em> color table can be set with
+<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/t.rast.colors.html">t.rast.colors</a>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.colors<span class="w"> </span><span class="nv">input</span><span class="o">=</span>ndvi<span class="w"> </span><span class="nv">color</span><span class="o">=</span>ndvi
+</pre></div>
+</div>
+<figure class="align-center" id="id2">
+<img alt="../_images/simple-animation.gif" class="middle" src="../_images/simple-animation.gif" />
+<figcaption>
+<p><span class="caption-number">Fig. 113 </span><span class="caption-text">Simple NDVI animation (no clouds mask applied) created by
+<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/g.gui.animation.html">g.gui.animation</a>.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Load data as multiple raster maps instead of space time
+dataset.</p>
+</div>
+<section id="cloud-mask">
+<h3>Cloud mask<a class="headerlink" href="#cloud-mask" title="Permalink to this heading">¶</a></h3>
+<p>Let’s apply the cloud masks on our NDVI space-time dataset. At first, we will create
+a new space-time dataset containing computed raster masks. A sample
+Python script has been designed for this purpose below. Masks can
+be created with <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.mask.html">r.mask</a>, see line <span class="lcode">50</span>. But in this
+case, the mask should be kept for further usage. Note that
+<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.mask.html">r.mask</a> module produces a normal raster map with the unique name
+<em>MASK</em>. To disable a mask, it is enough to rename the <em>MASK</em> map with
+<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/g.rename.html">g.rename</a>, see line <span class="lcode">52</span>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="ch">#!/usr/bin/env python3</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="c1">#%module</span>
+<span class="linenos"> 4</span><span class="c1">#% description: Creates raster mask maps based on clouds mask features.</span>
+<span class="linenos"> 5</span><span class="c1">#%end</span>
+<span class="linenos"> 6</span><span class="c1">#%option G_OPT_V_MAP</span>
+<span class="linenos"> 7</span><span class="c1">#% description: Name of AOI vector map</span>
+<span class="linenos"> 8</span><span class="c1">#%end</span>
+<span class="linenos"> 9</span><span class="c1">#%option G_OPT_STRDS_INPUT</span>
+<span class="linenos">10</span><span class="c1">#% description: Name of input 4th band space time raster dataset</span>
+<span class="linenos">11</span><span class="c1">#%end</span>
+<span class="linenos">12</span><span class="c1">#%option G_OPT_F_OUTPUT</span>
+<span class="linenos">13</span><span class="c1">#%end</span>
+<span class="linenos">14</span>
+<span class="linenos">15</span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="linenos">16</span><span class="kn">import</span> <span class="nn">os</span>
+<span class="linenos">17</span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+<span class="linenos">18</span>
+<span class="linenos">19</span><span class="kn">import</span> <span class="nn">grass.script</span> <span class="k">as</span> <span class="nn">gs</span>
+<span class="linenos">20</span>
+<span class="linenos">21</span><span class="kn">from</span> <span class="nn">grass.pygrass.gis</span> <span class="kn">import</span> <span class="n">Mapset</span>
+<span class="linenos">22</span><span class="kn">from</span> <span class="nn">grass.pygrass.modules</span> <span class="kn">import</span> <span class="n">Module</span>
+<span class="linenos">23</span><span class="kn">from</span> <span class="nn">grass.pygrass.vector</span> <span class="kn">import</span> <span class="n">VectorTopo</span>
+<span class="linenos">24</span><span class="kn">from</span> <span class="nn">grass.pygrass.utils</span> <span class="kn">import</span> <span class="n">copy</span>
+<span class="linenos">25</span><span class="kn">import</span> <span class="nn">grass.temporal</span> <span class="k">as</span> <span class="nn">tgis</span>
+<span class="linenos">26</span>
+<span class="linenos">27</span><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<span class="linenos">28</span>    <span class="n">mapset</span> <span class="o">=</span> <span class="n">Mapset</span><span class="p">()</span>
+<span class="linenos">29</span>    <span class="n">mapset</span><span class="o">.</span><span class="n">current</span><span class="p">()</span>
+<span class="linenos">30</span>
+<span class="linenos">31</span>    <span class="n">tgis</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+<span class="linenos">32</span>    <span class="n">sp4</span> <span class="o">=</span> <span class="n">tgis</span><span class="o">.</span><span class="n">open_old_stds</span><span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;input&#39;</span><span class="p">],</span> <span class="s1">&#39;raster&#39;</span><span class="p">)</span>
+<span class="linenos">33</span>    
+<span class="linenos">34</span>    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;output&#39;</span><span class="p">],</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
+<span class="linenos">35</span>        <span class="k">for</span> <span class="n">t_item</span> <span class="ow">in</span> <span class="n">sp4</span><span class="o">.</span><span class="n">get_registered_maps</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;name,start_time&#39;</span><span class="p">):</span>
+<span class="linenos">36</span>            <span class="n">items</span> <span class="o">=</span> <span class="n">t_item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)</span>
+<span class="linenos">37</span>            <span class="n">d</span> <span class="o">=</span> <span class="n">t_item</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="linenos">38</span>
+<span class="linenos">39</span>            <span class="n">vect</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">_MSK_CLOUDS&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">items</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="linenos">40</span>            <span class="n">mask_vect</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">vect</span><span class="p">,</span> <span class="n">options</span><span class="p">[</span><span class="s1">&#39;map&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;@&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+<span class="linenos">41</span>            <span class="n">n_clouds</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="linenos">42</span>            <span class="k">with</span> <span class="n">VectorTopo</span><span class="p">(</span><span class="n">vect</span><span class="p">)</span> <span class="k">as</span> <span class="n">v</span><span class="p">:</span>
+<span class="linenos">43</span>                <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">exist</span><span class="p">():</span>
+<span class="linenos">44</span>                    <span class="n">n_clouds</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">num_primitive_of</span><span class="p">(</span><span class="s1">&#39;centroid&#39;</span><span class="p">)</span>
+<span class="linenos">45</span>            <span class="k">if</span> <span class="n">n_clouds</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+<span class="linenos">46</span>                <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;v.overlay&#39;</span><span class="p">,</span> <span class="n">ainput</span><span class="o">=</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;map&#39;</span><span class="p">],</span> <span class="n">binput</span><span class="o">=</span><span class="n">vect</span><span class="p">,</span> <span class="n">operator</span><span class="o">=</span><span class="s1">&#39;not&#39;</span><span class="p">,</span>
+<span class="linenos">47</span>                       <span class="n">output</span><span class="o">=</span><span class="n">mask_vect</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="linenos">48</span>            <span class="k">else</span><span class="p">:</span>
+<span class="linenos">49</span>                <span class="n">copy</span><span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;map&#39;</span><span class="p">],</span> <span class="n">mask_vect</span><span class="p">,</span> <span class="s1">&#39;vector&#39;</span><span class="p">)</span>
+<span class="hll"><span class="linenos">50</span>            <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;r.mask&#39;</span><span class="p">,</span> <span class="n">vector</span><span class="o">=</span><span class="n">mask_vect</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span class="linenos">51</span>            <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;g.remove&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;vector&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">mask_vect</span><span class="p">)</span>
+<span class="hll"><span class="linenos">52</span>            <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;g.rename&#39;</span><span class="p">,</span> <span class="n">raster</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;MASK&#39;</span><span class="p">,</span> <span class="n">mask_vect</span><span class="p">])</span>
+</span><span class="linenos">53</span>            <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">|</span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+<span class="linenos">54</span>                <span class="n">mask_vect</span><span class="p">,</span>
+<span class="linenos">55</span>                <span class="n">d</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S.</span><span class="si">%f</span><span class="s1">&#39;</span><span class="p">),</span>
+<span class="linenos">56</span>            <span class="p">))</span>
+<span class="linenos">57</span>        
+<span class="linenos">58</span>    <span class="k">return</span> <span class="mi">0</span>
+<span class="linenos">59</span>
+<span class="linenos">60</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="linenos">61</span>    <span class="n">options</span><span class="p">,</span> <span class="n">flags</span> <span class="o">=</span> <span class="n">gs</span><span class="o">.</span><span class="n">parser</span><span class="p">()</span>
+<span class="linenos">62</span>    
+<span class="linenos">63</span>    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>Sample script to download: <a class="reference external" href="../_static/scripts/sentinel-cloud-mask.py">sentinel-cloud-mask.py</a></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sentinel-cloud-mask.py<span class="w"> </span><span class="nv">map</span><span class="o">=</span>jena_boundary<span class="w"> </span><span class="nv">input</span><span class="o">=</span>b4<span class="w"> </span><span class="nv">output</span><span class="o">=</span>cloud-timestamps.txt
+</pre></div>
+</div>
+<p>Now we can create a new space-time dataset and register the raster cloud masks
+created before.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.create<span class="w"> </span><span class="nv">output</span><span class="o">=</span>clouds<span class="w"> </span><span class="nv">title</span><span class="o">=</span><span class="s2">&quot;Sentinel L2A 2019 (clouds)&quot;</span><span class="w"> </span><span class="nv">desc</span><span class="o">=</span><span class="s2">&quot;Jena region&quot;</span>
+t.register<span class="w"> </span><span class="nv">input</span><span class="o">=</span>clouds<span class="w"> </span><span class="nv">file</span><span class="o">=</span>cloud-timestamps.txt
+</pre></div>
+</div>
+<p>Let’s check maps registered in the new space-time dataset.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.list<span class="w"> </span>clouds
+</pre></div>
+</div>
+<p>We now apply the cloud masks map by map using <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/t.rast.algebra.html">t.rast.algebra</a> and set
+<em>ndvi</em> color table.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.algebra<span class="w"> </span><span class="nv">basename</span><span class="o">=</span>ndvi_masked<span class="w"> </span><span class="se">\</span>
+<span class="nv">expression</span><span class="o">=</span><span class="s2">&quot;ndvi_masked = if(isnull(clouds), null(), float(b8 - b4) / ( b8 + b4 ))&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="nv">nprocs</span><span class="o">=</span><span class="m">3</span>
+
+t.rast.colors<span class="w"> </span><span class="k">in</span><span class="o">=</span>ndvi_masked<span class="w"> </span><span class="nv">color</span><span class="o">=</span>ndvi
+</pre></div>
+</div>
+<figure class="align-center" id="id3">
+<img alt="../_images/simple-animation-clouds.gif" class="middle" src="../_images/simple-animation-clouds.gif" />
+<figcaption>
+<p><span class="caption-number">Fig. 114 </span><span class="caption-text">Simple NDVI animation with clouds masks applied. Computation is limited
+to AOI only.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>Table of Contents</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS GIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02.html">Unit 02 - First steps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03.html">Unit 03 - Data Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Modules, Region</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05.html">Unit 05 - Raster processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06.html">Unit 06 - Data export</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07.html">Unit 07 - QGIS loves GRASS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08.html">Unit 08 - Modeler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09.html">Unit 09 - Model tuning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10.html">Unit 10 - Python intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11.html">Unit 11 - PyGRASS scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12.html">Unit 12 - Script User Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13.html">Unit 13 - PyGRASS Raster Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14.html">Unit 14 - PyGRASS Vector Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15.html">Unit 15 - Data reprojection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16.html">Unit 16 - Flooding simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17.html">Unit 17 - Spatio-temporal intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18.html">Unit 18 - Lidar, DTM interpolation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19.html">Unit 19 - DTM script parallelization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20.html">Unit 20 - Sentinel downloader</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Unit 21 - Sentinel spatio-temporal</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#download-data">Download data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#import-data">Import data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#create-space-time-dataset">Create space-time dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ndvi-st-computation">NDVI ST computation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="22.html">Unit 22 - Spatio-temporal scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23.html">Unit 23 - Spatio-temporal parallelization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="24.html">Unit 24 - MODIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="25.html">Unit 25 - MODIS ST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="26.html">Unit 26 - MODIS ST scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="27.html">Unit 27 - PyWPS intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="28.html">Unit 28 - PyWPS LST point stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="29.html">Unit 29 - PyWPS LST region stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="30.html">Unit 30 - PyWPS LST region zones</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Search</h3>
+            <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="Go" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="20.html" title="Unit 20 - Sentinel downloader"
+              >previous</a> |
+            <a href="22.html" title="Unit 22 - Spatio-temporal scripting"
+              >next</a>
+          </div>
+          <div role="note" aria-label="source link">
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018-2023 Martin Landa and GISMentors.eu.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

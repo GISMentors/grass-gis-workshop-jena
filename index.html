@@ -1,0 +1,396 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Introduction &#8212; Jena GRASS GIS Workshop</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/gismentors.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Unit 01 - About GRASS GIS" href="units/01.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="#">Jena GRASS GIS Workshop</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="units/01.html" title="Unit 01 - About GRASS GIS"
+             accesskey="N">next</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h1>
+<section id="free-and-open-source-software-foss">
+<h2>Free and Open Source Software (FOSS)<a class="headerlink" href="#free-and-open-source-software-foss" title="Permalink to this heading">¶</a></h2>
+<figure class="align-center" id="id3">
+<img alt="_images/foss.png" class="small" src="_images/foss.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 1 </span><span class="caption-text">FOSS software overview (<a class="reference external" href="https://www.linkedin.com/pulse/open-source-software-development-neha-sharma">source</a>).</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>Free and open-source software (FOSS) is a computer software that can be
+classified as both <strong>free software</strong> and <strong>open-source
+software</strong>. That is, anyone is freely licensed to</p>
+<ul class="simple">
+<li><p>use,</p></li>
+<li><p>copy,</p></li>
+<li><p>study, and</p></li>
+<li><p>change</p></li>
+</ul>
+<p>the software in any way. The source code is openly shared so that
+people are encouraged to voluntarily improve the design of the
+software. This is in contrast to <strong>proprietary software</strong>, where the
+software is under restrictive copyright and the source code is usually
+hidden from the users. See <a class="reference external" href="http://cs.wikipedia.org/wiki/Free and open-source software">Free and open-source
+software</a> article on Wikipedia for more information.</p>
+<section id="foss-for-geospatial">
+<h3>FOSS for Geospatial<a class="headerlink" href="#foss-for-geospatial" title="Permalink to this heading">¶</a></h3>
+<p>In 2006 was founded <a class="reference external" href="http://www.osgeo.org">OSGeo Foundation</a> to
+support the collaborative development of open source geospatial
+software, and promote its widespread use.</p>
+<figure class="align-center" id="id4">
+<img alt="_images/osgeo-logo.png" class="small" src="_images/osgeo-logo.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 2 </span><span class="caption-text">OSGeo logo (<a class="reference external" href="https://www.osgeo.org/about/branding-material/">source</a>)</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>The foundation has adopted principles to ensure that projects under
+OSGeo umbrella will satisfy basic quality requirements, namely:</p>
+<ul class="simple">
+<li><p>Projects should manage themselves, striving for consensus and
+encouraging participation from all contributors - from beginning
+users to advanced developers.</p></li>
+<li><p>Contributors are the scarce resource and successful projects court
+and encourage them.</p></li>
+<li><p>Projects are encouraged to adopt open standards and collaborate with
+other OSGeo projects.</p></li>
+<li><p>Projects are responsible for reviewing and controlling their code
+bases to insure the integrity of the open source baselines.</p></li>
+</ul>
+<p>This principles ensure that <a class="reference external" href="https://www.osgeo.org/projects/">OSGeo projects</a> are well established, stable,
+mature and sustainable.</p>
+</section>
+</section>
+<section id="software-used-in-this-training-materials">
+<h2>Software used in this training materials<a class="headerlink" href="#software-used-in-this-training-materials" title="Permalink to this heading">¶</a></h2>
+<figure class="align-center">
+<img alt="_images/grass-gis-logo.png" class="small" src="_images/grass-gis-logo.png" />
+</figure>
+<ul class="simple">
+<li><p><a class="reference external" href="http://grass.osgeo.org">GRASS GIS</a> (recommended version 8.0) for
+geospatial raster, imagery, and vector data processing and providing
+spatial analysis.</p></li>
+<li><p><a class="reference external" href="http://qgis.org">QGIS desktop</a> (recommended version 3.22) for
+geospatial visualization, creating hardcopy outputs, and data
+publishing.</p></li>
+<li><p><a class="reference external" href="http://gdal.org">GDAL library</a> for reading and writing various
+geospatial data.</p></li>
+<li><p><a class="reference external" href="https://pypi.python.org/pypi/sentinelsat">sentinelsat library</a>
+utility to search and download Copernicus Sentinel satellite images.</p></li>
+<li><p><a class="reference external" href="http://www.pymodis.org/">pyModis</a> Python based library to work
+with MODIS data.</p></li>
+<li><p><a class="reference external" href="http://pywps.org/">pyWPS</a> implementation of the Web Processing
+Service standard from the Open Geospatial Consortium written in
+Python.</p></li>
+</ul>
+<section id="installation-notes">
+<h3>Installation notes<a class="headerlink" href="#installation-notes" title="Permalink to this heading">¶</a></h3>
+<section id="debian-ubuntu-linux">
+<h4>Debian/Ubuntu Linux<a class="headerlink" href="#debian-ubuntu-linux" title="Permalink to this heading">¶</a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>grass
+</pre></div>
+</div>
+</section>
+<section id="ms-windows">
+<h4>MS Windows<a class="headerlink" href="#ms-windows" title="Permalink to this heading">¶</a></h4>
+<ul class="simple">
+<li><p>Install GRASS GIS 8 using <a class="reference external" href="https://grass.osgeo.org/download/windows/#standalone-installers">standalone installer</a></p></li>
+</ul>
+</section>
+<section id="id1">
+<h4>Debian/Ubuntu Linux<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h4>
+</section>
+<section id="id2">
+<h4>MS Windows<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h4>
+</section>
+</section>
+</section>
+<section id="sample-dataset">
+<h2>Sample dataset<a class="headerlink" href="#sample-dataset" title="Permalink to this heading">¶</a></h2>
+<p>For purpose of this training materials a sample dataset has been
+created based on Open Data covering Germany and Jena region
+specifically. Sample dataset is split into four parts:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://geo.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2022/jena-sample-data-base.7z">jena-sample-data-base.7z</a> (294MB)</p></li>
+<li><p><a class="reference external" href="https://geo.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2022/jena-sample-data-lidar.7z">jena-sample-data-lidar.7z</a> (541MB)</p></li>
+<li><p><a class="reference external" href="https://geo.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2022/jena-sample-data-sentinel.7z">jena-sample-data-sentinel.7z</a> (1.7GB)</p></li>
+<li><p><a class="reference external" href="https://geo.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2022/jena-sample-data-modis.7z">jena-sample-data-modis.7z</a> (1.0GB)</p></li>
+</ul>
+<p>You need at least 10GB free space on your disk (GRASS + sample data + computation).</p>
+<p>List of data sources:</p>
+<ul class="simple">
+<li><p>EU-DEM (directory: <code class="file docutils literal notranslate"><span class="pre">eu-dem</span></code>, source: <a class="reference external" href="https://www.eea.europa.eu/data-and-maps/data/copernicus-land-monitoring-service-eu-dem">Copernicus Land Monitoring
+Service - EU-DEM</a>)</p></li>
+<li><p>Sample GRASS locations/mapsets (directory: <code class="file docutils literal notranslate"><span class="pre">grassdata</span></code>)</p></li>
+<li><p>Lidar LAZ data (directory: <code class="file docutils literal notranslate"><span class="pre">lidar</span></code>, source: <a class="reference external" href="https://www.geoportal-th.de">GeoPortal Th</a>)</p></li>
+<li><p>MODIS Land Surface Temperature eight day 1 Km (directory:
+<code class="file docutils literal notranslate"><span class="pre">modis</span></code>, source: <a class="reference external" href="https://lpdaac.usgs.gov/dataset_discovery/modis/modis_products_table">LP DAAC</a>)</p></li>
+<li><p>Administrative regions (directory: <code class="file docutils literal notranslate"><span class="pre">osm</span></code>, source:
+OpenStreetMap)</p></li>
+<li><p>Sentinel-2 data (directory: <code class="file docutils literal notranslate"><span class="pre">sentinel</span></code>, source: <a class="reference external" href="https://scihub.copernicus.eu/">Copernicus
+Open Access Hub</a>)</p></li>
+</ul>
+</section>
+<section id="units">
+<h2>Units<a class="headerlink" href="#units" title="Permalink to this heading">¶</a></h2>
+<p><a class="reference external" href="https://docs.google.com/spreadsheets/d/1usoz9TaWb2mlWtq5EgaHA6f3dB_oeBYMC_ovwPSB_Ns/edit?usp=sharing">Time Schedule</a></p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="units/01.html">Unit 01 - About GRASS GIS</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="units/01.html#in-a-nutshell">In a nutshell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="units/01.html#how-to-install">How to install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="units/01.html#useful-links">Useful links</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="units/02.html">Unit 02 - First steps</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="units/02.html#create-a-new-location">Create a new location</a></li>
+<li class="toctree-l2"><a class="reference internal" href="units/02.html#display-data">Display data</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="units/03.html">Unit 03 - Data Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="units/03.html#raster-data">Raster data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="units/03.html#vector-data">Vector data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="units/03.html#notes">Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="units/04.html">Unit 04 - Modules, Region</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="units/04.html#accessing-grass-modules">Accessing GRASS modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="units/04.html#computational-region">Computational region</a></li>
+<li class="toctree-l2"><a class="reference internal" href="units/04.html#color-table">Color table</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="units/05.html">Unit 05 - Raster processing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="units/05.html#recommended-approach-for-computing-ndvi">Recommended approach for computing NDVI</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="units/06.html">Unit 06 - Data export</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="units/06.html#notes">Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="units/07.html">Unit 07 - QGIS loves GRASS</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="units/07.html#processing-plugin">Processing plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="units/07.html#grass-plugin">GRASS plugin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="units/08.html">Unit 08 - Modeler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units/09.html">Unit 09 - Model tuning</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="units/09.html#parameterization">Parameterization</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="units/10.html">Unit 10 - Python intro</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="units/10.html#graphical-modeler-and-python">Graphical Modeler and Python</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="units/11.html">Unit 11 - PyGRASS scripting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="units/11.html#pygrass-syntax">PyGRASS syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="units/11.html#statistics">Statistics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="units/12.html">Unit 12 - Script User Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="units/12.html#standard-input">Standard input</a></li>
+<li class="toctree-l2"><a class="reference internal" href="units/12.html#user-interface-ui">User interface (UI)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="units/13.html">Unit 13 - PyGRASS Raster Access</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="units/13.html#raster-statistics-example">Raster statistics example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="units/13.html#writing-raster-data">Writing raster data</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="units/14.html">Unit 14 - PyGRASS Vector Access</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="units/14.html#writing-vector-data">Writing vector data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="units/14.html#topology-access-example">Topology access example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="units/15.html">Unit 15 - Data reprojection</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="units/15.html#create-location-for-data-import">Create location for data import</a></li>
+<li class="toctree-l2"><a class="reference internal" href="units/15.html#reproject-dem-into-target-location">Reproject DEM into target location</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="units/16.html">Unit 16 - Flooding simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units/17.html">Unit 17 - Spatio-temporal intro</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="units/17.html#spatio-temporal-flooding-simulation">Spatio-temporal flooding simulation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="units/18.html">Unit 18 - Lidar, DTM interpolation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="units/18.html#data-import">Data import</a></li>
+<li class="toctree-l2"><a class="reference internal" href="units/18.html#filling-gaps">Filling gaps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="units/18.html#high-resolution-dsm">High resolution DSM</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="units/19.html">Unit 19 - DTM script parallelization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="units/19.html#dtm-interpolation-in-parallel">DTM interpolation in parallel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="units/19.html#dtm-comparision">DTM comparision</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="units/20.html">Unit 20 - Sentinel downloader</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="units/20.html#download-data">Download data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="units/20.html#import-data">Import data</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="units/21.html">Unit 21 - Sentinel spatio-temporal</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="units/21.html#download-data">Download data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="units/21.html#import-data">Import data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="units/21.html#create-space-time-dataset">Create space-time dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="units/21.html#ndvi-st-computation">NDVI ST computation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="units/22.html">Unit 22 - Spatio-temporal scripting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="units/22.html#ui">UI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="units/22.html#python-temporal-api">Python Temporal API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="units/23.html">Unit 23 - Spatio-temporal parallelization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units/24.html">Unit 24 - MODIS</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="units/24.html#download-data">Download data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="units/24.html#import-data">Import data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="units/24.html#lst">LST</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="units/25.html">Unit 25 - MODIS ST</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="units/25.html#data-querying">Data querying</a></li>
+<li class="toctree-l2"><a class="reference internal" href="units/25.html#data-extracting">Data extracting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="units/25.html#lst">LST</a></li>
+<li class="toctree-l2"><a class="reference internal" href="units/25.html#data-aggregation">Data aggregation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="units/25.html#data-extraction">Data extraction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="units/25.html#data-visualization">Data visualization</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="units/26.html">Unit 26 - MODIS ST scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units/27.html">Unit 27 - PyWPS intro</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="units/27.html#modis-process">MODIS process</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="units/28.html">Unit 28 - PyWPS LST point stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units/29.html">Unit 29 - PyWPS LST region stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units/30.html">Unit 30 - PyWPS LST region zones</a></li>
+</ul>
+</div>
+</section>
+<section id="lecturer">
+<h2>Lecturer<a class="headerlink" href="#lecturer" title="Permalink to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="http://geo.fsv.cvut.cz/gwiki/Landa">Martin Landa</a>, GeoForAll
+Lab, Czech Technical University in Prague, Czech Republic</p></li>
+</ul>
+<p>Materials proudly provided by <a class="reference external" href="http://www.gismentors.eu">GISMentors</a> training and mentoring group.</p>
+</section>
+<section id="license">
+<h2>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h2>
+<p><a class="reference external" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="_images/cc-by-sa.png"><img alt="_images/cc-by-sa.png" src="_images/cc-by-sa.png" style="width: 130px;" /></a>
+</figure>
+<p>Source code available on <a class="reference external" href="https://github.com/GISMentors/grass-gis-workshop-jena">GitHub</a>. Feel
+free to open issues or pull requests to improve the materials :-)</p>
+<p><em>Document version:</em> 3.0 (built Jul 28, 2023)</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>Table of Contents</h3>
+          <ul>
+<li class="toctree-l1"><a class="reference internal" href="units/01.html">Unit 01 - About GRASS GIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units/02.html">Unit 02 - First steps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units/03.html">Unit 03 - Data Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units/04.html">Unit 04 - Modules, Region</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units/05.html">Unit 05 - Raster processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units/06.html">Unit 06 - Data export</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units/07.html">Unit 07 - QGIS loves GRASS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units/08.html">Unit 08 - Modeler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units/09.html">Unit 09 - Model tuning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units/10.html">Unit 10 - Python intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units/11.html">Unit 11 - PyGRASS scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units/12.html">Unit 12 - Script User Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units/13.html">Unit 13 - PyGRASS Raster Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units/14.html">Unit 14 - PyGRASS Vector Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units/15.html">Unit 15 - Data reprojection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units/16.html">Unit 16 - Flooding simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units/17.html">Unit 17 - Spatio-temporal intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units/18.html">Unit 18 - Lidar, DTM interpolation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units/19.html">Unit 19 - DTM script parallelization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units/20.html">Unit 20 - Sentinel downloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units/21.html">Unit 21 - Sentinel spatio-temporal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units/22.html">Unit 22 - Spatio-temporal scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units/23.html">Unit 23 - Spatio-temporal parallelization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units/24.html">Unit 24 - MODIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units/25.html">Unit 25 - MODIS ST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units/26.html">Unit 26 - MODIS ST scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units/27.html">Unit 27 - PyWPS intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units/28.html">Unit 28 - PyWPS LST point stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units/29.html">Unit 29 - PyWPS LST region stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units/30.html">Unit 30 - PyWPS LST region zones</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Search</h3>
+            <form class="search" action="search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="Go" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="units/01.html" title="Unit 01 - About GRASS GIS"
+              >next</a>
+          </div>
+          <div role="note" aria-label="source link">
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018-2023 Martin Landa and GISMentors.eu.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

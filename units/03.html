@@ -1,0 +1,296 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Unit 03 - Data Management &#8212; Jena GRASS GIS Workshop</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gismentors.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Unit 04 - Modules, Region" href="04.html" />
+    <link rel="prev" title="Unit 02 - First steps" href="02.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html">Jena GRASS GIS Workshop</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="02.html" title="Unit 02 - First steps"
+             accesskey="P">previous</a> |
+          <a href="04.html" title="Unit 04 - Modules, Region"
+             accesskey="N">next</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="unit-03-data-management">
+<h1>Unit 03 - Data Management<a class="headerlink" href="#unit-03-data-management" title="Permalink to this heading">¶</a></h1>
+<p>Data can be imported simply from toolbar in <span class="item">Data</span> tab by tools
+dedicated for <a class="reference external" href="http://cs.wikipedia.org/wiki/GIS_file_formats#Raster">raster</a>
+<a class="reference internal" href="../_images/raster-import.png"><img alt="grass-raster-import" src="../_images/raster-import.png" style="width: 1.5em;" /></a> or <a class="reference external" href="http://cs.wikipedia.org/wiki/GIS_file_formats#Vector">vector</a>
+<a class="reference internal" href="../_images/vector-import.png"><img alt="grass-vector-import" src="../_images/vector-import.png" style="width: 1.5em;" /></a> GIS data formats. Basic knowledge of commonly
+used <a class="reference external" href="http://cs.wikipedia.org/wiki/GIS file formats">GIS file formats</a> is required.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>GRASS terminology differs from commonly used GIS
+packages. To avoid confusion let’s focus on the most
+important terms. Commonly used term “a layer” is called in
+GRASS “a map”. While GRASS layer is a subset of features within
+one “map”. So “GRASS raster map” can be treated as “a raster
+layer” in other GIS packages.</p>
+</div>
+<p>Data used in this unit is located in <code class="file docutils literal notranslate"><span class="pre">geodata/sentinel/sample</span></code>
+directory of a sample dataset.</p>
+<section id="raster-data">
+<h2>Raster data<a class="headerlink" href="#raster-data" title="Permalink to this heading">¶</a></h2>
+<p>Let’s import sample Sentinel-2 4th band
+<code class="file docutils literal notranslate"><span class="pre">L2A_T32UPB_20170706T102021_B04_10m.jp2</span></code> file.  Data is stored
+in <a class="reference external" href="http://cs.wikipedia.org/wiki/JPEG2000">JPEG2000</a> data format, which is nowadays commonly used
+GIS <em>raster</em> format for imagery data. Raster data can be imported into
+GRASS from the toolbar <a class="reference internal" href="../_images/raster-import.png"><img alt="grass-raster-import" src="../_images/raster-import.png" style="width: 1.5em;" /></a> <sup>Import raster data
+[r.import]</sup> or from the menu <span class="menuselection">File ‣ Import raster
+data ‣ Simplified raster import with reprojection</span>.</p>
+<p>Import dialog allows importing single raster file (<span class="item">File</span>) or
+multiple files from directory (<span class="item">Directory</span>). In our case single
+file is planned to be imported.</p>
+<figure class="align-center" id="id1">
+<span id="import-raster"></span><img alt="../_images/import-raster-dialog.png" src="../_images/import-raster-dialog.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 17 </span><span class="caption-text">Select input raster file to be imported.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="id2">
+<img alt="../_images/display-band4.png" class="large" src="../_images/display-band4.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 18 </span><span class="caption-text">Imported raster data is automatically displayed in <em>Map Display</em>
+window. Progress of import is shown in <span class="item">Console</span> tab.
+Default color table is not perfect as you can see, color
+interpretation will enhanced in <a class="reference internal" href="04.html#color-table"><span class="std std-ref">Unit 04</span></a>.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>GRASS imports/links RGB image as separate bands. Color
+composition can be displayed using <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/d.rgb.html">d.rgb</a>.</p>
+</div>
+<p id="raster-metadata">Basic raster metadata can be printed by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.info.html">r.info</a> or from
+<span class="item">Layers</span> tab.</p>
+<figure class="align-center" id="id3">
+<img alt="../_images/raster-metadata.png" src="../_images/raster-metadata.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 19 </span><span class="caption-text">Show raster metadata from contextual menu.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="id4">
+<img alt="../_images/raster-metadata-cell.png" src="../_images/raster-metadata-cell.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 20 </span><span class="caption-text">Detail of raster metadata.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>Raster maps are represented by regular grid. Three data types are
+supported:</p>
+<ul class="simple">
+<li><p>CELL (integer)</p></li>
+<li><p>FCELL (float)</p></li>
+<li><p>DCELL (double)</p></li>
+</ul>
+</section>
+<section id="vector-data">
+<h2>Vector data<a class="headerlink" href="#vector-data" title="Permalink to this heading">¶</a></h2>
+<p>Let’s import sample vector cloud mask data layer from
+<code class="file docutils literal notranslate"><span class="pre">geodata/sentinel/sample/MSK_CLOUDS_B00.gml</span></code> <a class="reference external" href="http://cs.wikipedia.org/wiki/GML">GML</a>
+file (commonly used GIS exchange <em>vector</em> data format). Vector data can
+be imported into GRASS from the toolbar <a class="reference internal" href="../_images/vector-import.png"><img alt="grass-vector-import" src="../_images/vector-import.png" style="width: 1.5em;" /></a>
+<sup>Import vector data [v.import]</sup> or from the menu
+<span class="menuselection">File ‣ Import vector data ‣ Simplified vector
+import with reprojection</span>).</p>
+<figure class="align-center" id="id5">
+<img alt="../_images/import-vector-dialog.png" src="../_images/import-vector-dialog.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 21 </span><span class="caption-text">Select input vector file to be imported.</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="id6">
+<img alt="../_images/display-band4-clouds.png" class="large" src="../_images/display-band4-clouds.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 22 </span><span class="caption-text">Imported vector data is automatically displayed in <em>Map Display</em>
+window. Progress of import is shown in <span class="item">Console</span> tab.
+Map composition of Sentinel-2 4th band and cloud mask features.</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="notes">
+<h2>Notes<a class="headerlink" href="#notes" title="Permalink to this heading">¶</a></h2>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>If a spatial reference system (SRS) of raster/vector
+file differs from GRASS location (<span class="item">Project match</span>) input data
+is automatically reprojected into SRS of the current GRASS
+location. Note that GRASS simply does not support on the fly
+transformation from several reasons.</p>
+</div>
+<div class="admonition note" id="import-no-srs">
+<p class="admonition-title">Note</p>
+<p>In some cases SRS of imported file can be missing or
+invalid. GRASS reports this issue as <em>In case of no
+significant differences in the projection definitions, use
+the -o flag to ignore them and use current location
+definition.  Consider generating a new location from the
+input dataset using the ‘location’ parameter.</em></p>
+<p>GRASS allows importing such file by overriding project check
+(if you are really sure that SRS of input file is the same
+as GRASS location).</p>
+</div>
+<section id="vector-topology">
+<span id="vector-topo-section"></span><h3>Vector topology<a class="headerlink" href="#vector-topology" title="Permalink to this heading">¶</a></h3>
+<p>Let’s take a closer look at vector metadata of imported administrative
+regions. Instead of “polygons” there are “areas” and other kind of
+primitives (points, lines, boundaries, centroids, isles), see
+<a class="reference internal" href="#vector-metadata"><span class="std std-numref">Fig. 23</span></a>.</p>
+<figure class="align-center" id="id7">
+<span id="vector-metadata"></span><img alt="../_images/vector-metadata-features.png" src="../_images/vector-metadata-features.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 23 </span><span class="caption-text">Vector metadata of imported file.</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>GRASS GIS is a <strong>topological GIS</strong>. Importing vector data into GRASS also
+means converting features from simple feature model (points,
+linestrings, polygons, …) into GRASS topological model.</p>
+<figure class="align-center" id="id8">
+<img alt="../_images/grass-topo.png" class="middle" src="../_images/grass-topo.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 24 </span><span class="caption-text">GRASS topological model with primitives (nodes, lines,
+boundaries, centroids, areas, and isles).</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>Topological errors are checked and repaired by GRASS GIS when
+importing data, be awere of <span class="param">snap</span> option of
+<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/v.import.html">v.import</a> module. Topological errors which is not possible
+repair automatically without user specification can fixed using
+<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/v.clean.html">v.clean</a> module.</p>
+<blockquote>
+<div></div></blockquote>
+</section>
+<section id="linking-external-formats">
+<span id="link-external"></span><h3>Linking external formats<a class="headerlink" href="#linking-external-formats" title="Permalink to this heading">¶</a></h3>
+<p>To avoid data duplication GRASS also allows linking raster data using
+<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.external.html">r.external</a> (<em>Link external raster data</em>) and vector data
+by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/v.external.html">v.external</a> (<em>Link external vector data</em>) which are also
+accessible from the toolbar <a class="reference internal" href="../_images/layer-import.png"><img alt="grass-layer-import" src="../_images/layer-import.png" style="width: 1.5em;" /></a> in <span class="item">Data</span> tab.</p>
+<figure class="align-center" id="id9">
+<img alt="../_images/link-data-menu.png" class="middle" src="../_images/link-data-menu.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 25 </span><span class="caption-text">Link raster or vector data.</span><a class="headerlink" href="#id9" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>Linking data is mainly recommended when working with raster data such
+large datasets of imagery data. GRASS can handle linked raster data
+similarly as native raster maps. Both from point of stability and
+accessibility.</p>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>Table of Contents</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS GIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02.html">Unit 02 - First steps</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Unit 03 - Data Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#raster-data">Raster data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#vector-data">Vector data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#notes">Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Modules, Region</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05.html">Unit 05 - Raster processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06.html">Unit 06 - Data export</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07.html">Unit 07 - QGIS loves GRASS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08.html">Unit 08 - Modeler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09.html">Unit 09 - Model tuning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10.html">Unit 10 - Python intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11.html">Unit 11 - PyGRASS scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12.html">Unit 12 - Script User Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13.html">Unit 13 - PyGRASS Raster Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14.html">Unit 14 - PyGRASS Vector Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15.html">Unit 15 - Data reprojection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16.html">Unit 16 - Flooding simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17.html">Unit 17 - Spatio-temporal intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18.html">Unit 18 - Lidar, DTM interpolation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19.html">Unit 19 - DTM script parallelization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20.html">Unit 20 - Sentinel downloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="21.html">Unit 21 - Sentinel spatio-temporal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22.html">Unit 22 - Spatio-temporal scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23.html">Unit 23 - Spatio-temporal parallelization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="24.html">Unit 24 - MODIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="25.html">Unit 25 - MODIS ST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="26.html">Unit 26 - MODIS ST scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="27.html">Unit 27 - PyWPS intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="28.html">Unit 28 - PyWPS LST point stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="29.html">Unit 29 - PyWPS LST region stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="30.html">Unit 30 - PyWPS LST region zones</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Search</h3>
+            <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="Go" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="02.html" title="Unit 02 - First steps"
+              >previous</a> |
+            <a href="04.html" title="Unit 04 - Modules, Region"
+              >next</a>
+          </div>
+          <div role="note" aria-label="source link">
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018-2023 Martin Landa and GISMentors.eu.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

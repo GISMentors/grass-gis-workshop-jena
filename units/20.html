@@ -1,0 +1,296 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Unit 20 - Sentinel downloader &#8212; Jena GRASS GIS Workshop</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gismentors.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Unit 21 - Sentinel spatio-temporal" href="21.html" />
+    <link rel="prev" title="Unit 19 - DTM script parallelization" href="19.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html">Jena GRASS GIS Workshop</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="19.html" title="Unit 19 - DTM script parallelization"
+             accesskey="P">previous</a> |
+          <a href="21.html" title="Unit 21 - Sentinel spatio-temporal"
+             accesskey="N">next</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="unit-20-sentinel-downloader">
+<h1>Unit 20 - Sentinel downloader<a class="headerlink" href="#unit-20-sentinel-downloader" title="Permalink to this heading">¶</a></h1>
+<p>There are plenty of libraries or tools which allow downloading
+Sentinel products from <a class="reference external" href="https://scihub.copernicus.eu/">Copernicus Open Access Hub</a>.</p>
+<p>For GRASS GIS there is the <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/addons/i.sentinel.html">i.sentinel</a> toolbox.
+It consists of six GRASS addon modules:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="http://grass.osgeo.org/grass80/manuals/addons/i.sentinel.coverage.html">i.sentinel.coverage</a></p></li>
+<li><p><a class="reference external" href="http://grass.osgeo.org/grass80/manuals/addons/i.sentinel.download.html">i.sentinel.download</a></p></li>
+<li><p><a class="reference external" href="http://grass.osgeo.org/grass80/manuals/addons/i.sentinel.parallel.download.html">i.sentinel.parallel.download</a></p></li>
+<li><p><a class="reference external" href="http://grass.osgeo.org/grass80/manuals/addons/i.sentinel.import.html">i.sentinel.import</a></p></li>
+<li><p><a class="reference external" href="http://grass.osgeo.org/grass80/manuals/addons/i.sentinel.preproc.html">i.sentinel.preproc</a></p></li>
+<li><p><a class="reference external" href="http://grass.osgeo.org/grass80/manuals/addons/i.sentinel.mask.html">i.sentinel.mask</a></p></li>
+</ul>
+<p>Addons modules are not internal part of GRASS installation.  Addons
+can be easily installed by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/g.extension.html">g.extension</a>
+(<span class="menuselection">Settings ‣ Addons extensions ‣ Install
+extension from addons</span>).</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>g.extension<span class="w"> </span><span class="nv">extension</span><span class="o">=</span>i.sentinel
+</pre></div>
+</div>
+<figure class="align-center" id="id2">
+<img alt="../_images/g-extension1.png" src="../_images/g-extension1.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 110 </span><span class="caption-text">Install <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/addons/i.sentinel.html">i.sentinel</a> GRASS Addon.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>Note that <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/addons/i.sentinel.download.html">i.sentinel.download</a> requires also
+<a class="reference external" href="https://pypi.python.org/pypi/sentinelsat">sentinelsat library</a> to
+be installed.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Sentinelsat library can be easily installed from the
+<span class="item">Console</span> tab by entering the command below.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>sentinelsat<span class="w"> </span>pandas
+</pre></div>
+</div>
+</div>
+<p><a class="reference internal" href="15.html#switch-location"><span class="std std-ref">Switch</span></a> to <cite>jena-region</cite> location.</p>
+<section id="download-data">
+<h2>Download data<a class="headerlink" href="#download-data" title="Permalink to this heading">¶</a></h2>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Pre-downloaded Sentinel scenes are available in the
+sample dataset <a class="reference external" href="https://geo.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2022/jena-sample-data-sentinel.7z">jena-sample-data-sentinel.7z</a>
+(1.7GB) <code class="file docutils literal notranslate"><span class="pre">geodata/sentinel</span></code>. Readers can continue with
+<a class="reference internal" href="#sentinel-import"><span class="std std-ref">importing sample data</span></a>.</p>
+</div>
+<p>Let’s download suitable Sentinel products for our area of interest
+(AOI) and perform the NDVI calculation as described in <a class="reference internal" href="05.html"><span class="doc">Unit 05 - Raster processing</span></a>
+(implemented as a model in <a class="reference internal" href="08.html"><span class="doc">Unit 08 - Modeler</span></a> or as a Python script in
+<a class="reference internal" href="11.html"><span class="doc">Unit 11 - PyGRASS scripting</span></a>). AOI region is defined by Jena city region created in
+<a class="reference internal" href="03.html"><span class="doc">Unit 03 - Data Management</span></a>.</p>
+<p><a class="reference external" href="https://www.sentinel-hub.com/blog/sentinel-2-l2a-products-available-sentinel-hub">Sentinel-2 L2A products</a>
+will be used to avoid computing atmospheric corrections. Let’s
+search for the latest available product by means of
+<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/i.sentinel.download.html">i.sentinel.download</a>. Setting the <span class="param">-l</span> flag, the result will only
+be printed. The download procedure will be performed later. In order to
+search and download Sentinel products from the Copernicus Open Access Hub,
+you have to create an account first. See the manual page of
+<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/i.sentinel.download.html">i.sentinel.download</a> module for details. Create a new text
+file <code class="file docutils literal notranslate"><span class="pre">sentinel.txt</span></code> containing two lines (username and
+password).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To get username and password you need to register at the
+<a class="reference external" href="https://scihub.copernicus.eu/">Copernicus Open Access Hub</a>,
+see <a class="reference external" href="https://scihub.copernicus.eu/dhus/#/self-registration">Register new account</a>
+page for signing up.</p>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>i.sentinel.download<span class="w"> </span>-l<span class="w"> </span><span class="nv">map</span><span class="o">=</span>jena_boundary<span class="w"> </span><span class="nv">producttype</span><span class="o">=</span>S2MSI2A<span class="w"> </span><span class="nv">settings</span><span class="o">=</span>sentinel.txt
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">11</span> <span class="n">Sentinel</span> <span class="n">product</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">found</span>
+<span class="mi">37438</span><span class="n">a05</span><span class="o">-</span><span class="n">f795</span><span class="o">-</span><span class="mf">4e77</span><span class="o">-</span><span class="n">b68e</span><span class="o">-</span><span class="mi">3</span><span class="n">a3c0ec5f04b</span> <span class="o">...</span> <span class="mi">2022</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">06</span><span class="n">T10</span><span class="p">:</span><span class="mi">23</span><span class="p">:</span><span class="mi">19</span><span class="n">Z</span>  <span class="mi">4</span><span class="o">%</span> <span class="n">S2MSI2A</span> <span class="mf">1.08</span> <span class="n">GB</span>
+<span class="n">b4bc9d3b</span><span class="o">-</span><span class="mf">1e1</span><span class="n">a</span><span class="o">-</span><span class="mi">4</span><span class="n">cfd</span><span class="o">-</span><span class="n">bd01</span><span class="o">-</span><span class="mi">14</span><span class="n">c21a596e8a</span> <span class="o">...</span> <span class="mi">2022</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">05</span><span class="n">T10</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mi">19</span><span class="n">Z</span> <span class="mi">64</span><span class="o">%</span> <span class="n">S2MSI2A</span> <span class="mf">1.03</span> <span class="n">GB</span>
+<span class="n">f2a604a6</span><span class="o">-</span><span class="mf">8e50</span><span class="o">-</span><span class="mi">4</span><span class="n">c62</span><span class="o">-</span><span class="n">b98b</span><span class="o">-</span><span class="mi">22077365</span><span class="n">df7a</span> <span class="o">...</span> <span class="mi">2022</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">21</span><span class="n">T10</span><span class="p">:</span><span class="mi">23</span><span class="p">:</span><span class="mi">31</span><span class="n">Z</span> <span class="mi">65</span><span class="o">%</span> <span class="n">S2MSI2A</span> <span class="mf">933.01</span> <span class="n">MB</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<p>By default the module returns products for the last 60 days. Let’s
+change the search period setting <span class="param">start</span> and <span class="param">end</span>
+options. To be sure that our AOI is fully covered by a Sentinel
+product we also set <span class="param">area_relation</span> option.  We will also limit
+products by <span class="param">clouds</span> coverage percentage threshold</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>i.sentinel.download<span class="w"> </span>-l<span class="w"> </span><span class="nv">map</span><span class="o">=</span>jena_boundary<span class="w"> </span><span class="nv">producttype</span><span class="o">=</span>S2MSI2A<span class="w"> </span><span class="nv">settings</span><span class="o">=</span>sentinel.txt<span class="w"> </span><span class="se">\</span>
+<span class="nv">start</span><span class="o">=</span><span class="m">2021</span>-04-01<span class="w"> </span><span class="nv">end</span><span class="o">=</span><span class="m">2021</span>-10-01<span class="w"> </span><span class="nv">area_relation</span><span class="o">=</span>Contains<span class="w"> </span><span class="nv">clouds</span><span class="o">=</span><span class="m">10</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">6</span> <span class="n">Sentinel</span> <span class="n">product</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">found</span>
+<span class="n">a844500a</span><span class="o">-</span><span class="mi">049</span><span class="n">f</span><span class="o">-</span><span class="mi">46</span><span class="n">a3</span><span class="o">-</span><span class="mi">92</span><span class="n">de</span><span class="o">-</span><span class="n">bcda2c38fc3c</span> <span class="o">...</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">31</span><span class="n">T10</span><span class="p">:</span><span class="mi">15</span><span class="p">:</span><span class="mi">59</span><span class="n">Z</span>  <span class="mi">2</span><span class="o">%</span> <span class="n">S2MSI2A</span> <span class="mf">1.09</span> <span class="n">GB</span>
+<span class="n">d5b73db9</span><span class="o">-</span><span class="mi">0</span><span class="n">acf</span><span class="o">-</span><span class="mi">401</span><span class="n">d</span><span class="o">-</span><span class="mi">9</span><span class="n">bf4</span><span class="o">-</span><span class="n">a6f199df1119</span> <span class="o">...</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">08</span><span class="n">T10</span><span class="p">:</span><span class="mi">15</span><span class="p">:</span><span class="mi">59</span><span class="n">Z</span>  <span class="mi">3</span><span class="o">%</span> <span class="n">S2MSI2A</span> <span class="mf">1.09</span> <span class="n">GB</span>
+<span class="n">b00d5dfd</span><span class="o">-</span><span class="mi">9</span><span class="n">cce</span><span class="o">-</span><span class="mi">48</span><span class="n">c6</span><span class="o">-</span><span class="n">a011</span><span class="o">-</span><span class="n">fd46b85de814</span> <span class="o">...</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">03</span><span class="n">T10</span><span class="p">:</span><span class="mi">20</span><span class="p">:</span><span class="mi">21</span><span class="n">Z</span>  <span class="mi">3</span><span class="o">%</span> <span class="n">S2MSI2A</span> <span class="mf">1.09</span> <span class="n">GB</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<p>Let’s download the desired product(s). Just remove the <span class="param">-l</span> flag and
+add the <span class="param">output</span> option in order to define the path to the output directory
+where data should be saved.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>i.sentinel.download<span class="w"> </span><span class="nv">map</span><span class="o">=</span>jena_boundary<span class="w"> </span><span class="nv">producttype</span><span class="o">=</span>S2MSI2A<span class="w"> </span><span class="nv">settings</span><span class="o">=</span>sentinel.txt<span class="w"> </span><span class="se">\</span>
+<span class="nv">start</span><span class="o">=</span><span class="m">2021</span>-04-01<span class="w"> </span><span class="nv">end</span><span class="o">=</span><span class="m">2021</span>-10-01<span class="w"> </span><span class="nv">area_relation</span><span class="o">=</span>Contains<span class="w"> </span><span class="nv">clouds</span><span class="o">=</span><span class="m">10</span><span class="w"> </span><span class="se">\</span>
+<span class="nv">limit</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">output</span><span class="o">=</span>/home/user/geodata/sentinel/2021
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note all products are available online. In this case the
+module fails with <code class="docutils literal notranslate"><span class="pre">Product</span>
+<span class="pre">a844500a-049f-46a3-92de-bcda2c38fc3c</span> <span class="pre">is</span> <span class="pre">not</span>
+<span class="pre">online.</span> <span class="pre">Triggering</span> <span class="pre">retrieval</span> <span class="pre">from</span> <span class="pre">long</span> <span class="pre">term</span> <span class="pre">archive.</span></code> error
+message. In this case try to download affected product in the next days.</p>
+</div>
+</section>
+<section id="import-data">
+<h2>Import data<a class="headerlink" href="#import-data" title="Permalink to this heading">¶</a></h2>
+<p id="sentinel-import">Before importing or linking Sentinel data try to print a list of
+filtered raster files including projection match (second column, 1 for
+match otherwise 0). If the CRS of input data differs from the current location
+consider reprojection (<span class="param">-r</span>) or creating a new location for
+import.</p>
+<p>Data will be imported into the GRASS location by means of the
+<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/addons/i.sentinel.import.html">i.sentinel.import</a> tool. The command will import
+<strong>all</strong> Sentinel bands from <span class="param">input</span> directory
+recursively. Before importing data let’s check content of the input
+directory by <span class="param">-p</span> flag. The import procedure will be limited to
+the 4th and 8th bands in 10m spatial resolution by <span class="param">pattern</span>
+option.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>i.sentinel.import<span class="w"> </span>-p<span class="w"> </span><span class="nv">input</span><span class="o">=</span>/home/user/geodata/sentinel/2019<span class="w"> </span><span class="nv">pattern</span><span class="o">=</span><span class="s2">&quot;20190626T102031_B0[4|8]_10m&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">...</span><span class="n">L2A_T32UPB_A020940_20190626T102028</span><span class="o">/</span><span class="n">IMG_DATA</span><span class="o">/</span><span class="n">R10m</span><span class="o">/</span><span class="n">T32UPB_20190626T102031_B08_10m</span><span class="o">.</span><span class="n">jp2</span> <span class="mi">1</span> <span class="p">(</span><span class="n">EPSG</span><span class="p">:</span> <span class="mi">32632</span><span class="p">)</span>
+<span class="o">...</span><span class="n">L2A_T32UPB_A020940_20190626T102028</span><span class="o">/</span><span class="n">IMG_DATA</span><span class="o">/</span><span class="n">R10m</span><span class="o">/</span><span class="n">T32UPB_20190626T102031_B04_10m</span><span class="o">.</span><span class="n">jp2</span> <span class="mi">1</span> <span class="p">(</span><span class="n">EPSG</span><span class="p">:</span> <span class="mi">32632</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>By default, input data are imported into GRASS data format.
+Alternatively, data can be linked if <span class="param">-l</span> is given. It is also
+useful to import cloud mask vector features by <span class="param">-c</span> flag. We also use
+<span class="param">register_output</span> option to produce a timestamp plain text file
+which will be used in <a class="reference internal" href="21.html"><span class="doc">Unit 21 - Sentinel spatio-temporal</span></a>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>i.sentinel.import<span class="w"> </span>-l<span class="w"> </span>-c<span class="w"> </span><span class="nv">input</span><span class="o">=</span>/home/user/geodata/sentinel/2019<span class="w"> </span><span class="nv">pattern</span><span class="o">=</span><span class="s2">&quot;20190626T102031_B0[4|8]_10m&quot;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Cloud mask is computed by
+<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/addons/i.sentinel.import.html">i.sentinel.import</a>, the module doesn’t use cloud
+mask product stored in a SAFE directory.</p>
+</div>
+<div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p>Fix <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/addons/i.sentinel.import.html">i.sentinel.import</a> <code class="xref std std-option docutils literal notranslate"><span class="pre">-c</span></code> flag to
+respect <code class="xref std std-option docutils literal notranslate"><span class="pre">pattern</span></code> parameter.</p>
+</div>
+<p>Now launch the NDVI sample script created in <a class="reference internal" href="12.html"><span class="doc">Unit 12 - Script User Interface</span></a> (<a class="reference external" href="../_static/scripts/ndvi-v4.py">ndvi-v4.py</a>) in order to compute NDVI classes.</p>
+<figure class="align-center" id="id3">
+<img alt="../_images/run-script1.png" src="../_images/run-script1.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 111 </span><span class="caption-text">Run script to compute NDVI classes.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="id4">
+<img alt="../_images/ndvi-classes.png" class="large" src="../_images/ndvi-classes.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 112 </span><span class="caption-text">Computed NDVI classes for given AOI.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>Table of Contents</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS GIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02.html">Unit 02 - First steps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03.html">Unit 03 - Data Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Modules, Region</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05.html">Unit 05 - Raster processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06.html">Unit 06 - Data export</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07.html">Unit 07 - QGIS loves GRASS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08.html">Unit 08 - Modeler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09.html">Unit 09 - Model tuning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10.html">Unit 10 - Python intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11.html">Unit 11 - PyGRASS scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12.html">Unit 12 - Script User Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13.html">Unit 13 - PyGRASS Raster Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14.html">Unit 14 - PyGRASS Vector Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15.html">Unit 15 - Data reprojection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16.html">Unit 16 - Flooding simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17.html">Unit 17 - Spatio-temporal intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18.html">Unit 18 - Lidar, DTM interpolation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19.html">Unit 19 - DTM script parallelization</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Unit 20 - Sentinel downloader</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#download-data">Download data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#import-data">Import data</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="21.html">Unit 21 - Sentinel spatio-temporal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22.html">Unit 22 - Spatio-temporal scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23.html">Unit 23 - Spatio-temporal parallelization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="24.html">Unit 24 - MODIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="25.html">Unit 25 - MODIS ST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="26.html">Unit 26 - MODIS ST scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="27.html">Unit 27 - PyWPS intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="28.html">Unit 28 - PyWPS LST point stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="29.html">Unit 29 - PyWPS LST region stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="30.html">Unit 30 - PyWPS LST region zones</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Search</h3>
+            <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="Go" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="19.html" title="Unit 19 - DTM script parallelization"
+              >previous</a> |
+            <a href="21.html" title="Unit 21 - Sentinel spatio-temporal"
+              >next</a>
+          </div>
+          <div role="note" aria-label="source link">
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018-2023 Martin Landa and GISMentors.eu.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

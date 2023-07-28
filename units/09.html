@@ -1,0 +1,309 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Unit 09 - Model tuning &#8212; Jena GRASS GIS Workshop</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gismentors.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Unit 10 - Python intro" href="10.html" />
+    <link rel="prev" title="Unit 08 - Modeler" href="08.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html">Jena GRASS GIS Workshop</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="08.html" title="Unit 08 - Modeler"
+             accesskey="P">previous</a> |
+          <a href="10.html" title="Unit 10 - Python intro"
+             accesskey="N">next</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="unit-09-model-tuning">
+<h1>Unit 09 - Model tuning<a class="headerlink" href="#unit-09-model-tuning" title="Permalink to this heading">¶</a></h1>
+<p>Let’s improve our NDVI model created in <a class="reference internal" href="08.html"><span class="doc">Unit 08 - Modeler</span></a>. The model operates
+in a current computation region, it would be better to define region
+based on user input.</p>
+<p>NDVI values range from +1.0 to -1.0. Areas of barren rock, sand, or
+snow usually show very low NDVI values (less than 0.1). Sparse
+vegetation such as shrubs and grasslands or senescing crops may result
+in moderate NDVI values (approximately between 0.2 and 0.5). High NDVI values
+(approximately between 0.6 and 1.0) correspond to dense vegetation such as that
+found in temperate and tropical forests or crops at their peak growth
+stage. Let’s classify NDVI into 3 major classes:</p>
+<ul class="simple">
+<li><p>Class 1: from -1.0 to 0.2</p></li>
+<li><p>Class 2: from 0.2 to 0.6</p></li>
+<li><p>Class 3: from 0.6 to 1.0</p></li>
+</ul>
+<p>The desired output will be a simplified vector map with NDVI
+classes</p>
+<p>From GRASS perspective a computation workflow can be decomposed to the
+following steps:</p>
+<ol class="arabic simple">
+<li><p>Erase cloud mask in input region (<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/v.overlay.html">v.overlay</a>: <code class="docutils literal notranslate"><span class="pre">not</span></code> operator)</p></li>
+<li><p>Set computation region based on modified input region (<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/g.region.html">g.region</a>)</p></li>
+<li><p>Set mask (<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.mask.html">r.mask</a>)</p></li>
+<li><p>Compute NDVI values (<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/i.vi.html">i.vi</a>)</p></li>
+<li><p>Reclassify NDVI values into classes (<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.recode.html">r.recode</a>)</p></li>
+<li><p>Set desired color table for NDVI classes
+(<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.colors.html">r.colors</a>)</p></li>
+<li><p>Convert raster classes into vector areas (<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.to.vect.html">r.to.vect</a>)</p></li>
+<li><p>Remove small areas (join them with adjacent areas by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/v.clean.html">v.clean</a>)</p></li>
+<li><p>Set color table based on NDVI raster classes (<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/v.colors.html">v.colors</a>)</p></li>
+</ol>
+<p>Overview of commands below:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>v.overlay<span class="w"> </span><span class="nv">ainput</span><span class="o">=</span>jena_boundary<span class="w"> </span><span class="nv">binput</span><span class="o">=</span>MaskFeature<span class="w"> </span><span class="nv">operator</span><span class="o">=</span>not<span class="w"> </span><span class="nv">output</span><span class="o">=</span>region_mask
+g.region<span class="w"> </span><span class="nv">vector</span><span class="o">=</span>region_mask<span class="w"> </span><span class="nv">align</span><span class="o">=</span>L2A_T32UPB_20170706T102021_B04_10m
+r.mask<span class="w"> </span><span class="nv">vector</span><span class="o">=</span>region_mask
+i.vi<span class="w"> </span><span class="nv">red</span><span class="o">=</span>L2A_T32UPB_20170706T102021_B04_10m<span class="w"> </span><span class="nv">output</span><span class="o">=</span>ndvi<span class="w"> </span><span class="nv">nir</span><span class="o">=</span>L2A_T32UPB_20170706T102021_B08_10m
+r.recode<span class="w"> </span><span class="nv">input</span><span class="o">=</span>ndvi<span class="w"> </span><span class="nv">output</span><span class="o">=</span>ndvi_class<span class="w"> </span><span class="nv">rules</span><span class="o">=</span>reclass.txt
+r.colors<span class="w"> </span><span class="nv">map</span><span class="o">=</span>ndvi_class<span class="w"> </span><span class="nv">rules</span><span class="o">=</span>colors.txt
+r.to.vect<span class="w"> </span>-s<span class="w"> </span>-v<span class="w"> </span><span class="nv">input</span><span class="o">=</span>ndvi_class<span class="w"> </span><span class="nv">output</span><span class="o">=</span>ndvi_class<span class="w"> </span><span class="nv">type</span><span class="o">=</span>area
+v.clean<span class="w"> </span><span class="nv">input</span><span class="o">=</span>ndvi_class<span class="w"> </span><span class="nv">output</span><span class="o">=</span>ndvi_vector<span class="w"> </span><span class="nv">tool</span><span class="o">=</span>rmarea<span class="w"> </span><span class="nv">threshold</span><span class="o">=</span><span class="m">1600</span>
+v.colors<span class="w"> </span><span class="nv">map</span><span class="o">=</span>ndvi_vector<span class="w"> </span><span class="nv">raster</span><span class="o">=</span>ndvi_class
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Small areas can be also removed by raster-based workflow:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.reclass.area<span class="w"> </span><span class="nv">input</span><span class="o">=</span>ndvi_class<span class="w"> </span><span class="nv">output</span><span class="o">=</span>ndvi_class2<span class="w"> </span><span class="nv">mode</span><span class="o">=</span>greater<span class="w"> </span><span class="nv">value</span><span class="o">=</span><span class="m">0</span>.16
+r.grow.distance<span class="w"> </span><span class="nv">input</span><span class="o">=</span>ndvi_class2<span class="w"> </span><span class="nv">value</span><span class="o">=</span>ndvi_class_c
+</pre></div>
+</div>
+</div>
+<p>The tools can be added to the existing model by <a class="reference internal" href="../_images/module-add.png"><img alt="grass-module-add" src="../_images/module-add.png" style="width: 1.5em;" /></a>
+<sup>Add GRASS tool (module) to model</sup>. Note that newly added tools
+are placed at the end of a computation workflow which is not
+desired. Commands order can be changed in <span class="item">Items</span> tab.</p>
+<figure class="align-center" id="id1">
+<img alt="../_images/reorder-items.png" src="../_images/reorder-items.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 63 </span><span class="caption-text">Reorder model items (GRASS tools) by <span class="item">Up/Down</span> buttons. In
+this case move <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/v.overlay.html">v.overlay</a> up to the first position.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Don’t forget to align region bounds to input raster data
+(use <span class="param">align</span> option in <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/g.region.html">g.region</a> tool).</p>
+</div>
+<p>Reclassification of floating point raster maps can be done by
+<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.recode.html">r.recode</a>. An example of reclassification table:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>-1:0.2:1
+<span class="m">0</span>.2:0.6:2
+<span class="m">0</span>.6:1:3
+</pre></div>
+</div>
+<p>Beside predefined color tables <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.colors.html">r.colors</a> (see
+<a class="reference internal" href="04.html#color-table"><span class="std std-ref">Color table</span></a> section) also allows to use user-defined color
+table by <span class="param">rules</span> option. In our case a color table can be quite
+simple:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="m">1</span><span class="w"> </span>grey
+<span class="m">2</span><span class="w"> </span>yellow
+<span class="m">3</span><span class="w"> </span>green
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Reclassification and color table is recommended to be stored into
+files otherwise it can be lost when opening model next time:
+<a class="reference external" href="../_static/models/reclass.txt">reclass.txt</a> and <a class="reference external" href="../_static/models/colors.txt">colors.txt</a></p>
+</div>
+<figure class="align-center" id="id2">
+<img alt="../_images/model-v2.png" src="../_images/model-v2.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 64 </span><span class="caption-text">Extended model.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>Sample model to download: <a class="reference external" href="../_static/models/ndvi-v2.gxm">ndvi-v2.gxm</a>
+(note: don’t forget to fix path to reclass and colors file for
+<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.recode.html">r.recode</a> and <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.colors.html">r.colors</a> modules)</p>
+<section id="parameterization">
+<h2>Parameterization<a class="headerlink" href="#parameterization" title="Permalink to this heading">¶</a></h2>
+<p>The model has all parameters hard-coded. User lacks possibility to
+control input parameters before running model.</p>
+<p>In Graphical Modeler a user input can be defined by two mechanisms:</p>
+<ul class="simple">
+<li><p><strong>parametrization</strong> of tools parameters</p></li>
+<li><p>using user-defined <strong>variables</strong> (ideal when multiple tools are
+sharing same user-defined input value)</p></li>
+</ul>
+<p>Let’s start with parametrization. Change the model in order to provide
+the user ability to:</p>
+<ul class="simple">
+<li><p>define own area of interest (<span class="param">ainput</span> option in
+<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/v.overlay.html">v.overlay</a>)</p></li>
+<li><p>set threshold for small areas (<span class="param">threshold</span> option in
+<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/v.clean.html">v.clean</a>)</p></li>
+</ul>
+<p>To parameterize a command open its properties dialog. Option
+parametrization can be easily enabled by <span class="item">Parameterized in
+model</span> checkbox as shown below.</p>
+<figure class="align-center" id="id3">
+<img alt="../_images/parametrize-cmd.png" src="../_images/parametrize-cmd.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 65 </span><span class="caption-text">Parametrization of <span class="param">ainput</span> option for <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/v.overlay.html">v.overlay</a>
+command.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Parameterized tools are highlighted in the model by a
+bold border.</p>
+</div>
+<p>After pressing <a class="reference internal" href="../_images/execute.png"><img alt="grass-execute" src="../_images/execute.png" style="width: 1.5em;" /></a> <sup>Run model</sup> the model is not run
+immediately. GUI dialog is shown to allow entering user-defined
+parameters before lauching model computation.</p>
+<figure class="align-center" id="id4">
+<img alt="../_images/model-params.png" class="small" src="../_images/model-params.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 66 </span><span class="caption-text">Parameterized options are organized into tabs based on relevant tools.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>After setting the input parameters the model can be <span class="item">Run</span>.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Saved models can be run directly from Layer Manager
+<span class="menuselection">File ‣ Run model</span> without opening Graphical Model
+itself.</p>
+</div>
+<div class="task admonition">
+<p class="admonition-title">Úkol</p>
+<p>Test the model with different settings.</p>
+</div>
+<figure class="align-center" id="id5">
+<img alt="../_images/ndvi-no-reduction.png" class="large" src="../_images/ndvi-no-reduction.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 67 </span><span class="caption-text">NDVI vector class without small area reduction.</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="id6">
+<img alt="../_images/ndvi-2000m2.png" class="large" src="../_images/ndvi-2000m2.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 68 </span><span class="caption-text">NDVI classes smaller than 2000m <sup>2</sup> (so 20 pixel) removed.</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<div class="task admonition">
+<p class="admonition-title">Úkol</p>
+<p>Change computation region, eg. by buffering Jena city region
+(<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/v.buffer.html">v.buffer</a>) and run the model.</p>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>v.buffer<span class="w"> </span><span class="nv">input</span><span class="o">=</span>jena_boundary<span class="w"> </span><span class="nv">output</span><span class="o">=</span>jena_boundary_5km<span class="w"> </span><span class="nv">distance</span><span class="o">=</span><span class="m">5000</span>
+</pre></div>
+</div>
+<figure class="align-center" id="id7">
+<img alt="../_images/ndvi-jena-5km.png" class="large" src="../_images/ndvi-jena-5km.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 69 </span><span class="caption-text">NDVI vector classes computed in 5km buffer around Jena city region.</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>Sample model to download: <a class="reference external" href="../_static/models/ndvi-v3.gxm">ndvi-v3.gxm</a></p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>Table of Contents</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS GIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02.html">Unit 02 - First steps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03.html">Unit 03 - Data Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Modules, Region</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05.html">Unit 05 - Raster processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06.html">Unit 06 - Data export</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07.html">Unit 07 - QGIS loves GRASS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08.html">Unit 08 - Modeler</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Unit 09 - Model tuning</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#parameterization">Parameterization</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="10.html">Unit 10 - Python intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11.html">Unit 11 - PyGRASS scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12.html">Unit 12 - Script User Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13.html">Unit 13 - PyGRASS Raster Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14.html">Unit 14 - PyGRASS Vector Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15.html">Unit 15 - Data reprojection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16.html">Unit 16 - Flooding simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17.html">Unit 17 - Spatio-temporal intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18.html">Unit 18 - Lidar, DTM interpolation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19.html">Unit 19 - DTM script parallelization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20.html">Unit 20 - Sentinel downloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="21.html">Unit 21 - Sentinel spatio-temporal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22.html">Unit 22 - Spatio-temporal scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23.html">Unit 23 - Spatio-temporal parallelization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="24.html">Unit 24 - MODIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="25.html">Unit 25 - MODIS ST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="26.html">Unit 26 - MODIS ST scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="27.html">Unit 27 - PyWPS intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="28.html">Unit 28 - PyWPS LST point stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="29.html">Unit 29 - PyWPS LST region stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="30.html">Unit 30 - PyWPS LST region zones</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Search</h3>
+            <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="Go" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="08.html" title="Unit 08 - Modeler"
+              >previous</a> |
+            <a href="10.html" title="Unit 10 - Python intro"
+              >next</a>
+          </div>
+          <div role="note" aria-label="source link">
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018-2023 Martin Landa and GISMentors.eu.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

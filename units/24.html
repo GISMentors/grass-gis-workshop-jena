@@ -1,0 +1,326 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Unit 24 - MODIS &#8212; Jena GRASS GIS Workshop</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gismentors.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Unit 25 - MODIS ST" href="25.html" />
+    <link rel="prev" title="Unit 23 - Spatio-temporal parallelization" href="23.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html">Jena GRASS GIS Workshop</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="23.html" title="Unit 23 - Spatio-temporal parallelization"
+             accesskey="P">previous</a> |
+          <a href="25.html" title="Unit 25 - MODIS ST"
+             accesskey="N">next</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="unit-24-modis">
+<h1>Unit 24 - MODIS<a class="headerlink" href="#unit-24-modis" title="Permalink to this heading">¶</a></h1>
+<p>The <strong>Moderate Resolution Imaging Spectroradiometer</strong>
+(<a class="reference external" href="http://cs.wikipedia.org/wiki/MODIS">MODIS</a>) is a 36-channel from visible to thermal-infrared
+sensor that was launched as part of the Terra satellite payload in
+December 1999 and Aqua satellite in May 2002. The Terra satellite
+passes twice a day (at 10:30am and 22:30pm local time), the Aqua
+satellite also passes twice a day (at 01:30am and 13:30pm local
+time). (source: <a class="reference external" href="https://grasswiki.osgeo.org/wiki/MODIS">GRASS Wiki</a>)</p>
+<p>Our area of interest, Germany, is covered by two MODIS tiles (see
+<a class="reference external" href="https://modis-land.gsfc.nasa.gov/MODLAND_grid.html">MODLAND grid</a>):</p>
+<ul class="simple">
+<li><p>h18v03</p></li>
+<li><p>h18v04</p></li>
+</ul>
+<p>MODIS data is provided in 3 projections (Sinusoidal, Lambert Azimuthal
+Equal-Area, and Geographic). For our purpose, data will be reprojected
+to ETRS89 / LAEA Europe <a class="reference external" href="http://epsg.io/3035">EPSG:3035</a>.</p>
+<p id="create-location-epsg">Create a new GRASS location <em>germany-modis</em> (see <a class="reference internal" href="02.html#create-location"><span class="std std-ref">Unit 02</span></a>) using EPSG code (<em>Select CRS from a list by EPSG
+or description</em>).</p>
+<figure class="align-center" id="id1">
+<img alt="../_images/create-location-epsg-0.png" src="../_images/create-location-epsg-0.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 115 </span><span class="caption-text">Create a new location based on EPSG code.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="id2">
+<img alt="../_images/create-location-epsg-1.png" src="../_images/create-location-epsg-1.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 116 </span><span class="caption-text">Enter EPSG code.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>Enter a new GRASS session (PERMANENT mapset) and install
+<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/addons/i.modis.html">i.modis</a> addons extension (more about installing
+addons in <a class="reference internal" href="17.html#grass-addons"><span class="std std-ref">Unit 17</span></a>) for downloading and importing
+MODIS data (note that you have to install also <a class="reference external" href="http://www.pymodis.org/">pyMODIS Python Library</a>). Run two commands below in
+<span class="item">Console</span> tab.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>setuptools<span class="w"> </span>slugify<span class="w"> </span>pymodis
+
+g.extension<span class="w"> </span><span class="nv">extension</span><span class="o">=</span>i.modis
+</pre></div>
+</div>
+<p>GRASS MODIS addon consists of two modules:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="http://grass.osgeo.org/grass80/manuals/addons/i.modis.download.html">i.modis.download</a> and</p></li>
+<li><p><a class="reference external" href="http://grass.osgeo.org/grass80/manuals/addons/i.modis.import.html">i.modis.import</a></p></li>
+</ul>
+<section id="download-data">
+<h2>Download data<a class="headerlink" href="#download-data" title="Permalink to this heading">¶</a></h2>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Pre-downloaded MODIS data (year 2019) is available in the
+sample dataset <a class="reference external" href="https://geo.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2022/jena-sample-data-modis.7z">jena-sample-data-modis.7z</a>
+(1.0GB) <code class="file docutils literal notranslate"><span class="pre">geodata/modis</span></code>. Readers can continue with
+<a class="reference internal" href="#modis-import"><span class="std std-ref">importing sample data</span></a>.</p>
+</div>
+<p>Let’s download desired tiles (h18v03 and h18v04) for year 2021 by
+<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/addons/i.modis.download.html">i.modis.download</a>.</p>
+<p>Land Surface Temperature eight day 1 Km (Terra/Aqua) product will be
+downloaded.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>i.modis.download<span class="w"> </span><span class="nv">settings</span><span class="o">=</span>settings.txt<span class="w"> </span><span class="nv">folder</span><span class="o">=</span>/home/user/geodata/modis/h18v03_04<span class="w"> </span><span class="se">\</span>
+<span class="nv">tiles</span><span class="o">=</span>h18v03,h18v04<span class="w"> </span><span class="se">\</span>
+<span class="nv">product</span><span class="o">=</span>lst_aqua_eight_1000,lst_terra_eight_1000<span class="w"> </span><span class="se">\</span>
+<span class="nv">startday</span><span class="o">=</span><span class="m">2021</span>-01-01<span class="w"> </span><span class="nv">endday</span><span class="o">=</span><span class="m">2021</span>-12-31
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Output folder (<code class="file docutils literal notranslate"><span class="pre">h18v03_04</span></code> in this case) must exists,
+otherwise the module will fail.</p>
+<p>File <code class="file docutils literal notranslate"><span class="pre">settings.txt</span></code> contains two lines: <em>username</em> and
+<em>password</em> for accessing MODIS download service.</p>
+<p>Please read <a class="reference external" href="http://www.pymodis.org/info.html#user-and-password">pyModis documentation</a> how to
+register and set up your account.</p>
+</div>
+</section>
+<section id="import-data">
+<span id="modis-import"></span><h2>Import data<a class="headerlink" href="#import-data" title="Permalink to this heading">¶</a></h2>
+<p>Input MODIS data can be imported and reprojected into target location
+by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/addons/i.modis.import.html">i.modis.import</a>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>i.modis.import<span class="w"> </span>-mw<span class="w"> </span><span class="nv">files</span><span class="o">=</span>/home/user/geodata/modis/h18v03_04/listfileMOD11A2.006.txt<span class="w"> </span><span class="se">\</span>
+<span class="nv">spectral</span><span class="o">=</span><span class="s1">&#39;( 1 0 0 0 1 0 0 0 0 0 0 0 )&#39;</span><span class="w"> </span><span class="nv">outfile</span><span class="o">=</span>tlist-mod.txt
+
+i.modis.import<span class="w"> </span>-mw<span class="w"> </span><span class="nv">files</span><span class="o">=</span>/home/user/geodata/modis/h18v03_04/listfileMYD11A2.006.txt<span class="w"> </span><span class="se">\</span>
+<span class="nv">spectral</span><span class="o">=</span><span class="s1">&#39;( 1 0 0 0 1 0 0 0 0 0 0 0 )&#39;</span><span class="w"> </span><span class="nv">outfile</span><span class="o">=</span>tlist-myd.txt
+</pre></div>
+</div>
+<p>If <code class="docutils literal notranslate"><span class="pre">-m</span></code> flag is given mosaic from input tiles is created
+automatically, see <a class="reference internal" href="#modis-mosaics"><span class="std std-numref">Fig. 117</span></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>See relevant <a class="reference external" href="https://github.com/OSGeo/grass-addons/blob/grass8/src/imagery/i.modis/libmodis/rmodislib.py#L78">source code</a>
+related to <code class="xref std std-option docutils literal notranslate"><span class="pre">spectral</span></code> option.</p>
+</div>
+<figure class="align-center" id="id3">
+<span id="modis-mosaics"></span><img alt="../_images/modis-mosaics.png" class="large" src="../_images/modis-mosaics.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 117 </span><span class="caption-text">Data mosaic created from h18v03 and h18v04 tiles.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="lst">
+<span id="modis-lst"></span><h2>LST<a class="headerlink" href="#lst" title="Permalink to this heading">¶</a></h2>
+<p>In this section <strong>Land Surface Temperature</strong> (LST) analysis will be
+perfmored for Germany.</p>
+<p>Let’s start by importing Germany administrative border located in the
+sample dataset <code class="file docutils literal notranslate"><span class="pre">osm/germany_boundary.gpkg</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Administrative border of Germany has been downloaded from
+OSM database.</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span>(
+relation
+[&quot;boundary&quot;=&quot;administrative&quot;]
+[&quot;admin_level&quot;=&quot;2&quot;]
+[&quot;name&quot;=&quot;Deutschland&quot;]
+);
+/*added<span class="w"> </span>by<span class="w"> </span>auto<span class="w"> </span>repair*/
+(._;&gt;;);
+/*end<span class="w"> </span>of<span class="w"> </span>auto<span class="w"> </span>repair*/
+out;
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ogr2ogr<span class="w"> </span>-f<span class="w"> </span>GPKG<span class="w"> </span>germany_boundary.gpkg<span class="w"> </span>-a_srs<span class="w"> </span>EPSG:4326<span class="w"> </span>-t_srs<span class="w"> </span>EPSG:3035<span class="w"> </span>/vsicurl_streaming/<span class="s2">&quot;\</span>
+<span class="s2">http://overpass-api.de/api/interpreter?data=%28relation%5B%22boundary%22%3D%22\</span>
+<span class="s2">administrative%22%5D%5B%22admin%5Flevel%22%3D%222%22%5D%5B%22name%22%3D%22Deutschland\</span>
+<span class="s2">%22%5D%3B%29%3B%28%2E%5F%3B%3E%3B%29%3Bout%3B%0A&quot;</span><span class="w"> </span>lines
+</pre></div>
+</div>
+</div>
+<p>The input file contains national border represented by linestring, see
+<a class="reference internal" href="#germany-boundary"><span class="std std-numref">Fig. 118</span></a> left part. Mask can be created only from
+area features (polygons). Input data have to be polygonized. This will
+be performed by two GRASS operations:</p>
+<ul class="simple">
+<li><p>change line border to <em>boundary</em> by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/v.type.html">v.type</a>
+(in GRASS topological model, an area is composition of boundaries
+and centroid, see <a class="reference internal" href="03.html#vector-topo-section"><span class="std std-ref">Unit 03</span></a>)</p></li>
+<li><p>add centroid by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/v.centroids.html">v.centroids</a></p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>v.type<span class="w"> </span><span class="nv">input</span><span class="o">=</span>germany_boundary<span class="w"> </span><span class="nv">output</span><span class="o">=</span>germany_b<span class="w"> </span><span class="nv">from_type</span><span class="o">=</span>line<span class="w"> </span><span class="nv">to_type</span><span class="o">=</span>boundary
+v.centroids<span class="w"> </span><span class="nv">input</span><span class="o">=</span>germany_b<span class="w"> </span><span class="nv">output</span><span class="o">=</span>germany
+</pre></div>
+</div>
+<figure class="align-center" id="id4">
+<span id="germany-boundary"></span><img alt="../_images/germany_line_area.png" class="large" src="../_images/germany_line_area.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 118 </span><span class="caption-text">Germany national boundary as linestring on left and as polygon
+(area) on right part.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>Mask will be created by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.mask.html">r.mask</a>. Don’t forget that
+computational region must be set before creating a mask. Computational
+region will be defined by Germany vector map and aligned by the input
+MODIS data by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/g.region.html">g.region</a>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>g.region<span class="w"> </span><span class="nv">vector</span><span class="o">=</span>germany<span class="w"> </span><span class="nv">align</span><span class="o">=</span>MOD11A2.A2019001_mosaic_LST_Day_1km
+r.mask<span class="w"> </span><span class="nv">vector</span><span class="o">=</span>germany
+</pre></div>
+</div>
+<p>Let’s check range values of our LST data by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.info.html">r.info</a> module:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.info<span class="w"> </span>-r<span class="w"> </span><span class="nv">map</span><span class="o">=</span>MOD11A2.A2019001_mosaic_LST_Day_1km
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">min</span><span class="o">=</span><span class="mi">0</span>
+<span class="nb">max</span><span class="o">=</span><span class="mi">14418</span>
+</pre></div>
+</div>
+<p id="modis-dn-c">In order to determine LST from input data, digital values (DN) must be
+converted into Celsius or Kelvin scale.</p>
+<div class="math notranslate nohighlight">
+\[C = DN * 0.02 - 273.15\]</div>
+<p>Conversion to Celsium scale can be done by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.mapcalc.html">r.mapcalc</a> (see
+also <a class="reference internal" href="05.html"><span class="doc">Unit 05 - Raster processing</span></a>). It’s also suitable to replace zero values with
+no-data value (NULL value in GRASS terminology).</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.mapcalc<span class="w"> </span><span class="nv">expression</span><span class="o">=</span><span class="s2">&quot;MOD11A2.A2019001_mosaic_LST_Day_1km_c = \</span>
+<span class="s2">if(MOD11A2.A2019001_mosaic_LST_Day_1km != 0, \</span>
+<span class="s2">MOD11A2.A2019001_mosaic_LST_Day_1km * 0.02 - 273.15, null())&quot;</span>
+</pre></div>
+</div>
+<p>Let’s check range values of new LST data layer.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.info<span class="w"> </span>-r<span class="w"> </span><span class="nv">map</span><span class="o">=</span>MOD11A2.A2019001_mosaic_LST_Day_1km_c
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">min</span><span class="o">=-</span><span class="mf">26.65</span>
+<span class="nb">max</span><span class="o">=</span><span class="mf">8.09000000000003</span>
+</pre></div>
+</div>
+<figure class="align-center" id="id5">
+<img alt="../_images/lst-c.png" class="large" src="../_images/lst-c.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 119 </span><span class="caption-text">LST reconstruction for Germany in Celsius scale (color table
+<code class="docutils literal notranslate"><span class="pre">celsius</span></code> applied).</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>Table of Contents</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS GIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02.html">Unit 02 - First steps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03.html">Unit 03 - Data Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Modules, Region</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05.html">Unit 05 - Raster processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06.html">Unit 06 - Data export</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07.html">Unit 07 - QGIS loves GRASS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08.html">Unit 08 - Modeler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09.html">Unit 09 - Model tuning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10.html">Unit 10 - Python intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11.html">Unit 11 - PyGRASS scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12.html">Unit 12 - Script User Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13.html">Unit 13 - PyGRASS Raster Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14.html">Unit 14 - PyGRASS Vector Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15.html">Unit 15 - Data reprojection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16.html">Unit 16 - Flooding simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17.html">Unit 17 - Spatio-temporal intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18.html">Unit 18 - Lidar, DTM interpolation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19.html">Unit 19 - DTM script parallelization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20.html">Unit 20 - Sentinel downloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="21.html">Unit 21 - Sentinel spatio-temporal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22.html">Unit 22 - Spatio-temporal scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23.html">Unit 23 - Spatio-temporal parallelization</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Unit 24 - MODIS</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#download-data">Download data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#import-data">Import data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lst">LST</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="25.html">Unit 25 - MODIS ST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="26.html">Unit 26 - MODIS ST scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="27.html">Unit 27 - PyWPS intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="28.html">Unit 28 - PyWPS LST point stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="29.html">Unit 29 - PyWPS LST region stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="30.html">Unit 30 - PyWPS LST region zones</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Search</h3>
+            <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="Go" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="23.html" title="Unit 23 - Spatio-temporal parallelization"
+              >previous</a> |
+            <a href="25.html" title="Unit 25 - MODIS ST"
+              >next</a>
+          </div>
+          <div role="note" aria-label="source link">
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018-2023 Martin Landa and GISMentors.eu.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

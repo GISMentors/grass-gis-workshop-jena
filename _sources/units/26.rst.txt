@@ -1,0 +1,43 @@
+Unit 26 - MODIS ST scripting
+============================
+
+Let's create a simple Python script for computing LST statistics in
+Germany area for given period. Input parameters:
+
+* :param:`input` - Name of the input space time raster dataset (line :lcode:`6`)
+* :param:`start` - Start date (line :lcode:`9`)
+* :param:`end` - End date (line :lcode:`15`)
+
+The script prints minimum, maximum and mean LST value. The raster map
+for computing statistics is created by :grasscmd:`t.rast.series` (line
+:lcode:`50`), statistics is computed by :grasscmd:`r.univar` (line
+:lcode:`60`). Statistics will be printed by lines :lcode:`66-68`.
+
+In :doc:`25` we processed LST space time dataset only for
+year 2019. We will also check if input dates are valid, see line
+:lcode:`31`.
+
+.. tip::
+
+   Verbosity level can be set globally by :envvar:`GRASS_VERBOSE`
+   environment variable, see line :lcode:`47`.
+    
+.. literalinclude:: ../_static/scripts/modis-date-stats.py
+   :language: python
+   :linenos:
+   :emphasize-lines: 6, 9, 15, 31, 47, 50, 60, 66-68
+
+Sample script to download: `modis-date-stats.py
+<../_static/scripts/modis-date-stats.py>`__
+                     
+Example of usage:
+
+.. code-block:: bash
+                
+   modis-date-stats.py input=modis_c start=2019-03-01 end=2019-04-01
+
+::
+   
+   Min: -8.3
+   Max: 12.6
+   Mean: 7.3

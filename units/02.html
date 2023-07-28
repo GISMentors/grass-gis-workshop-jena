@@ -1,0 +1,356 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Unit 02 - First steps &#8212; Jena GRASS GIS Workshop</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gismentors.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Unit 03 - Data Management" href="03.html" />
+    <link rel="prev" title="Unit 01 - About GRASS GIS" href="01.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html">Jena GRASS GIS Workshop</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="01.html" title="Unit 01 - About GRASS GIS"
+             accesskey="P">previous</a> |
+          <a href="03.html" title="Unit 03 - Data Management"
+             accesskey="N">next</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="unit-02-first-steps">
+<h1>Unit 02 - First steps<a class="headerlink" href="#unit-02-first-steps" title="Permalink to this heading">¶</a></h1>
+<p>Starting a GRASS session requires basic knowledge about the software
+itself. GRASS motivates users to organize their data from an early
+beginning. GRASS uses a consistent structure of so-called
+<strong>locations</strong> and <strong>mapsets</strong> to organize its data. This has not
+changed in GRASS 8.</p>
+<p id="location-mapset-section">The GRASS data structure has three levels:</p>
+<ol class="arabic simple">
+<li><p><strong>Database directory.</strong> A directory on local or network disc which
+contains all data accessed by GRASS. It’s usually a directory called
+<code class="file docutils literal notranslate"><span class="pre">grassdata</span></code> located in users’ home directory.</p></li>
+<li><p><strong>Location</strong>. All geodata stored within one location must have the
+same spatial coordinate system (GRASS doesn’t support on-the-fly
+projection for several reasons).</p></li>
+<li><dl class="simple">
+<dt><strong>Mapset</strong>. Contains task-related data within one project. Helps</dt><dd><p>organizing data into logical groups or to separate parallel work of
+different users on the same project.</p>
+</dd>
+</dl>
+</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In GRASS 7, a startup screen (<a class="reference internal" href="#startup7"><span class="std std-numref">Fig. 3</span></a>) appeared
+before entering a session. The user had to define the working
+environment in which the GRASS session started. This step
+was required to enter GRASS. Such an approach is not so
+common. Applications like Esri ArcGIS or QGIS just start. Users
+load different data from various sources in different
+projections and start working on their project.</p>
+<figure class="align-center" id="id1">
+<span id="startup7"></span><img alt="../_images/grass7-start.png" src="../_images/grass7-start.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 3 </span><span class="caption-text">GRASS GIS startup screen in version 7.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+</div>
+<p>Obstacles (especially for newcomers) related to the startup screen have
+been reduced in GRASS 8. The startup screen has been
+replaced by a completely new mechanism. On the first launch, GRASS 8
+sets up the <em>database directory</em> automatically and launches GUI in a
+default location <em>World LatLong WGS84</em>. Also, a sample <em>world</em> vector
+layer (in GRASS terminology <em>vector map</em>) is shown.</p>
+<p>GRASS GUI is designed as a <em>simple and lightweight</em> graphical user
+interface. Basically, it is a GUI front-end calling GRASS commands (see
+<a class="reference internal" href="04.html#grass-modules"><span class="std std-ref">Accessing GRASS modules</span></a>) in the background. The GUI consists of two main
+windows, see <a class="reference internal" href="#startup8"><span class="std std-numref">Fig. 4</span></a>.</p>
+<figure class="align-center" id="id2">
+<span id="startup8"></span><img alt="../_images/grass8-start.png" class="large" src="../_images/grass8-start.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 4 </span><span class="caption-text">GRASS GIS 8 on startup.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If GUI crashes, it can be started again by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/g.gui.html">g.gui</a>
+command from the underlying terminal (command prompt).</p>
+</div>
+<p>GRASS GUI guides users by means of tooltips as shown in
+<a class="reference internal" href="#startup8"><span class="std std-numref">Fig. 4</span></a>. The default location is not designed for real
+work. The next step is usually to create new “project(s)” (in GRASS
+terminology <em>a location</em>) with user-defined spatial coordinate systems.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Consider changing language settings to English in
+<span class="menuselection">Settings ‣ Preferences ‣ Appearance</span>. Change
+<cite>Language settings</cite> to <code class="docutils literal notranslate"><span class="pre">en</span></code> and restart GRASS.</p>
+</div>
+<section id="create-a-new-location">
+<span id="create-location"></span><h2>Create a new location<a class="headerlink" href="#create-a-new-location" title="Permalink to this heading">¶</a></h2>
+<p>By clicking on <span class="item">Create new Location</span> button in the tooltip (or by
+<a class="reference internal" href="../_images/location-add.png"><img alt="grass-location-add" src="../_images/location-add.png" style="width: 1.5em;" /></a> from the toolbar) the wizard appears. A new GRASS
+location can be easily created using <a class="reference external" href="http://cs.wikipedia.org/wiki/EPSG">EPSG</a> codes or
+user-defined geodata.</p>
+<p>In the first page of the location wizard, the location name is defined.
+Optionally, also a short description can be added.</p>
+<figure class="align-center" id="id3">
+<img alt="../_images/create-location-0.png" src="../_images/create-location-0.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 5 </span><span class="caption-text">Define a name for the new GRASS location.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>In the next page, a coordinate reference system (CRS) is chosen. CRS
+is usually defined by EPSG code (<span class="item">Select CRS from a list by EPSG
+or description</span>) or by user-defined geodata (<span class="item">Read CRS from a
+georeferenced data file</span>).</p>
+<figure class="align-center" id="id4">
+<img alt="../_images/create-location-1.png" src="../_images/create-location-1.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 6 </span><span class="caption-text">Choose “Read CRS from a georeferenced data file” for creating a new
+GRASS location.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>In our case, a new location will be created by defining CRS from
+<a class="reference external" href="../_static/data/jena_boundary.gpkg">jena_boundary.gpkg</a> input
+file.</p>
+<figure class="align-center" id="id5">
+<img alt="../_images/create-location-2.png" src="../_images/create-location-2.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 7 </span><span class="caption-text">Define an input file <a class="reference external" href="../_static/data/jena_boundary.gpkg">jena_boundary.gpkg</a> (available from
+<code class="file docutils literal notranslate"><span class="pre">geodata/osm</span></code> directory).</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<div class="admonition note" id="city-region-download">
+<p class="admonition-title">Note</p>
+<p>Jena administrative boundary has been downloaded from
+OpenStreetMap project using Overpass API by GDAL library (<cite>ogr2ogr</cite>
+utility). Downloaded data is stored in OGC GeoPackage format (<em>we
+don’t like an old-school Esri Shapefile format</em>). Data is
+reprojected to UTM zone 32N (<a class="reference external" href="http://epsg.io/32632">EPSG:32632</a>) since we want to work
+with Sentinel data afterwards, see <a class="reference internal" href="03.html"><span class="doc">Unit 03 - Data Management</span></a>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ogr2ogr<span class="w"> </span>-f<span class="w"> </span>GPKG<span class="w"> </span>jena_boundary.gpkg<span class="w"> </span>-a_srs<span class="w"> </span>EPSG:4326<span class="w"> </span>-t_srs<span class="w"> </span>EPSG:32632<span class="w"> </span><span class="se">\</span>
+/vsicurl_streaming/<span class="s2">&quot;http://overpass-api.de/api/interpreter?data=%28relation\</span>
+<span class="s2">%5B%22boundary%22%3D%22administrative%22%5D%5B%22admin%5Flevel%22%3D%226%22%5D%5B%22\</span>
+<span class="s2">name%22%3D%22Jena%22%5D%3B%29%3B%28%2E%5F%3B%3E%3B%29%3Bout%3B%0A&quot;</span><span class="w"> </span>multipolygons
+</pre></div>
+</div>
+<p>The URL has been generated by <a class="reference external" href="http://overpass-turbo.eu">http://overpass-turbo.eu</a>
+(<span class="menuselection">Export ‣ Query ‣ compact OverpassQL</span>) using
+the query below:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span>(
+relation
+[&quot;boundary&quot;=&quot;administrative&quot;]
+[&quot;admin_level&quot;=&quot;6&quot;]
+[&quot;name&quot;=&quot;Jena&quot;]
+);
+/*added<span class="w"> </span>by<span class="w"> </span>auto<span class="w"> </span>repair*/
+(._;&gt;;);
+/*end<span class="w"> </span>of<span class="w"> </span>auto<span class="w"> </span>repair*/
+out;
+</pre></div>
+</div>
+</div>
+<p>Spatial reference system is chosen based on input file (UTM zone 32N
+<a class="reference external" href="http://epsg.io/32632">EPSG:32632</a>).</p>
+<figure class="align-center" id="id6">
+<img alt="../_images/create-location-3.png" src="../_images/create-location-3.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 8 </span><span class="caption-text">Check the summary.</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>A new GRASS user-defined location will be created by clicking on
+<span class="item">Finish</span> button.</p>
+<p>After creating a new location (<span class="item">Finish</span> button) the user can
+optionally import data used for defining the new location (in our case
+<em>jena_boundary.gpkg</em>).</p>
+<figure class="align-center" id="id7">
+<img alt="../_images/create-location-4.png" class="small" src="../_images/create-location-4.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 9 </span><span class="caption-text">Let’s import data to simplify our first steps in GRASS GIS.</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>By default GRASS creates a <em>PERMANENT mapset</em> in the new location.
+Here, all location settings are stored. This mapset is commonly used
+for importing input geodata used in the location.</p>
+<figure class="align-center" id="id8">
+<img alt="../_images/create-location-5.png" class="large" src="../_images/create-location-5.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 10 </span><span class="caption-text">GRASS GUI automatically switches to the new location.</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="display-data">
+<h2>Display data<a class="headerlink" href="#display-data" title="Permalink to this heading">¶</a></h2>
+<p>Imported <span class="map">jena_boundary</span> data layer can be easily displayed from
+<span class="item">Data</span> tab.</p>
+<figure class="align-center" id="id9">
+<img alt="../_images/jena-boundary.png" class="large" src="../_images/jena-boundary.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 11 </span><span class="caption-text">Display Jena city administrative boundary vector layer. Select
+<span class="item">Display layer</span> from contextual menu in Data tab or simply
+use double-click on the specified layer.</span><a class="headerlink" href="#id9" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>Let’s also add a basemap from freely available OpenStreeMap map
+service. In our case <em>OpenStreetMap WMS</em> provided by <a class="reference external" href="https://mundialis.de">mundialis</a> company
+(<a class="reference external" href="http://ows.mundialis.de/services/service">http://ows.mundialis.de/services/service</a>?). WMS layer can be added
+from <span class="item">Layers</span> tab <a class="reference internal" href="../_images/layer-wms-add.png"><img alt="grass-layer-wms-add" src="../_images/layer-wms-add.png" style="width: 1.5em;" /></a> <sup>Add web service
+layer</sup>.</p>
+<figure class="align-center" id="id10">
+<img alt="../_images/d-wms-0.png" src="../_images/d-wms-0.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 12 </span><span class="caption-text">Connect to the defined WMS server.</span><a class="headerlink" href="#id10" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>After connecting to the WMS server, desired layer can be chosen.</p>
+<figure class="align-center" id="id11">
+<img alt="../_images/d-wms-1.png" src="../_images/d-wms-1.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 13 </span><span class="caption-text">Choose WMS layer to be displayed.</span><a class="headerlink" href="#id11" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>On MS Windows is currently WMS functionality broken. Use
+<code class="file docutils literal notranslate"><span class="pre">geodata/osm/basemap.pack</span></code> file which can be loaded into
+GRASS in <span class="item">Data</span> tab by <a class="reference internal" href="../_images/layer-import.png"><img alt="grass-layer-import" src="../_images/layer-import.png" style="width: 1.5em;" /></a> <sup>Unpack
+GRASS raster map [r.unpack]</sup>. New raster map <span class="map">basemap</span> should
+appear in <span class="item">Data</span> tab. In opposite case refresh content by
+<a class="reference internal" href="../_images/reload.png"><img alt="grass-reload" src="../_images/reload.png" style="width: 1.5em;" /></a> <sup>Reload GRASS mapset only</sup>.</p>
+</div>
+<p>In <span class="item">Layers</span> tab change order of layers (move
+<span class="map">jena-boundary</span> on the top) and tune display properities of
+<span class="map">jena-boundary</span> layer.</p>
+<figure class="align-center" id="id12">
+<img alt="../_images/d-vect-menu.png" src="../_images/d-vect-menu.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 14 </span><span class="caption-text">Choose <span class="item">Properties</span> from contextual menu (right click on
+selected layer).</span><a class="headerlink" href="#id12" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="id13">
+<img alt="../_images/d-vect-colrs.png" src="../_images/d-vect-colrs.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 15 </span><span class="caption-text">Change map layer properties: outline in blue color, fill color
+transparent.</span><a class="headerlink" href="#id13" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="id14">
+<img alt="../_images/jena-boundary-wms.png" class="large" src="../_images/jena-boundary-wms.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 16 </span><span class="caption-text">A map composition of basemap and boundary of Jena city region in
+blue color.</span><a class="headerlink" href="#id14" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>Table of Contents</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS GIS</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Unit 02 - First steps</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#create-a-new-location">Create a new location</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#display-data">Display data</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="03.html">Unit 03 - Data Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Modules, Region</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05.html">Unit 05 - Raster processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06.html">Unit 06 - Data export</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07.html">Unit 07 - QGIS loves GRASS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08.html">Unit 08 - Modeler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09.html">Unit 09 - Model tuning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10.html">Unit 10 - Python intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11.html">Unit 11 - PyGRASS scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12.html">Unit 12 - Script User Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13.html">Unit 13 - PyGRASS Raster Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14.html">Unit 14 - PyGRASS Vector Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15.html">Unit 15 - Data reprojection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16.html">Unit 16 - Flooding simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17.html">Unit 17 - Spatio-temporal intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18.html">Unit 18 - Lidar, DTM interpolation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19.html">Unit 19 - DTM script parallelization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20.html">Unit 20 - Sentinel downloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="21.html">Unit 21 - Sentinel spatio-temporal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22.html">Unit 22 - Spatio-temporal scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23.html">Unit 23 - Spatio-temporal parallelization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="24.html">Unit 24 - MODIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="25.html">Unit 25 - MODIS ST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="26.html">Unit 26 - MODIS ST scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="27.html">Unit 27 - PyWPS intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="28.html">Unit 28 - PyWPS LST point stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="29.html">Unit 29 - PyWPS LST region stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="30.html">Unit 30 - PyWPS LST region zones</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Search</h3>
+            <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="Go" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="01.html" title="Unit 01 - About GRASS GIS"
+              >previous</a> |
+            <a href="03.html" title="Unit 03 - Data Management"
+              >next</a>
+          </div>
+          <div role="note" aria-label="source link">
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018-2023 Martin Landa and GISMentors.eu.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

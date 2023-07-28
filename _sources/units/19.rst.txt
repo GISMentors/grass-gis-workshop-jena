@@ -1,0 +1,81 @@
+Unit 19 - DTM script parallelization
+====================================
+
+This unit is focused on **parallel computing**. Sample script
+below produces seamless DTM (Digital Terrain Model, see :doc:`18`)
+from bunch of LAS/LAZ files. Computation will be split into tiles and
+performed in parallel.
+
+DTM interpolation in parallel
+-----------------------------
+
+User interface defines two parameters, :param:`directory` (line
+:lcode:`6`) for input directory with input LAS/LAZ files, and
+:param:`elevation` (line :lcode:`9`) name for output elevation raster
+map mosaics. The resolution of output DTM is defined by
+:param:`resolution` parameter (line :lcode:`13`). And finally number
+of processes running in parallel will be controlled by :param:`nproc`
+(line :lcode:`18`) parameter.
+
+A script consists of three main functions:
+
+1. ``import_files()`` to import input LAS/LAZ files (line
+:lcode:`33`). Import process can be performed in parallel by
+:pygrass-modules:`ParallelModuleQueue` from PyGRASS library (see
+:doc:`11` for PyGRASS introduction), lines :lcode:`37, 42, 57-58, 60`.
+
+2. ``create_dtm_tiles()`` to compute DTM per tile (line :lcode:`67`)
+using :grasscmd:`v.surf.rst`. DTM tiles need to be computed with a
+reasonable overlap in order to create seamless mosaics, see
+:lcode:`73-76`. Tiles can be processed in parallel too, see
+:param:`nproc` option on line :lcode:`82`.
+
+3. ``patch_tiles()`` to patch DTM tiles together by
+:grasscmd:`r.series`, see :lcode:`86`. From overlapping cell values is
+computed an average value. This is main reason why :grasscmd:`r.patch`
+is not used here.
+  
+.. literalinclude:: ../_static/scripts/create-dtm.py
+   :language: python
+   :linenos:
+   :emphasize-lines: 6, 9, 13, 18, 33, 37, 42, 57-58, 60, 67, 73-76, 82, 86
+
+Sample script to download: `create-dtm.py <../_static/scripts/create-dtm.py>`__
+
+.. note::
+
+	The script is taking a long time with all the tiles from
+	:file:`/home/user/geodata/lidar` directory. Choose few tiles
+	for testing.
+	
+.. figure:: ../images/units/19/dtm_patched.png
+   :class: middle
+   
+   DTM created from all available tiles.
+
+..   
+   .. todo:: update
+          
+.. _dmt-comparision:
+
+DTM comparision
+---------------
+
+In this session we will compute the Canopy Height Model (CHM), as the
+difference between interpolated DSM and imported EU-DEM DTM from
+:doc:`15`.
+
+The CHM is computed using :grasscmd:`r.mapcalc`, executing the difference between
+DSM and DTM.
+
+.. code-block:: bash
+
+   r.mapcalc expression="chm = dtm_laz - dem"
+
+.. figure:: ../images/units/19/chm.png
+   :class: middle
+   
+   The CHM map.
+
+..
+    .. todo:: update screenshot

@@ -1,0 +1,348 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Unit 27 - PyWPS intro &#8212; Jena GRASS GIS Workshop</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gismentors.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Unit 28 - PyWPS LST point stats" href="28.html" />
+    <link rel="prev" title="Unit 26 - MODIS ST scripting" href="26.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html">Jena GRASS GIS Workshop</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="26.html" title="Unit 26 - MODIS ST scripting"
+             accesskey="P">previous</a> |
+          <a href="28.html" title="Unit 28 - PyWPS LST point stats"
+             accesskey="N">next</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="unit-27-pywps-intro">
+<h1>Unit 27 - PyWPS intro<a class="headerlink" href="#unit-27-pywps-intro" title="Permalink to this heading">¶</a></h1>
+<p><a class="reference external" href="http://pywps.org">PyWPS</a> is a server side implementation of the
+<a class="reference external" href="http://www.opengeospatial.org/standards/wps">OGC Web Processing Service</a> (OGC WPS) standard
+implemented in the Python programming language.</p>
+<figure class="align-center" id="id1">
+<img alt="../_images/server-based-network.png" class="small" src="../_images/server-based-network.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 122 </span><span class="caption-text">Server-client architecture.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="id2">
+<img alt="../_images/map-servers.png" src="../_images/map-servers.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 123 </span><span class="caption-text">OGC Web Map Service example.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p><strong>OGC Web Processing Service</strong> standard provides rules for
+standardizing inputs and outputs (requests and responses) for
+geospatial processing services. The standard also defines how a client
+can request the execution of a process, and how the output from the
+process is handled. It defines an interface that facilitates the
+publishing of geospatial processes and clients discovery of and
+binding to those processes. The data required by the WPS can be
+delivered across a network or they can be available at the
+server. (source: <a class="reference external" href="http://pywps.readthedocs.io/en/master/wps.html">PyWPS documentation</a>)</p>
+<figure class="align-center" id="id3">
+<img alt="../_images/processing-servers.png" src="../_images/processing-servers.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 124 </span><span class="caption-text">OGC Web Processing Service example.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>This unit shows how to write your own WPS processes. The processes
+will be tested in <a class="reference external" href="https://github.com/geopython/pywps-flask">PyWPS demo</a> environment. <a class="reference external" href="https://github.com/geopython/pywps-flask/archive/master.zip">Download</a> the
+demo and extract into your working directory.</p>
+<p>Install PyWPS and Flask dependency from GRASS <span class="item">Console</span> tab.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>On MS Windows download fiona package from
+<a class="reference external" href="https://www.lfd.uci.edu/~gohlke/pythonlibs/">https://www.lfd.uci.edu/~gohlke/pythonlibs/</a> and install it:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>C:<span class="se">\U</span>sers<span class="se">\m</span>artin<span class="se">\D</span>ownloads<span class="se">\F</span>iona-1.8.21-cp39-cp39-win_amd64.whl
+</pre></div>
+</div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="nv">flask</span><span class="o">==</span><span class="m">1</span>.1.4<span class="w"> </span><span class="nv">werkzeug</span><span class="o">==</span><span class="m">1</span>.0.1<span class="w"> </span><span class="nv">pywps</span><span class="o">==</span><span class="m">4</span>.2.11<span class="w"> </span><span class="nv">markupsafe</span><span class="o">==</span><span class="m">2</span>.0.1
+</pre></div>
+</div>
+<p>Go to <code class="file docutils literal notranslate"><span class="pre">pywps-flask</span></code> directory and start PyWPS demo server</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>demo.py
+</pre></div>
+</div>
+<p>Open <a class="reference external" href="http://127.0.0.1:5000">http://127.0.0.1:5000</a> in order to see all available WPS demo
+processes. Let’s request process description of selected process,
+eg. <em>say_hello</em> process. Try to run the process by <code class="docutils literal notranslate"><span class="pre">execute</span></code>
+request.</p>
+<p><a class="reference external" href="http://localhost:5000/wps?request=Execute&amp;service=WPS&amp;identifier=say_hello&amp;version=1.0.0&amp;datainputs=name=Martin">http://localhost:5000/wps?request=Execute&amp;service=WPS&amp;identifier=say_hello&amp;version=1.0.0&amp;datainputs=name=Martin</a></p>
+<p>Example of response:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;wps:LiteralData</span><span class="w"> </span><span class="na">uom=</span><span class="s">&quot;urn:ogc:def:uom:OGC:1.0:unity&quot;</span><span class="w"> </span><span class="na">dataType=</span><span class="s">&quot;string&quot;</span><span class="nt">&gt;</span>
+Hello<span class="w"> </span>Martin
+<span class="nt">&lt;/wps:LiteralData&gt;</span>
+</pre></div>
+</div>
+<p>Let’s continue with creating our own WPS process.</p>
+<section id="modis-process">
+<h2>MODIS process<a class="headerlink" href="#modis-process" title="Permalink to this heading">¶</a></h2>
+<p>Go to <code class="file docutils literal notranslate"><span class="pre">pywps-flask/processes</span></code> directory and create a new process
+(<code class="file docutils literal notranslate"><span class="pre">grassbuffer.py</span></code> can be used as a template). Example of process
+below is based on the script created in <a class="reference internal" href="26.html"><span class="doc">Unit 26 - MODIS ST scripting</span></a>. Let’s focus on
+important parts.</p>
+<p>Process itself is defined as a Python class, <code class="xref py py-class docutils literal notranslate"><span class="pre">ModisV1</span></code> in this
+case (line <span class="lcode">7</span>). In class constructor input (lines <span class="lcode">9</span>
+and <span class="lcode">11</span>) and output parameters (line <span class="lcode">14</span>) are
+defined. Every process has its identifier (line <span class="lcode">20</span>), title
+and abstract. The process will operate in GRASS location defined on
+line <span class="lcode">30</span>. On line <span class="lcode">61</span> is assumed that space time LST
+dataset is located in PERMANENT, see <a class="reference internal" href="25.html"><span class="doc">Unit 25 - MODIS ST</span></a>. For each job (executed
+process by a client) PyWPS creates in this location a temporary mapset
+which is deleted when process is finished. Process body is implemented
+as <code class="docutils literal notranslate"><span class="pre">_handler()</span></code> method, see line <span class="lcode">40</span>. Resultant statistics
+is stored to response output as a simple string on line <span class="lcode">80</span>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">os</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="kn">from</span> <span class="nn">pywps</span> <span class="kn">import</span> <span class="n">Process</span><span class="p">,</span> <span class="n">LiteralInput</span><span class="p">,</span> <span class="n">LiteralOutput</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="n">__author__</span> <span class="o">=</span> <span class="s1">&#39;Martin Landa&#39;</span>
+<span class="linenos"> 6</span>
+<span class="hll"><span class="linenos"> 7</span><span class="k">class</span> <span class="nc">ModisV1</span><span class="p">(</span><span class="n">Process</span><span class="p">):</span>
+</span><span class="linenos"> 8</span>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="hll"><span class="linenos"> 9</span>        <span class="n">inputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">LiteralInput</span><span class="p">(</span><span class="s1">&#39;start&#39;</span><span class="p">,</span> <span class="s1">&#39;Start date (eg. 2019-03-01)&#39;</span><span class="p">,</span>
+</span><span class="linenos">10</span>                               <span class="n">data_type</span><span class="o">=</span><span class="s1">&#39;string&#39;</span><span class="p">),</span>
+<span class="hll"><span class="linenos">11</span>                  <span class="n">LiteralInput</span><span class="p">(</span><span class="s1">&#39;end&#39;</span><span class="p">,</span> <span class="s1">&#39;End date (eg. 2019-04-01)&#39;</span><span class="p">,</span>
+</span><span class="linenos">12</span>                               <span class="n">data_type</span><span class="o">=</span><span class="s1">&#39;string&#39;</span><span class="p">)</span>
+<span class="linenos">13</span>        <span class="p">]</span>
+<span class="hll"><span class="linenos">14</span>        <span class="n">outputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">LiteralOutput</span><span class="p">(</span><span class="s1">&#39;stats&#39;</span><span class="p">,</span> <span class="s1">&#39;Computed LST statistics&#39;</span><span class="p">,</span>
+</span><span class="linenos">15</span>                                 <span class="n">data_type</span><span class="o">=</span><span class="s1">&#39;string&#39;</span><span class="p">)</span>
+<span class="linenos">16</span>        <span class="p">]</span>
+<span class="linenos">17</span>
+<span class="linenos">18</span>        <span class="nb">super</span><span class="p">(</span><span class="n">ModisV1</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+<span class="linenos">19</span>            <span class="bp">self</span><span class="o">.</span><span class="n">_handler</span><span class="p">,</span>
+<span class="hll"><span class="linenos">20</span>            <span class="n">identifier</span><span class="o">=</span><span class="s1">&#39;modis-v1&#39;</span><span class="p">,</span>
+</span><span class="linenos">21</span>            <span class="n">version</span><span class="o">=</span><span class="s1">&#39;0.1&#39;</span><span class="p">,</span>
+<span class="linenos">22</span>            <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Modis process (v1)&quot;</span><span class="p">,</span>
+<span class="linenos">23</span>            <span class="n">abstract</span><span class="o">=</span><span class="s1">&#39;The process uses the GRASS GIS to compute LST &#39;</span> \
+<span class="linenos">24</span>            <span class="s1">&#39;statistics for given period in 2019 for Germany&#39;</span><span class="p">,</span>
+<span class="linenos">25</span>            <span class="n">profile</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+<span class="linenos">26</span>            <span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span>
+<span class="linenos">27</span>            <span class="n">outputs</span><span class="o">=</span><span class="n">outputs</span><span class="p">,</span>
+<span class="linenos">28</span>            <span class="n">store_supported</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="linenos">29</span>            <span class="n">status_supported</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="hll"><span class="linenos">30</span>            <span class="n">grass_location</span><span class="o">=</span><span class="s2">&quot;/home/user/grassdata/germany-modis&quot;</span>
+</span><span class="linenos">31</span>        <span class="p">)</span>
+<span class="linenos">32</span>
+<span class="linenos">33</span>    <span class="k">def</span> <span class="nf">check_date</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">date_str</span><span class="p">):</span>
+<span class="linenos">34</span>        <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="linenos">35</span>
+<span class="linenos">36</span>        <span class="n">d</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">date_str</span><span class="p">,</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="linenos">37</span>        <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">year</span> <span class="o">!=</span> <span class="mi">2019</span><span class="p">:</span>
+<span class="linenos">38</span>            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Only year 2019 allowed&quot;</span><span class="p">)</span>
+<span class="linenos">39</span>
+<span class="hll"><span class="linenos">40</span>    <span class="k">def</span> <span class="nf">_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+</span><span class="linenos">41</span>        <span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">PIPE</span>
+<span class="linenos">42</span>
+<span class="linenos">43</span>        <span class="kn">import</span> <span class="nn">grass.script</span> <span class="k">as</span> <span class="nn">gs</span>
+<span class="linenos">44</span>        <span class="kn">from</span> <span class="nn">grass.pygrass.modules</span> <span class="kn">import</span> <span class="n">Module</span>
+<span class="linenos">45</span>        <span class="kn">from</span> <span class="nn">grass.exceptions</span> <span class="kn">import</span> <span class="n">CalledModuleError</span>
+<span class="linenos">46</span>        
+<span class="linenos">47</span>        <span class="n">start</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;start&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+<span class="linenos">48</span>        <span class="n">end</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;end&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+<span class="linenos">49</span>        <span class="bp">self</span><span class="o">.</span><span class="n">check_date</span><span class="p">(</span><span class="n">start</span><span class="p">)</span>
+<span class="linenos">50</span>        <span class="bp">self</span><span class="o">.</span><span class="n">check_date</span><span class="p">(</span><span class="n">end</span><span class="p">)</span>
+<span class="linenos">51</span>
+<span class="linenos">52</span>        <span class="n">output</span> <span class="o">=</span> <span class="s1">&#39;modis_response&#39;</span>
+<span class="linenos">53</span>        
+<span class="linenos">54</span>        <span class="c1"># be silent</span>
+<span class="linenos">55</span>        <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;GRASS_VERBOSE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;0&#39;</span>
+<span class="linenos">56</span>
+<span class="linenos">57</span>        <span class="c1"># need to set computation region (would be nice g.region strds or t.region)</span>
+<span class="linenos">58</span>        <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;g.region&#39;</span><span class="p">,</span> <span class="n">raster</span><span class="o">=</span><span class="s1">&#39;c_001&#39;</span><span class="p">)</span>
+<span class="linenos">59</span>        <span class="k">try</span><span class="p">:</span>
+<span class="linenos">60</span>            <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;t.rast.series&#39;</span><span class="p">,</span>
+<span class="hll"><span class="linenos">61</span>                   <span class="nb">input</span><span class="o">=</span><span class="s1">&#39;modis_c@PERMANENT&#39;</span><span class="p">,</span>
+</span><span class="linenos">62</span>                   <span class="n">output</span><span class="o">=</span><span class="n">output</span><span class="p">,</span>
+<span class="linenos">63</span>                   <span class="n">method</span><span class="o">=</span><span class="s1">&#39;average&#39;</span><span class="p">,</span>
+<span class="linenos">64</span>                   <span class="n">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt; &#39;</span><span class="si">{start}</span><span class="s2">&#39; and start_time &lt; &#39;</span><span class="si">{end}</span><span class="s2">&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+<span class="linenos">65</span>                       <span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">end</span>
+<span class="linenos">66</span>            <span class="p">))</span>
+<span class="linenos">67</span>        <span class="k">except</span> <span class="n">CalledModuleError</span><span class="p">:</span>
+<span class="linenos">68</span>            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Unable to compute statistics&#39;</span><span class="p">)</span>
+<span class="linenos">69</span>
+<span class="linenos">70</span>        <span class="n">ret</span> <span class="o">=</span> <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;r.univar&#39;</span><span class="p">,</span>
+<span class="linenos">71</span>                     <span class="n">flags</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span>
+<span class="linenos">72</span>                     <span class="nb">map</span><span class="o">=</span><span class="n">output</span><span class="p">,</span>
+<span class="linenos">73</span>                     <span class="n">stdout_</span><span class="o">=</span><span class="n">PIPE</span>
+<span class="linenos">74</span>        <span class="p">)</span>
+<span class="linenos">75</span>        <span class="n">stats</span> <span class="o">=</span> <span class="n">gs</span><span class="o">.</span><span class="n">parse_key_val</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+<span class="linenos">76</span>        
+<span class="linenos">77</span>        <span class="n">outstr</span> <span class="o">=</span> <span class="s1">&#39;Min: </span><span class="si">{0:.1f}</span><span class="s1">;Max: </span><span class="si">{1:.1f}</span><span class="s1">;Mean: </span><span class="si">{2:.1f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+<span class="linenos">78</span>            <span class="nb">float</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;min&#39;</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;max&#39;</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">])</span>
+<span class="linenos">79</span>        <span class="p">)</span>
+<span class="hll"><span class="linenos">80</span>        <span class="n">response</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="s1">&#39;stats&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">outstr</span>
+</span><span class="linenos">81</span>
+<span class="linenos">82</span>        <span class="k">return</span> <span class="n">response</span>
+</pre></div>
+</div>
+<p>Sample process to download: <a class="reference external" href="../_static/scripts/modis_v1.py">modis_v1.py</a></p>
+<p id="process-import">The process has to be activated in <code class="file docutils literal notranslate"><span class="pre">demo.py</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">...</span>
+<span class="kn">from</span> <span class="nn">processes.modis_v1</span> <span class="kn">import</span> <span class="n">ModisV1</span>
+<span class="o">...</span>
+
+<span class="n">processes</span> <span class="o">=</span> <span class="p">[</span>
+ <span class="o">...</span>
+ <span class="n">ModisV1</span><span class="p">(),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>Stop running demo PyWPS server by <kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">Ctrl</kbd>+<kbd class="kbd docutils literal notranslate">C</kbd></kbd> and start again.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>./demo.py
+</pre></div>
+</div>
+<p>You should see your <code class="docutils literal notranslate"><span class="pre">modis-v1</span></code> process in the list. Click on
+<code class="docutils literal notranslate"><span class="pre">DescribeProcess</span></code> to check input and outputs parameters description.</p>
+<figure class="align-center" id="id4">
+<img alt="../_images/modis-v1.png" src="../_images/modis-v1.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 125 </span><span class="caption-text">Process modis-v1 available on PyWPS demo server.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>In order to use GRASS GIS functionality update PyWPS
+configuration. Open <code class="file docutils literal notranslate"><span class="pre">pywps.cfg</span></code> and set correct GRASS
+installation directory, eg.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">gisbase</span><span class="o">=</span>/usr/lib/grass80
+</pre></div>
+</div>
+<p>On Windows specify path in Unix-like style:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">gisbase</span><span class="o">=</span>/C/Program<span class="w"> </span>Files/GRASS<span class="w"> </span>GIS<span class="w"> </span><span class="m">8</span>.0
+</pre></div>
+</div>
+</div>
+<p>Now execute the process:</p>
+<p><a class="reference external" href="http://localhost:5000/wps?request=Execute&amp;service=WPS&amp;identifier=modis-v1&amp;version=1.0.0&amp;datainputs=start=2019-03-01;end=2019-04-01">http://localhost:5000/wps?request=Execute&amp;service=WPS&amp;identifier=modis-v1&amp;version=1.0.0&amp;datainputs=start=2019-03-01;end=2019-04-01</a></p>
+<p>Example of response:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;wps:LiteralData</span><span class="w"> </span><span class="na">dataType=</span><span class="s">&quot;string&quot;</span><span class="nt">&gt;</span>
+Min:<span class="w"> </span>-8.3;Max:<span class="w"> </span>12.6;Mean:<span class="w"> </span>7.3
+<span class="nt">&lt;/wps:LiteralData&gt;</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>When something goes wrong, check <code class="file docutils literal notranslate"><span class="pre">logs/pywps.log</span></code> for
+details.</p>
+</div>
+<div class="task admonition">
+<p class="admonition-title">Úkol</p>
+<p>Try to improve the process in order to return something more
+reasonable than a string, eg. <a class="reference external" href="http://cs.wikipedia.org/wiki/JSON">JSON</a>.</p>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>Table of Contents</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS GIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02.html">Unit 02 - First steps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03.html">Unit 03 - Data Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Modules, Region</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05.html">Unit 05 - Raster processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06.html">Unit 06 - Data export</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07.html">Unit 07 - QGIS loves GRASS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08.html">Unit 08 - Modeler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09.html">Unit 09 - Model tuning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10.html">Unit 10 - Python intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11.html">Unit 11 - PyGRASS scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12.html">Unit 12 - Script User Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13.html">Unit 13 - PyGRASS Raster Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14.html">Unit 14 - PyGRASS Vector Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15.html">Unit 15 - Data reprojection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16.html">Unit 16 - Flooding simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17.html">Unit 17 - Spatio-temporal intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18.html">Unit 18 - Lidar, DTM interpolation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19.html">Unit 19 - DTM script parallelization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20.html">Unit 20 - Sentinel downloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="21.html">Unit 21 - Sentinel spatio-temporal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22.html">Unit 22 - Spatio-temporal scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23.html">Unit 23 - Spatio-temporal parallelization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="24.html">Unit 24 - MODIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="25.html">Unit 25 - MODIS ST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="26.html">Unit 26 - MODIS ST scripting</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Unit 27 - PyWPS intro</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#modis-process">MODIS process</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="28.html">Unit 28 - PyWPS LST point stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="29.html">Unit 29 - PyWPS LST region stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="30.html">Unit 30 - PyWPS LST region zones</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Search</h3>
+            <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="Go" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="26.html" title="Unit 26 - MODIS ST scripting"
+              >previous</a> |
+            <a href="28.html" title="Unit 28 - PyWPS LST point stats"
+              >next</a>
+          </div>
+          <div role="note" aria-label="source link">
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018-2023 Martin Landa and GISMentors.eu.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

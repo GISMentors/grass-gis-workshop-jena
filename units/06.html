@@ -1,0 +1,241 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Unit 06 - Data export &#8212; Jena GRASS GIS Workshop</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gismentors.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Unit 07 - QGIS loves GRASS" href="07.html" />
+    <link rel="prev" title="Unit 05 - Raster processing" href="05.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html">Jena GRASS GIS Workshop</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="05.html" title="Unit 05 - Raster processing"
+             accesskey="P">previous</a> |
+          <a href="07.html" title="Unit 07 - QGIS loves GRASS"
+             accesskey="N">next</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="unit-06-data-export">
+<h1>Unit 06 - Data export<a class="headerlink" href="#unit-06-data-export" title="Permalink to this heading">¶</a></h1>
+<p>Data produced by GRASS tools (like <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.mapcalc.html">r.mapcalc</a> or
+<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/i.vi.html">i.vi</a> in <a class="reference internal" href="05.html"><span class="doc">Unit 05 - Raster processing</span></a>) is always stored in the current
+mapset.</p>
+<p>There are two fundamental tools for exporting data from GRASS to
+exchange data formats:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.out.gdal.html">r.out.gdal</a> for exporting raster data
+(<span class="menuselection">File ‣ Export raster map ‣ Common export
+formats</span>)</p></li>
+<li><p><a class="reference external" href="http://grass.osgeo.org/grass80/manuals/v.out.ogr.html">v.out.ogr</a> for exporting vector data (<span class="menuselection">File
+‣ Export vector map ‣ Common export formats</span>)</p></li>
+</ul>
+<p>These tools are based on well-known <a class="reference external" href="http://gdal.org">GDAL</a> library
+for reading and writing raster and vector geospatial data
+formats. Thanks to this library GRASS is able to export data into
+various GIS formats, see supported <a class="reference external" href="https://gdal.org/drivers/raster/index.html">raster</a> and <a class="reference external" href="https://gdal.org/drivers/vector/index.html">vector</a> formats.</p>
+<figure class="align-center" id="id1">
+<img alt="../_images/export-menu.png" src="../_images/export-menu.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 40 </span><span class="caption-text">Export raster map in Layer Manager.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Remember that raster export tools <strong>operate in a
+current computational region</strong>. So don’t forget to set desired
+computational region before exporting raster data. In this way, for
+example, you can easily export only subregion defining your area of
+interest.</p>
+</div>
+<figure class="align-center" id="id2">
+<img alt="../_images/raster-export.png" src="../_images/raster-export.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 41 </span><span class="caption-text">Export NDVI raster into GeoTIFF format.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>Try to load created raster in some GIS software like Esri ArcGIS or
+QGIS. Note that color table is not exported in the case of
+floating-point data. You need to set up suitable color interpretation
+in your software on your own.</p>
+<figure class="align-center" id="id3">
+<img alt="../_images/qgis-ndvi-tif.png" class="large" src="../_images/qgis-ndvi-tif.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 42 </span><span class="caption-text">NDVI TIFF file loaded in QGIS.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<section id="notes">
+<span id="vector-notes"></span><h2>Notes<a class="headerlink" href="#notes" title="Permalink to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Most of vector data formats (eg. Esri Shapefile, OCG GML or OGC
+GeoPackage) are based on <strong>simple feature model</strong>. It means that
+GRASS export tool converts topological primitives (lines,
+boundaries, centroids, areas, isles) into simple features
+(linestrings, polygons). Points have no topology, so no conversion
+is involved.</p></li>
+<li><p>GRASS does not distinguish between <strong>single and multi parts</strong>
+(features and multifeatures). Attributes are simply linked to
+primitives (usually points, lines, or centroids) via so called
+“category”. More primitives can have the same category assigned, so
+the same attributes linked. This is a way how GRASS handles
+multiparts. By default <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/v.out.ogr.html">v.out.ogr</a> exports such primitives
+as single parts, ie. features. Multi parts (multifeatures) are
+written only when <span class="param">-m</span> flag is given.</p></li>
+<li><p>GRASS supports also one of few topological formats, <strong>PostGIS
+Topology</strong>, see <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/v.out.postgis.html">v.out.postgis</a> for details.</p></li>
+<li><p>To increase interoperability with your Esri-based colleagues, GRASS
+data can be exported directly also to <strong>Esri File Geodatabase
+format</strong>. This requires GDAL with <a class="reference external" href="http://gdal.org/drv_filegdb.html">FileGDB</a> support. But we highly
+recommend to use for data exchange open standards like <strong>OGC
+GeoPackage</strong> which Esri products can read. OGC GeoPackage is default
+output format in <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/v.out.ogr.html">v.out.ogr</a> since GRASS 7.4.</p></li>
+</ul>
+<section id="interoperability-with-esri-arcgis">
+<h3>Interoperability with Esri ArcGIS<a class="headerlink" href="#interoperability-with-esri-arcgis" title="Permalink to this heading">¶</a></h3>
+<p>GRASS is able to read data stored in Esri Shapefile (SHP) or File
+Geodatabase (FileGDB) out of the box thanks to GDAL library. Note that
+in the case of FileGDB only vector data (feature classes) are
+supported, it’s not possible to read raster data from this
+format. Vector data can be written by GRASS to Esri FileGDB format
+only when GDAL is installed with proprietary-based <a class="reference external" href="https://gdal.org/drivers/vector/filegdb.html">FileGDB</a> support.</p>
+<p>In any case it is recommended to use modern OGC-based <strong>OGC
+GeoPackage</strong> format for exchanging data between various GIS
+packages. This format allows to store multiple raster or vector layers
+in one file (GeoPackage is based on file-based SQLite DB format). In
+the case of raster data also <strong>GeoTIFF</strong> format can be used.</p>
+</section>
+<section id="switch-from-grass-native-format-to-external-formats">
+<h3>Switch from GRASS native format to external formats<a class="headerlink" href="#switch-from-grass-native-format-to-external-formats" title="Permalink to this heading">¶</a></h3>
+<p>GRASS environment can be set to produce data directly in external data
+formats. It can be useful at the end of a workflow when final output
+data is produced. Writing output data directly to desired format saves
+one step, exporting data to target data formats by
+<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.out.gdal.html">r.out.gdal</a> or <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/v.out.ogr.html">v.out.ogr</a>. External format can
+be set by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.external.out.html">r.external.out</a> for raster outputs or by
+<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/v.external.out.html">v.external.out</a> in the case of vector outputs.</p>
+<p>Example for our workflow (map names shorten):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>g.region<span class="w"> </span><span class="nv">vector</span><span class="o">=</span>jena_boundary<span class="w"> </span><span class="nv">align</span><span class="o">=</span>B04_10m
+r.mask<span class="w"> </span>-i<span class="w"> </span><span class="nv">vector</span><span class="o">=</span>MaskFeature
+r.external.out<span class="w"> </span><span class="nv">directory</span><span class="o">=</span>/home/user<span class="w"> </span><span class="nv">format</span><span class="o">=</span>GTiff<span class="w"> </span><span class="nv">extension</span><span class="o">=</span>tif
+i.vi<span class="w"> </span><span class="nv">red</span><span class="o">=</span>B04_10m<span class="w"> </span><span class="nv">output</span><span class="o">=</span>ndvi<span class="w"> </span><span class="nv">nir</span><span class="o">=</span>B08_10m
+</pre></div>
+</div>
+<p>Produced data is stored directly (without any data conversion) in
+external format (GeoTIFF in this case). GRASS also creates
+automatically link to such data (similarly as <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.external.html">r.external</a>
+does), so produced data can be accessed as “normal” raster maps by
+GRASS for further computation.</p>
+<p>Default raster format can be reverted to GRASS native format by
+<code class="docutils literal notranslate"><span class="pre">r.external.out</span> <span class="pre">-r</span></code> command.</p>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>Table of Contents</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS GIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02.html">Unit 02 - First steps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03.html">Unit 03 - Data Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Modules, Region</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05.html">Unit 05 - Raster processing</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Unit 06 - Data export</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#notes">Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="07.html">Unit 07 - QGIS loves GRASS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08.html">Unit 08 - Modeler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09.html">Unit 09 - Model tuning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10.html">Unit 10 - Python intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11.html">Unit 11 - PyGRASS scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12.html">Unit 12 - Script User Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13.html">Unit 13 - PyGRASS Raster Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14.html">Unit 14 - PyGRASS Vector Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15.html">Unit 15 - Data reprojection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16.html">Unit 16 - Flooding simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17.html">Unit 17 - Spatio-temporal intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18.html">Unit 18 - Lidar, DTM interpolation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19.html">Unit 19 - DTM script parallelization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20.html">Unit 20 - Sentinel downloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="21.html">Unit 21 - Sentinel spatio-temporal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22.html">Unit 22 - Spatio-temporal scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23.html">Unit 23 - Spatio-temporal parallelization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="24.html">Unit 24 - MODIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="25.html">Unit 25 - MODIS ST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="26.html">Unit 26 - MODIS ST scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="27.html">Unit 27 - PyWPS intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="28.html">Unit 28 - PyWPS LST point stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="29.html">Unit 29 - PyWPS LST region stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="30.html">Unit 30 - PyWPS LST region zones</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Search</h3>
+            <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="Go" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="05.html" title="Unit 05 - Raster processing"
+              >previous</a> |
+            <a href="07.html" title="Unit 07 - QGIS loves GRASS"
+              >next</a>
+          </div>
+          <div role="note" aria-label="source link">
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018-2023 Martin Landa and GISMentors.eu.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

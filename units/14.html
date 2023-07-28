@@ -1,0 +1,271 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Unit 14 - PyGRASS Vector Access &#8212; Jena GRASS GIS Workshop</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gismentors.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Unit 15 - Data reprojection" href="15.html" />
+    <link rel="prev" title="Unit 13 - PyGRASS Raster Access" href="13.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html">Jena GRASS GIS Workshop</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="13.html" title="Unit 13 - PyGRASS Raster Access"
+             accesskey="P">previous</a> |
+          <a href="15.html" title="Unit 15 - Data reprojection"
+             accesskey="N">next</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="unit-14-pygrass-vector-access">
+<h1>Unit 14 - PyGRASS Vector Access<a class="headerlink" href="#unit-14-pygrass-vector-access" title="Permalink to this heading">¶</a></h1>
+<p>PyGRASS allows to access GRASS raster and vector maps in the sense of
+Python objects. This unit shows how to deal with GRASS topological
+vector data by PyGRASS API.</p>
+<p>Let’s import <code class="file docutils literal notranslate"><span class="pre">geodata/osm/counties.gpkg</span></code> into <em>jena-region</em>
+GRASS location as described in <a class="reference internal" href="03.html"><span class="doc">Unit 03 - Data Management</span></a>. In this case coordinate
+reference system (CRS) of input data (<a class="reference external" href="http://epsg.io/3035">EPSG:3035</a>) differs from
+<em>jena-region</em> CRS definition (<a class="reference external" href="http://epsg.io/32632">EPSG:32632</a>). GRASS will apply
+transformation of input data into target CRS provided by the current
+location (<code class="docutils literal notranslate"><span class="pre">Projection</span> <span class="pre">match:</span> <span class="pre">No</span></code>). This operation needs to be
+confirmed by a user, see <a class="reference internal" href="#confirm-reprojection"><span class="std std-numref">Fig. 83</span></a>.</p>
+<figure class="align-center" id="id1">
+<span id="confirm-reprojection"></span><img alt="../_images/reproject.png" class="small" src="../_images/reproject.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 83 </span><span class="caption-text">Confirm reprojection of input data.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>Data incosistency can cause significant topological errors when
+importing vector data into GRASS (as in our case
+<a class="reference internal" href="#topo-errors"><span class="std std-numref">Fig. 84</span></a>).</p>
+<figure class="align-center" id="id2">
+<span id="topo-errors"></span><img alt="../_images/counties-broken.png" class="middle" src="../_images/counties-broken.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 84 </span><span class="caption-text">Topological errors detected by import process.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>Usually helps to set up a “reasonable” snapping threshold when
+importing data into GRASS, see <a class="reference internal" href="#import-snap"><span class="std std-numref">Fig. 85</span></a>.</p>
+<figure class="align-center" id="id3">
+<span id="import-snap"></span><img alt="../_images/threshold_snap.png" src="../_images/threshold_snap.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 85 </span><span class="caption-text">Set threshold for snapping before data import in <span class="item">Import
+settings</span> tab.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>Vector data can be treated by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/libpython/pygrass.vector.html#pygrass.vector.Vector">Vector</a> class when
+dealing with basic vector primitives (points, lines, boundaries,
+centroids) or by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/libpython/pygrass.vector.html#pygrass.vector.VectorTopo">VectorTopo</a> which allows accessing
+topological primitives like areas or isles. See
+<a class="reference internal" href="03.html#vector-topo-section"><span class="std std-ref">Vector topology</span></a> section for details.</p>
+<p>Example below prints county names and area size in hectares.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">grass.pygrass.vector</span> <span class="kn">import</span> <span class="n">VectorTopo</span>
+<span class="n">counties</span> <span class="o">=</span> <span class="n">VectorTopo</span><span class="p">(</span><span class="s1">&#39;counties&#39;</span><span class="p">)</span>
+<span class="n">counties</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="n">counties</span><span class="o">.</span><span class="n">viter</span><span class="p">(</span><span class="s1">&#39;areas&#39;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">feat</span><span class="o">.</span><span class="n">attrs</span><span class="p">:</span>
+        <span class="k">continue</span>
+    <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">: </span><span class="si">{1:.1f}</span><span class="s1">ha&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">feat</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="n">feat</span><span class="o">.</span><span class="n">area</span><span class="p">()</span> <span class="o">/</span> <span class="mf">10e4</span><span class="p">))</span>
+
+<span class="n">counties</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Example of output:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Hamburg</span><span class="p">:</span> <span class="mf">31.5</span><span class="n">ha</span>
+<span class="n">Hamburg</span><span class="p">:</span> <span class="mf">26.6</span><span class="n">ha</span>
+<span class="n">Niedersachsen</span><span class="p">:</span> <span class="mf">306.4</span><span class="n">ha</span>
+<span class="n">Niedersachsen</span><span class="p">:</span> <span class="mf">279.2</span><span class="n">ha</span>
+<span class="n">Niedersachsen</span><span class="p">:</span> <span class="mf">205.7</span><span class="n">ha</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<div class="task admonition">
+<p class="admonition-title">Úkol</p>
+<p>Modify the script to print overall area for each county.</p>
+</div>
+<section id="writing-vector-data">
+<h2>Writing vector data<a class="headerlink" href="#writing-vector-data" title="Permalink to this heading">¶</a></h2>
+<p>In the example below a point vector data with an attribute table is
+created.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python3</span>
+
+<span class="kn">from</span> <span class="nn">grass.pygrass.vector</span> <span class="kn">import</span> <span class="n">VectorTopo</span>
+<span class="kn">from</span> <span class="nn">grass.pygrass.vector.geometry</span> <span class="kn">import</span> <span class="n">Point</span>
+
+<span class="c1"># create the columns definition</span>
+<span class="n">cols</span> <span class="o">=</span> <span class="p">[(</span><span class="sa">u</span><span class="s1">&#39;cat&#39;</span><span class="p">,</span>   <span class="s1">&#39;INTEGER PRIMARY KEY&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="sa">u</span><span class="s1">&#39;name&#39;</span><span class="p">,</span>  <span class="s1">&#39;VARCHAR&#39;</span><span class="p">)]</span>
+<span class="c1"># start new vector with columns definition</span>
+<span class="n">new</span> <span class="o">=</span> <span class="n">VectorTopo</span><span class="p">(</span><span class="s1">&#39;pois&#39;</span><span class="p">)</span>
+<span class="n">new</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">tab_cols</span><span class="o">=</span><span class="n">cols</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1"># add points</span>
+<span class="n">point</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mf">681671.15</span><span class="p">,</span><span class="mf">5644545.63</span><span class="p">)</span>
+<span class="n">new</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;Jena&#39;</span><span class="p">,))</span>
+<span class="c1"># commit attributes, otherwise they will be not saved</span>
+<span class="n">new</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+<span class="c1"># close the vector</span>
+<span class="n">new</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Sample script to download: <a class="reference external" href="../_static/scripts/pygrass-write-vector.py">pygrass-write-vector.py</a></p>
+</section>
+<section id="topology-access-example">
+<h2>Topology access example<a class="headerlink" href="#topology-access-example" title="Permalink to this heading">¶</a></h2>
+<p>In the following example is presented how to access vector topological
+primitives directly using PyGRASS. See <a class="reference internal" href="03.html#vector-topo-section"><span class="std std-ref">Vector topology</span></a>
+section in <a class="reference internal" href="03.html"><span class="doc">Unit 03 - Data Management</span></a>.</p>
+<p>Sample script below prints for each county number of its neighbours.</p>
+<ol class="arabic simple">
+<li><p>Vector map <span class="map">Counties</span> is open on line <span class="lcode">3</span> by
+<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/libpython/pygrass.vector.html#pygrass.vector.VectorTopo">VectorTopo</a> and its method <code class="docutils literal notranslate"><span class="pre">open()</span></code>.</p></li>
+<li><p>Topological primitives (areas in this case) are sequentially read by <code class="docutils literal notranslate"><span class="pre">for</span></code> loop
+on line <span class="lcode">6</span>. Areas are interated by <code class="docutils literal notranslate"><span class="pre">viter()</span></code> function.</p></li>
+<li><p>For each county its boudaries are looped, see line <span class="lcode">8</span>. Each
+boundary has two neighbours (line <span class="lcode">9</span>): on the left and right
+side (<code class="docutils literal notranslate"><span class="pre">-1</span></code> for no area).</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="ch">#!/usr/bin/env python3</span>
+<span class="linenos"> 2</span>
+<span class="hll"><span class="linenos"> 3</span><span class="kn">from</span> <span class="nn">grass.pygrass.vector</span> <span class="kn">import</span> <span class="n">VectorTopo</span>
+</span><span class="hll"><span class="linenos"> 4</span>
+</span><span class="linenos"> 5</span><span class="n">counties</span> <span class="o">=</span> <span class="n">VectorTopo</span><span class="p">(</span><span class="s1">&#39;counties&#39;</span><span class="p">)</span>
+<span class="hll"><span class="linenos"> 6</span><span class="n">counties</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+</span><span class="linenos"> 7</span>
+<span class="hll"><span class="linenos"> 8</span><span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">counties</span><span class="o">.</span><span class="n">viter</span><span class="p">(</span><span class="s1">&#39;areas&#39;</span><span class="p">):</span>
+</span><span class="hll"><span class="linenos"> 9</span>    <span class="n">neighbours</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+</span><span class="linenos">10</span>    <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">o</span><span class="o">.</span><span class="n">boundaries</span><span class="p">():</span>
+<span class="linenos">11</span>        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">b</span><span class="o">.</span><span class="n">read_area_ids</span><span class="p">():</span>
+<span class="linenos">12</span>            <span class="k">if</span> <span class="n">n</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">n</span> <span class="o">!=</span> <span class="n">o</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
+<span class="linenos">13</span>                <span class="n">neighbours</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="linenos">14</span>    <span class="k">if</span> <span class="n">o</span><span class="o">.</span><span class="n">attrs</span><span class="p">:</span>
+<span class="linenos">15</span>        <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;</span><span class="si">{:25}</span><span class="s1">: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="nb">len</span><span class="p">(</span><span class="n">neighbours</span><span class="p">)))</span>
+<span class="linenos">16</span>
+<span class="linenos">17</span><span class="n">counties</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Sample script to download: <a class="reference external" href="../_static/scripts/neighbours.py">neighbours.py</a></p>
+<p>Possible output:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Hamburg</span>                  <span class="p">:</span> <span class="mi">0</span>
+<span class="n">Hamburg</span>                  <span class="p">:</span> <span class="mi">1</span>
+<span class="n">Niedersachsen</span>            <span class="p">:</span> <span class="mi">1</span>
+<span class="n">Niedersachsen</span>            <span class="p">:</span> <span class="mi">1</span>
+<span class="n">Niedersachsen</span>            <span class="p">:</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<div class="task admonition">
+<p class="admonition-title">Úkol</p>
+<p>Modify the script to print summary of neighbours for each
+county.</p>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>Table of Contents</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS GIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02.html">Unit 02 - First steps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03.html">Unit 03 - Data Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Modules, Region</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05.html">Unit 05 - Raster processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06.html">Unit 06 - Data export</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07.html">Unit 07 - QGIS loves GRASS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08.html">Unit 08 - Modeler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09.html">Unit 09 - Model tuning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10.html">Unit 10 - Python intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11.html">Unit 11 - PyGRASS scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12.html">Unit 12 - Script User Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13.html">Unit 13 - PyGRASS Raster Access</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Unit 14 - PyGRASS Vector Access</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#writing-vector-data">Writing vector data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#topology-access-example">Topology access example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="15.html">Unit 15 - Data reprojection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16.html">Unit 16 - Flooding simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17.html">Unit 17 - Spatio-temporal intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18.html">Unit 18 - Lidar, DTM interpolation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19.html">Unit 19 - DTM script parallelization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20.html">Unit 20 - Sentinel downloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="21.html">Unit 21 - Sentinel spatio-temporal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22.html">Unit 22 - Spatio-temporal scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23.html">Unit 23 - Spatio-temporal parallelization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="24.html">Unit 24 - MODIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="25.html">Unit 25 - MODIS ST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="26.html">Unit 26 - MODIS ST scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="27.html">Unit 27 - PyWPS intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="28.html">Unit 28 - PyWPS LST point stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="29.html">Unit 29 - PyWPS LST region stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="30.html">Unit 30 - PyWPS LST region zones</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Search</h3>
+            <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="Go" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="13.html" title="Unit 13 - PyGRASS Raster Access"
+              >previous</a> |
+            <a href="15.html" title="Unit 15 - Data reprojection"
+              >next</a>
+          </div>
+          <div role="note" aria-label="source link">
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018-2023 Martin Landa and GISMentors.eu.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

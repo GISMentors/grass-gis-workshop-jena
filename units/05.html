@@ -1,0 +1,216 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Unit 05 - Raster processing &#8212; Jena GRASS GIS Workshop</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gismentors.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Unit 06 - Data export" href="06.html" />
+    <link rel="prev" title="Unit 04 - Modules, Region" href="04.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html">Jena GRASS GIS Workshop</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="04.html" title="Unit 04 - Modules, Region"
+             accesskey="P">previous</a> |
+          <a href="06.html" title="Unit 06 - Data export"
+             accesskey="N">next</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="unit-05-raster-processing">
+<h1>Unit 05 - Raster processing<a class="headerlink" href="#unit-05-raster-processing" title="Permalink to this heading">¶</a></h1>
+<p>Raster data processing is <strong>always</strong> limited to the current
+<a class="reference internal" href="04.html#region"><span class="std std-ref">computational region</span></a>.</p>
+<p>Let’s demostrate raster processing on <a class="reference external" href="http://cs.wikipedia.org/wiki/map algebra">map algebra</a> based
+computation of <a class="reference external" href="http://cs.wikipedia.org/wiki/NDVI">NDVI</a> (Normalized difference vegetation
+index). The key GRASS module that allows a user to do the map algebra
+is <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.mapcalc.html">r.mapcalc</a>. A GUI tool for map algebra can be launched
+from <span class="menuselection">Raster ‣ Raster map calculator</span> or by
+<a class="reference internal" href="../_images/raster-calculator.png"><img alt="grass-raster-calculator" src="../_images/raster-calculator.png" style="width: 1.5em;" /></a> <sup>Raster map calculator</sup> from the main
+toolbar.</p>
+<p>To compute NDVI, the red (VIS) and near-infrared (NIR) bands are
+required. In the case of Sentinel-2, it refers to 4th and 8th
+band. Missing Sentinel-2 8th band can be imported as explained in
+<a class="reference internal" href="03.html"><span class="doc">Unit 03 - Data Management</span></a> from <code class="file docutils literal notranslate"><span class="pre">L2A_T32UPB_20170706T102021_B08_10m.jp2</span></code> file.</p>
+<div class="math notranslate nohighlight">
+\[NDVI = (NIR - VIS) / (NIR  + VIS)\]</div>
+<figure class="align-center" id="id1">
+<img alt="../_images/mapcalc-gui.png" src="../_images/mapcalc-gui.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 36 </span><span class="caption-text">GUI map algebra tool. Compute NDVI by <span class="item">Expression</span>. Result of
+computation is defined by <span class="item">Output</span> section.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>Corresponding command (map names shorten):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.mapcalc<span class="w"> </span><span class="nv">expression</span><span class="o">=</span><span class="s2">&quot;ndvi = float(B08_10m - B04_10m) / ( B08_10m + B04_10m )&quot;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Because all input raster maps are CELL type (integer) at
+least one sub-result must be converted to floating-point by
+<code class="docutils literal notranslate"><span class="pre">float()</span></code> function. Otherwise result would be also CELL
+map (integer: -1, 0, 1).</p>
+</div>
+<figure class="align-center" id="id2">
+<img alt="../_images/ndvi-mapcalc.png" class="large" src="../_images/ndvi-mapcalc.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 37 </span><span class="caption-text">NDVI computed by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.mapcalc.html">r.mapcalc</a> map algebra module (Jena
+city in red color).</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>Result requires some improvements:</p>
+<ul class="simple">
+<li><p>default color table <em>viridis</em> is not suitable for NDVI values</p></li>
+<li><p>NDVI was computed also in cloudy areas</p></li>
+</ul>
+<p>The first shortcoming can be easily solved by changing color table to
+<cite>ndvi</cite> as described in <a class="reference internal" href="04.html#color-table"><span class="std std-ref">Color table</span></a> section. The second requires
+setting a mask to ignore cloudy areas by the computation. Raster mask
+can be created by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.mask.html">r.mask</a>. Like other modules from the
+<code class="docutils literal notranslate"><span class="pre">r.*</span></code> family, it operates in the current computational region.</p>
+<p>Let’s create raster mask from cloud mask vector map in inverse manner.</p>
+<figure class="align-center" id="id3">
+<img alt="../_images/r-mask.png" src="../_images/r-mask.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 38 </span><span class="caption-text">Creating raster mask from an input vector map.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.mask<span class="w"> </span>-i<span class="w"> </span><span class="nv">vector</span><span class="o">=</span>MaskFeature
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Cloud mask provided by Sentinel products is not perfect, but
+it is a good starting point for us.</p>
+</div>
+<figure class="align-center" id="id4">
+<img alt="../_images/ndvi-vi.png" class="large" src="../_images/ndvi-vi.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 39 </span><span class="caption-text">Final NDVI result with cloud mask and simple legend added to map
+display by <a class="reference internal" href="../_images/overlay-add.png"><img alt="grass-overlay-add" src="../_images/overlay-add.png" style="width: 1.5em;" /></a> <sup>Add map elements</sup> (<em>Add raster
+legend</em>) from Map Display toolbar.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>A mask can be deactivated <code class="docutils literal notranslate"><span class="pre">r.mask</span> <span class="pre">-r</span></code> command.</p>
+<section id="recommended-approach-for-computing-ndvi">
+<h2>Recommended approach for computing NDVI<a class="headerlink" href="#recommended-approach-for-computing-ndvi" title="Permalink to this heading">¶</a></h2>
+<p>Note that there is specialized module for computing various vegetation
+indices including NDVI - <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/i.vi.html">i.vi</a>. This module makes NDVI
+computing even simpler.</p>
+<p>Let’s recompute <span class="map">ndvi</span> map using <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/i.vi.html">i.vi</a> (map names
+shorten):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>i.vi<span class="w"> </span><span class="nv">red</span><span class="o">=</span>B04_10m<span class="w"> </span><span class="nv">output</span><span class="o">=</span>ndvi<span class="w"> </span><span class="nv">viname</span><span class="o">=</span>ndvi<span class="w"> </span><span class="nv">nir</span><span class="o">=</span>B08_10m
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>Table of Contents</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS GIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02.html">Unit 02 - First steps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03.html">Unit 03 - Data Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Modules, Region</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Unit 05 - Raster processing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#recommended-approach-for-computing-ndvi">Recommended approach for computing NDVI</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="06.html">Unit 06 - Data export</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07.html">Unit 07 - QGIS loves GRASS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08.html">Unit 08 - Modeler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09.html">Unit 09 - Model tuning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10.html">Unit 10 - Python intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11.html">Unit 11 - PyGRASS scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12.html">Unit 12 - Script User Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13.html">Unit 13 - PyGRASS Raster Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14.html">Unit 14 - PyGRASS Vector Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15.html">Unit 15 - Data reprojection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16.html">Unit 16 - Flooding simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17.html">Unit 17 - Spatio-temporal intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18.html">Unit 18 - Lidar, DTM interpolation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19.html">Unit 19 - DTM script parallelization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20.html">Unit 20 - Sentinel downloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="21.html">Unit 21 - Sentinel spatio-temporal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22.html">Unit 22 - Spatio-temporal scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23.html">Unit 23 - Spatio-temporal parallelization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="24.html">Unit 24 - MODIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="25.html">Unit 25 - MODIS ST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="26.html">Unit 26 - MODIS ST scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="27.html">Unit 27 - PyWPS intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="28.html">Unit 28 - PyWPS LST point stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="29.html">Unit 29 - PyWPS LST region stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="30.html">Unit 30 - PyWPS LST region zones</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Search</h3>
+            <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="Go" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="04.html" title="Unit 04 - Modules, Region"
+              >previous</a> |
+            <a href="06.html" title="Unit 06 - Data export"
+              >next</a>
+          </div>
+          <div role="note" aria-label="source link">
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018-2023 Martin Landa and GISMentors.eu.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

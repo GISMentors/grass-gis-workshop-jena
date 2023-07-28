@@ -1,0 +1,32 @@
+Unit 29 - PyWPS LST region stats
+================================
+
+A third version of the process will return LST statistics for region
+in Germany defined by input vector (polygon) data. Input area of
+interest is imported by :grasscmd:`v.import` (line :lcode:`62`),
+resultant statistics is computed by :grasscmd:`t.rast.series` (line
+:lcode:`68`) and :grasscmd:`r.univar` (line :lcode:`78`).
+
+.. literalinclude:: ../_static/scripts/modis_v3.py
+   :language: python
+   :linenos:
+   :emphasize-lines: 10, 62, 68, 78
+                     
+Sample process to download: `modis_v3.py
+<../_static/scripts/modis_v3.py>`__
+
+Do not forget to import process as done in :ref:`Unit 27
+<process-import>` and restart demo PyWPS server.
+
+Copy :file:`jena_boundary.gpkg` to :file:`pywps-flask/static/data` and
+execute the process.
+
+http://localhost:5000/wps?request=Execute&service=WPS&identifier=modis-v3&version=1.0.0&datainputs=start=2019-03-01;end=2019-04-01;region=@xlink:href=http://localhost:5000/static/data/jena_boundary.gpkg
+
+Possible response.
+
+.. code-block:: xml
+
+   <wps:ComplexData mimeType="application/json" encoding="" schema="">
+   {"n": 115.0, "null_cells": 109.0, "cells": 224.0, "min": 7.07625000000003,...
+   </wps:ComplexData>

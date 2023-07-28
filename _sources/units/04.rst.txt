@@ -1,0 +1,172 @@
+Unit 04 - Modules, Region
+=========================
+
+.. _grass-modules:
+
+Accessing GRASS modules
+-----------------------
+
+GRASS GIS is a **modular system** which consists of several hundreds
+*tools* ("modules" in GRASS terminology). Modules are accessible from
+the menu, :item:`Tools` tab, or from command prompt (:item:`Console`
+tab).
+
+Let's find a tool which clips cloud mask vector map by Jena city
+region.
+
+.. figure:: ../images/units/04/modules-tab.png
+
+   Search for a tool by 'clip' keyword in :item:`Tools` tab. The
+   module which we are looking for is :grasscmd:`v.clip`. Module
+   dialog can be open by :item:`Run` button.
+
+.. note:: Module :grasscmd:`v.clip` was introduced to GRASS in version
+   7.4.0. In older versions generic :grasscmd:`v.overlay` module can
+   be used.
+   
+.. figure:: ../images/units/04/modules-cmd.png
+
+   Launching :grasscmd:`v.clip` module from :item:`Console` tab.
+
+Tools (modules) can be run from GUI dialogs, from :item:`Console` tab,
+or by using Python API (see :doc:`10`). Figure bellow shows GUI dialog
+of :grasscmd:`v.clip` module.
+
+.. _v-clip:
+
+.. figure:: ../images/units/04/v-clip.png
+
+   GUI dialog for launching :grasscmd:`v.clip` module.
+
+.. tip:: CLI syntax of modules is shown in GUI dialog statusbar, see
+   :numref:`v-clip`. Command can be copied to clipboard by
+   :item:`Copy` button for later usage.
+
+The corresponding command for console would be:
+
+.. code-block:: bash
+
+   v.clip input=MaskFeature clip=jena_boundary output=jena_clouds
+
+.. figure:: ../images/units/04/jena-clouds.png
+
+   Clipped clouds mask by Jena city region.
+
+Each GRASS module starts by a prefix. This prefix groups modules into
+several sections, see table below.
+  
+.. cssclass:: border
+
++----------+--------------------------------+-----------------------------------------------+
+| prefix   | section                        | description                                   |
++==========+================================+===============================================+
+| ``db.``  | :grasscmd:`database`           | attribute data management                     |
++----------+--------------------------------+-----------------------------------------------+
+| ``d.``   | :grasscmd:`display`            | display commands                              |
++----------+--------------------------------+-----------------------------------------------+
+| ``g.``   | :grasscmd:`general`            | generic commands                              |
++----------+--------------------------------+-----------------------------------------------+
+| ``i.``   | :grasscmd:`imagery`            | imagery data processing                       |
++----------+--------------------------------+-----------------------------------------------+
+| ``ps.``  | :grasscmd:`postscript`         | map outputs                                   |
++----------+--------------------------------+-----------------------------------------------+
+| ``r.``   | :grasscmd:`raster`             | 2D raster data processing                     |
++----------+--------------------------------+-----------------------------------------------+
+| ``r3.``  | :grasscmd:`raster3D`           | 3D raster data processing                     |
++----------+--------------------------------+-----------------------------------------------+
+| ``t.``   | :grasscmd:`temporal`           | Temporal data processing                      |
++----------+--------------------------------+-----------------------------------------------+
+| ``v.``   | :grasscmd:`vector`             | 2D/3D vector data processing                  |
++----------+--------------------------------+-----------------------------------------------+
+ 
+.. _region:
+
+Computational region
+--------------------
+
+The computational region is a **key element** in GRASS raster
+processing. Unlike other GIS software such as Esri ArcGIS which sets
+the computational region based on input data, GRASS is leaving this
+operation to the user.
+
+.. important:: **The user must define computational region before any
+   raster computation is performed!**
+
+The computational region is defined by *extent* (north, south, east, west)
+and by *spatial resolution* in both directions (east-west,
+north-south). Note that GRASS supports only regular grids.
+
+.. figure:: ../images/units/04/region2d.png
+              
+   2D computational region grid.
+
+.. note:: For 3D raster data (known as "volumes") there is an
+   extension to the 3D computation grid.
+
+The great majority of raster processing modules (``r.*``) respect the 
+computational region. There are a few exceptions like import modules
+(eg. :grasscmd:`r.import`). On the other hand, most vector
+processing modules (``v.*``) ignore the computational region completely
+since there is no computation grid defined for them.
+
+The computational region can be easily set on existing raster or vector
+map from :item:`Layer` tab.
+
+.. figure:: ../images/units/04/comp-region-raster.png
+
+   Set computational region from raster map.
+
+Note that when setting up the computational region from a vector map, only
+the extent is adjusted. It's a good idea to align the computational grid
+based on the raster map used for computation (*Align computational region
+to selected map*).
+          
+Current computation region extent is by default visualized in map
+window as **a red rectangle**.
+
+.. figure:: ../images/units/04/show-comp-region.png
+
+   Show/Hide computational region extent in map display.
+
+Full flexibility for operating with computational region is allowed via the 
+:grasscmd:`g.region` module (:menuselection:`Settings --> Computational
+region --> Set region`). Example below:
+
+.. code-block:: bash
+
+   g.region vector=jena_boundary align=L2A_T32UPB_20170706T102021_B04_10m
+          
+.. _color-table:
+
+Color table
+-----------
+
+The color table of raster maps can be changed by the
+:grasscmd:`r.colors` command. With knowledge of computational region
+let's enhance color table of imported Sentinel band using histogram
+equalization (which is influenced by computation region as we already
+know).
+
+.. figure:: ../images/units/04/r-colors-menu.png
+
+   Set color table from :item:`Layers` tab.
+
+Example of command:
+
+.. code-block:: bash
+
+   r.colors map=L2A_T32UPB_20170706T102021_B04_10m color=grey.eq
+
+.. figure:: ../images/units/04/r-colors.png
+
+   Choose the predefined 'grey.eq' (enhanced grey scale) color table
+   in the :item:`Define` tab.
+   
+.. figure:: ../images/units/04/r-colors-jena.png
+   :class: large
+   
+   Sentinel 4th band with enhanced grey color table.
+
+.. tip:: Color table set also interactively in the case that
+         predefined color tables do not satisfy user's needs.
+   

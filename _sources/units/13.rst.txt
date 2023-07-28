@@ -1,0 +1,87 @@
+Unit 13 - PyGRASS Raster Access
+===============================
+
+PyGRASS allows to access GRASS raster and vector maps in the sense of
+Python objects. This unit shows how to deal with GRASS raster data by
+PyGRASS API.
+
+Raster map can be treated by :pygrass-raster:`RasterRow` for reading
+raster data row by row. There is also :pygrass-raster:`RasterSegment`
+which allows reading data by user-defined segments (tiles).
+
+.. literalinclude:: ../_static/scripts/ndvi-pygrass-univar.py
+   :language: python
+   :lines: 5-8
+
+Raster map is open by ``open()`` method. The sample code also prints
+basic information as number of columns and rows, min and max values,
+range.
+   
+.. code-block:: python
+
+   print(ndvi.info.cols, ndvi.info.rows)
+   min, max = ndvi.info.range
+   print(min, max)             
+   print(max - min)
+                
+.. figure:: ../images/units/13/pygrass-shell.png
+
+   Running PyGRASS code from :item:`Python` tab.
+
+Don't forget to close the raster map at the end.
+
+.. code-block:: python
+
+   ndvi.close()
+
+Raster statistics example
+-------------------------
+
+A simple PyGRASS script for computing basic univariate raster
+statistics below. 
+
+.. literalinclude:: ../_static/scripts/ndvi-pygrass-univar.py
+   :language: python
+
+Sample script to download: `ndvi-pygrass-univar.py
+<../_static/scripts/ndvi-pygrass-univar.py>`__
+
+Optimized version based on `NumPy <https://numpy.org>`__ library:
+
+.. literalinclude:: ../_static/scripts/ndvi-pygrass-univar-numpy.py
+   :language: python
+
+Sample script to download: `ndvi-pygrass-univar-numpy.py
+<../_static/scripts/ndvi-pygrass-univar-numpy.py>`__
+
+.. task:: Compare computation speed of two sample scripts with C-based
+   :grasscmd:`r.univar` module.
+
+Writing raster data
+-------------------
+
+PyGRASS allows also writing raster data. In the example below a NDVI
+map will be computed from Sentinel-2 red and near-infrated channels
+similarly as in :doc:`05`.
+
+.. literalinclude:: ../_static/scripts/ndvi-pygrass.py
+   :language: python
+
+Sample script to download: `ndvi-pygrass.py
+<../_static/scripts/ndvi-pygrass.py>`__
+              
+.. task::
+
+   Create a raster map from scratch. Raster row is represented by
+   Buffer object in PyGRASS.
+   
+   .. literalinclude:: ../_static/scripts/pygrass-write-raster.py
+      :language: python
+              
+   .. figure:: ../images/units/13/newscratch.png
+
+      Example of created raster map.
+
+   Sample script to download: `pygrass-write-raster.py
+   <../_static/scripts/pygrass-write-raster.py>`__
+

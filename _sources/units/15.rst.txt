@@ -1,0 +1,118 @@
+Unit 15 - Data reprojection
+===========================
+
+In this unit EU-DEM global dataset provided by `Copernicus programme
+<https://www.eea.europa.eu/data-and-maps/data/copernicus-land-monitoring-service-eu-dem#tab-gis-data>`__
+will be used. Jena region is covered by tile E40N30. Be aware that
+EU-DEM tiles covers large regions (4GB per tile).
+
+Normally :grasscmd:`r.import` could be used to import and
+automatically reproject data into target location. In our case there
+is no need to import into GRASS a whole big DEM tile. By using ``-r``
+flag of :grasscmd:`r.in.gdal` GRASS module only a subregion covering
+AOI can be imported. Unfortunately :grasscmd:`r.import` do not offer
+such flag. This is a reason why data will be reprojected
+manually. Input data will be imported into a new location
+(ETRS89-extended / LAEA Europe :epsg:`3035`). In the next step
+imported data will be reprojected into target *jena-region*
+(WGS 84 / UTM zone 32N :epsg:`32632`).
+
+.. note:: In order to save disk space the original EU-DEM tile was
+   clipped by larger region than Jena AOI. Modified tile is available
+   from :file:`geodata/eu-dem` directory.
+
+Create location for data import
+-------------------------------
+
+EU-DEM dataset is provided in ETRS89-extended / LAEA Europe
+(:epsg:`3035`). Start a new GRASS session and create a new location
+*jena-eu-dem* based on input :file:`geodata/eu-dem/dem_sample.tif`
+file as described in :ref:`Unit 02 <create-location>`) or from EPSG code.
+
+.. important:: Skip data import provided by
+               location wizard since only subregion defined by Jena city region is
+               planned to be imported.
+
+Enter new location (PERMANENT mapset) and copy (ie. reproject)
+:map:`jena_boundary` into the current location.
+
+.. _data-reproject-fig:
+
+.. figure:: ../images/units/15/data-reproject.png
+   :class: middle
+           
+.. figure:: ../images/units/15/data-reproject-1.png
+   :class: middle
+           
+   Copy :map:`jena_boundary` vector map from `jena-region` location
+   (:epsg:`32632`) to the current location (:epsg:`3035`).
+
+.. figure:: ../images/units/15/data-reproject-dialog.png
+   :class: small
+           
+   Reprojection and default maximum segment must be confirmed.
+   
+.. note:: The same operation can be done by :grasscmd:`v.proj`:
+
+   .. code-block:: bash
+                          
+      v.proj location=jena-region mapset=PERMANENT input=jena_boundary
+
+Before importing DEM set computation region extent based on
+reprojected Jena city region.
+      
+.. figure:: ../images/units/15/region-extent.png
+   :class: large
+	   
+   Set computational region extent based on Jena city region.
+
+Launch :grasscmd:`r.in.gdal` (:menuselection:`File --> Import raster
+data --> Import of common raster formats`) to import DEM tile, don't
+forget to enable :option:`-r` flag.
+
+.. code-block:: bash
+
+   r.in.gdal -r input=/home/user/geodata/eu-dem/dem_sample.tif output=dem 
+
+.. figure:: ../images/units/15/dem-imported.png
+   :class: middle
+           
+   Imported DEM limited to current region extent. Visualized using
+   ``elevation`` color table.
+
+Reproject DEM into target location
+----------------------------------
+
+Now switch back to *jena-region* (target) location (PERMANENT mapset).
+
+.. _switch-location:
+
+.. figure:: ../images/units/15/switch-location.png
+   :class: middle
+	   
+   Switch to jena-region location and PERMANENT mapset from
+   :item:`Data` tab.
+
+Reproject DEM from *jena-eu-dem* location by copying in :item:`Data`
+tab. Set desired resolution (25m) and choose appropriate resampling
+method (in our case *bilinear*).
+
+.. note:: If a mask is enabled, it's good idea to remove it before
+   importing.
+
+.. figure:: ../images/units/15/data-reproject-raster.png
+   :class: small
+	   
+   Reproject raster data by specifying target resolution and
+   resampling method.
+  
+.. note:: The same operation can be done by :grasscmd:`r.proj`:
+
+   .. code-block:: bash
+		
+      r.proj location=jena-eu-dem mapset=PERMANENT input=dem method=bilinear resolution=25
+
+.. figure:: ../images/units/15/dem-3d.png
+   :class: large
+	   
+   Imported DEM in 3D view. Jena city region by blue color.

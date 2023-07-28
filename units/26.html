@@ -1,0 +1,235 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Unit 26 - MODIS ST scripting &#8212; Jena GRASS GIS Workshop</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gismentors.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Unit 27 - PyWPS intro" href="27.html" />
+    <link rel="prev" title="Unit 25 - MODIS ST" href="25.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="../index.html">Jena GRASS GIS Workshop</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="25.html" title="Unit 25 - MODIS ST"
+             accesskey="P">previous</a> |
+          <a href="27.html" title="Unit 27 - PyWPS intro"
+             accesskey="N">next</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="unit-26-modis-st-scripting">
+<h1>Unit 26 - MODIS ST scripting<a class="headerlink" href="#unit-26-modis-st-scripting" title="Permalink to this heading">¶</a></h1>
+<p>Let’s create a simple Python script for computing LST statistics in
+Germany area for given period. Input parameters:</p>
+<ul class="simple">
+<li><p><span class="param">input</span> - Name of the input space time raster dataset (line <span class="lcode">6</span>)</p></li>
+<li><p><span class="param">start</span> - Start date (line <span class="lcode">9</span>)</p></li>
+<li><p><span class="param">end</span> - End date (line <span class="lcode">15</span>)</p></li>
+</ul>
+<p>The script prints minimum, maximum and mean LST value. The raster map
+for computing statistics is created by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/t.rast.series.html">t.rast.series</a> (line
+<span class="lcode">50</span>), statistics is computed by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.univar.html">r.univar</a> (line
+<span class="lcode">60</span>). Statistics will be printed by lines <span class="lcode">66-68</span>.</p>
+<p>In <a class="reference internal" href="25.html"><span class="doc">Unit 25 - MODIS ST</span></a> we processed LST space time dataset only for
+year 2019. We will also check if input dates are valid, see line
+<span class="lcode">31</span>.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Verbosity level can be set globally by <span class="target" id="index-0"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">GRASS_VERBOSE</span></code>
+environment variable, see line <span class="lcode">47</span>.</p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="ch">#!/usr/bin/env python3</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="c1">#%module</span>
+<span class="linenos"> 4</span><span class="c1">#% description: Computes LST stats for given period (limited to Germany and 2019).</span>
+<span class="linenos"> 5</span><span class="c1">#%end</span>
+<span class="hll"><span class="linenos"> 6</span><span class="c1">#%option G_OPT_STRDS_INPUT</span>
+</span><span class="linenos"> 7</span><span class="c1">#%end</span>
+<span class="linenos"> 8</span><span class="c1">#%option </span>
+<span class="hll"><span class="linenos"> 9</span><span class="c1">#% key: start</span>
+</span><span class="linenos">10</span><span class="c1">#% description: Start date (eg. 2019-03-01)</span>
+<span class="linenos">11</span><span class="c1">#% type: string</span>
+<span class="linenos">12</span><span class="c1">#% required: yes</span>
+<span class="linenos">13</span><span class="c1">#%end</span>
+<span class="linenos">14</span><span class="c1">#%option </span>
+<span class="hll"><span class="linenos">15</span><span class="c1">#% key: end</span>
+</span><span class="linenos">16</span><span class="c1">#% description: End date (eg. 2019-04-01)</span>
+<span class="linenos">17</span><span class="c1">#% type: string</span>
+<span class="linenos">18</span><span class="c1">#% required: yes</span>
+<span class="linenos">19</span><span class="c1">#%end</span>
+<span class="linenos">20</span>
+<span class="linenos">21</span><span class="kn">import</span> <span class="nn">os</span>
+<span class="linenos">22</span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="linenos">23</span><span class="kn">import</span> <span class="nn">atexit</span>
+<span class="linenos">24</span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="linenos">25</span><span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">PIPE</span>
+<span class="linenos">26</span>
+<span class="linenos">27</span><span class="kn">import</span> <span class="nn">grass.script</span> <span class="k">as</span> <span class="nn">gs</span>
+<span class="linenos">28</span><span class="kn">from</span> <span class="nn">grass.pygrass.modules</span> <span class="kn">import</span> <span class="n">Module</span>
+<span class="linenos">29</span><span class="kn">from</span> <span class="nn">grass.exceptions</span> <span class="kn">import</span> <span class="n">CalledModuleError</span>
+<span class="linenos">30</span>    
+<span class="hll"><span class="linenos">31</span><span class="k">def</span> <span class="nf">check_date</span><span class="p">(</span><span class="n">date_str</span><span class="p">):</span>
+</span><span class="linenos">32</span>    <span class="n">d</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">date_str</span><span class="p">,</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="linenos">33</span>    <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">year</span> <span class="o">!=</span> <span class="mi">2019</span><span class="p">:</span>
+<span class="linenos">34</span>        <span class="n">gs</span><span class="o">.</span><span class="n">fatal</span><span class="p">(</span><span class="s2">&quot;Only year 2019 allowed&quot;</span><span class="p">)</span>
+<span class="linenos">35</span>
+<span class="linenos">36</span><span class="k">def</span> <span class="nf">cleanup</span><span class="p">():</span>
+<span class="linenos">37</span>    <span class="k">try</span><span class="p">:</span>
+<span class="linenos">38</span>        <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;g.remove&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;raster&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">output</span><span class="p">)</span>
+<span class="linenos">39</span>    <span class="k">except</span> <span class="n">CalledModuleError</span><span class="p">:</span>
+<span class="linenos">40</span>        <span class="k">pass</span>
+<span class="linenos">41</span>    
+<span class="linenos">42</span><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<span class="linenos">43</span>    <span class="n">check_date</span><span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;start&#39;</span><span class="p">])</span>
+<span class="linenos">44</span>    <span class="n">check_date</span><span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;end&#39;</span><span class="p">])</span>
+<span class="linenos">45</span>
+<span class="linenos">46</span>    <span class="c1"># be silent</span>
+<span class="hll"><span class="linenos">47</span>    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;GRASS_VERBOSE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;0&#39;</span>
+</span><span class="linenos">48</span>    
+<span class="linenos">49</span>    <span class="k">try</span><span class="p">:</span>
+<span class="hll"><span class="linenos">50</span>        <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;t.rast.series&#39;</span><span class="p">,</span>
+</span><span class="linenos">51</span>               <span class="nb">input</span><span class="o">=</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;input&#39;</span><span class="p">],</span>
+<span class="linenos">52</span>               <span class="n">output</span><span class="o">=</span><span class="n">output</span><span class="p">,</span>
+<span class="linenos">53</span>               <span class="n">method</span><span class="o">=</span><span class="s1">&#39;average&#39;</span><span class="p">,</span>
+<span class="linenos">54</span>               <span class="n">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt; &#39;</span><span class="si">{start}</span><span class="s2">&#39; and start_time &lt; &#39;</span><span class="si">{end}</span><span class="s2">&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+<span class="linenos">55</span>                   <span class="n">start</span><span class="o">=</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;start&#39;</span><span class="p">],</span> <span class="n">end</span><span class="o">=</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;end&#39;</span><span class="p">]</span>
+<span class="linenos">56</span>        <span class="p">))</span>
+<span class="linenos">57</span>    <span class="k">except</span> <span class="n">CalledModuleError</span><span class="p">:</span>
+<span class="linenos">58</span>        <span class="n">gs</span><span class="o">.</span><span class="n">fatal</span><span class="p">(</span><span class="s1">&#39;Unable to compute statistics&#39;</span><span class="p">)</span>
+<span class="linenos">59</span>        
+<span class="hll"><span class="linenos">60</span>    <span class="n">ret</span> <span class="o">=</span> <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;r.univar&#39;</span><span class="p">,</span>
+</span><span class="linenos">61</span>                 <span class="n">flags</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span>
+<span class="linenos">62</span>                 <span class="nb">map</span><span class="o">=</span><span class="n">output</span><span class="p">,</span>
+<span class="linenos">63</span>                 <span class="n">stdout_</span><span class="o">=</span><span class="n">PIPE</span>
+<span class="linenos">64</span>    <span class="p">)</span>
+<span class="linenos">65</span>    <span class="n">stats</span> <span class="o">=</span> <span class="n">gs</span><span class="o">.</span><span class="n">parse_key_val</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+<span class="hll"><span class="linenos">66</span>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Min: </span><span class="si">{0:.1f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;min&#39;</span><span class="p">])))</span>
+</span><span class="hll"><span class="linenos">67</span>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Max: </span><span class="si">{0:.1f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;max&#39;</span><span class="p">])))</span>
+</span><span class="hll"><span class="linenos">68</span>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Mean: </span><span class="si">{0:.1f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">])))</span>
+</span><span class="linenos">69</span>        
+<span class="linenos">70</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="linenos">71</span>    <span class="n">options</span><span class="p">,</span> <span class="n">flags</span> <span class="o">=</span> <span class="n">gs</span><span class="o">.</span><span class="n">parser</span><span class="p">()</span>
+<span class="linenos">72</span>    <span class="n">output</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+<span class="linenos">73</span>        <span class="n">options</span><span class="p">[</span><span class="s1">&#39;input&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;@&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">()</span>
+<span class="linenos">74</span>    <span class="p">)</span>
+<span class="linenos">75</span>
+<span class="linenos">76</span>    <span class="n">atexit</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">cleanup</span><span class="p">)</span>
+<span class="linenos">77</span>    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>Sample script to download: <a class="reference external" href="../_static/scripts/modis-date-stats.py">modis-date-stats.py</a></p>
+<p>Example of usage:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>modis-date-stats.py<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_c<span class="w"> </span><span class="nv">start</span><span class="o">=</span><span class="m">2019</span>-03-01<span class="w"> </span><span class="nv">end</span><span class="o">=</span><span class="m">2019</span>-04-01
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Min</span><span class="p">:</span> <span class="o">-</span><span class="mf">8.3</span>
+<span class="n">Max</span><span class="p">:</span> <span class="mf">12.6</span>
+<span class="n">Mean</span><span class="p">:</span> <span class="mf">7.3</span>
+</pre></div>
+</div>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>Table of Contents</h3>
+          <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS GIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02.html">Unit 02 - First steps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03.html">Unit 03 - Data Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Modules, Region</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05.html">Unit 05 - Raster processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06.html">Unit 06 - Data export</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07.html">Unit 07 - QGIS loves GRASS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08.html">Unit 08 - Modeler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09.html">Unit 09 - Model tuning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10.html">Unit 10 - Python intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11.html">Unit 11 - PyGRASS scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12.html">Unit 12 - Script User Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13.html">Unit 13 - PyGRASS Raster Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14.html">Unit 14 - PyGRASS Vector Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15.html">Unit 15 - Data reprojection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16.html">Unit 16 - Flooding simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17.html">Unit 17 - Spatio-temporal intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18.html">Unit 18 - Lidar, DTM interpolation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19.html">Unit 19 - DTM script parallelization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20.html">Unit 20 - Sentinel downloader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="21.html">Unit 21 - Sentinel spatio-temporal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22.html">Unit 22 - Spatio-temporal scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23.html">Unit 23 - Spatio-temporal parallelization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="24.html">Unit 24 - MODIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="25.html">Unit 25 - MODIS ST</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Unit 26 - MODIS ST scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="27.html">Unit 27 - PyWPS intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="28.html">Unit 28 - PyWPS LST point stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="29.html">Unit 29 - PyWPS LST region stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="30.html">Unit 30 - PyWPS LST region zones</a></li>
+</ul>
+
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Search</h3>
+            <form class="search" action="../search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="Go" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="25.html" title="Unit 25 - MODIS ST"
+              >previous</a> |
+            <a href="27.html" title="Unit 27 - PyWPS intro"
+              >next</a>
+          </div>
+          <div role="note" aria-label="source link">
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018-2023 Martin Landa and GISMentors.eu.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>
