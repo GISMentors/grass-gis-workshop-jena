@@ -42,25 +42,25 @@
             
   <section id="unit-10-python-intro">
 <h1>Unit 10 - Python intro<a class="headerlink" href="#unit-10-python-intro" title="Permalink to this heading">¶</a></h1>
-<p><a class="reference external" href="http://cs.wikipedia.org/wiki/Python (programming language)">Python</a> programming
+<p><a class="reference external" href="https://cs.wikipedia.org/wiki/Python (programming language)">Python</a> programming
 language is very popular in the field of GIS and data science in
 general. Python is also the main scripting platform for Esri products
 (see <a class="reference external" href="http://pro.arcgis.com/en/pro-app/arcpy/get-started/what-is-arcpy-.htm">arcpy</a>
 package). GRASS is not an exception. In reality, many GRASS modules
-are basically Python scripts, eg. <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.mask.html">r.mask</a> (see <em>Source
+are basically Python scripts, eg. <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.mask.html">r.mask</a> (see <em>Source
 Code</em> section).</p>
 <p>GRASS Python environment consists various libraries, see
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/libpython/index.html">GRASS documentation</a> for
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/libpython/index.html">GRASS documentation</a> for
 details. Let’s focus on three main libraries related to this workshop:</p>
 <ul class="simple">
-<li><p><a class="reference external" href="http://grass.osgeo.org/grass80/manuals/libpython/script_intro.html">GRASS Scripting Library</a>
+<li><p><a class="reference external" href="https://grass.osgeo.org/grass83/manuals/libpython/script_intro.html">GRASS Scripting Library</a>
 as entering node to Python scripting capabilities in GRASS GIS</p></li>
-<li><p>object-oriented (native for Python) <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/libpython/pygrass_index.html">pyGRASS</a></p></li>
-<li><p>spatio-temporal <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/libpython/temporal_framework.html">GRASS GIS Temporal Framework</a></p></li>
+<li><p>object-oriented (native for Python) <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/libpython/pygrass_index.html">pyGRASS</a></p></li>
+<li><p>spatio-temporal <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/libpython/temporal_framework.html">GRASS GIS Temporal Framework</a></p></li>
 </ul>
-<p><a class="reference external" href="http://grass.osgeo.org/grass80/manuals/libpython/pygrass_index.html">PyGRASS</a> is designed as an
+<p><a class="reference external" href="https://grass.osgeo.org/grass83/manuals/libpython/pygrass_index.html">PyGRASS</a> is designed as an
 <strong>object-oriented</strong> Python API for GRASS GIS. This is a major
-difference to <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/libpython/script_intro.html">GRASS Scripting Library</a> which consists of procedures - Python
+difference to <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/libpython/script_intro.html">GRASS Scripting Library</a> which consists of procedures - Python
 functions. It is important to highlight that PyGRASS is not a
 replacement for GRASS Scripting Library. The both libraries are living
 next to each other. It is up to a user which library will use in
@@ -71,7 +71,7 @@ tab.</p>
 <figure class="align-center" id="id1">
 <img alt="../_images/layer-manager-python.png" class="middle" src="../_images/layer-manager-python.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 70 </span><span class="caption-text">Interactive prompt in <span class="item">Python</span> tab.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 66 </span><span class="caption-text">Interactive prompt in <span class="item">Python</span> tab.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>Let’s perform a simple computation workflow below in Python:</p>
@@ -105,7 +105,7 @@ first Python script.</p>
 <figure class="align-center" id="id2">
 <img alt="../_images/layer-manager-log-file.png" src="../_images/layer-manager-log-file.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 71 </span><span class="caption-text">Log GRASS commands into file.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 67 </span><span class="caption-text">Log GRASS commands into file.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 </div>
@@ -114,7 +114,7 @@ unit <strong>GRASS Scripting Library</strong> will be used since <span class="it
 already includes this library as <code class="docutils literal notranslate"><span class="pre">gs</span></code>. Only basic syntax will be
 explained. In next units we will switch to object-oriented PyGRASS
 library.</p>
-<p id="python-code">GRASS commands can be run by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/libpython/script.html#script.core.run_command">core.run_command</a> function.</p>
+<p id="python-code">GRASS commands can be run by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/libpython/script.html#script.core.run_command">core.run_command</a> function.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1.</span>
 <span class="n">gs</span><span class="o">.</span><span class="n">run_command</span><span class="p">(</span><span class="s1">&#39;g.region&#39;</span><span class="p">,</span> <span class="n">vector</span><span class="o">=</span><span class="s1">&#39;jena_boundary&#39;</span><span class="p">,</span> <span class="n">align</span><span class="o">=</span><span class="s1">&#39;L2A_T32UPB_20170706T102021_B04_10m&#39;</span><span class="p">)</span>
 <span class="c1"># 2.</span>
@@ -132,17 +132,17 @@ library.</p>
 <p>Python shell has its history, previous commands can be browsed by
 <kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">Alt</kbd>+<kbd class="kbd docutils literal notranslate">P</kbd></kbd>, next commands by <kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">Alt</kbd>+<kbd class="kbd docutils literal notranslate">N</kbd></kbd>.</p>
 </div>
-<p>Output of <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.univar.html">r.univar</a> tool is ignored by
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/libpython/script.html#script.core.run_command">core.run_command</a> function. <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.univar.html">r.univar</a> must
-be run by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/libpython/script.html#script.core.read_command">core.read_command</a> which returns an output of
+<p>Output of <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.univar.html">r.univar</a> tool is ignored by
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/libpython/script.html#script.core.run_command">core.run_command</a> function. <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.univar.html">r.univar</a> must
+be run by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/libpython/script.html#script.core.read_command">core.read_command</a> which returns an output of
 the command. But it is still not perfect, statistics is printed to
 standard output and cannot be processed by Python commands. It would
 be feasible to retrieve command’s output as Python object, a
 dictionary. This can be done by:</p>
 <ul class="simple">
-<li><p>running <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.univar.html">r.univar</a> with <span class="param">-g</span> to enable shell script
+<li><p>running <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.univar.html">r.univar</a> with <span class="param">-g</span> to enable shell script
 (parse-able) output</p></li>
-<li><p>and using <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/libpython/script.html#script.core.parse_command">core.parse_command</a> function which parses
+<li><p>and using <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/libpython/script.html#script.core.parse_command">core.parse_command</a> function which parses
 output and store result as a Python dictionary object</p></li>
 </ul>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 5.</span>
@@ -155,7 +155,7 @@ output and store result as a Python dictionary object</p></li>
 <figure class="align-center" id="id3">
 <img alt="../_images/python-result.png" class="middle" src="../_images/python-result.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 72 </span><span class="caption-text">Running Python code in <span class="item">Python</span> tab.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 68 </span><span class="caption-text">Running Python code in <span class="item">Python</span> tab.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>Resultant NDVI raster map can be displayed easily by calling
@@ -171,7 +171,7 @@ tab.</p>
 <figure class="align-center" id="id4">
 <img alt="../_images/model-python-editor.png" class="large" src="../_images/model-python-editor.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 73 </span><span class="caption-text">Python editor integrated in Graphical Modeler. Python code can be
+<p><span class="caption-number">Fig. 69 </span><span class="caption-text">Python editor integrated in Graphical Modeler. Python code can be
 modified, run or saved into file (<code class="file docutils literal notranslate"><span class="pre">ndvi-v3.py</span></code>).</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
@@ -252,7 +252,7 @@ modified, run or saved into file (<code class="file docutils literal notranslate
         <div class="right">
           
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2018-2023 Martin Landa and GISMentors.eu.
+        &#169; Copyright 2018-2024 Martin Landa and GISMentors.eu.
       Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
         </div>

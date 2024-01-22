@@ -71,22 +71,16 @@ Notes
   Topology**, see :grasscmd:`v.out.postgis` for details.
 * To increase interoperability with your Esri-based colleagues, GRASS
   data can be exported directly also to **Esri File Geodatabase
-  format**. This requires GDAL with `FileGDB
-  <http://gdal.org/drv_filegdb.html>`__ support. But we highly
-  recommend to use for data exchange open standards like **OGC
-  GeoPackage** which Esri products can read. OGC GeoPackage is default
-  output format in :grasscmd:`v.out.ogr` since GRASS 7.4.
+  format**. But we highly recommend to use for data exchange open
+  standards like **OGC GeoPackage** which Esri products can read. OGC
+  GeoPackage is default output format in :grasscmd:`v.out.ogr` since
+  GRASS 7.4.
 
 Interoperability with Esri ArcGIS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                
 GRASS is able to read data stored in Esri Shapefile (SHP) or File
-Geodatabase (FileGDB) out of the box thanks to GDAL library. Note that
-in the case of FileGDB only vector data (feature classes) are
-supported, it's not possible to read raster data from this
-format. Vector data can be written by GRASS to Esri FileGDB format
-only when GDAL is installed with proprietary-based `FileGDB
-<https://gdal.org/drivers/vector/filegdb.html>`__ support.
+Geodatabase (FileGDB) out of the box thanks to GDAL library.
 
 In any case it is recommended to use modern OGC-based **OGC
 GeoPackage** format for exchanging data between various GIS

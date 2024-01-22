@@ -42,7 +42,7 @@
             
   <section id="unit-22-spatio-temporal-scripting">
 <h1>Unit 22 - Spatio-temporal scripting<a class="headerlink" href="#unit-22-spatio-temporal-scripting" title="Permalink to this heading">¶</a></h1>
-<p>GRASS offers a Python API for <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/libpython/temporal_framework.html">space-time processing</a>. The usage is presented in the
+<p>GRASS offers a Python API for <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/libpython/temporal_framework.html">space-time processing</a>. The usage is presented in the
 script described below.</p>
 <p>In the script below similar computation to <a class="reference internal" href="11.html"><span class="doc">Unit 11 - PyGRASS scripting</span></a> and <a class="reference internal" href="12.html"><span class="doc">Unit 12 - Script User Interface</span></a>
 will be performed. But instead of processing single Sentinel scene, a
@@ -67,16 +67,16 @@ processed.</p>
 </section>
 <section id="python-temporal-api">
 <h2>Python Temporal API<a class="headerlink" href="#python-temporal-api" title="Permalink to this heading">¶</a></h2>
-<p id="temporal-api">Functions from <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/libpython/temporal_framework.html">GRASS GIS Temporal Framework</a>:</p>
+<p id="temporal-api">Functions from <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/libpython/temporal_framework.html">GRASS GIS Temporal Framework</a>:</p>
 <ul class="simple">
-<li><p>initialization must be done by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/libpython/temporal.html#temporal.core.init">init</a> function, see line
+<li><p>initialization must be done by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/libpython/temporal.html#temporal.core.init">init</a> function, see line
 <span class="lcode">144</span></p></li>
 <li><p>space time datasets are open on lines <span class="lcode">146-148</span> by
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/libpython/temporal.html#temporal.open_stds.open_old_stds">open_old_stds</a></p></li>
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/libpython/temporal.html#temporal.open_stds.open_old_stds">open_old_stds</a></p></li>
 <li><p>raster maps registered in reference dataset (b4) are listed on line
-<span class="lcode">152</span> by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/libpython/temporal.html#temporal.abstract_space_time_dataset.AbstractSpaceTimeDataset.get_registered_maps">get_registered_maps</a></p></li>
+<span class="lcode">152</span> by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/libpython/temporal.html#temporal.abstract_space_time_dataset.AbstractSpaceTimeDataset.get_registered_maps">get_registered_maps</a></p></li>
 <li><p>related raster maps in two other datasets (b8, cl) are searched on
-lines <span class="lcode">155-158</span> by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/libpython/temporal.html#temporal.abstract_space_time_dataset.AbstractSpaceTimeDataset.get_registered_maps">get_registered_maps</a>
+lines <span class="lcode">155-158</span> by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/libpython/temporal.html#temporal.abstract_space_time_dataset.AbstractSpaceTimeDataset.get_registered_maps">get_registered_maps</a>
 with <code class="docutils literal notranslate"><span class="pre">where</span></code> parameter</p></li>
 </ul>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">  1</span><span class="ch">#!/usr/bin/env python3</span>
@@ -357,7 +357,7 @@ NDVI class 3: -0.9978 (min) 0.9994 (max) 0.6992 (mean)
         <div class="right">
           
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2018-2023 Martin Landa and GISMentors.eu.
+        &#169; Copyright 2018-2024 Martin Landa and GISMentors.eu.
       Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
         </div>

@@ -58,16 +58,16 @@ of processes running in parallel will be controlled by <span class="param">nproc
 <p>A script consists of three main functions:</p>
 <p>1. <code class="docutils literal notranslate"><span class="pre">import_files()</span></code> to import input LAS/LAZ files (line
 <span class="lcode">33</span>). Import process can be performed in parallel by
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/libpython/pygrass.modules.interface.html#pygrass.modules.interface.module.ParallelModuleQueue">ParallelModuleQueue</a> from PyGRASS library (see
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/libpython/pygrass.modules.interface.html#pygrass.modules.interface.module.ParallelModuleQueue">ParallelModuleQueue</a> from PyGRASS library (see
 <a class="reference internal" href="11.html"><span class="doc">Unit 11 - PyGRASS scripting</span></a> for PyGRASS introduction), lines <span class="lcode">37, 42, 57-58, 60</span>.</p>
 <p>2. <code class="docutils literal notranslate"><span class="pre">create_dtm_tiles()</span></code> to compute DTM per tile (line <span class="lcode">67</span>)
-using <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/v.surf.rst.html">v.surf.rst</a>. DTM tiles need to be computed with a
+using <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.surf.rst.html">v.surf.rst</a>. DTM tiles need to be computed with a
 reasonable overlap in order to create seamless mosaics, see
 <span class="lcode">73-76</span>. Tiles can be processed in parallel too, see
 <span class="param">nproc</span> option on line <span class="lcode">82</span>.</p>
 <p>3. <code class="docutils literal notranslate"><span class="pre">patch_tiles()</span></code> to patch DTM tiles together by
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.series.html">r.series</a>, see <span class="lcode">86</span>. From overlapping cell values is
-computed an average value. This is main reason why <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.patch.html">r.patch</a>
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.series.html">r.series</a>, see <span class="lcode">86</span>. From overlapping cell values is
+computed an average value. This is main reason why <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.patch.html">r.patch</a>
 is not used here.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">  1</span><span class="ch">#!/usr/bin/env python3</span>
 <span class="linenos">  2</span>
@@ -193,7 +193,7 @@ for testing.</p>
 <figure class="align-center" id="id1">
 <img alt="../_images/dtm_patched.png" class="middle" src="../_images/dtm_patched.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 108 </span><span class="caption-text">DTM created from all available tiles.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 104 </span><span class="caption-text">DTM created from all available tiles.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 </section>
@@ -202,7 +202,7 @@ for testing.</p>
 <p>In this session we will compute the Canopy Height Model (CHM), as the
 difference between interpolated DSM and imported EU-DEM DTM from
 <a class="reference internal" href="15.html"><span class="doc">Unit 15 - Data reprojection</span></a>.</p>
-<p>The CHM is computed using <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.mapcalc.html">r.mapcalc</a>, executing the difference between
+<p>The CHM is computed using <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.mapcalc.html">r.mapcalc</a>, executing the difference between
 DSM and DTM.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.mapcalc<span class="w"> </span><span class="nv">expression</span><span class="o">=</span><span class="s2">&quot;chm = dtm_laz - dem&quot;</span>
 </pre></div>
@@ -210,7 +210,7 @@ DSM and DTM.</p>
 <figure class="align-center" id="id2">
 <img alt="../_images/chm.png" class="middle" src="../_images/chm.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 109 </span><span class="caption-text">The CHM map.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 105 </span><span class="caption-text">The CHM map.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 </section>
@@ -291,7 +291,7 @@ DSM and DTM.</p>
         <div class="right">
           
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2018-2023 Martin Landa and GISMentors.eu.
+        &#169; Copyright 2018-2024 Martin Landa and GISMentors.eu.
       Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
         </div>

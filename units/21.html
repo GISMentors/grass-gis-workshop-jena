@@ -44,10 +44,10 @@
 <h1>Unit 21 - Sentinel spatio-temporal<a class="headerlink" href="#unit-21-sentinel-spatio-temporal" title="Permalink to this heading">¶</a></h1>
 <p><a class="reference internal" href="16.html#create-mapset"><span class="std std-ref">Create a new mapset</span></a> in <em>jena-region</em> location:
 <cite>sentinel_ndvi</cite> (don’t use dashes in the mapset name otherwise
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/t.rast.algebra.html">t.rast.algebra</a> will most probably fail).</p>
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.rast.algebra.html">t.rast.algebra</a> will most probably fail).</p>
 <div class="admonition-todo admonition" id="id1">
 <p class="admonition-title">Todo</p>
-<p>Fix <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/t.rast.algebra.html">t.rast.algebra</a> to support also mapsets
+<p>Fix <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.rast.algebra.html">t.rast.algebra</a> to support also mapsets
 containing dash(es) in the name.</p>
 </div>
 <section id="download-data">
@@ -82,7 +82,7 @@ with <a class="reference internal" href="#sentinel-import-st"><span class="std s
 </section>
 <section id="import-data">
 <span id="sentinel-import-st"></span><h2>Import data<a class="headerlink" href="#import-data" title="Permalink to this heading">¶</a></h2>
-<p>Data can be imported by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/i.sentinel.import.html">i.sentinel.import</a> similarly as
+<p>Data can be imported by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/i.sentinel.import.html">i.sentinel.import</a> similarly as
 done in <a class="reference internal" href="20.html"><span class="doc">Unit 20 - Sentinel downloader</span></a>. At fisrt check list of bands to be imported by
 <span class="param">-p</span> flag. Since NDVI is computed only 4th and 8th band are
 selected. Use <code class="xref std std-option docutils literal notranslate"><span class="pre">register_output</span></code> in order to create timestamps
@@ -105,14 +105,14 @@ i.sentinel.import<span class="w"> </span>-l<span class="w"> </span>-c<span class
 <section id="create-space-time-dataset">
 <h2>Create space-time dataset<a class="headerlink" href="#create-space-time-dataset" title="Permalink to this heading">¶</a></h2>
 <p>At this moment a new space-time dataset can be created by means of
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/t.create.html">t.create</a> and all imported Sentinel bands registered with
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/t.register.html">t.register</a>.</p>
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.create.html">t.create</a> and all imported Sentinel bands registered with
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.register.html">t.register</a>.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.create<span class="w"> </span><span class="nv">output</span><span class="o">=</span>sentinel<span class="w"> </span><span class="nv">title</span><span class="o">=</span><span class="s2">&quot;Sentinel L2A 2019&quot;</span><span class="w"> </span><span class="nv">desc</span><span class="o">=</span><span class="s2">&quot;Jena region&quot;</span>
 t.register<span class="w"> </span><span class="nv">input</span><span class="o">=</span>sentinel<span class="w"> </span><span class="nv">file</span><span class="o">=</span>/home/user/sentinel-timestamps.txt
 </pre></div>
 </div>
-<p>Let’s check basic metadata (<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/t.info.html">t.info</a>) and list the registered
-maps (<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/t.rast.list.html">t.rast.list</a>).</p>
+<p>Let’s check basic metadata (<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.info.html">t.info</a>) and list the registered
+maps (<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.rast.list.html">t.rast.list</a>).</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.info<span class="w"> </span><span class="nv">input</span><span class="o">=</span>sentinel
 </pre></div>
 </div>
@@ -137,21 +137,21 @@ maps (<a class="reference external" href="http://grass.osgeo.org/grass80/manuals
 <section id="ndvi-st-computation">
 <h2>NDVI ST computation<a class="headerlink" href="#ndvi-st-computation" title="Permalink to this heading">¶</a></h2>
 <p>For NDVI computation 4th and 8th bands are required (<a class="reference internal" href="05.html"><span class="doc">Unit 05 - Raster processing</span></a>). Map
-algebra for spatio-temporal data is performed by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/t.rast.algebra.html">t.rast.algebra</a>
+algebra for spatio-temporal data is performed by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.rast.algebra.html">t.rast.algebra</a>
 which requires bands separated into different
 spatio-temporal datasets (see example in <a class="reference internal" href="22.html"><span class="doc">Unit 22 - Spatio-temporal scripting</span></a>). Such datasets can
-be prepared by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/t.rast.extract.html">t.rast.extract</a>.</p>
+be prepared by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.rast.extract.html">t.rast.extract</a>.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>sentinel<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;name like &#39;%B04%&#39;&quot;</span><span class="w"> </span><span class="nv">output</span><span class="o">=</span>b4
 t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>sentinel<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;name like &#39;%B08%&#39;&quot;</span><span class="w"> </span><span class="nv">output</span><span class="o">=</span>b8
 </pre></div>
 </div>
-<p>Let’s check content of the new datasets by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/t.rast.list.html">t.rast.list</a>.</p>
+<p>Let’s check content of the new datasets by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.rast.list.html">t.rast.list</a>.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.list<span class="w"> </span><span class="nv">input</span><span class="o">=</span>b4
 t.rast.list<span class="w"> </span><span class="nv">input</span><span class="o">=</span>b8
 </pre></div>
 </div>
-<p>Set computational region by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/g.region.html">g.region</a> including mask for
-area of interest by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.mask.html">r.mask</a>.</p>
+<p>Set computational region by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/g.region.html">g.region</a> including mask for
+area of interest by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.mask.html">r.mask</a>.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>g.region<span class="w"> </span><span class="nv">vector</span><span class="o">=</span>jena_boundary<span class="w"> </span><span class="nv">align</span><span class="o">=</span>T32UPB_20190407T102021_B04_10m
 r.mask<span class="w"> </span><span class="nv">vector</span><span class="o">=</span>jena_boundary
 </pre></div>
@@ -165,7 +165,7 @@ performed in parallel (<span class="param">nproc</span>).</p>
 <p class="admonition-title">Tip</p>
 <p>GRASS 8 adds mechanism of semantic labels which makes
 computation much more straighforward using
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/t.rast.mapcalc.html">t.rast.mapcalc</a>. NDVI can be computed directly using
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.rast.mapcalc.html">t.rast.mapcalc</a>. NDVI can be computed directly using
 <span class="map">sentinel</span> space-time dataset. No need for creating time
 series subsets as described above.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.mapcalc<span class="w"> </span><span class="nv">inputs</span><span class="o">=</span>sentinel.S2_8,sentinel.S2_4<span class="w"> </span><span class="nv">output</span><span class="o">=</span>ndvi<span class="w"> </span><span class="nv">basename</span><span class="o">=</span>ndvi<span class="w"> </span><span class="se">\</span>
@@ -175,15 +175,15 @@ series subsets as described above.</p>
 </div>
 </div>
 <p>When computation is finished <em>ndvi</em> color table can be set with
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/t.rast.colors.html">t.rast.colors</a>.</p>
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.rast.colors.html">t.rast.colors</a>.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.colors<span class="w"> </span><span class="nv">input</span><span class="o">=</span>ndvi<span class="w"> </span><span class="nv">color</span><span class="o">=</span>ndvi
 </pre></div>
 </div>
 <figure class="align-center" id="id2">
 <img alt="../_images/simple-animation.gif" class="middle" src="../_images/simple-animation.gif" />
 <figcaption>
-<p><span class="caption-number">Fig. 113 </span><span class="caption-text">Simple NDVI animation (no clouds mask applied) created by
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/g.gui.animation.html">g.gui.animation</a>.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 109 </span><span class="caption-text">Simple NDVI animation (no clouds mask applied) created by
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/g.gui.animation.html">g.gui.animation</a>.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <div class="admonition important">
@@ -196,11 +196,11 @@ dataset.</p>
 <p>Let’s apply the cloud masks on our NDVI space-time dataset. At first, we will create
 a new space-time dataset containing computed raster masks. A sample
 Python script has been designed for this purpose below. Masks can
-be created with <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.mask.html">r.mask</a>, see line <span class="lcode">50</span>. But in this
+be created with <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.mask.html">r.mask</a>, see line <span class="lcode">50</span>. But in this
 case, the mask should be kept for further usage. Note that
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.mask.html">r.mask</a> module produces a normal raster map with the unique name
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.mask.html">r.mask</a> module produces a normal raster map with the unique name
 <em>MASK</em>. To disable a mask, it is enough to rename the <em>MASK</em> map with
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/g.rename.html">g.rename</a>, see line <span class="lcode">52</span>.</p>
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/g.rename.html">g.rename</a>, see line <span class="lcode">52</span>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="ch">#!/usr/bin/env python3</span>
 <span class="linenos"> 2</span>
 <span class="linenos"> 3</span><span class="c1">#%module</span>
@@ -280,7 +280,7 @@ t.register<span class="w"> </span><span class="nv">input</span><span class="o">=
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.list<span class="w"> </span>clouds
 </pre></div>
 </div>
-<p>We now apply the cloud masks map by map using <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/t.rast.algebra.html">t.rast.algebra</a> and set
+<p>We now apply the cloud masks map by map using <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.rast.algebra.html">t.rast.algebra</a> and set
 <em>ndvi</em> color table.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.algebra<span class="w"> </span><span class="nv">basename</span><span class="o">=</span>ndvi_masked<span class="w"> </span><span class="se">\</span>
 <span class="nv">expression</span><span class="o">=</span><span class="s2">&quot;ndvi_masked = if(isnull(clouds), null(), float(b8 - b4) / ( b8 + b4 ))&quot;</span><span class="w"> </span><span class="se">\</span>
@@ -292,7 +292,7 @@ t.rast.colors<span class="w"> </span><span class="k">in</span><span class="o">=<
 <figure class="align-center" id="id3">
 <img alt="../_images/simple-animation-clouds.gif" class="middle" src="../_images/simple-animation-clouds.gif" />
 <figcaption>
-<p><span class="caption-number">Fig. 114 </span><span class="caption-text">Simple NDVI animation with clouds masks applied. Computation is limited
+<p><span class="caption-number">Fig. 110 </span><span class="caption-text">Simple NDVI animation with clouds masks applied. Computation is limited
 to AOI only.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
@@ -377,7 +377,7 @@ to AOI only.</span><a class="headerlink" href="#id3" title="Permalink to this im
         <div class="right">
           
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2018-2023 Martin Landa and GISMentors.eu.
+        &#169; Copyright 2018-2024 Martin Landa and GISMentors.eu.
       Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
         </div>

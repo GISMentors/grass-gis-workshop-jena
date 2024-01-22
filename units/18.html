@@ -57,8 +57,8 @@ choose region in map viewer and download selected tiles.</p>
 <h2>Data import<a class="headerlink" href="#data-import" title="Permalink to this heading">¶</a></h2>
 <p>For importing LAS/LAZ data there are available two GRASS modules:</p>
 <ul class="simple">
-<li><p><a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.in.lidar.html">r.in.lidar</a> for importing point cloud data as raster map</p></li>
-<li><p><a class="reference external" href="http://grass.osgeo.org/grass80/manuals/v.in.lidar.html">v.in.lidar</a> for importing point cloud data as vector point map</p></li>
+<li><p><a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.in.lidar.html">r.in.lidar</a> for importing point cloud data as raster map</p></li>
+<li><p><a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.in.lidar.html">v.in.lidar</a> for importing point cloud data as vector point map</p></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -75,8 +75,8 @@ Max<span class="w"> </span>X<span class="w"> </span>Y<span class="w"> </span>Z:<
 ...
 </pre></div>
 </div>
-<p>There is also a new generation of Lidar modules based on <a class="reference external" href="https://pdal.io/">PDAL</a> library: <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.in.pdal.html">r.in.pdal</a> and
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/v.in.pdal.html">v.in.pdal</a>.</p>
+<p>There is also a new generation of Lidar modules based on <a class="reference external" href="https://pdal.io/">PDAL</a> library: <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.in.pdal.html">r.in.pdal</a> and
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.in.pdal.html">v.in.pdal</a>.</p>
 </div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
@@ -92,11 +92,11 @@ command-line tool:</p>
 <section id="vector-import">
 <h3>Vector import<a class="headerlink" href="#vector-import" title="Permalink to this heading">¶</a></h3>
 <p>Let’s create a new GRASS location <em>jena-lidar</em> defined by
-<a class="reference external" href="http://epsg.io/25832">EPSG:25832</a>.</p>
+<a class="reference external" href="https://epsg.io/25832">EPSG:25832</a>.</p>
 <figure class="align-center" id="id1">
 <img alt="../_images/create-location-epsg.png" src="../_images/create-location-epsg.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 102 </span><span class="caption-text">Create a new GRASS location by specifying EPSG code (<em>Select CRS
+<p><span class="caption-number">Fig. 98 </span><span class="caption-text">Create a new GRASS location by specifying EPSG code (<em>Select CRS
 from a list by EPSG or description</em>).</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
@@ -110,13 +110,13 @@ Information about data SRS can be missing, in this case use
 </pre></div>
 </div>
 <p>Note that computational region is ignored when importing data using
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/v.in.lidar.html">v.in.lidar</a>.</p>
-<p>Overall point density can be checked by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/v.outlier.html">v.outlier</a>. Note
-that <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/v.outlier.html">v.outlier</a> is working in the current computation
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.in.lidar.html">v.in.lidar</a>.</p>
+<p>Overall point density can be checked by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.outlier.html">v.outlier</a>. Note
+that <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.outlier.html">v.outlier</a> is working in the current computation
 region(!). Computational region must be set based on imported
 data. Since building topology was skipped by <span class="param">-b</span> flag, the map
 extent must be computed by scanning all points in input vector
-map. That is reason why <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/g.region.html">g.region</a> can run for a while.</p>
+map. That is reason why <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/g.region.html">g.region</a> can run for a while.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>g.region<span class="w"> </span><span class="nv">vector</span><span class="o">=</span>las_681_5644
 v.outlier<span class="w"> </span>-e<span class="w"> </span><span class="nv">input</span><span class="o">=</span>las_681_5644
 </pre></div>
@@ -126,7 +126,7 @@ v.outlier<span class="w"> </span>-e<span class="w"> </span><span class="nv">inpu
 </pre></div>
 </div>
 <p>Point density is calculated for map (square) unit.</p>
-<p>Basic metadata can be printed by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/v.info.html">v.info</a> (since no topology
+<p>Basic metadata can be printed by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.info.html">v.info</a> (since no topology
 is built, the module must scan all points in the map):</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>v.info<span class="w"> </span><span class="nv">map</span><span class="o">=</span>las_681_5644
 </pre></div>
@@ -147,10 +147,10 @@ is built, the module must scan all points in the map):</p>
 </section>
 <section id="raster-import">
 <h3>Raster import<a class="headerlink" href="#raster-import" title="Permalink to this heading">¶</a></h3>
-<p>Input point cloud can be imported by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.in.lidar.html">r.in.lidar</a> into
+<p>Input point cloud can be imported by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.in.lidar.html">r.in.lidar</a> into
 raster map. Flag <span class="param">-e</span> extends current computational region to
 cover all imported points. Otherwise user would need to set up
-computational region by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/g.region.html">g.region</a> before importing
+computational region by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/g.region.html">g.region</a> before importing
 data. Spatial resolution for output raster map is defined by
 <span class="param">resolution</span> option. By default, for cells with more points
 involved, the value is computed by mean value, see <span class="param">method</span>
@@ -159,7 +159,7 @@ option. Cells covered by no points will get NULL (no-data) value assigned.</p>
 </pre></div>
 </div>
 <p>Basic metadata about created raster map can be obtained by
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.info.html">r.info</a>.</p>
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.info.html">r.info</a>.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.info<span class="w"> </span><span class="nv">map</span><span class="o">=</span>las_681_5644
 </pre></div>
 </div>
@@ -173,7 +173,7 @@ option. Cells covered by no points will get NULL (no-data) value assigned.</p>
 <figure class="align-center" id="id2">
 <img alt="../_images/import-rast-vect.png" class="middle" src="../_images/import-rast-vect.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 103 </span><span class="caption-text">Imported data as vector points. Raster map with 1m resolution in the
+<p><span class="caption-number">Fig. 99 </span><span class="caption-text">Imported data as vector points. Raster map with 1m resolution in the
 background.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
@@ -182,10 +182,10 @@ background.</span><a class="headerlink" href="#id2" title="Permalink to this ima
 <section id="filling-gaps">
 <h2>Filling gaps<a class="headerlink" href="#filling-gaps" title="Permalink to this heading">¶</a></h2>
 <p>There are several GRASS modules for filling gaps in raster maps like
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.fillnulls.html">r.fillnulls</a> or <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.fill.stats.html">r.fill.stats</a>. The first module
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.fillnulls.html">r.fillnulls</a> or <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.fill.stats.html">r.fill.stats</a>. The first module
 is based on spline interpolation, the second fills gaps with
 interpolated values using IDW. Let’s use the second module which fill
-nulls rapidly compared to <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.fillnulls.html">r.fillnulls</a>. By <code class="xref std std-option docutils literal notranslate"><span class="pre">-k</span></code>
+nulls rapidly compared to <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.fillnulls.html">r.fillnulls</a>. By <code class="xref std std-option docutils literal notranslate"><span class="pre">-k</span></code>
 flag it is ensured that original values will be kept untouched. Only
 cells with no-data value will be modified.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.fill.stats<span class="w"> </span>-k<span class="w"> </span><span class="nv">input</span><span class="o">=</span>las_681_5644<span class="w"> </span><span class="nv">output</span><span class="o">=</span>las_681_5644_no_gaps
@@ -194,18 +194,18 @@ cells with no-data value will be modified.</p>
 <figure class="align-center" id="id3">
 <img alt="../_images/rast-gaps-fill.png" class="middle" src="../_images/rast-gaps-fill.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 104 </span><span class="caption-text">NULL values (on left part) filled by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.fill.stats.html">r.fill.stats</a>
+<p><span class="caption-number">Fig. 100 </span><span class="caption-text">NULL values (on left part) filled by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.fill.stats.html">r.fill.stats</a>
 (right part).</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Note that only cells in given distance (8 pixels by default, see
-<code class="xref std std-option docutils literal notranslate"><span class="pre">cells</span></code> option) are processed, see <a class="reference internal" href="#lidar-gaps"><span class="std std-numref">Fig. 105</span></a>.</p>
+<code class="xref std std-option docutils literal notranslate"><span class="pre">cells</span></code> option) are processed, see <a class="reference internal" href="#lidar-gaps"><span class="std std-numref">Fig. 101</span></a>.</p>
 <figure class="align-center" id="id4">
 <span id="lidar-gaps"></span><img alt="../_images/rast-gaps.png" class="middle" src="../_images/rast-gaps.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 105 </span><span class="caption-text">Cells out of distance not filled.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 101 </span><span class="caption-text">Cells out of distance not filled.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 </div>
@@ -213,7 +213,7 @@ cells with no-data value will be modified.</p>
 <section id="high-resolution-dsm">
 <span id="edge-detection"></span><h2>High resolution DSM<a class="headerlink" href="#high-resolution-dsm" title="Permalink to this heading">¶</a></h2>
 <p>Digital Surface Model (DSM) can be interpolated by
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/v.surf.rst.html">v.surf.rst</a> using regularized spline with tension
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.surf.rst.html">v.surf.rst</a> using regularized spline with tension
 approximation. Output resolution set to 0.5 meter. The computation can
 be really slow. The computation time becomes more reasonable by
 running in parallel, see <code class="xref std std-option docutils literal notranslate"><span class="pre">nprocs</span></code> option.</p>
@@ -228,15 +228,15 @@ v.surf.rst<span class="w"> </span><span class="nv">input</span><span class="o">=
 <figure class="align-center" id="id5">
 <img alt="../_images/dsm-3d.png" class="middle" src="../_images/dsm-3d.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 106 </span><span class="caption-text">DSM in 3D view. Orthophoto downloaded from <a class="reference external" href="http://www.geoportal-th.de/de-de/Downloadbereiche/Download-Offene-Geodaten-Th%C3%BCringen/Download-Luftbilder-und-Orthophotos">Geoportal-Th.de</a>
+<p><span class="caption-number">Fig. 102 </span><span class="caption-text">DSM in 3D view. Orthophoto downloaded from <a class="reference external" href="http://www.geoportal-th.de/de-de/Downloadbereiche/Download-Offene-Geodaten-Th%C3%BCringen/Download-Luftbilder-und-Orthophotos">Geoportal-Th.de</a>
 (tile 32680_5644).</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>GRASS imports/links RGB image as separate bands. Color
-composition can be displayed using <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/d.rgb.html">d.rgb</a>. By
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.composite.html">r.composite</a> it is possible to create color composite as
+composition can be displayed using <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/d.rgb.html">d.rgb</a>. By
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.composite.html">r.composite</a> it is possible to create color composite as
 a new raster map.</p>
 </div>
 <div class="admonition note">
@@ -246,9 +246,9 @@ filtered terrain only points by <em>edge detection</em>.</p>
 <p>The filter aims to recognize and extract attached and detached object
 (such as buildings, bridges, power lines, trees, etc.) in order to
 create a Digital Terrain Model. (source:
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/v.lidar.edgedetection.html">v.lidar.edgedetection</a> manual page) Example of simple
-workflow based on <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/v.lidar.edgedetection.html">v.lidar.edgedetection</a>,
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/v.lidar.growing.html">v.lidar.growing</a> and <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/v.lidar.correction.html">v.lidar.correction</a>
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.lidar.edgedetection.html">v.lidar.edgedetection</a> manual page) Example of simple
+workflow based on <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.lidar.edgedetection.html">v.lidar.edgedetection</a>,
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.lidar.growing.html">v.lidar.growing</a> and <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.lidar.correction.html">v.lidar.correction</a>
 below. Note that edge detection is usually a time and RAM consuming task.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>v.lidar.edgedetection<span class="w"> </span><span class="nv">input</span><span class="o">=</span>las_681_5644<span class="w"> </span><span class="nv">output</span><span class="o">=</span>edge_681_5644<span class="w"> </span><span class="nv">ew_step</span><span class="o">=</span><span class="m">8</span><span class="w"> </span><span class="nv">ns_step</span><span class="o">=</span><span class="m">8</span><span class="w"> </span><span class="nv">lambda_g</span><span class="o">=</span><span class="m">0</span>.5
 v.in.lidar<span class="w"> </span>-otb<span class="w"> </span><span class="nv">input</span><span class="o">=</span>las_681_5644_1_th_2014-2019.laz<span class="w"> </span><span class="nv">output</span><span class="o">=</span>las_681_5644_first<span class="w"> </span><span class="nv">return_filter</span><span class="o">=</span>first
@@ -259,7 +259,7 @@ v.lidar.correction<span class="w"> </span><span class="nv">input</span><span cla
 <figure class="align-center" id="id6">
 <img alt="../_images/terrain-only-points.png" src="../_images/terrain-only-points.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 107 </span><span class="caption-text">Filtered terrain points only.</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 103 </span><span class="caption-text">Filtered terrain points only.</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 </div>
@@ -342,7 +342,7 @@ v.lidar.correction<span class="w"> </span><span class="nv">input</span><span cla
         <div class="right">
           
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2018-2023 Martin Landa and GISMentors.eu.
+        &#169; Copyright 2018-2024 Martin Landa and GISMentors.eu.
       Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
         </div>

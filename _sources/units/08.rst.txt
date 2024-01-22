@@ -42,7 +42,7 @@ mask. Don't forget to enable inverse mask by :param:`-i` flag in
    Define parameters for :grasscmd:`r.mask`, a vector map used for
    creating a mask.
 
-In similar way will be added to model :grasscmd:`i.vi`
+In similar way will be added to model the :grasscmd:`i.vi`
 tool. Properties dialog for this command is open automatically because
 there are required options which must be set.
 
@@ -51,7 +51,9 @@ there are required options which must be set.
    NDVI model version 1.
 
 It's a good idea to set metadata for the model and enable overwriting
-data produced by model (:menuselection:`Model --> Model properties`).
+data produced by model (:menuselection:`Model --> Model
+properties`). Resultant NDVI raster map may be also shown
+automatically in the map window.
 
 .. figure:: ../images/units/08/model-v1-props.png
    :class: small

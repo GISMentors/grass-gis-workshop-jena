@@ -43,10 +43,10 @@
   <section id="unit-03-data-management">
 <h1>Unit 03 - Data Management<a class="headerlink" href="#unit-03-data-management" title="Permalink to this heading">¶</a></h1>
 <p>Data can be imported simply from toolbar in <span class="item">Data</span> tab by tools
-dedicated for <a class="reference external" href="http://cs.wikipedia.org/wiki/GIS_file_formats#Raster">raster</a>
-<a class="reference internal" href="../_images/raster-import.png"><img alt="grass-raster-import" src="../_images/raster-import.png" style="width: 1.5em;" /></a> or <a class="reference external" href="http://cs.wikipedia.org/wiki/GIS_file_formats#Vector">vector</a>
+dedicated for <a class="reference external" href="https://cs.wikipedia.org/wiki/GIS_file_format#Raster_formats">raster</a>
+<a class="reference internal" href="../_images/raster-import.png"><img alt="grass-raster-import" src="../_images/raster-import.png" style="width: 1.5em;" /></a> or <a class="reference external" href="https://cs.wikipedia.org/wiki/GIS_file_format#Vector_formats">vector</a>
 <a class="reference internal" href="../_images/vector-import.png"><img alt="grass-vector-import" src="../_images/vector-import.png" style="width: 1.5em;" /></a> GIS data formats. Basic knowledge of commonly
-used <a class="reference external" href="http://cs.wikipedia.org/wiki/GIS file formats">GIS file formats</a> is required.</p>
+used <a class="reference external" href="https://cs.wikipedia.org/wiki/GIS file format">GIS file format</a> is required.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>GRASS terminology differs from commonly used GIS
@@ -57,12 +57,13 @@ one “map”. So “GRASS raster map” can be treated as “a raster
 layer” in other GIS packages.</p>
 </div>
 <p>Data used in this unit is located in <code class="file docutils literal notranslate"><span class="pre">geodata/sentinel/sample</span></code>
-directory of a sample dataset.</p>
+directory of a sample dataset (available from
+<code class="file docutils literal notranslate"><span class="pre">jena-sample-data-base.7z</span></code>).</p>
 <section id="raster-data">
 <h2>Raster data<a class="headerlink" href="#raster-data" title="Permalink to this heading">¶</a></h2>
 <p>Let’s import sample Sentinel-2 4th band
 <code class="file docutils literal notranslate"><span class="pre">L2A_T32UPB_20170706T102021_B04_10m.jp2</span></code> file.  Data is stored
-in <a class="reference external" href="http://cs.wikipedia.org/wiki/JPEG2000">JPEG2000</a> data format, which is nowadays commonly used
+in <a class="reference external" href="https://cs.wikipedia.org/wiki/JPEG2000">JPEG2000</a> data format, which is nowadays commonly used
 GIS <em>raster</em> format for imagery data. Raster data can be imported into
 GRASS from the toolbar <a class="reference internal" href="../_images/raster-import.png"><img alt="grass-raster-import" src="../_images/raster-import.png" style="width: 1.5em;" /></a> <sup>Import raster data
 [r.import]</sup> or from the menu <span class="menuselection">File ‣ Import raster
@@ -88,9 +89,9 @@ interpretation will enhanced in <a class="reference internal" href="04.html#colo
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>GRASS imports/links RGB image as separate bands. Color
-composition can be displayed using <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/d.rgb.html">d.rgb</a>.</p>
+composition can be displayed using <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/d.rgb.html">d.rgb</a>.</p>
 </div>
-<p id="raster-metadata">Basic raster metadata can be printed by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.info.html">r.info</a> or from
+<p id="raster-metadata">Basic raster metadata can be printed by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.info.html">r.info</a> or from
 <span class="item">Layers</span> tab.</p>
 <figure class="align-center" id="id3">
 <img alt="../_images/raster-metadata.png" src="../_images/raster-metadata.png" />
@@ -115,7 +116,7 @@ supported:</p>
 <section id="vector-data">
 <h2>Vector data<a class="headerlink" href="#vector-data" title="Permalink to this heading">¶</a></h2>
 <p>Let’s import sample vector cloud mask data layer from
-<code class="file docutils literal notranslate"><span class="pre">geodata/sentinel/sample/MSK_CLOUDS_B00.gml</span></code> <a class="reference external" href="http://cs.wikipedia.org/wiki/GML">GML</a>
+<code class="file docutils literal notranslate"><span class="pre">geodata/sentinel/sample/MSK_CLOUDS_B00.gml</span></code> <a class="reference external" href="https://cs.wikipedia.org/wiki/GML">GML</a>
 file (commonly used GIS exchange <em>vector</em> data format). Vector data can
 be imported into GRASS from the toolbar <a class="reference internal" href="../_images/vector-import.png"><img alt="grass-vector-import" src="../_images/vector-import.png" style="width: 1.5em;" /></a>
 <sup>Import vector data [v.import]</sup> or from the menu
@@ -182,17 +183,17 @@ boundaries, centroids, areas, and isles).</span><a class="headerlink" href="#id8
 </figure>
 <p>Topological errors are checked and repaired by GRASS GIS when
 importing data, be awere of <span class="param">snap</span> option of
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/v.import.html">v.import</a> module. Topological errors which is not possible
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.import.html">v.import</a> module. Topological errors which is not possible
 repair automatically without user specification can fixed using
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/v.clean.html">v.clean</a> module.</p>
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.clean.html">v.clean</a> module.</p>
 <blockquote>
 <div></div></blockquote>
 </section>
 <section id="linking-external-formats">
 <span id="link-external"></span><h3>Linking external formats<a class="headerlink" href="#linking-external-formats" title="Permalink to this heading">¶</a></h3>
 <p>To avoid data duplication GRASS also allows linking raster data using
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.external.html">r.external</a> (<em>Link external raster data</em>) and vector data
-by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/v.external.html">v.external</a> (<em>Link external vector data</em>) which are also
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.external.html">r.external</a> (<em>Link external raster data</em>) and vector data
+by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.external.html">v.external</a> (<em>Link external vector data</em>) which are also
 accessible from the toolbar <a class="reference internal" href="../_images/layer-import.png"><img alt="grass-layer-import" src="../_images/layer-import.png" style="width: 1.5em;" /></a> in <span class="item">Data</span> tab.</p>
 <figure class="align-center" id="id9">
 <img alt="../_images/link-data-menu.png" class="middle" src="../_images/link-data-menu.png" />
@@ -284,7 +285,7 @@ accessibility.</p>
         <div class="right">
           
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2018-2023 Martin Landa and GISMentors.eu.
+        &#169; Copyright 2018-2024 Martin Landa and GISMentors.eu.
       Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
         </div>

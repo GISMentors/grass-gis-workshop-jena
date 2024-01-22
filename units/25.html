@@ -45,25 +45,25 @@
 <p>In this unit time-series computation based LST reconstruction will be
 performed.</p>
 <p>In <a class="reference internal" href="24.html"><span class="doc">Unit 24 - MODIS</span></a> the input MODIS data was <a class="reference internal" href="24.html#modis-import"><span class="std std-ref">imported</span></a>
-into GRASS by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/addons/i.modis.import.html">i.modis.import</a>. The command was called
+into GRASS by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/i.modis.import.html">i.modis.import</a>. The command was called
 with <span class="param">-w</span> flag and <span class="param">outfile</span> parameter to generate
 a timestamp file which can be later used for creating space-time raster
 dataset (strds).</p>
 <p>Creation of space time dataset including basic operations is explained
 in <a class="reference internal" href="17.html"><span class="doc">Unit 17 - Spatio-temporal intro</span></a> and <a class="reference internal" href="21.html"><span class="doc">Unit 21 - Sentinel spatio-temporal</span></a>.</p>
-<p>A new space time raster datasets is created by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/t.create.html">t.create</a>.</p>
+<p>A new space time raster datasets is created by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.create.html">t.create</a>.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.create<span class="w"> </span><span class="nv">output</span><span class="o">=</span>modis<span class="w"> </span><span class="nv">title</span><span class="o">=</span><span class="s2">&quot;MODIS 2019&quot;</span><span class="w"> </span><span class="nv">desc</span><span class="o">=</span><span class="s2">&quot;MODIS data for Germany&quot;</span>
 </pre></div>
 </div>
 <p>In the next step imported MODIS data is registered into space time
-dataset by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/t.register.html">t.register</a>. The command needs to be run
+dataset by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.register.html">t.register</a>. The command needs to be run
 twice, once for Aqua data than for Terra data.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.register<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis<span class="w"> </span><span class="nv">file</span><span class="o">=</span>tlist-mod.txt
 t.register<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis<span class="w"> </span><span class="nv">file</span><span class="o">=</span>tlist-myd.txt
 </pre></div>
 </div>
 <p>Let’s check basic metedata about created dataset by
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/t.info.html">t.info</a>.</p>
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.info.html">t.info</a>.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.info<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis
 </pre></div>
 </div>
@@ -87,7 +87,7 @@ Sinusoidal grid as the average values of clear-sky LSTs during an
 <section id="data-querying">
 <h2>Data querying<a class="headerlink" href="#data-querying" title="Permalink to this heading">¶</a></h2>
 <p>List of registered raster maps in spatio-temporal dataset can be
-printed by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/t.rast.list.html">t.rast.list</a>. In example below only relevant
+printed by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.rast.list.html">t.rast.list</a>. In example below only relevant
 data from March 2019 will be listed.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.list<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis<span class="w"> </span><span class="nv">order</span><span class="o">=</span>start_time<span class="w"> </span><span class="se">\</span>
 <span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt; &#39;2019-03-01&#39; and start_time &lt; &#39;2019-04-01&#39;&quot;</span>
@@ -98,10 +98,10 @@ printed.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.list<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis<span class="w"> </span><span class="nv">order</span><span class="o">=</span>start_time<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;name LIKE &#39;MYD%&#39;&quot;</span>
 </pre></div>
 </div>
-<p>Univariate statistics can be calculated by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/t.rast.univar.html">t.rast.univar</a>.
+<p>Univariate statistics can be calculated by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.rast.univar.html">t.rast.univar</a>.
 In example below statistics only for March 2019 is calculated. Note
 that the command is running in the current computation region
-similarly as <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.univar.html">r.univar</a> does.</p>
+similarly as <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.univar.html">r.univar</a> does.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.univar<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt; &#39;2019-03-01&#39; and start_time &lt; &#39;2019-04-01&#39;&quot;</span>
 </pre></div>
 </div>
@@ -113,7 +113,7 @@ similarly as <a class="reference external" href="http://grass.osgeo.org/grass80/
 <section id="data-extracting">
 <h2>Data extracting<a class="headerlink" href="#data-extracting" title="Permalink to this heading">¶</a></h2>
 <p>Raster spatio-temporal data can be extracted into a new dataset using
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/t.rast.extract.html">t.rast.extract</a>. In the example below are created four new
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.rast.extract.html">t.rast.extract</a>. In the example below are created four new
 datasets containing data of different satellite and datetime.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;name LIKE &#39;MOD%LST_Day_1km&#39;&quot;</span><span class="w"> </span><span class="nv">output</span><span class="o">=</span>modis_terra_day
 t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;name LIKE &#39;MOD%LST_Night_1km&#39;&quot;</span><span class="w"> </span><span class="nv">output</span><span class="o">=</span>modis_terra_night
@@ -129,8 +129,8 @@ t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="
 <h2>LST<a class="headerlink" href="#lst" title="Permalink to this heading">¶</a></h2>
 <p>Digital numbers (DN) need to be converted into Celsius scale as done
 in <a class="reference internal" href="24.html#modis-dn-c"><span class="std std-ref">Unit 24</span></a>. Instead of running
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.mapcalc.html">r.mapcalc</a> repeatedly there is a specialized temporal
-command <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/t.rast.mapcalc.html">t.rast.mapcalc</a> which applies map algebra to all
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.mapcalc.html">r.mapcalc</a> repeatedly there is a specialized temporal
+command <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.rast.mapcalc.html">t.rast.mapcalc</a> which applies map algebra to all
 the maps registered in input space time dataset.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
@@ -154,7 +154,7 @@ respected.</p>
 </pre></div>
 </div>
 <p>Color table for all the maps in a space time raster dataset can be set
-by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/t.rast.colors.html">t.rast.colors</a> similarly as <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.colors.html">r.colors</a> does
+by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.rast.colors.html">t.rast.colors</a> similarly as <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.colors.html">r.colors</a> does
 for a single raster map.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.colors<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_c<span class="w"> </span><span class="nv">color</span><span class="o">=</span>celsius
 </pre></div>
@@ -163,12 +163,12 @@ for a single raster map.</p>
 <section id="data-aggregation">
 <h2>Data aggregation<a class="headerlink" href="#data-aggregation" title="Permalink to this heading">¶</a></h2>
 <p>The temporal framework enables a user to perform data aggregation by
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/t.rast.aggregate.html">t.rast.aggregate</a>. Based on specified <span class="param">granularity</span>
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.rast.aggregate.html">t.rast.aggregate</a>. Based on specified <span class="param">granularity</span>
 a new temporal dataset with aggregated data is created.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.aggregate<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_c<span class="w"> </span><span class="nv">output</span><span class="o">=</span>modis_cm<span class="w"> </span><span class="nv">basename</span><span class="o">=</span>cm<span class="w"> </span><span class="nv">granularity</span><span class="o">=</span><span class="s2">&quot;1 months&quot;</span><span class="w"> </span><span class="nv">nproc</span><span class="o">=</span><span class="m">3</span>
 </pre></div>
 </div>
-<p>Statistics can be computed by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/t.rast.univar.html">t.rast.univar</a>.</p>
+<p>Statistics can be computed by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.rast.univar.html">t.rast.univar</a>.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.univar<span class="w"> </span>modis_cm
 </pre></div>
 </div>
@@ -180,7 +180,7 @@ a new temporal dataset with aggregated data is created.</p>
 <section id="data-extraction">
 <h2>Data extraction<a class="headerlink" href="#data-extraction" title="Permalink to this heading">¶</a></h2>
 <p>A new space time dataset only with subset of data can be created by
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/t.rast.extract.html">t.rast.extract</a>. Example for the four seasons below.</p>
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.rast.extract.html">t.rast.extract</a>. Example for the four seasons below.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_c<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt; &#39;2019-03-01&#39; and start_time &lt; &#39;2019-06-01&#39;&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="nv">output</span><span class="o">=</span>modis_spring
 
@@ -194,7 +194,7 @@ t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="
 <span class="nv">output</span><span class="o">=</span>modis_winter
 </pre></div>
 </div>
-<p>Another aggregation method is based on <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/t.rast.series.html">t.rast.series</a>, it
+<p>Another aggregation method is based on <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.rast.series.html">t.rast.series</a>, it
 allows to aggregate space time raster dataset or part of it by various
 methods. The module returns a single raster map as output. In example
 below average temperature for each seasons will be computed.</p>
@@ -205,7 +205,7 @@ t.rast.series<span class="w"> </span><span class="nv">input</span><span class="o
 </pre></div>
 </div>
 <p>Univariate statistics of created raster map with average temperature
-values can be calculated by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.univar.html">r.univar</a>.</p>
+values can be calculated by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.univar.html">r.univar</a>.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.univar<span class="w"> </span>modis_spring_avg
 </pre></div>
 </div>
@@ -218,18 +218,18 @@ values can be calculated by <a class="reference external" href="http://grass.osg
 <figure class="align-center" id="id1">
 <img alt="../_images/spring_avg.png" class="large" src="../_images/spring_avg.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 120 </span><span class="caption-text">Average temperature for spring 2019.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 116 </span><span class="caption-text">Average temperature for spring 2019.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 </section>
 <section id="data-visualization">
 <h2>Data visualization<a class="headerlink" href="#data-visualization" title="Permalink to this heading">¶</a></h2>
-<p>In addition to <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/g.gui.timeline.html">g.gui.timeline</a> introduced in <a class="reference internal" href="17.html"><span class="doc">Unit 17 - Spatio-temporal intro</span></a>
+<p>In addition to <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/g.gui.timeline.html">g.gui.timeline</a> introduced in <a class="reference internal" href="17.html"><span class="doc">Unit 17 - Spatio-temporal intro</span></a>
 there are other two GRASS tools for temporal data visualization:
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/g.gui.animation.html">g.gui.animation</a> (<span class="menuselection">Temporal ‣ GUI tools
-‣ Animation tool</span>) and <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/g.gui.tplot.html">g.gui.tplot</a>
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/g.gui.animation.html">g.gui.animation</a> (<span class="menuselection">Temporal ‣ GUI tools
+‣ Animation tool</span>) and <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/g.gui.tplot.html">g.gui.tplot</a>
 (<span class="menuselection">Temporal ‣ GUI tools ‣ Temporal plot tool</span>).</p>
-<p>Tool <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/g.gui.animation.html">g.gui.animation</a> allows creating animations in
+<p>Tool <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/g.gui.animation.html">g.gui.animation</a> allows creating animations in
 different formats, the example below showing the monthly average
 values.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>g.gui.animation<span class="w"> </span><span class="nv">strds</span><span class="o">=</span>modis_cm
@@ -238,7 +238,7 @@ values.</p>
 <figure class="align-center" id="id2">
 <img alt="../_images/modis-animation.gif" class="large" src="../_images/modis-animation.gif" />
 <figcaption>
-<p><span class="caption-number">Fig. 121 </span><span class="caption-text">Monthly average dataset animation with celsius color table applied.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 117 </span><span class="caption-text">Monthly average dataset animation with celsius color table applied.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 </section>
@@ -323,7 +323,7 @@ values.</p>
         <div class="right">
           
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2018-2023 Martin Landa and GISMentors.eu.
+        &#169; Copyright 2018-2024 Martin Landa and GISMentors.eu.
       Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
         </div>

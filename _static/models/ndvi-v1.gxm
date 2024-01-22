@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE gxm SYSTEM "grass-gxm.dtd">
 <gxm>
-    <window pos="669,313" size="800,600" />
+    <window pos="26,23" size="800,600" />
     <properties>
         <name>ndvi-v1</name>
         <description>NDVI computation version 1.</description>
@@ -10,6 +10,8 @@
     </properties>
     <action id="1" name="r.mask" pos="375,70" size="125,50">
         <task name="r.mask">
+            <flag name="i" />
+            <flag name="overwrite" />
             <parameter name="maskcats">
                 <value>*</value>
             </parameter>
@@ -19,20 +21,19 @@
             <parameter name="layer">
                 <value>1</value>
             </parameter>
-            <flag name="i" />
-            <flag name="overwrite" />
         </task>
     </action>
     <action id="2" name="i.vi" pos="375,185" size="125,50">
         <task name="i.vi">
-            <parameter name="red">
-                <value>L2A_T32UPB_20170706T102021_B04_10m@PERMANENT</value>
-            </parameter>
+            <flag name="overwrite" />
             <parameter name="output">
                 <value>ndvi</value>
             </parameter>
             <parameter name="viname">
                 <value>ndvi</value>
+            </parameter>
+            <parameter name="red">
+                <value>L2A_T32UPB_20170706T102021_B04_10m@PERMANENT</value>
             </parameter>
             <parameter name="nir">
                 <value>L2A_T32UPB_20170706T102021_B08_10m@PERMANENT</value>
@@ -40,7 +41,6 @@
             <parameter name="storage_bit">
                 <value>8</value>
             </parameter>
-            <flag name="overwrite" />
         </task>
     </action>
     <data pos="595,70" size="175,50">
@@ -61,6 +61,7 @@
         <data-parameter prompt="raster">
             <value>ndvi</value>
         </data-parameter>
+        <display />
         <relation dir="to" id="2" name="output">
         </relation>
     </data>

@@ -44,18 +44,18 @@
 <h1>Unit 20 - Sentinel downloader<a class="headerlink" href="#unit-20-sentinel-downloader" title="Permalink to this heading">¶</a></h1>
 <p>There are plenty of libraries or tools which allow downloading
 Sentinel products from <a class="reference external" href="https://scihub.copernicus.eu/">Copernicus Open Access Hub</a>.</p>
-<p>For GRASS GIS there is the <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/addons/i.sentinel.html">i.sentinel</a> toolbox.
+<p>For GRASS GIS there is the <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/i.sentinel.html">i.sentinel</a> toolbox.
 It consists of six GRASS addon modules:</p>
 <ul class="simple">
-<li><p><a class="reference external" href="http://grass.osgeo.org/grass80/manuals/addons/i.sentinel.coverage.html">i.sentinel.coverage</a></p></li>
-<li><p><a class="reference external" href="http://grass.osgeo.org/grass80/manuals/addons/i.sentinel.download.html">i.sentinel.download</a></p></li>
-<li><p><a class="reference external" href="http://grass.osgeo.org/grass80/manuals/addons/i.sentinel.parallel.download.html">i.sentinel.parallel.download</a></p></li>
-<li><p><a class="reference external" href="http://grass.osgeo.org/grass80/manuals/addons/i.sentinel.import.html">i.sentinel.import</a></p></li>
-<li><p><a class="reference external" href="http://grass.osgeo.org/grass80/manuals/addons/i.sentinel.preproc.html">i.sentinel.preproc</a></p></li>
-<li><p><a class="reference external" href="http://grass.osgeo.org/grass80/manuals/addons/i.sentinel.mask.html">i.sentinel.mask</a></p></li>
+<li><p><a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/i.sentinel.coverage.html">i.sentinel.coverage</a></p></li>
+<li><p><a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/i.sentinel.download.html">i.sentinel.download</a></p></li>
+<li><p><a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/i.sentinel.parallel.download.html">i.sentinel.parallel.download</a></p></li>
+<li><p><a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/i.sentinel.import.html">i.sentinel.import</a></p></li>
+<li><p><a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/i.sentinel.preproc.html">i.sentinel.preproc</a></p></li>
+<li><p><a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/i.sentinel.mask.html">i.sentinel.mask</a></p></li>
 </ul>
 <p>Addons modules are not internal part of GRASS installation.  Addons
-can be easily installed by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/g.extension.html">g.extension</a>
+can be easily installed by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/g.extension.html">g.extension</a>
 (<span class="menuselection">Settings ‣ Addons extensions ‣ Install
 extension from addons</span>).</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>g.extension<span class="w"> </span><span class="nv">extension</span><span class="o">=</span>i.sentinel
@@ -64,10 +64,10 @@ extension from addons</span>).</p>
 <figure class="align-center" id="id2">
 <img alt="../_images/g-extension1.png" src="../_images/g-extension1.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 110 </span><span class="caption-text">Install <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/addons/i.sentinel.html">i.sentinel</a> GRASS Addon.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 106 </span><span class="caption-text">Install <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/i.sentinel.html">i.sentinel</a> GRASS Addon.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
-<p>Note that <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/addons/i.sentinel.download.html">i.sentinel.download</a> requires also
+<p>Note that <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/i.sentinel.download.html">i.sentinel.download</a> requires also
 <a class="reference external" href="https://pypi.python.org/pypi/sentinelsat">sentinelsat library</a> to
 be installed.</p>
 <div class="admonition note">
@@ -96,11 +96,11 @@ sample dataset <a class="reference external" href="https://geo.fsv.cvut.cz/geofo
 <p><a class="reference external" href="https://www.sentinel-hub.com/blog/sentinel-2-l2a-products-available-sentinel-hub">Sentinel-2 L2A products</a>
 will be used to avoid computing atmospheric corrections. Let’s
 search for the latest available product by means of
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/i.sentinel.download.html">i.sentinel.download</a>. Setting the <span class="param">-l</span> flag, the result will only
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/i.sentinel.download.html">i.sentinel.download</a>. Setting the <span class="param">-l</span> flag, the result will only
 be printed. The download procedure will be performed later. In order to
 search and download Sentinel products from the Copernicus Open Access Hub,
 you have to create an account first. See the manual page of
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/i.sentinel.download.html">i.sentinel.download</a> module for details. Create a new text
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/i.sentinel.download.html">i.sentinel.download</a> module for details. Create a new text
 file <code class="file docutils literal notranslate"><span class="pre">sentinel.txt</span></code> containing two lines (username and
 password).</p>
 <div class="admonition note">
@@ -161,7 +161,7 @@ match otherwise 0). If the CRS of input data differs from the current location
 consider reprojection (<span class="param">-r</span>) or creating a new location for
 import.</p>
 <p>Data will be imported into the GRASS location by means of the
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/addons/i.sentinel.import.html">i.sentinel.import</a> tool. The command will import
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/i.sentinel.import.html">i.sentinel.import</a> tool. The command will import
 <strong>all</strong> Sentinel bands from <span class="param">input</span> directory
 recursively. Before importing data let’s check content of the input
 directory by <span class="param">-p</span> flag. The import procedure will be limited to
@@ -185,25 +185,25 @@ which will be used in <a class="reference internal" href="21.html"><span class="
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Cloud mask is computed by
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/addons/i.sentinel.import.html">i.sentinel.import</a>, the module doesn’t use cloud
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/i.sentinel.import.html">i.sentinel.import</a>, the module doesn’t use cloud
 mask product stored in a SAFE directory.</p>
 </div>
 <div class="admonition-todo admonition" id="id1">
 <p class="admonition-title">Todo</p>
-<p>Fix <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/addons/i.sentinel.import.html">i.sentinel.import</a> <code class="xref std std-option docutils literal notranslate"><span class="pre">-c</span></code> flag to
+<p>Fix <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/i.sentinel.import.html">i.sentinel.import</a> <code class="xref std std-option docutils literal notranslate"><span class="pre">-c</span></code> flag to
 respect <code class="xref std std-option docutils literal notranslate"><span class="pre">pattern</span></code> parameter.</p>
 </div>
 <p>Now launch the NDVI sample script created in <a class="reference internal" href="12.html"><span class="doc">Unit 12 - Script User Interface</span></a> (<a class="reference external" href="../_static/scripts/ndvi-v4.py">ndvi-v4.py</a>) in order to compute NDVI classes.</p>
 <figure class="align-center" id="id3">
 <img alt="../_images/run-script1.png" src="../_images/run-script1.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 111 </span><span class="caption-text">Run script to compute NDVI classes.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 107 </span><span class="caption-text">Run script to compute NDVI classes.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <figure class="align-center" id="id4">
 <img alt="../_images/ndvi-classes.png" class="large" src="../_images/ndvi-classes.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 112 </span><span class="caption-text">Computed NDVI classes for given AOI.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 108 </span><span class="caption-text">Computed NDVI classes for given AOI.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 </section>
@@ -284,7 +284,7 @@ respect <code class="xref std std-option docutils literal notranslate"><span cla
         <div class="right">
           
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2018-2023 Martin Landa and GISMentors.eu.
+        &#169; Copyright 2018-2024 Martin Landa and GISMentors.eu.
       Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
         </div>

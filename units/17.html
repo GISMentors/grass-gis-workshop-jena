@@ -43,7 +43,7 @@
   <section id="unit-17-spatio-temporal-intro">
 <h1>Unit 17 - Spatio-temporal intro<a class="headerlink" href="#unit-17-spatio-temporal-intro" title="Permalink to this heading">¶</a></h1>
 <p>GRASS GIS offers specialized tools for spatio-temporal data
-processing, see <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/temporalintro.html">GRASS documentation</a> for
+processing, see <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/temporalintro.html">GRASS documentation</a> for
 details.</p>
 <p>GRASS introduces three special data types that are designed to handle
 time-series data:</p>
@@ -57,23 +57,23 @@ series.</p></li>
 </ul>
 <section id="spatio-temporal-flooding-simulation">
 <h2>Spatio-temporal flooding simulation<a class="headerlink" href="#spatio-temporal-flooding-simulation" title="Permalink to this heading">¶</a></h2>
-<p>Module <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.lake.html">r.lake</a> itself allows to generating only one level
+<p>Module <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.lake.html">r.lake</a> itself allows to generating only one level
 (represented by one raster map) within one run. This limitation is
-surpassed by addon <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/addons/r.lake.series.html">r.lake.series</a>.</p>
+surpassed by addon <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/r.lake.series.html">r.lake.series</a>.</p>
 <div class="admonition note" id="grass-addons">
 <p class="admonition-title">Note</p>
 <p>Addons modules are not internal part of GRASS installation.
-Addons can be easily installed by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/g.extension.html">g.extension</a>
+Addons can be easily installed by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/g.extension.html">g.extension</a>
 (<span class="menuselection">Settings ‣ Addons extensions ‣ Install
 extension from addons</span>).</p>
 <figure class="align-center" id="id1">
 <img alt="../_images/g-extension.png" src="../_images/g-extension.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 99 </span><span class="caption-text">Install <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/addons/r.lake.series.html">r.lake.series</a> GRASS Addon.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 95 </span><span class="caption-text">Install <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/r.lake.series.html">r.lake.series</a> GRASS Addon.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 </div>
-<p><a class="reference external" href="http://grass.osgeo.org/grass80/manuals/addons/r.lake.series.html">r.lake.series</a> module outputs multiple raster maps
+<p><a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/r.lake.series.html">r.lake.series</a> module outputs multiple raster maps
 registered in space-time raster dataset.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.lake.series<span class="w"> </span><span class="nv">elevation</span><span class="o">=</span>dem<span class="w"> </span><span class="nv">out</span><span class="o">=</span>lakes<span class="w"> </span><span class="nv">start_water_level</span><span class="o">=</span><span class="m">134</span><span class="w"> </span><span class="nv">end_water_level</span><span class="o">=</span><span class="m">145</span><span class="w"> </span><span class="se">\</span>
 <span class="w"> </span><span class="nv">water_level_step</span><span class="o">=</span><span class="m">0</span>.1<span class="w"> </span><span class="nv">coordinates</span><span class="o">=</span><span class="m">686668</span>,5650664<span class="w"> </span><span class="se">\</span>
@@ -85,7 +85,7 @@ registered in space-time raster dataset.</p>
 computation speed we used three CPU cores. The result is stored in
 raster space-time dataset named <span class="map">lakes</span>.</p>
 <p>Basic information about output space-time dataset can be obtained by
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/t.info.html">t.info</a> command.</p>
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.info.html">t.info</a> command.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.info<span class="w"> </span><span class="nv">input</span><span class="o">=</span>lakes
 </pre></div>
 </div>
@@ -99,7 +99,7 @@ raster space-time dataset named <span class="map">lakes</span>.</p>
 <span class="o">...</span>
 </pre></div>
 </div>
-<p>Time topology information can be obtained by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/t.topology.html">t.topology</a>.</p>
+<p>Time topology information can be obtained by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.topology.html">t.topology</a>.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.topology<span class="w"> </span><span class="nv">input</span><span class="o">=</span>lakes
 </pre></div>
 </div>
@@ -114,13 +114,13 @@ raster space-time dataset named <span class="map">lakes</span>.</p>
 </div>
 <section id="space-time-data-querying">
 <h3>Space-time Data Querying<a class="headerlink" href="#space-time-data-querying" title="Permalink to this heading">¶</a></h3>
-<p>By <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/t.rast.list.html">t.rast.list</a> can be printed raster maps within given
+<p>By <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.rast.list.html">t.rast.list</a> can be printed raster maps within given
 time period. In the example below are printed raster maps within the
 first hour of simulated flooding.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.list<span class="w"> </span><span class="nv">input</span><span class="o">=</span>lakes<span class="w"> </span><span class="nv">order</span><span class="o">=</span>start_time<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &lt; 60&quot;</span>
 </pre></div>
 </div>
-<p>Univariate statistic can be calculated by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/t.rast.univar.html">t.rast.univar</a>,
+<p>Univariate statistic can be calculated by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.rast.univar.html">t.rast.univar</a>,
 in example below statistics is computed only for the first hour of
 flooding.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.univar<span class="w"> </span><span class="nv">input</span><span class="o">=</span>lakes<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &lt; 60&quot;</span>
@@ -135,7 +135,7 @@ flooding.</p>
 <span class="n">lakes_134</span><span class="mf">.5</span><span class="nd">@flooding</span><span class="o">|</span><span class="mi">51</span><span class="o">|</span><span class="kc">None</span><span class="o">|</span><span class="mf">0.582153865733045</span><span class="o">|</span><span class="mf">0.0008697509765625</span><span class="o">|</span><span class="mf">1.54051208496094</span><span class="o">|...</span>
 </pre></div>
 </div>
-<p>Data aggregation can be performed by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/t.rast.aggregate.html">t.rast.aggregate</a>. In
+<p>Data aggregation can be performed by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.rast.aggregate.html">t.rast.aggregate</a>. In
 the example below data is aggregated by 1 hour.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.aggregate<span class="w"> </span><span class="nv">input</span><span class="o">=</span>lakes<span class="w"> </span><span class="nv">output</span><span class="o">=</span>lakes_h<span class="w"> </span><span class="nv">basename</span><span class="o">=</span>ag<span class="w"> </span><span class="nv">granularity</span><span class="o">=</span><span class="m">60</span><span class="w"> </span><span class="nv">nproc</span><span class="o">=</span><span class="m">3</span>
 </pre></div>
@@ -155,7 +155,7 @@ subsequent analysis like univariate statistics:</p>
 <section id="space-time-data-extracting">
 <h3>Space-time Data Extracting<a class="headerlink" href="#space-time-data-extracting" title="Permalink to this heading">¶</a></h3>
 <p>Raster space-time data can be extract into new datasets using
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/t.rast.extract.html">t.rast.extract</a>. In the example below three new datasets
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.rast.extract.html">t.rast.extract</a>. In the example below three new datasets
 are created for the first, second and third six hours of flooding.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>lakes<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt; 0 and start_time &lt; 361&quot;</span><span class="w"> </span><span class="nv">output</span><span class="o">=</span>lakes_1
 t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>lakes<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt; 360 and start_time &lt; 720&quot;</span><span class="w"> </span><span class="nv">output</span><span class="o">=</span>lakes_2
@@ -163,12 +163,12 @@ t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="
 </pre></div>
 </div>
 <p>Aggregation into single raster output can be performed by
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/t.rast.series.html">t.rast.series</a>:</p>
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.rast.series.html">t.rast.series</a>:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.series<span class="w"> </span><span class="nv">input</span><span class="o">=</span>lakes_1<span class="w"> </span><span class="nv">output</span><span class="o">=</span>lakes_1_avg<span class="w"> </span><span class="nv">method</span><span class="o">=</span>average
 </pre></div>
 </div>
 <p>Let’s print univariate statistics for generated raster output by
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.univar.html">r.univar</a>:</p>
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.univar.html">r.univar</a>:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.univar<span class="w"> </span><span class="nv">map</span><span class="o">=</span>lakes_1_avg
 </pre></div>
 </div>
@@ -182,26 +182,26 @@ t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="
 <section id="space-time-data-visualization">
 <span id="st-animation"></span><h3>Space-time Data Visualization<a class="headerlink" href="#space-time-data-visualization" title="Permalink to this heading">¶</a></h3>
 <p>Time series can be visualized by specialized tool
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/g.gui.timeline.html">g.gui.timeline</a>. Example below.</p>
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/g.gui.timeline.html">g.gui.timeline</a>. Example below.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>g.gui.timeline<span class="w"> </span><span class="nv">inputs</span><span class="o">=</span>lakes_1,lakes_2,lakes_3
 </pre></div>
 </div>
 <figure class="align-center" id="id2">
 <img alt="../_images/timeline.png" src="../_images/timeline.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 100 </span><span class="caption-text">Timeline tool showing three space-time datasets.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 96 </span><span class="caption-text">Timeline tool showing three space-time datasets.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>And finally, a simple animation can be created by
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/g.gui.animation.html">g.gui.animation</a> (<span class="menuselection">File ‣ Animation
-tool</span>), see <a class="reference internal" href="#flooding-animation"><span class="std std-numref">Fig. 101</span></a>.</p>
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/g.gui.animation.html">g.gui.animation</a> (<span class="menuselection">File ‣ Animation
+tool</span>), see <a class="reference internal" href="#flooding-animation"><span class="std std-numref">Fig. 97</span></a>.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>g.gui.animation<span class="w"> </span><span class="nv">strds</span><span class="o">=</span>lakes
 </pre></div>
 </div>
 <figure class="align-center" id="id3">
 <span id="flooding-animation"></span><img alt="../_images/flooding-anim.gif" class="large" src="../_images/flooding-anim.gif" />
 <figcaption>
-<p><span class="caption-number">Fig. 101 </span><span class="caption-text">Example of flooding animation.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 97 </span><span class="caption-text">Example of flooding animation.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 </section>
@@ -282,7 +282,7 @@ tool</span>), see <a class="reference internal" href="#flooding-animation"><span
         <div class="right">
           
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2018-2023 Martin Landa and GISMentors.eu.
+        &#169; Copyright 2018-2024 Martin Landa and GISMentors.eu.
       Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
         </div>

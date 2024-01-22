@@ -51,22 +51,35 @@ tool. Beside native algoritms QGIS offers also connection to
 third-party software packages as SAGA, Orfeo or GRASS GIS. GRASS tools
 can be run directly from QGIS enviroment without starting GRASS
 explicitly.</p>
-<p>There are two options how to access GRASS tools from QGIS environment:</p>
-<ul class="simple">
-<li><p>generic <strong>Processing</strong> plugin</p></li>
-<li><p>specialized <strong>GRASS</strong> plugin</p></li>
-</ul>
-<p>Both plugins can be activated from <span class="menuselection">Plugins ‣ Manage
-and Install Plugins</span>. Processing plugin is activated by default.</p>
-<p>Let’s compute NDVI as described in <a class="reference internal" href="05.html"><span class="doc">Unit 05 - Raster processing</span></a> using <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/i.vi.html">i.vi</a>
+<p>Data produced by GRASS GIS may be easily accessed directly from
+<span class="item">Browser</span> tab.</p>
+<figure class="align-center" id="id1">
+<img alt="../_images/qgis-display-grass-data.png" class="middle" src="../_images/qgis-display-grass-data.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 43 </span><span class="caption-text">Show data produced by GRASS GIS in QGIS environment.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>QGIS has some issues with GRASS raster data symbology. Broken
+symbology may be fixed in <span class="item">Properties</span> dialog.</p>
+<figure class="align-center" id="id2">
+<img alt="../_images/qgis-raster-symbology.png" src="../_images/qgis-raster-symbology.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 44 </span><span class="caption-text">Set raster symbology in QGIS.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+</div>
+<p>It is also possible to run GRASS tools from <strong>Processing</strong> plugin.</p>
+<p>Let’s compute NDVI as described in <a class="reference internal" href="05.html"><span class="doc">Unit 05 - Raster processing</span></a> using <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/i.vi.html">i.vi</a>
 GRASS tool, but in this case directly from QGIS UI. Load into QGIS
 input data: Jena city region (<code class="file docutils literal notranslate"><span class="pre">geodata/osm/jena_boundary.gpkg</span></code>)
 and Sentinel bands (red and near-infrared channels) from
 <code class="file docutils literal notranslate"><span class="pre">geodata/sentinel/sample</span></code>.</p>
-<figure class="align-center" id="id1">
+<figure class="align-center" id="id3">
 <img alt="../_images/qgis-input-data.png" class="middle" src="../_images/qgis-input-data.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 43 </span><span class="caption-text">Input data loaded in QGIS.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 45 </span><span class="caption-text">Input data loaded in QGIS.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <section id="processing-plugin">
@@ -74,117 +87,39 @@ and Sentinel bands (red and near-infrared channels) from
 <p>Processing plugin is a generic toolbox which allows to run tools
 provided by QGIS or third-party software packages like eg. GRASS. Let’s
 open <span class="menuselection">Processing ‣ Toolbox</span> and search for
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/i.vi.html">i.vi</a> GRASS module.</p>
-<figure class="align-center" id="id2">
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/i.vi.html">i.vi</a> GRASS module.</p>
+<figure class="align-center" id="id4">
 <img alt="../_images/processing-i-vi.png" class="small" src="../_images/processing-i-vi.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 44 </span><span class="caption-text">Search for <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/i.vi.html">i.vi</a> GRASS module in Processing toolbox.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
-</figcaption>
-</figure>
-<figure class="align-center" id="id3">
-<img alt="../_images/processing-i-vi-params.png" class="middle" src="../_images/processing-i-vi-params.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 45 </span><span class="caption-text">Set input parameters (red and nir channels). Computation extent can
-be optionally defined in <span class="item">Advanced parameters</span> section.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
-</figcaption>
-</figure>
-<p><a class="reference internal" href="#processing-i-vi-running"><span class="std std-numref">Fig. 46</span></a> shows how Processing plugin
-works. First of all a temporary GRASS location is created by
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/g.proj.html">g.proj</a>, input data is linked into temporary location by
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.external.html">r.external</a>. Then computation can finally starts by running
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/i.vi.html">i.vi</a> module. In the last step output data is exported out
-of GRASS using <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/r.out.gdal.html">r.out.gdal</a>. The resultant GeoTiff file is
-vizualized in QGIS map window.</p>
-<figure class="align-center" id="id4">
-<span id="processing-i-vi-running"></span><img alt="../_images/processing-i-vi-running.png" src="../_images/processing-i-vi-running.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 46 </span><span class="caption-text">Running <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/i.vi.html">i.vi</a> tool and exporting result from GRASS
-temporary location.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 46 </span><span class="caption-text">Search for <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/i.vi.html">i.vi</a> GRASS module in Processing toolbox.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <figure class="align-center" id="id5">
+<img alt="../_images/processing-i-vi-params.png" class="middle" src="../_images/processing-i-vi-params.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 47 </span><span class="caption-text">Set input parameters (red and nir channels). Computation extent can
+be optionally defined in <span class="item">Advanced parameters</span> section.</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p><a class="reference internal" href="#processing-i-vi-running"><span class="std std-numref">Fig. 48</span></a> shows how Processing plugin
+works. First of all a temporary GRASS location is created by
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/g.proj.html">g.proj</a>, input data is linked into temporary location by
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.external.html">r.external</a>. Then computation can finally starts by running
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/i.vi.html">i.vi</a> module. In the last step output data is exported out
+of GRASS using <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.out.gdal.html">r.out.gdal</a>. The resultant GeoTiff file is
+vizualized in QGIS map window.</p>
+<figure class="align-center" id="id6">
+<span id="processing-i-vi-running"></span><img alt="../_images/processing-i-vi-running.png" src="../_images/processing-i-vi-running.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 48 </span><span class="caption-text">Running <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/i.vi.html">i.vi</a> tool and exporting result from GRASS
+temporary location.</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="id7">
 <span id="processing-result"></span><img alt="../_images/processing-result.png" class="large" src="../_images/processing-result.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 47 </span><span class="caption-text">Computed NDVI raster vizualized in QGIS map window (with better
-color interpretation than grayscale). No clouds mask involved.</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
-</figcaption>
-</figure>
-</section>
-<section id="grass-plugin">
-<h2>GRASS plugin<a class="headerlink" href="#grass-plugin" title="Permalink to this heading">¶</a></h2>
-<p>GRASS plugin has been designed to support GRASS as a <em>native</em>
-processing toolbox.  This also includes capability to vizualize data
-stored in GRASS native format (raster and vector maps located in GRASS
-locations). And, of course, ability to run any GRASS command with full
-flexibility of GRASS GIS environment. On the other hand, in contrast
-to <em>Processing</em> plugin, the GRASS plugin requires at least a basic
-knowledge of GRASS GIS concepts: locations, mapsets, and control of
-computational region. In opposite to Processing plugin data created by
-GRASS plugin are persistent, so accessible also by GRASS GIS itself.</p>
-<p>In order to use GRASS plugin, you have to define/create a location and
-mapset to be entered. New location/mapset can be created by
-<span class="menuselection">Plugins ‣ GRASS ‣ New Mapset</span>. Creating a new
-mapset using GRASS plugin is a very similar procedure to creating
-location/mapset in native GRASS GIS environment, see <a class="reference internal" href="02.html#create-location"><span class="std std-ref">Creating
-new location</span></a> (Unit 02). Since there is already
-GRASS location and mapset prepared in <a class="reference internal" href="02.html"><span class="doc">Unit 02 - First steps</span></a> it can be entered by
-<span class="menuselection">Plugins ‣ GRASS ‣ Open Mapset</span>.</p>
-<figure class="align-center" id="id6">
-<img alt="../_images/grass-open-mapset.png" class="small" src="../_images/grass-open-mapset.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 48 </span><span class="caption-text">Enter existing location and mapset by GRASS plugin.</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
-</figcaption>
-</figure>
-<p>After specifying GRASS location and mapset, the GRASS tools can be
-activated from menu <span class="menuselection">Plugins ‣ GRASS ‣ Open GRASS
-Tools</span>.</p>
-<p>GRASS plugin offers GUI tool for defining computational region in
-<span class="item">Region</span> tab. For more advanced operations can be used
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/g.region.html">g.region</a> module.</p>
-<figure class="align-center" id="id7">
-<img alt="../_images/grass-region.png" src="../_images/grass-region.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 49 </span><span class="caption-text">Set computational region from QGIS canvas extent. Don’t forget to
-set desired spatial resolution.</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
-</figcaption>
-</figure>
-<p>Let’s search for <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/i.vi.html">i.vi</a> GRASS tool in <span class="item">Modules</span> tab.</p>
-<figure class="align-center" id="id8">
-<img alt="../_images/grass-i-vi.png" src="../_images/grass-i-vi.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 50 </span><span class="caption-text">Launch <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/i.vi.html">i.vi</a> module from GRASS plugin.</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
-</figcaption>
-</figure>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>GRASS modules can be launched also from <em>GRASS shell</em> as
-shows the figure below.</p>
-<figure class="align-center" id="id9">
-<img alt="../_images/grass-shell.png" src="../_images/grass-shell.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 51 </span><span class="caption-text">Start a GRASS Shell.</span><a class="headerlink" href="#id9" title="Permalink to this image">¶</a></p>
-</figcaption>
-</figure>
-<p>By adding a flag <span class="param">–ui</span> to the end of command, a native
-GRASS GUI dialog appears. In this way other GRASS tools like
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/g.gui.gmodeler.html">g.gui.gmodeler</a> (see <a class="reference internal" href="08.html"><span class="doc">Unit 08 - Modeler</span></a>) or a whole GRASS GUI by
-<a class="reference external" href="http://grass.osgeo.org/grass80/manuals/g.gui.html">g.gui</a> can be started. Yes, it seems schizophrenic a bit to
-start GRASS GUI from GRASS plugin in QGIS environment. Someone can
-ask, why don’t you use GRASS directly ;-)</p>
-<figure class="align-center" id="id10">
-<img alt="../_images/grass-i-vi-shell.png" class="large" src="../_images/grass-i-vi-shell.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 52 </span><span class="caption-text">Launch native GUI dialog for <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/i.vi.html">i.vi</a> GRASS module.</span><a class="headerlink" href="#id10" title="Permalink to this image">¶</a></p>
-</figcaption>
-</figure>
-</div>
-<p>Computed output data is stored in the current mapset open by GRASS
-plugin. Native GRASS data can be directly accessed from QGIS <em>Browser
-Panel</em> similarly as other data sources, see <a class="reference internal" href="#qgis-grass-browser"><span class="std std-numref">Fig. 53</span></a>.</p>
-<figure class="align-center" id="id11">
-<span id="qgis-grass-browser"></span><img alt="../_images/grass-data-browse.png" class="large" src="../_images/grass-data-browse.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 53 </span><span class="caption-text">Browse GRASS data similarly as other data sources in QGIS.</span><a class="headerlink" href="#id11" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 49 </span><span class="caption-text">Computed NDVI raster vizualized in QGIS map window (with better
+color interpretation than grayscale). No clouds mask involved.</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 </section>
@@ -208,7 +143,6 @@ Panel</em> similarly as other data sources, see <a class="reference internal" hr
 <li class="toctree-l1"><a class="reference internal" href="06.html">Unit 06 - Data export</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Unit 07 - QGIS loves GRASS</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#processing-plugin">Processing plugin</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#grass-plugin">GRASS plugin</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="08.html">Unit 08 - Modeler</a></li>
@@ -265,7 +199,7 @@ Panel</em> similarly as other data sources, see <a class="reference internal" hr
         <div class="right">
           
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2018-2023 Martin Landa and GISMentors.eu.
+        &#169; Copyright 2018-2024 Martin Landa and GISMentors.eu.
       Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
         </div>

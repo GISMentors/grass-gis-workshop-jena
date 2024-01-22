@@ -55,12 +55,9 @@ contains all data accessed by GRASS. It’s usually a directory called
 <li><p><strong>Location</strong>. All geodata stored within one location must have the
 same spatial coordinate system (GRASS doesn’t support on-the-fly
 projection for several reasons).</p></li>
-<li><dl class="simple">
-<dt><strong>Mapset</strong>. Contains task-related data within one project. Helps</dt><dd><p>organizing data into logical groups or to separate parallel work of
-different users on the same project.</p>
-</dd>
-</dl>
-</li>
+<li><p><strong>Mapset</strong>. Contains task-related data within one project. Helps
+organizing data into logical groups or to separate parallel work of
+different users on the same project.</p></li>
 </ol>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -96,7 +93,7 @@ windows, see <a class="reference internal" href="#startup8"><span class="std std
 </figure>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>If GUI crashes, it can be started again by <a class="reference external" href="http://grass.osgeo.org/grass80/manuals/g.gui.html">g.gui</a>
+<p>If GUI crashes, it can be started again by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/g.gui.html">g.gui</a>
 command from the underlying terminal (command prompt).</p>
 </div>
 <p>GRASS GUI guides users by means of tooltips as shown in
@@ -113,7 +110,7 @@ terminology <em>a location</em>) with user-defined spatial coordinate systems.</
 <span id="create-location"></span><h2>Create a new location<a class="headerlink" href="#create-a-new-location" title="Permalink to this heading">¶</a></h2>
 <p>By clicking on <span class="item">Create new Location</span> button in the tooltip (or by
 <a class="reference internal" href="../_images/location-add.png"><img alt="grass-location-add" src="../_images/location-add.png" style="width: 1.5em;" /></a> from the toolbar) the wizard appears. A new GRASS
-location can be easily created using <a class="reference external" href="http://cs.wikipedia.org/wiki/EPSG">EPSG</a> codes or
+location can be easily created using <a class="reference external" href="https://cs.wikipedia.org/wiki/EPSG">EPSG</a> codes or
 user-defined geodata.</p>
 <p>In the first page of the location wizard, the location name is defined.
 Optionally, also a short description can be added.</p>
@@ -135,13 +132,12 @@ GRASS location.</span><a class="headerlink" href="#id4" title="Permalink to this
 </figcaption>
 </figure>
 <p>In our case, a new location will be created by defining CRS from
-<a class="reference external" href="../_static/data/jena_boundary.gpkg">jena_boundary.gpkg</a> input
-file.</p>
+<code class="file docutils literal notranslate"><span class="pre">jena_boundary.gpkg</span></code> input file (available from
+<code class="file docutils literal notranslate"><span class="pre">jena-sample-data-base.7z</span></code>).</p>
 <figure class="align-center" id="id5">
 <img alt="../_images/create-location-2.png" src="../_images/create-location-2.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 7 </span><span class="caption-text">Define an input file <a class="reference external" href="../_static/data/jena_boundary.gpkg">jena_boundary.gpkg</a> (available from
-<code class="file docutils literal notranslate"><span class="pre">geodata/osm</span></code> directory).</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 7 </span><span class="caption-text">Define an input file <code class="file docutils literal notranslate"><span class="pre">jena_boundary.gpkg</span></code>.</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <div class="admonition note" id="city-region-download">
@@ -150,7 +146,7 @@ file.</p>
 OpenStreetMap project using Overpass API by GDAL library (<cite>ogr2ogr</cite>
 utility). Downloaded data is stored in OGC GeoPackage format (<em>we
 don’t like an old-school Esri Shapefile format</em>). Data is
-reprojected to UTM zone 32N (<a class="reference external" href="http://epsg.io/32632">EPSG:32632</a>) since we want to work
+reprojected to UTM zone 32N (<a class="reference external" href="https://epsg.io/32632">EPSG:32632</a>) since we want to work
 with Sentinel data afterwards, see <a class="reference internal" href="03.html"><span class="doc">Unit 03 - Data Management</span></a>.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ogr2ogr<span class="w"> </span>-f<span class="w"> </span>GPKG<span class="w"> </span>jena_boundary.gpkg<span class="w"> </span>-a_srs<span class="w"> </span>EPSG:4326<span class="w"> </span>-t_srs<span class="w"> </span>EPSG:32632<span class="w"> </span><span class="se">\</span>
 /vsicurl_streaming/<span class="s2">&quot;http://overpass-api.de/api/interpreter?data=%28relation\</span>
@@ -162,20 +158,17 @@ with Sentinel data afterwards, see <a class="reference internal" href="03.html">
 (<span class="menuselection">Export ‣ Query ‣ compact OverpassQL</span>) using
 the query below:</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span>(
-relation
-[&quot;boundary&quot;=&quot;administrative&quot;]
-[&quot;admin_level&quot;=&quot;6&quot;]
-[&quot;name&quot;=&quot;Jena&quot;]
+relation[&quot;boundary&quot;=&quot;administrative&quot;]
+<span class="w">    </span>[&quot;admin_level&quot;=&quot;6&quot;]
+<span class="w">    </span>[&quot;name&quot;=&quot;Jena&quot;];
 );
-/*added<span class="w"> </span>by<span class="w"> </span>auto<span class="w"> </span>repair*/
 (._;&gt;;);
-/*end<span class="w"> </span>of<span class="w"> </span>auto<span class="w"> </span>repair*/
-out;
+out<span class="w"> </span>body;
 </pre></div>
 </div>
 </div>
 <p>Spatial reference system is chosen based on input file (UTM zone 32N
-<a class="reference external" href="http://epsg.io/32632">EPSG:32632</a>).</p>
+<a class="reference external" href="https://epsg.io/32632">EPSG:32632</a>).</p>
 <figure class="align-center" id="id6">
 <img alt="../_images/create-location-3.png" src="../_images/create-location-3.png" />
 <figcaption>
@@ -186,7 +179,7 @@ out;
 <span class="item">Finish</span> button.</p>
 <p>After creating a new location (<span class="item">Finish</span> button) the user can
 optionally import data used for defining the new location (in our case
-<em>jena_boundary.gpkg</em>).</p>
+<code class="file docutils literal notranslate"><span class="pre">jena_boundary.gpkg</span></code>).</p>
 <figure class="align-center" id="id7">
 <img alt="../_images/create-location-4.png" class="small" src="../_images/create-location-4.png" />
 <figcaption>
@@ -217,7 +210,7 @@ use double-click on the specified layer.</span><a class="headerlink" href="#id9"
 </figure>
 <p>Let’s also add a basemap from freely available OpenStreeMap map
 service. In our case <em>OpenStreetMap WMS</em> provided by <a class="reference external" href="https://mundialis.de">mundialis</a> company
-(<a class="reference external" href="http://ows.mundialis.de/services/service">http://ows.mundialis.de/services/service</a>?). WMS layer can be added
+(<a class="reference external" href="http://ows.mundialis.de/services/service">http://ows.mundialis.de/services/service</a>). WMS layer can be added
 from <span class="item">Layers</span> tab <a class="reference internal" href="../_images/layer-wms-add.png"><img alt="grass-layer-wms-add" src="../_images/layer-wms-add.png" style="width: 1.5em;" /></a> <sup>Add web service
 layer</sup>.</p>
 <figure class="align-center" id="id10">
@@ -344,7 +337,7 @@ blue color.</span><a class="headerlink" href="#id14" title="Permalink to this im
         <div class="right">
           
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2018-2023 Martin Landa and GISMentors.eu.
+        &#169; Copyright 2018-2024 Martin Landa and GISMentors.eu.
       Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
         </div>

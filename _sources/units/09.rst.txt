@@ -20,7 +20,7 @@ stage. Let's classify NDVI into 3 major classes:
 The desired output will be a simplified vector map with NDVI
 classes
 
-From GRASS perspective a computation workflow can be decomposed to the
+From GRASS perspective a computation workflow may be decomposed to the
 following steps:
 
 #. Erase cloud mask in input region (:grasscmd:`v.overlay`: ``not`` operator)
@@ -28,11 +28,10 @@ following steps:
 #. Set mask (:grasscmd:`r.mask`)
 #. Compute NDVI values (:grasscmd:`i.vi`)
 #. Reclassify NDVI values into classes (:grasscmd:`r.recode`)
-#. Set desired color table for NDVI classes
-   (:grasscmd:`r.colors`)
-#. Convert raster classes into vector areas (:grasscmd:`r.to.vect`)
-#. Remove small areas (join them with adjacent areas by :grasscmd:`v.clean`)
-#. Set color table based on NDVI raster classes (:grasscmd:`v.colors`)
+#. Remove small areas (:grasscmd:`r.reclass.area`)
+#. Fill holes (removed small areas) with adjacent area class
+   (:grasscmd:`r.grow.distance`)
+#. Set desired color table for NDVI classes (:grasscmd:`r.colors`)
    
 Overview of commands below:
 
@@ -40,22 +39,27 @@ Overview of commands below:
 
    v.overlay ainput=jena_boundary binput=MaskFeature operator=not output=region_mask
    g.region vector=region_mask align=L2A_T32UPB_20170706T102021_B04_10m
+   r.mask -r
    r.mask vector=region_mask
    i.vi red=L2A_T32UPB_20170706T102021_B04_10m output=ndvi nir=L2A_T32UPB_20170706T102021_B08_10m
    r.recode input=ndvi output=ndvi_class rules=reclass.txt
-   r.colors map=ndvi_class rules=colors.txt
-   r.to.vect -s -v input=ndvi_class output=ndvi_class type=area
-   v.clean input=ndvi_class output=ndvi_vector tool=rmarea threshold=1600
-   v.colors map=ndvi_vector raster=ndvi_class
-
+   r.reclass.area input=ndvi_class output=ndvi_class_area mode=greater value=0.16
+   r.grow.distance input=ndvi_class_area value=ndvi_class_filled
+   r.colors map=ndvi_class_filled rules=colors.txt
+ 
 .. note::
 
-   Small areas can be also removed by raster-based workflow:
+   Small areas can be also removed by vector-based workflow:
 
    .. code-block:: bash
 
-      r.reclass.area input=ndvi_class output=ndvi_class2 mode=greater value=0.16
-      r.grow.distance input=ndvi_class2 value=ndvi_class_c
+      r.to.vect -s -v input=ndvi_class output=ndvi_class type=area
+      v.clean input=ndvi_class output=ndvi_class_filled tool=rmarea threshold=1600
+      v.colors map=ndvi_class_filled raster=ndvi_class
+
+   Note that area in :grasscmd:`r.reclass.area` is provided in
+   hectares whereas in the case of :grasscmd:`v.clean` it is given in
+   square metres.
           
 The tools can be added to the existing model by |grass-module-add|
 :sup:`Add GRASS tool (module) to model`. Note that newly added tools
@@ -115,13 +119,13 @@ In Graphical Modeler a user input can be defined by two mechanisms:
 * using user-defined **variables** (ideal when multiple tools are
   sharing same user-defined input value)
 
-Let's start with parametrization. Change the model in order to provide
-the user ability to:
+In our case the model will be modified by its parametrization. Change
+the model in order to provide the user ability to:
 
 * define own area of interest (:param:`ainput` option in
   :grasscmd:`v.overlay`)
-* set threshold for small areas (:param:`threshold` option in
-  :grasscmd:`v.clean`)
+* set threshold for small areas (:param:`value` option in
+  :grasscmd:`r.reclass.area`)
 
 To parameterize a command open its properties dialog. Option
 parametrization can be easily enabled by :item:`Parameterized in
@@ -153,13 +157,13 @@ After setting the input parameters the model can be :item:`Run`.
 .. task:: Test the model with different settings.
 
 .. figure:: ../images/units/09/ndvi-no-reduction.png
-   :class: large
+   :class: middle
            
    NDVI vector class without small area reduction.
 
 .. figure:: ../images/units/09/ndvi-2000m2.png
-   :class: large
-           
+   :class: middle
+      
    NDVI classes smaller than 2000m :sup:`2` (so 20 pixel) removed.
 
 .. task:: Change computation region, eg. by buffering Jena city region
@@ -170,8 +174,8 @@ After setting the input parameters the model can be :item:`Run`.
    v.buffer input=jena_boundary output=jena_boundary_5km distance=5000
 
 .. figure:: ../images/units/09/ndvi-jena-5km.png
-   :class: large
-   
+   :class: middle
+
    NDVI vector classes computed in 5km buffer around Jena city region.
 
 Sample model to download: `ndvi-v3.gxm <../_static/models/ndvi-v3.gxm>`__
