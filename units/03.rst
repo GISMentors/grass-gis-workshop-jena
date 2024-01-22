@@ -2,10 +2,10 @@ Unit 03 - Data Management
 =========================
 
 Data can be imported simply from toolbar in :item:`Data` tab by tools
-dedicated for :wikipedia:`raster <GIS_file_formats#Raster>`
-|grass-raster-import| or :wikipedia:`vector <GIS_file_formats#Vector>`
+dedicated for :wikipedia:`raster <GIS_file_format#Raster_formats>`
+|grass-raster-import| or :wikipedia:`vector <GIS_file_format#Vector_formats>`
 |grass-vector-import| GIS data formats. Basic knowledge of commonly
-used :wikipedia:`GIS file formats` is required.
+used :wikipedia:`GIS file format` is required.
 
 .. note:: GRASS terminology differs from commonly used GIS
    packages. To avoid confusion let's focus on the most
@@ -15,7 +15,8 @@ used :wikipedia:`GIS file formats` is required.
    layer" in other GIS packages.
 
 Data used in this unit is located in :file:`geodata/sentinel/sample`
-directory of a sample dataset.
+directory of a sample dataset (available from
+:file:`jena-sample-data-base.7z`).
 
 Raster data
 -----------

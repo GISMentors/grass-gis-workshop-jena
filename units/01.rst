@@ -31,12 +31,12 @@ In a nutshell
 
 **Advantages**:
 
-* open-source, you can use it freely, modify, improve, share
+* open source -- you can use it freely, modify, improve, share
 * a strong user community, commercial support
 * large scale functionality, a large amount of tools (2D/3D
   raster/vector, topology, imagery, map production, spatio-temporal
   data, ...)
-* both GUI and CMD (easy for scripting) user interface
+* both GUI and CMD (easy-to-use for scripting) user interface
 * Python API and libraries
 
 **Disadvantages** (turning out to be advantages in some cases):
@@ -90,10 +90,8 @@ See https://grass.osgeo.org/download/software/ms-windows/
 
 There are basically two options:
 
+#. Traditional standalone installer
 #. OSGeo4W network installer
-#. traditional standalone installer
-
-Choose 64bit version if you don't care.
 
 .. tip:: GRASS GIS is also part of the `QGIS installer on Windows
    <https://qgis.org/en/site/forusers/download.html>`__. So if QGIS is
@@ -106,9 +104,9 @@ Useful links
 * `GRASS GIS homepage <https://grass.osgeo.org>`__
 * `GRASS GIS wiki <https://grasswiki.osgeo.org>`__: a lot of information, with examples
   and tutorials
-* `GRASS user mailing list <http://lists.osgeo.org/mailman/listinfo/grass-user>`__:
+* `GRASS GIS user mailing list <http://lists.osgeo.org/mailman/listinfo/grass-user>`__:
   the simpler and most used way to ask for support
-* `GRASS on stackexchange <https://gis.stackexchange.com/questions/tagged/grass>`__:
+* `GRASS GIS on StackExchange <https://gis.stackexchange.com/questions/tagged/grass>`__:
   another way to ask for support
 * `GRASS GIS tutorials <https://grass.osgeo.org/documentation/tutorials/>`__:
   an incomplete list of tutorials related to GRASS GIS

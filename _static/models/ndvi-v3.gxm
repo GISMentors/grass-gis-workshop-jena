@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE gxm SYSTEM "grass-gxm.dtd">
 <gxm>
-    <window pos="46,303" size="985,767" />
+    <window pos="26,23" size="1232,926" />
     <properties>
-        <name>ndvi-v2</name>
-        <description>NDVI model version 2</description>
+        <name>ndvi-v3</name>
+        <description>NDVI computation version 3.</description>
         <author>martin</author>
         <flag name="overwrite" />
     </properties>
-    <action id="1" name="v.overlay" pos="375,35" size="125,50">
+    <action id="1" name="v.overlay" pos="820,40" size="125,50">
         <task name="v.overlay">
             <flag name="overwrite" />
             <parameter name="ainput">
                 <parameterized />
-                <value>jena_boundary@PERMANENT</value>
+                <value>jena_boundary</value>
             </parameter>
             <parameter name="alayer">
                 <value>1</value>
@@ -22,7 +22,7 @@
                 <value>auto</value>
             </parameter>
             <parameter name="binput">
-                <value>MaskFeature@PERMANENT</value>
+                <value>MaskFeature</value>
             </parameter>
             <parameter name="blayer">
                 <value>1</value>
@@ -44,18 +44,18 @@
             </parameter>
         </task>
     </action>
-    <action id="2" name="g.region" pos="845,75" size="125,50">
+    <action id="2" name="g.region" pos="1065,185" size="125,50">
         <task name="g.region">
             <flag name="overwrite" />
             <parameter name="vector">
                 <value>region_mask</value>
             </parameter>
             <parameter name="align">
-                <value>L2A_T32UPB_20170706T102021_B04_10m@PERMANENT</value>
+                <value>L2A_T32UPB_20170706T102021_B04_10m</value>
             </parameter>
         </task>
     </action>
-    <action id="3" name="r.mask" pos="375,110" size="125,50">
+    <action id="3" name="r.mask" pos="820,300" size="125,50">
         <task name="r.mask">
             <flag name="overwrite" />
             <parameter name="maskcats">
@@ -89,7 +89,7 @@
             </parameter>
         </task>
     </action>
-    <action id="5" name="r.recode" pos="605,290" size="125,50">
+    <action id="5" name="r.recode" pos="375,415" size="125,50">
         <task name="r.recode">
             <flag name="overwrite" />
             <parameter name="input">
@@ -99,111 +99,98 @@
                 <value>ndvi_class</value>
             </parameter>
             <parameter name="rules">
-                <value>/home/user/geodata/models/reclass.txt</value>
+                <value>/home/martin/git/gismentors/grass-gis-workshop-jena/_static/models/reclass.txt</value>
             </parameter>
         </task>
     </action>
-    <action id="6" name="r.colors" pos="830,410" size="125,50">
+    <action id="6" name="r.reclass.area" pos="680,530" size="125,50">
+        <task name="r.reclass.area">
+            <flag name="overwrite" />
+            <parameter name="input">
+                <value>ndvi_class</value>
+            </parameter>
+            <parameter name="output">
+                <value>ndvi_class_area</value>
+            </parameter>
+            <parameter name="value">
+                <parameterized />
+                <value>0.16</value>
+            </parameter>
+            <parameter name="mode">
+                <value>greater</value>
+            </parameter>
+            <parameter name="method">
+                <value>reclass</value>
+            </parameter>
+        </task>
+    </action>
+    <action id="7" name="r.grow.distance" pos="375,650" size="125,50">
+        <task name="r.grow.distance">
+            <flag name="overwrite" />
+            <parameter name="input">
+                <value>ndvi_class_area</value>
+            </parameter>
+            <parameter name="value">
+                <value>ndvi_class_filled</value>
+            </parameter>
+            <parameter name="metric">
+                <value>euclidean</value>
+            </parameter>
+        </task>
+    </action>
+    <action id="8" name="r.colors" pos="920,650" size="125,50">
         <task name="r.colors">
             <parameter name="map">
-                <value>ndvi_class</value>
+                <value>ndvi_class_filled</value>
             </parameter>
             <parameter name="rules">
-                <value>/home/user/geodata/models/colors.txt</value>
+                <value>/home/martin/git/gismentors/grass-gis-workshop-jena/_static/models/colors.txt</value>
             </parameter>
-        </task>
-    </action>
-    <action id="7" name="r.to.vect" pos="385,410" size="125,50">
-        <task name="r.to.vect">
-            <flag name="s" />
-            <flag name="v" />
-            <flag name="overwrite" />
-            <parameter name="input">
-                <value>ndvi_class</value>
+            <parameter name="offset">
+                <value>0</value>
             </parameter>
-            <parameter name="output">
-                <value>ndvi_class</value>
-            </parameter>
-            <parameter name="type">
-                <value>area</value>
-            </parameter>
-            <parameter name="column">
-                <value>value</value>
-            </parameter>
-        </task>
-    </action>
-    <action id="8" name="v.clean" pos="150,510" size="125,50">
-        <task name="v.clean">
-            <flag name="overwrite" />
-            <parameter name="input">
-                <value>ndvi_class</value>
-            </parameter>
-            <parameter name="layer">
-                <value>-1</value>
-            </parameter>
-            <parameter name="type">
-                <value>point,line,boundary,centroid,area,face,kernel</value>
-            </parameter>
-            <parameter name="output">
-                <value>ndvi_vector</value>
-            </parameter>
-            <parameter name="tool">
-                <value>rmarea</value>
-            </parameter>
-            <parameter name="threshold">
-                <parameterized />
-                <value>1600</value>
-            </parameter>
-        </task>
-    </action>
-    <action id="9" name="v.colors" pos="605,510" size="125,50">
-        <task name="v.colors">
-            <parameter name="map">
-                <value>ndvi_vector</value>
-            </parameter>
-            <parameter name="layer">
+            <parameter name="scale">
                 <value>1</value>
             </parameter>
-            <parameter name="use">
-                <value>cat</value>
-            </parameter>
-            <parameter name="raster">
-                <value>ndvi_class</value>
-            </parameter>
         </task>
     </action>
-    <data pos="135,35" size="175,50">
+    <data pos="365,40" size="175,50">
         <data-parameter prompt="vector">
-            <value>jena_boundary@PERMANENT</value>
+            <value>jena_boundary</value>
         </data-parameter>
         <relation dir="from" id="1" name="ainput">
         </relation>
     </data>
-    <data pos="605,75" size="175,50">
+    <data pos="1070,40" size="175,50">
         <data-parameter prompt="vector">
-            <value>region_mask</value>
-        </data-parameter>
-        <relation dir="from" id="3" name="vector">
-        </relation>
-        <relation dir="from" id="2" name="vector">
-        </relation>
-        <relation dir="to" id="1" name="output">
-        </relation>
-    </data>
-    <data pos="140,110" size="175,50">
-        <data-parameter prompt="vector">
-            <value>MaskFeature@PERMANENT</value>
+            <value>MaskFeature</value>
         </data-parameter>
         <relation dir="from" id="1" name="binput">
         </relation>
     </data>
-    <data pos="600,185" size="175,50">
+    <data pos="820,180" size="175,50">
+        <data-parameter prompt="vector">
+            <value>region_mask</value>
+        </data-parameter>
+        <relation dir="from" id="2" name="vector">
+        </relation>
+        <relation dir="from" id="3" name="vector">
+        </relation>
+        <relation dir="to" id="1" name="output">
+        </relation>
+    </data>
+    <data pos="1065,300" size="175,50">
+        <data-parameter prompt="raster">
+            <value>L2A_T32UPB_20170706T102021_B04_10m</value>
+        </data-parameter>
+        <relation dir="from" id="2" name="align">
+        </relation>
+    </data>
+    <data pos="595,180" size="175,50">
         <data-parameter prompt="raster">
             <value>L2A_T32UPB_20170706T102021_B04_10m@PERMANENT</value>
         </data-parameter>
         <relation dir="from" id="4" name="red">
-        </relation>
-        <relation dir="from" id="2" name="align">
         </relation>
     </data>
     <data pos="375,290" size="175,50">
@@ -222,35 +209,32 @@
         <relation dir="from" id="4" name="nir">
         </relation>
     </data>
-    <data pos="605,410" size="175,50">
+    <data pos="680,415" size="175,50">
         <data-parameter prompt="raster">
             <value>ndvi_class</value>
         </data-parameter>
-        <relation dir="from" id="7" name="input">
-        </relation>
-        <relation dir="from" id="6" name="map">
-        </relation>
-        <relation dir="from" id="9" name="raster">
+        <relation dir="from" id="6" name="input">
         </relation>
         <relation dir="to" id="5" name="output">
         </relation>
     </data>
-    <data pos="150,410" size="175,50">
-        <data-parameter prompt="vector">
-            <value>ndvi_class</value>
+    <data pos="375,530" size="175,50">
+        <data-parameter prompt="raster">
+            <value>ndvi_class_area</value>
         </data-parameter>
-        <relation dir="from" id="8" name="input">
+        <relation dir="from" id="7" name="input">
         </relation>
-        <relation dir="to" id="7" name="output">
+        <relation dir="to" id="6" name="output">
         </relation>
     </data>
-    <data pos="385,510" size="175,50">
-        <data-parameter prompt="vector">
-            <value>ndvi_vector</value>
+    <data pos="670,650" size="175,50">
+        <data-parameter prompt="raster">
+            <value>ndvi_class_filled</value>
         </data-parameter>
-        <relation dir="from" id="9" name="map">
+        <display />
+        <relation dir="from" id="8" name="map">
         </relation>
-        <relation dir="to" id="8" name="output">
+        <relation dir="to" id="7" name="value">
         </relation>
     </data>
 </gxm>

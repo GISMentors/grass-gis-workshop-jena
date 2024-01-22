@@ -20,8 +20,8 @@ The GRASS data structure has three levels:
    projection for several reasons).
 
 #. **Mapset**. Contains task-related data within one project. Helps
-    organizing data into logical groups or to separate parallel work of
-    different users on the same project.
+   organizing data into logical groups or to separate parallel work of
+   different users on the same project.
 
 .. note:: In GRASS 7, a startup screen (:numref:`startup7`) appeared 
    before entering a session. The user had to define the working
@@ -96,14 +96,12 @@ georeferenced data file`).
    GRASS location.
             
 In our case, a new location will be created by defining CRS from
-`jena_boundary.gpkg <../_static/data/jena_boundary.gpkg>`__ input
-file.
+:file:`jena_boundary.gpkg` input file (available from
+:file:`jena-sample-data-base.7z`).
 
 .. figure:: ../images/units/02/create-location-2.png
 
-   Define an input file `jena_boundary.gpkg
-   <../_static/data/jena_boundary.gpkg>`__ (available from
-   :file:`geodata/osm` directory).
+   Define an input file :file:`jena_boundary.gpkg`.
 
 .. _city_region_download:
 
@@ -129,15 +127,12 @@ file.
    .. code:: xml
 
       (
-      relation
-      ["boundary"="administrative"]
-      ["admin_level"="6"]
-      ["name"="Jena"]
+      relation["boundary"="administrative"]
+          ["admin_level"="6"]
+          ["name"="Jena"];
       );
-      /*added by auto repair*/
       (._;>;);
-      /*end of auto repair*/
-      out;
+      out body;
 
 Spatial reference system is chosen based on input file (UTM zone 32N
 :epsg:`32632`).
@@ -151,7 +146,7 @@ A new GRASS user-defined location will be created by clicking on
       
 After creating a new location (:item:`Finish` button) the user can
 optionally import data used for defining the new location (in our case
-*jena_boundary.gpkg*).
+:file:`jena_boundary.gpkg`).
 
 .. figure:: ../images/units/02/create-location-4.png
    :class: small
@@ -183,7 +178,7 @@ Imported :map:`jena_boundary` data layer can be easily displayed from
 Let's also add a basemap from freely available OpenStreeMap map
 service. In our case *OpenStreetMap WMS* provided by `mundialis
 <https://mundialis.de>`__ company
-(http://ows.mundialis.de/services/service?). WMS layer can be added
+(http://ows.mundialis.de/services/service). WMS layer can be added
 from :item:`Layers` tab |grass-layer-wms-add| :sup:`Add web service
 layer`.
 
