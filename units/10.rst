@@ -14,7 +14,7 @@ GRASS Python environment consists various libraries, see
 :grasscmd2:`GRASS documentation <libpython/index.html>` for
 details. Let's focus on three main libraries related to this workshop:
 
-* :grasscmd2:`GRASS Scripting Library <libpython/script_intro.html>`
+* :grasscmd2:`GRASS Script Package <libpython/script_intro.html>`
   as entering node to Python scripting capabilities in GRASS GIS
 * object-oriented (native for Python) :grasscmd2:`pyGRASS
   <libpython/pygrass_index.html>`
@@ -23,12 +23,11 @@ details. Let's focus on three main libraries related to this workshop:
 
 :grasscmd2:`PyGRASS <libpython/pygrass_index.html>` is designed as an
 **object-oriented** Python API for GRASS GIS. This is a major
-difference to :grasscmd2:`GRASS Scripting Library
-<libpython/script_intro.html>` which consists of procedures - Python
+difference to GRASS Script Package which consists of procedures - Python
 functions. It is important to highlight that PyGRASS is not a
-replacement for GRASS Scripting Library. The both libraries are living
-next to each other. It is up to a user which library will use in
-his/her scripts. It's also possible to compine both libraries in one
+replacement for GRASS Script Package. The both packages are living
+next to each other. It is up to a user which package will use in
+his/her scripts. It's also possible to compine both packages in one
 single script (not recommended).
   
 Let's do our first steps towards Python scripting in :item:`Python`
@@ -63,58 +62,64 @@ The workflow is represented by a set of GRASS commands (map names shorten):
    # 5.
    r.univar map=ndvi
 
-.. tip:: GRASS modules run from :item:`Console` and GUI dialogs can be
-   logged into file by :item:`Log file` (click to start/stop
-   logging). Logged commands can be used as a starting point for your
-   first Python script.
+.. tip:: GRASS modules run from :item:`Console` or GUI dialogs are
+   logged by commands history. This history may be exported by
+   :item:`Export history` button in :item:`Console` tab. Logged
+   commands can be used as a starting point for your first Python
+   script. The commands just need to be changed to satisfy Python
+   syntax. Let's learn how to do it :-)
 
-   .. figure:: ../images/units/10/layer-manager-log-file.png
-               
-      Log GRASS commands into file.         
+   .. figure:: ../images/units/10/history-panel.png
+      :class: large
+              
+      GRASS GIS 8.4 will come with much better command history management.
             
-The commands needs to be changed to satisfy Python syntax. In this
-unit **GRASS Scripting Library** will be used since :item:`Python` tab
-already includes this library as ``gs``. Only basic syntax will be
-explained. In next units we will switch to object-oriented PyGRASS
-library.
+Python code may be interactively run from :item:`Python` tab. In the
+following units PyGRASS API will be systematically used.
 
 .. _python-code:
 
-GRASS commands can be run by :grass-script:`core.run_command` function.
+GRASS commands can be run in by :pygrass-modules:`Module` object.
 
 .. code-block:: python
-                
-   # 1.
-   gs.run_command('g.region', vector='jena_boundary', align='L2A_T32UPB_20170706T102021_B04_10m')
-   # 2.
-   gs.run_command('g.region', n='n+1000', s='s-1000', e='e+1000', w='w-1000') # 3.
-   gs.run_command('r.mask', flags='i', vector='MaskFeature', overwrite=True)
-   # 4.
-   gs.run_command('i.vi', red='L2A_T32UPB_20170706T102021_B04_10m', output='ndvi',
-                     viname='ndvi', nir='L2A_T32UPB_20170706T102021_B08_10m', overwrite=True)
-   # 5.
-   gs.run_command('r.univar', map='ndvi')
 
-.. tip:: Python shell has its history, previous commands can be browsed by
+   from grass.pygrass.modules import Module
+   
+   # 1.
+   Module('g.region', vector='jena_boundary', align='L2A_T32UPB_20170706T102021_B04_10m')
+   # 2.
+   Module('g.region', n='n+1000', s='s-1000', e='e+1000', w='w-1000')
+   # 3.
+   Module('r.mask', flags='i', vector='MaskFeature', overwrite=True)
+   # 4.
+   Module('i.vi', red='L2A_T32UPB_20170706T102021_B04_10m', output='ndvi',
+          viname='ndvi', nir='L2A_T32UPB_20170706T102021_B08_10m', overwrite=True)
+   # 5.
+   from subprocess import PIPE
+   m = Module('r.univar', map='ndvi', stdout_=PIPE)
+   print(m.outputs.stdout)
+
+.. tip:: Python shell has also its history, previous commands can be browsed by
    :kbd:`Alt+P`, next commands by :kbd:`Alt+N`.
 
-Output of :grasscmd:`r.univar` tool is ignored by
-:grass-script:`core.run_command` function. :grasscmd:`r.univar` must
-be run by :grass-script:`core.read_command` which returns an output of
-the command. But it is still not perfect, statistics is printed to
+To catch output of :grasscmd:`r.univar` tool ``stdout_=PIPE`` must be
+provided. But it is still not perfect, statistics is printed to
 standard output and cannot be processed by Python commands. It would
 be feasible to retrieve command's output as Python object, a
 dictionary. This can be done by:
 
 * running :grasscmd:`r.univar` with :param:`-g` to enable shell script
   (parse-able) output
-* and using :grass-script:`core.parse_command` function which parses
+* and using :grass-script:`core.parse_key_val` function which parses
   output and store result as a Python dictionary object
 
 .. code-block:: python
                 
    # 5.
-   stats = gs.parse_command('r.univar', flags='g', map='ndvi')
+   from grass.script import parse_key_val
+   
+   m = Module('r.univar', flags='g', map='ndvi', stdout_=PIPE)
+   stats = parse_key_val(m.outputs.stdout)
    print('NDVI min value: {0:.4f}'.format(float(stats['min'])))
    print('NDVI max value: {0:.4f}'.format(float(stats['max'])))
    print('NDVI mean value: {0:.4f}'.format(float(stats['mean'])))
