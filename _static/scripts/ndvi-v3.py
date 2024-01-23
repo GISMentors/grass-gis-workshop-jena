@@ -6,35 +6,34 @@
 #
 # AUTHOR(S):    martin
 #
-# PURPOSE:      NDVI model version 3
+# PURPOSE:      NDVI computation version 3.
 #
-# DATE:         Sat Feb  3 15:45:35 2018
+# DATE:         Tue Jan 23 23:39:32 2024
 #
 ##############################################################################
 
-#%module
-#% description: NDVI model version 3
-#%end
-#%option
-#% key: voverlay1_ainput
-#% description: Name of input vector map (A)
-#% required: yes
-#% type: string
-#% key_desc: name
-#% answer: jena_boundary@PERMANENT
-#%end
+# %module
+# % description: NDVI computation version 3.
+# %end
 # %option
-# % key: vclean8_threshold
-# % description: Threshold in map units, one value for each tool
+# % key: aoi
+# % description: Area of interest
+# % required: yes
+# % type: string
+# % key_desc: name
+# % answer: jena_boundary
+# %end
+# %option
+# % key: area_limit
+# % description: Value option that sets the area size limit (in hectares)
 # % required: yes
 # % type: double
-# % answer: 1600
+# % answer: 0.16
 # %end
 
 import sys
 import os
 import atexit
-
 from subprocess import PIPE
 
 from grass.script import parser, parse_key_val
@@ -45,78 +44,71 @@ def cleanup():
 
 def main(options, flags):
     Module("v.overlay",
-           overwrite = True,
-           ainput=options["voverlay1_ainput"],
-           alayer = "1",
-           atype = "auto",
-           binput = "MaskFeature@PERMANENT",
-           blayer = "1",
-           btype = "area",
-           operator = "not",
-           output = "region_mask",
-           olayer = "1,0,0",
-           snap = 1e-8)
+           overwrite=True,
+           ainput=options["aoi"],
+           alayer="1",
+           atype="auto",
+           binput="MaskFeature",
+           blayer="1",
+           btype="area",
+           operator="not",
+           output="region_mask",
+           olayer=['1', '0', '0'],
+           snap=1e-8)
 
     Module("g.region",
-           overwrite = True,
-           vector = "region_mask",
-           align = "L2A_T32UPB_20170706T102021_B04_10m@PERMANENT")
+           overwrite=True,
+           vector="region_mask",
+           align="L2A_T32UPB_20170706T102021_B04_10m")
 
     Module("r.mask",
-           overwrite = True,
-           maskcats = "*",
-           vector = "region_mask",
-           layer = "1")
+           overwrite=True,
+           maskcats="*",
+           vector="region_mask",
+           layer="1")
 
     Module("i.vi",
-           overwrite = True,
-           red = "L2A_T32UPB_20170706T102021_B04_10m@PERMANENT",
-           output = "ndvi",
-           viname = "ndvi",
-           nir = "L2A_T32UPB_20170706T102021_B08_10m@PERMANENT",
-           storage_bit = 8)
+           overwrite=True,
+           output="ndvi",
+           viname="ndvi",
+           red="L2A_T32UPB_20170706T102021_B04_10m@PERMANENT",
+           nir="L2A_T32UPB_20170706T102021_B08_10m@PERMANENT",
+           storage_bit=8)
 
     Module("r.recode",
-           overwrite = True,
-           input = "ndvi",
-           output = "ndvi_class",
-           rules = "/home/user/geodata/models/reclass.txt")
+           overwrite=True,
+           input="ndvi",
+           output="ndvi_class",
+           rules="/home/martin/git/gismentors/grass-gis-workshop-jena/_static/models/reclass.txt")
+
+    Module("r.reclass.area",
+           overwrite=True,
+           input="ndvi_class",
+           output="ndvi_class_area",
+           value=options["area_limit"],
+           mode="greater",
+           method="reclass")
+
+    Module("r.grow.distance",
+           overwrite=True,
+           input="ndvi_class_area",
+           value="ndvi_class_filled",
+           metric="euclidean")
 
     Module("r.colors",
-           map = "ndvi_class",
-           rules = "/home/user/geodata/models/colors.txt")
+           map="ndvi_class_filled",
+           rules="/home/martin/git/gismentors/grass-gis-workshop-jena/_static/models/colors.txt",
+           offset=0,
+           scale=1)
 
-    Module("r.to.vect",
-           flags = 'sv',
-           overwrite = True,
-           input = "ndvi_class",
-           output = "ndvi_class",
-           type = "area",
-           column = "value")
-
-    Module("v.clean",
-           overwrite = True,
-           input = "ndvi_class",
-           layer = "-1",
-           type = ["point","line","boundary","centroid","area","face","kernel"],
-           output = "ndvi_vector",
-           tool = "rmarea",
-           threshold = 1600)
-
-    Module("v.colors",
-           map="ndvi_vector",
-           layer="1",
-           use="cat",
-           raster="ndvi_class")
-    
-    ret = Module('r.univar', flags='g', map='ndvi', stdout_=PIPE)
-    stats = parse_key_val(ret.outputs.stdout)
-    print ('-' * 80)
-    print ('NDVI value statistics')
-    print ('-' * 80)
-    print ('NDVI min value: {0:.4f}'.format(float(stats['min'])))
-    print ('NDVI max value: {0:.4f}'.format(float(stats['max'])))
-    print ('NDVI mean value: {0:.4f}'.format(float(stats['mean'])))
+    m = Module('r.univar', flags='g', map='ndvi', stdout_=PIPE)
+    stats = parse_key_val(m.outputs.stdout)
+    print('-' * 80)
+    print('NDVI value statistics')
+    print('-' * 80)
+    print('NDVI min value: {0:.4f}'.format(float(stats['min'])))
+    print('NDVI max value: {0:.4f}'.format(float(stats['max'])))
+    print('NDVI mean value: {0:.4f}'.format(float(stats['mean'])))
 
     print ('-' * 80)
     print ('NDVI class statistics')
@@ -127,8 +119,9 @@ def main(options, flags):
         data = line.split('|')
         cat = data[0]
         area = float(data[-1])
-        print ('NDVI class {0}: {1:.1f} ha'.format(cat, area/1e4)) 
+        print('NDVI class {0}: {1:.1f} ha'.format(cat, area/1e4)) 
 
+    print ('-' * 80)
     # v.to.rast: use -c flag for updating statistics if exists
     Module('v.rast.stats', flags='c', map='ndvi_vector', raster='ndvi',
            column_prefix='ndvi', method=['minimum','maximum','average'])
@@ -139,10 +132,11 @@ def main(options, flags):
         cat,label,min,max,mean = line.split(',')
         print ('NDVI class {0}: {1:.4f} (min) {2:.4f} (max) {3:.4f} (mean)'.format(
         cat, float(min), float(max), float(mean)))
-
+    
     return 0
 
 if __name__ == "__main__":
     options, flags = parser()
     atexit.register(cleanup)
+    os.environ["GRASS_OVERWRITE"] = "1"
     sys.exit(main(options, flags))
