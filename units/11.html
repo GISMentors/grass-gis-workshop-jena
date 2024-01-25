@@ -52,30 +52,26 @@ script directory path into GRASS_ADDON_PATH. It can be useful if
 you will run script(s) from this directory more often. Then you
 don’t need to define full path to scripts, script name will be
 enough.</p>
-<figure class="align-center" id="id3">
+<figure class="align-center" id="id1">
 <img alt="../_images/addon-path.png" src="../_images/addon-path.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 70 </span><span class="caption-text">Add script directory into GRASS Addon Path.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 70 </span><span class="caption-text">Add script directory into GRASS Addon Path.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 </div>
-<figure class="align-center" id="id4">
+<figure class="align-center" id="id2">
 <img alt="../_images/script-output.png" class="middle" src="../_images/script-output.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 71 </span><span class="caption-text">Script output is printed into <span class="item">Console</span> tab.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 71 </span><span class="caption-text">Script output is printed into <span class="item">Console</span> tab.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
-<div class="admonition-todo admonition" id="id1">
-<p class="admonition-title">Todo</p>
-<p>GRASS doesn’t show UI dialog…</p>
-</div>
 <p>Open exported Python script by your favorite IDE or if your do not
 have any just use GRASS-integrated Python editor <a class="reference internal" href="../_images/python.png"><img alt="grass-python" src="../_images/python.png" style="width: 1.5em;" /></a> <sub>Open
 a simple Python code editor</sub>.</p>
-<figure class="align-center" id="id5">
+<figure class="align-center" id="id3">
 <img alt="../_images/editor.png" src="../_images/editor.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 72 </span><span class="caption-text">Simple GRASS Python code editor in action.</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 72 </span><span class="caption-text">Simple GRASS Python code editor in action.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>Load script by <a class="reference internal" href="../_images/open.png"><img alt="grass-open" src="../_images/open.png" style="width: 1.5em;" /></a> <sup>Open</sup> and improve the script by
@@ -119,47 +115,62 @@ their description:</p>
            <span class="n">value</span><span class="o">=</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;area_limit&quot;</span><span class="p">],</span>
 </pre></div>
 </div>
-<figure class="align-center" id="id6">
+<figure class="align-center" id="id4">
 <img alt="../_images/run-script.png" class="large" src="../_images/run-script.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 73 </span><span class="caption-text">Launch script by <a class="reference internal" href="../_images/execute.png"><img alt="grass-execute" src="../_images/execute.png" style="width: 1.5em;" /></a> <sup>Run</sup> and check out an output
-in <span class="item">Console</span> tab.</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+in <span class="item">Console</span> tab.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <section id="statistics">
 <h2>Statistics<a class="headerlink" href="#statistics" title="Permalink to this heading">¶</a></h2>
 <p>Let’s add additional NDVI classes statistics computed by
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.report.html">v.report</a>.</p>
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.stats.html">r.stats</a>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.stats<span class="w"> </span>-ian<span class="w"> </span><span class="nv">input</span><span class="o">=</span>ndvi_class_filled
+</pre></div>
+</div>
+<p>In Python:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
     <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;NDVI class statistics&#39;</span><span class="p">)</span>
     <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
-    <span class="n">ret</span> <span class="o">=</span> <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;v.report&#39;</span><span class="p">,</span> <span class="nb">map</span><span class="o">=</span><span class="s1">&#39;ndvi_vector&#39;</span><span class="p">,</span> <span class="n">option</span><span class="o">=</span><span class="s1">&#39;area&#39;</span><span class="p">,</span> <span class="n">stdout_</span><span class="o">=</span><span class="n">PIPE</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">ret</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()[</span><span class="mi">1</span><span class="p">:]:</span> <span class="c1"># skip first line (cat|label|area)</span>
-        <span class="c1"># parse line (eg. 1||2712850)</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">)</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;r.stats&#39;</span><span class="p">,</span> <span class="nb">input</span><span class="o">=</span><span class="s1">&#39;ndvi_class_filled&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s1">&#39;ian&#39;</span><span class="p">,</span> <span class="n">stdout_</span><span class="o">=</span><span class="n">PIPE</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">ret</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
+        <span class="c1"># parse line (eg. 1 2737300.000000)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
         <span class="n">cat</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">area</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;NDVI class </span><span class="si">{0}</span><span class="s1">: </span><span class="si">{1:.1f}</span><span class="s1"> ha&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cat</span><span class="p">,</span> <span class="n">area</span><span class="o">/</span><span class="mf">1e4</span><span class="p">))</span> 
 </pre></div>
 </div>
-<p>Output of <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.report.html">v.report</a> module need to be parsed. Unfortunately
+<p>Output of <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.stats.html">r.stats</a> module need to be parsed. Unfortunately
 the command does not offer a shell script output similarly to
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.univar.html">r.univar</a>. Python fuctions like <code class="docutils literal notranslate"><span class="pre">splitlines()</span></code> and
-<code class="docutils literal notranslate"><span class="pre">split()</span></code> can be used.</p>
-<p>Let’s compute also zonal statistics for each NDVI class by
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.rast.stats.html">v.rast.stats</a>. Zonal attributes can be printed by
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.db.select.html">v.db.select</a> tool.</p>
-<div class="admonition-todo admonition" id="id2">
-<p class="admonition-title">Todo</p>
-<p>Can be simplified since this statistics is already reported
-by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.report.html">v.report</a></p>
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.univar.html">r.univar</a>. This may be solved by Python functions like
+<code class="docutils literal notranslate"><span class="pre">splitlines()</span></code> and <code class="docutils literal notranslate"><span class="pre">split()</span></code>.</p>
+<p>Additionally let’s compute also zonal statistics (min, max, mean) for each NDVI
+class. This could be computed by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.stats.zonal.html">r.stats.zonal</a> for each
+object-based statistic (min, max, mean). Alternatively raster classes may be converted to vector by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.to.vect.html">r.to.vect</a> and statistics may be computed by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.rast.stats.html">v.rast.stats</a> as shown below.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Unfortunately <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.grow.distance.html">r.grow.distance</a>
+is producing floating-point (DCELL) raster data by default. So first,
+let’s convert <span class="map">ndvi_class_filled</span> from floating-point (DCELL) to
+integer.</p>
 </div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.mapcalc<span class="w"> </span><span class="nv">expression</span><span class="o">=</span><span class="s2">&quot;ndvi_class_filled_i = int(ndvi_class_filled)&quot;</span>
+r.to.vect<span class="w"> </span>-v<span class="w"> </span><span class="nv">input</span><span class="o">=</span>ndvi_class_filled_i<span class="w"> </span><span class="nv">output</span><span class="o">=</span>ndvi_class_filled<span class="w"> </span><span class="nv">type</span><span class="o">=</span>area
+v.rast.stats<span class="w"> </span>-c<span class="w"> </span><span class="nv">map</span><span class="o">=</span>ndvi_class_filled<span class="w"> </span><span class="nv">raster</span><span class="o">=</span>ndvi<span class="w"> </span><span class="nv">column_prefix</span><span class="o">=</span>ndvi<span class="w"> </span><span class="nv">method</span><span class="o">=</span>minimum,maximum,average
+</pre></div>
+</div>
+<p>In Python:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
-    <span class="c1"># v.to.rast: use -c flag for updating statistics if exists</span>
-    <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;v.rast.stats&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="nb">map</span><span class="o">=</span><span class="s1">&#39;ndvi_vector&#39;</span><span class="p">,</span> <span class="n">raster</span><span class="o">=</span><span class="s1">&#39;ndvi&#39;</span><span class="p">,</span>
+    <span class="c1"># we need integer map</span>
+    <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;r.mapcalc&#39;</span><span class="p">,</span> <span class="n">expression</span><span class="o">=</span><span class="s1">&#39;ndvi_class_filled_i = int(ndvi_class_filled)&#39;</span><span class="p">)</span>
+    <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;r.to.vect&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="nb">input</span><span class="o">=</span><span class="s1">&#39;ndvi_class_filled_i&#39;</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s1">&#39;ndvi_class_filled&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;area&#39;</span><span class="p">)</span>
+
+    <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;v.rast.stats&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="nb">map</span><span class="o">=</span><span class="s1">&#39;ndvi_class_filled&#39;</span><span class="p">,</span> <span class="n">raster</span><span class="o">=</span><span class="s1">&#39;ndvi&#39;</span><span class="p">,</span>
            <span class="n">column_prefix</span><span class="o">=</span><span class="s1">&#39;ndvi&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;minimum&#39;</span><span class="p">,</span><span class="s1">&#39;maximum&#39;</span><span class="p">,</span><span class="s1">&#39;average&#39;</span><span class="p">])</span>
     <span class="c1"># v.db.select: don&#39;t print column names (-c)</span>
-    <span class="n">ret</span> <span class="o">=</span> <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;v.db.select&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="nb">map</span><span class="o">=</span><span class="s1">&#39;ndvi_vector&#39;</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="s1">&#39;comma&#39;</span><span class="p">,</span> <span class="n">stdout_</span><span class="o">=</span><span class="n">PIPE</span><span class="p">)</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;v.db.select&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="nb">map</span><span class="o">=</span><span class="s1">&#39;ndvi_class_filled&#39;</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="s1">&#39;comma&#39;</span><span class="p">,</span> <span class="n">stdout_</span><span class="o">=</span><span class="n">PIPE</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">ret</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
         <span class="c1"># parse line (eg. 1,,-0.433962264150943,0.740350877192983,0.051388909449992)</span>
         <span class="n">cat</span><span class="p">,</span><span class="n">label</span><span class="p">,</span><span class="nb">min</span><span class="p">,</span><span class="nb">max</span><span class="p">,</span><span class="n">mean</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
@@ -177,12 +188,12 @@ NDVI mean value: 0.6485
 --------------------------------------------------------------------------------
 NDVI class statistics
 --------------------------------------------------------------------------------
-NDVI class 1: 271.5 ha
-NDVI class 2: 2438.1 ha
-NDVI class 3: 7561.3 ha
+NDVI class 1: 273.7 ha
+NDVI class 2: 2437.7 ha
+NDVI class 3: 7559.7 ha
 --------------------------------------------------------------------------------
-NDVI class 1: -0.4340 (min) 0.7404 (max) 0.0514 (mean)
-NDVI class 2: -0.1738 (min) 0.8547 (max) 0.3262 (mean)
+NDVI class 1: -0.4340 (min) 0.7133 (max) 0.0514 (mean)
+NDVI class 2: -0.4537 (min) 0.9989 (max) 0.3262 (mean)
 NDVI class 3: -0.6094 (min) 0.9997 (max) 0.7740 (mean)
 </pre></div>
 </div>
@@ -198,6 +209,13 @@ split code into two Python functions: <code class="docutils literal notranslate"
     <span class="k">return</span> <span class="mi">0</span>
 </pre></div>
 </div>
+</div>
+<div class="task admonition">
+<p class="admonition-title">Úkol</p>
+<p>Solve issue with statistics which do not follow class
+definition: eg. minimum value of class 3 (-0.6) is out of
+range (0.6 to 1.0). This is caused by removing small area
+and filling holes by adjacent class.</p>
 </div>
 </section>
 </section>

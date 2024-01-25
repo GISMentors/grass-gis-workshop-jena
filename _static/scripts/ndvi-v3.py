@@ -113,20 +113,23 @@ def main(options, flags):
     print ('-' * 80)
     print ('NDVI class statistics')
     print ('-' * 80)
-    ret = Module('v.report', map='ndvi_vector', option='area', stdout_=PIPE)
-    for line in ret.outputs.stdout.splitlines()[1:]: # skip first line (cat|label|area)
-        # parse line (eg. 1||2712850)
-        data = line.split('|')
+    ret = Module('r.stats', input='ndvi_class_filled', flags='ian', stdout_=PIPE)
+    for line in ret.outputs.stdout.splitlines():
+        # parse line (eg. 1 2737300.000000)
+        data = line.split(' ')
         cat = data[0]
         area = float(data[-1])
         print('NDVI class {0}: {1:.1f} ha'.format(cat, area/1e4)) 
 
     print ('-' * 80)
-    # v.to.rast: use -c flag for updating statistics if exists
-    Module('v.rast.stats', flags='c', map='ndvi_vector', raster='ndvi',
+    # we need integer map
+    Module('r.mapcalc', expression='ndvi_class_filled_i = int(ndvi_class_filled)')
+    Module('r.to.vect', flags='v', input='ndvi_class_filled_i', output='ndvi_class_filled', type='area')
+
+    Module('v.rast.stats', flags='c', map='ndvi_class_filled', raster='ndvi',
            column_prefix='ndvi', method=['minimum','maximum','average'])
     # v.db.select: don't print column names (-c)
-    ret = Module('v.db.select', flags='c', map='ndvi_vector', separator='comma', stdout_=PIPE)
+    ret = Module('v.db.select', flags='c', map='ndvi_class_filled', separator='comma', stdout_=PIPE)
     for line in ret.outputs.stdout.splitlines():
         # parse line (eg. 1,,-0.433962264150943,0.740350877192983,0.051388909449992)
         cat,label,min,max,mean = line.split(',')
