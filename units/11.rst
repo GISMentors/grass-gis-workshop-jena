@@ -20,8 +20,6 @@ by |grass-script-load| :sup:`Launch user-defined script`.
            
    Script output is printed into :item:`Console` tab.
 
-.. todo:: GRASS doesn't show UI dialog...
-          
 Open exported Python script by your favorite IDE or if your do not
 have any just use GRASS-integrated Python editor |grass-python| :sub:`Open
 a simple Python code editor`.
@@ -76,48 +74,64 @@ Statistics
 ----------
 
 Let's add additional NDVI classes statistics computed by
-:grasscmd:`v.report`.
+:grasscmd:`r.stats`:
+
+.. code-block:: bash
+
+   r.stats -ian input=ndvi_class_filled
+
+In Python:
 
 .. literalinclude:: ../_static/scripts/ndvi-v3.py
    :language: python
    :lines:  113-122
 
-Output of :grasscmd:`v.report` module need to be parsed. Unfortunately
+Output of :grasscmd:`r.stats` module need to be parsed. Unfortunately
 the command does not offer a shell script output similarly to
-:grasscmd:`r.univar`. Python fuctions like ``splitlines()`` and
-``split()`` can be used.
+:grasscmd:`r.univar`. This may be solved by Python functions like
+``splitlines()`` and ``split()``.
 
-Let's compute also zonal statistics for each NDVI class by
-:grasscmd:`v.rast.stats`. Zonal attributes can be printed by
-:grasscmd:`v.db.select` tool.
+Additionally let's compute also zonal statistics (min, max, mean) for each NDVI
+class. This could be computed by :grasscmd:`r.stats.zonal` for each
+object-based statistic (min, max, mean). Alternatively raster classes may be converted to vector by :grasscmd:`r.to.vect` and statistics may be computed by :grasscmd:`v.rast.stats` as shown below.
 
-.. todo:: Can be simplified since this statistics is already reported
-   by :grasscmd:`v.report`
-          
+.. note:: Unfortunately :grasscmd:`r.grow.distance`
+          is producing floating-point (DCELL) raster data by default. So first,
+          let's convert :map:`ndvi_class_filled` from floating-point (DCELL) to
+          integer. 
+
+.. code-block:: bash
+
+   r.mapcalc expression="ndvi_class_filled_i = int(ndvi_class_filled)"
+   r.to.vect -v input=ndvi_class_filled_i output=ndvi_class_filled type=area
+   v.rast.stats -c map=ndvi_class_filled raster=ndvi column_prefix=ndvi method=minimum,maximum,average
+
+In Python:
+
 .. literalinclude:: ../_static/scripts/ndvi-v3.py
    :language: python
-   :lines:  124-134
+   :lines:  124-137
                 
 Example of script output below.
 
 ::
 
-    --------------------------------------------------------------------------------
-    NDVI value statistics
-    --------------------------------------------------------------------------------
-    NDVI min value: -0.6094
-    NDVI max value: 0.9997
-    NDVI mean value: 0.6485
-    --------------------------------------------------------------------------------
-    NDVI class statistics
-    --------------------------------------------------------------------------------
-    NDVI class 1: 271.5 ha
-    NDVI class 2: 2438.1 ha
-    NDVI class 3: 7561.3 ha
-    --------------------------------------------------------------------------------
-    NDVI class 1: -0.4340 (min) 0.7404 (max) 0.0514 (mean)
-    NDVI class 2: -0.1738 (min) 0.8547 (max) 0.3262 (mean)
-    NDVI class 3: -0.6094 (min) 0.9997 (max) 0.7740 (mean)
+   --------------------------------------------------------------------------------
+   NDVI value statistics
+   --------------------------------------------------------------------------------
+   NDVI min value: -0.6094
+   NDVI max value: 0.9997
+   NDVI mean value: 0.6485
+   --------------------------------------------------------------------------------
+   NDVI class statistics
+   --------------------------------------------------------------------------------
+   NDVI class 1: 273.7 ha
+   NDVI class 2: 2437.7 ha
+   NDVI class 3: 7559.7 ha
+   --------------------------------------------------------------------------------
+   NDVI class 1: -0.4340 (min) 0.7133 (max) 0.0514 (mean)
+   NDVI class 2: -0.4537 (min) 0.9989 (max) 0.3262 (mean)
+   NDVI class 3: -0.6094 (min) 0.9997 (max) 0.7740 (mean)
 
 Sample script to download: `ndvi-v3.py <../_static/scripts/ndvi-v3.py>`__
 
@@ -131,3 +145,8 @@ Sample script to download: `ndvi-v3.py <../_static/scripts/ndvi-v3.py>`__
           stats(options)
       
           return 0
+
+.. task:: Solve issue with statistics which do not follow class
+          definition: eg. minimum value of class 3 (-0.6) is out of
+          range (0.6 to 1.0). This is caused by removing small area
+          and filling holes by adjacent class.
