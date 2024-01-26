@@ -43,26 +43,6 @@ crucial for Python syntax) as described in :ref:`Unit 10
       :language: python
       :lines:  37,39
 
-Let's also modify automatically generated parameter keys including
-their description:
-
-.. code-block:: python
-
-   # % key: voverlay1_ainput
-   # % description: Name of input vector map (A)   
-   ...
-   # % key: rreclassarea6_value
-   ...
-       ainput=options["voverlay1_ainput"],
-   ...
-       value=options["rreclassarea6_value"],
-       
-to
-
-.. literalinclude:: ../_static/scripts/ndvi-v3.py
-   :language: python
-   :lines:  20-21,28,48,88
-
 .. figure:: ../images/units/11/run-script.png
    :class: large
         
