@@ -47,32 +47,36 @@
 <p>In the script prepared in <a class="reference internal" href="11.html"><span class="doc">Unit 11 - PyGRASS scripting</span></a> some tools (<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.recode.html">r.recode</a>,
 <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.colors.html">r.colors</a>) use hardcoded paths to the input files. See code
 below (<code class="xref std std-option docutils literal notranslate"><span class="pre">rules</span></code> option):</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>           <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="n">Module</span><span class="p">(</span><span class="s2">&quot;r.recode&quot;</span><span class="p">,</span>
+           <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
            <span class="nb">input</span><span class="o">=</span><span class="s2">&quot;ndvi&quot;</span><span class="p">,</span>
            <span class="n">output</span><span class="o">=</span><span class="s2">&quot;ndvi_class&quot;</span><span class="p">,</span>
-           <span class="n">rules</span><span class="o">=</span><span class="s2">&quot;/home/martin/git/gismentors/grass-gis-workshop-jena/_static/models/reclass.txt&quot;</span><span class="p">)</span>
-<span class="hll">
-</span>    <span class="n">Module</span><span class="p">(</span><span class="s2">&quot;r.reclass.area&quot;</span><span class="p">,</span>
-           <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-           <span class="nb">input</span><span class="o">=</span><span class="s2">&quot;ndvi_class&quot;</span><span class="p">,</span>
-<span class="hll">           <span class="n">output</span><span class="o">=</span><span class="s2">&quot;ndvi_class_area&quot;</span><span class="p">,</span>
-</span></pre></div>
+<span class="hll">           <span class="n">rules</span><span class="o">=</span><span class="s2">&quot;/home/martin/git/gismentors/grass-gis-workshop-jena/_static/models/reclass.txt&quot;</span><span class="p">)</span>
+</span>
+    <span class="n">Module</span><span class="p">(</span><span class="s2">&quot;r.colors&quot;</span><span class="p">,</span>
+           <span class="nb">map</span><span class="o">=</span><span class="s2">&quot;ndvi_class_filled&quot;</span><span class="p">,</span>
+<span class="hll">           <span class="n">rules</span><span class="o">=</span><span class="s2">&quot;/home/martin/git/gismentors/grass-gis-workshop-jena/_static/models/colors.txt&quot;</span><span class="p">,</span>
+</span>           <span class="n">offset</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+           <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
 </div>
 <p>Content of input files can be defined as a string object and transfered
 to the command via standard input (<code class="docutils literal notranslate"><span class="pre">stdin_</span></code>). See a sample code
 below:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="n">Module</span><span class="p">(</span><span class="s2">&quot;r.recode&quot;</span><span class="p">,</span>
-           <span class="n">overwrite</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-           <span class="nb">input</span> <span class="o">=</span> <span class="s2">&quot;ndvi&quot;</span><span class="p">,</span>
-           <span class="n">output</span> <span class="o">=</span> <span class="s2">&quot;ndvi_class&quot;</span><span class="p">,</span>
-           <span class="n">rules</span> <span class="o">=</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span>
-<span class="hll">           <span class="n">stdin_</span> <span class="o">=</span> <span class="s2">&quot;-1:0.1:1</span><span class="se">\n</span><span class="s2">0.1:0.5:2</span><span class="se">\n</span><span class="s2">0.5:1:3&quot;</span><span class="p">)</span>
+           <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+           <span class="nb">input</span><span class="o">=</span><span class="s2">&quot;ndvi&quot;</span><span class="p">,</span>
+           <span class="n">output</span><span class="o">=</span><span class="s2">&quot;ndvi_class&quot;</span><span class="p">,</span>
+           <span class="n">rules</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span>
+<span class="hll">           <span class="n">stdin_</span><span class="o">=</span><span class="s2">&quot;-1:0.1:1</span><span class="se">\n</span><span class="s2">0.1:0.5:2</span><span class="se">\n</span><span class="s2">0.5:1:3&quot;</span><span class="p">)</span>
 </span>
     <span class="n">Module</span><span class="p">(</span><span class="s2">&quot;r.colors&quot;</span><span class="p">,</span>
-           <span class="nb">map</span> <span class="o">=</span> <span class="s2">&quot;ndvi_class&quot;</span><span class="p">,</span>
-           <span class="n">rules</span> <span class="o">=</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span>
-<span class="hll">           <span class="n">stdin_</span> <span class="o">=</span> <span class="s2">&quot;1 grey</span><span class="se">\n</span><span class="s2">2 255 255 0</span><span class="se">\n</span><span class="s2">3 green&quot;</span><span class="p">)</span>
-</span></pre></div>
+           <span class="nb">map</span><span class="o">=</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;output&quot;</span><span class="p">],</span>
+           <span class="n">rules</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span>
+<span class="hll">           <span class="n">stdin_</span><span class="o">=</span><span class="s2">&quot;1 grey</span><span class="se">\n</span><span class="s2">2 255 255 0</span><span class="se">\n</span><span class="s2">3 green&quot;</span><span class="p">,</span>
+</span>           <span class="n">offset</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+           <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
 </div>
 <p>Note that many of GRASS modules allows sending data via standard input
 by option value <code class="docutils literal notranslate"><span class="pre">-</span></code> (dash). In our case the both commands will be
@@ -83,6 +87,10 @@ changed to use <code class="docutils literal notranslate"><span class="pre">rule
 <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/g.remove.html">g.remove</a> tool.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">cleanup</span><span class="p">():</span>
     <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;g.remove&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;region_mask&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;vector&#39;</span><span class="p">)</span>
+    <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;g.remove&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ndvi&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;raster&#39;</span><span class="p">)</span>
+    <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;g.remove&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ndvi_class&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;raster&#39;</span><span class="p">)</span>
+    <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;g.remove&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ndvi_class_area&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;raster&#39;</span><span class="p">)</span>
+    <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;g.remove&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ndvi_class_filled_i&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;raster&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -94,15 +102,15 @@ changed to use <code class="docutils literal notranslate"><span class="pre">rule
 <span class="c1"># % description: NDVI computation version 3.</span>
 <span class="c1"># %end</span>
 <span class="c1"># %option</span>
-<span class="c1"># % key: aoi</span>
-<span class="c1"># % description: Area of interest</span>
+<span class="c1"># % key: voverlay1_ainput</span>
+<span class="c1"># % description: Name of input vector map (A)</span>
 <span class="c1"># % required: yes</span>
 <span class="c1"># % type: string</span>
 <span class="c1"># % key_desc: name</span>
 <span class="c1"># % answer: jena_boundary</span>
 <span class="c1"># %end</span>
 <span class="c1"># %option</span>
-<span class="c1"># % key: area_limit</span>
+<span class="c1"># % key: rreclassarea6_value</span>
 <span class="c1"># % description: Value option that sets the area size limit (in hectares)</span>
 <span class="c1"># % required: yes</span>
 <span class="c1"># % type: double</span>
@@ -122,36 +130,37 @@ changed to use <code class="docutils literal notranslate"><span class="pre">rule
 <li><p><code class="docutils literal notranslate"><span class="pre">clouds</span></code>: vector map with cloud mask features (required)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">red</span></code>: input red channel (required)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">nir</span></code>: input nir channel (required)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">threshold</span></code>: threshold for removing small areas (optional)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">min_area</span></code>: threshold for removing small areas (optional)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">output</span></code>: output vector map (required)</p></li>
 </ul>
 <p>UI definition below.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#%module</span>
-<span class="c1">#% description: NDVI model version 4</span>
-<span class="c1">#%end</span>
-<span class="c1">#%option G_OPT_V_INPUT</span>
-<span class="c1">#% key: region</span>
-<span class="c1">#% description: Name of input vector region map </span>
-<span class="c1">#%end</span>
-<span class="c1">#%option G_OPT_V_INPUT</span>
-<span class="c1">#% key: clouds</span>
-<span class="c1">#% description: Name of input vector clouds map </span>
-<span class="c1">#%end</span>
-<span class="c1">#%option G_OPT_R_INPUT</span>
-<span class="c1">#% key: red</span>
-<span class="c1">#% description: Name of input red channel</span>
-<span class="c1">#%end</span>
-<span class="c1">#%option G_OPT_R_INPUT</span>
-<span class="c1">#% key: nir</span>
-<span class="c1">#% description: Name of input NIR channel</span>
-<span class="c1">#%end</span>
-<span class="c1">#%option</span>
-<span class="c1">#% key: threshold</span>
-<span class="c1">#% description: Threshold for removing small areas</span>
-<span class="c1">#% answer: 1600</span>
-<span class="c1">#%end</span>
-<span class="c1">#%option G_OPT_V_OUTPUT</span>
-<span class="c1">#%end</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># %module</span>
+<span class="c1"># % description: NDVI computation version 4.</span>
+<span class="c1"># %end</span>
+<span class="c1"># %option G_OPT_V_INPUT</span>
+<span class="c1"># % key: region</span>
+<span class="c1"># % description: Name of input vector region map </span>
+<span class="c1"># %end</span>
+<span class="c1"># %option G_OPT_V_INPUT</span>
+<span class="c1"># % key: clouds</span>
+<span class="c1"># % description: Name of input vector clouds map </span>
+<span class="c1"># %end</span>
+<span class="c1"># %option G_OPT_R_INPUT</span>
+<span class="c1"># % key: red</span>
+<span class="c1"># % description: Name of input red channel</span>
+<span class="c1"># %end</span>
+<span class="c1"># %option G_OPT_R_INPUT</span>
+<span class="c1"># % key: nir</span>
+<span class="c1"># % description: Name of input NIR channel</span>
+<span class="c1"># %end</span>
+<span class="c1"># %option</span>
+<span class="c1"># % key: min_area</span>
+<span class="c1"># % description: Threshold for removing small areas in m2</span>
+<span class="c1"># %type: integer</span>
+<span class="c1"># % answer: 1600</span>
+<span class="c1"># %end</span>
+<span class="c1"># %option G_OPT_V_OUTPUT</span>
+<span class="c1"># %end</span>
 </pre></div>
 </div>
 <figure class="align-center" id="id2">
@@ -161,36 +170,40 @@ changed to use <code class="docutils literal notranslate"><span class="pre">rule
 </figcaption>
 </figure>
 <p>In the script input parameters are still hardcoded, eg.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>           <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-           <span class="n">ainput</span><span class="o">=</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;aoi&quot;</span><span class="p">],</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="n">Module</span><span class="p">(</span><span class="s2">&quot;v.overlay&quot;</span><span class="p">,</span>
+           <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+           <span class="n">ainput</span><span class="o">=</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;voverlay1_ainput&quot;</span><span class="p">],</span>
            <span class="n">alayer</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
            <span class="n">atype</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
-           <span class="n">binput</span><span class="o">=</span><span class="s2">&quot;MaskFeature&quot;</span><span class="p">,</span>
-<span class="hll">           <span class="n">blayer</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
-</span></pre></div>
+<span class="hll">           <span class="n">binput</span><span class="o">=</span><span class="s2">&quot;MaskFeature&quot;</span><span class="p">,</span>
+</span>           <span class="n">blayer</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+           <span class="n">btype</span><span class="o">=</span><span class="s2">&quot;area&quot;</span><span class="p">,</span>
+           <span class="n">operator</span><span class="o">=</span><span class="s2">&quot;not&quot;</span><span class="p">,</span>
+           <span class="n">output</span><span class="o">=</span><span class="s2">&quot;region_mask&quot;</span><span class="p">,</span>
+           <span class="n">olayer</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">],</span>
+           <span class="n">snap</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">)</span>
+</pre></div>
 </div>
 <p>Input parameters are accesible by <code class="docutils literal notranslate"><span class="pre">options</span></code> and <code class="docutils literal notranslate"><span class="pre">flags</span></code>
 objects which are generated by <code class="docutils literal notranslate"><span class="pre">parse()</span></code> function.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="n">options</span><span class="p">,</span> <span class="n">flags</span> <span class="o">=</span> <span class="n">parser</span><span class="p">()</span>
+</pre></div>
+</div>
 <p>Options and flags objects are Python dictionaries, where parameters are
 accessible by keys, see example below.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="n">Module</span><span class="p">(</span><span class="s2">&quot;v.overlay&quot;</span><span class="p">,</span>
-           <span class="n">overwrite</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-<span class="hll">           <span class="n">ainput</span> <span class="o">=</span> <span class="n">options</span><span class="p">[</span><span class="s2">&quot;region&quot;</span><span class="p">],</span>
-</span>           <span class="n">alayer</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
-           <span class="n">atype</span> <span class="o">=</span> <span class="s2">&quot;auto&quot;</span><span class="p">,</span>
-<span class="hll">           <span class="n">binput</span> <span class="o">=</span> <span class="n">options</span><span class="p">[</span><span class="s2">&quot;clouds&quot;</span><span class="p">],</span>
-</span></pre></div>
-</div>
-<div class="task admonition">
-<p class="admonition-title">Úkol</p>
-<p>All generated (intermediate) maps can be removed when
-computation finished.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;g.remove&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;region_mask&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;vector&#39;</span><span class="p">)</span>
-    <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;g.remove&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ndvi&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;raster&#39;</span><span class="p">)</span>
-    <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;g.remove&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ndvi_class&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;raster&#39;</span><span class="p">)</span>
-    <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;g.remove&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ndvi_class&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;vector&#39;</span><span class="p">)</span>
+           <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="hll">           <span class="n">ainput</span><span class="o">=</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;region&quot;</span><span class="p">],</span>
+</span>           <span class="n">alayer</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+           <span class="n">atype</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+<span class="hll">           <span class="n">binput</span><span class="o">=</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;clouds&quot;</span><span class="p">],</span>
+</span>           <span class="n">blayer</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+           <span class="n">btype</span><span class="o">=</span><span class="s2">&quot;area&quot;</span><span class="p">,</span>
+           <span class="n">operator</span><span class="o">=</span><span class="s2">&quot;not&quot;</span><span class="p">,</span>
+           <span class="n">output</span><span class="o">=</span><span class="s2">&quot;region_mask&quot;</span><span class="p">,</span>
+           <span class="n">olayer</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">],</span>
+           <span class="n">snap</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">)</span>
 </pre></div>
-</div>
 </div>
 <figure class="align-center" id="id3">
 <img alt="../_images/call-ndvi-script.png" class="large" src="../_images/call-ndvi-script.png" />

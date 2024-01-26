@@ -16,15 +16,15 @@
 # % description: NDVI computation version 3.
 # %end
 # %option
-# % key: aoi
-# % description: Area of interest
+# % key: voverlay1_ainput
+# % description: Name of input vector map (A)
 # % required: yes
 # % type: string
 # % key_desc: name
 # % answer: jena_boundary
 # %end
 # %option
-# % key: area_limit
+# % key: rreclassarea6_value
 # % description: Value option that sets the area size limit (in hectares)
 # % required: yes
 # % type: double
@@ -45,7 +45,7 @@ def cleanup():
 def main(options, flags):
     Module("v.overlay",
            overwrite=True,
-           ainput=options["aoi"],
+           ainput=options["voverlay1_ainput"],
            alayer="1",
            atype="auto",
            binput="MaskFeature",
@@ -85,7 +85,7 @@ def main(options, flags):
            overwrite=True,
            input="ndvi_class",
            output="ndvi_class_area",
-           value=options["area_limit"],
+           value=options["rreclassarea6_value"],
            mode="greater",
            method="reclass")
 
@@ -102,13 +102,13 @@ def main(options, flags):
            scale=1)
 
     m = Module('r.univar', flags='g', map='ndvi', stdout_=PIPE)
-    stats = parse_key_val(m.outputs.stdout)
+    stats = parse_key_val(m.outputs.stdout, val_type=float)
     print('-' * 80)
     print('NDVI value statistics')
     print('-' * 80)
-    print('NDVI min value: {0:.4f}'.format(float(stats['min'])))
-    print('NDVI max value: {0:.4f}'.format(float(stats['max'])))
-    print('NDVI mean value: {0:.4f}'.format(float(stats['mean'])))
+    print('NDVI min value: {0:.4f}'.format(stats['min']))
+    print('NDVI max value: {0:.4f}'.format(stats['max']))
+    print('NDVI mean value: {0:.4f}'.format(stats['mean']))
 
     print ('-' * 80)
     print ('NDVI class statistics')
