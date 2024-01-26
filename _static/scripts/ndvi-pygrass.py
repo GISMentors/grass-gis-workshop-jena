@@ -8,7 +8,7 @@ b04 = RasterRow('L2A_T32UPB_20170706T102021_B04_10m')
 b04.open()
 b08 = RasterRow('L2A_T32UPB_20170706T102021_B08_10m')
 b08.open()
-ndvi = RasterRow('ndvi_pyrass')
+ndvi = RasterRow('ndvi_pygrass')
 ndvi.open('w', mtype='FCELL', overwrite=True)
 
 for i in range(len(b04)):
