@@ -25,6 +25,8 @@ jobs:
     - name: Download template
       run: |
         git clone https://github.com/GISMentors/sphinx-template.git $RUNNER_WORKSPACE/sphinx-template
+        cd $RUNNER_WORKSPACE/sphinx-template
+        git checkout en
 
     - name: Build and Commit
       uses: sphinx-notes/pages@2.1
