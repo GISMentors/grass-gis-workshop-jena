@@ -60,7 +60,12 @@ confirmed by a user, see <a class="reference internal" href="#confirm-reprojecti
 </figure>
 <p>Data incosistency can cause significant topological errors when
 importing vector data into GRASS (as in our case
-<a class="reference internal" href="#topo-errors"><span class="std std-numref">Fig. 80</span></a>).</p>
+<a class="reference internal" href="#topo-errors"><span class="std std-numref">Fig. 80</span></a>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">WARNING</span><span class="p">:</span> <span class="n">Number</span> <span class="n">of</span> <span class="n">centroids</span> <span class="n">exceeds</span> <span class="n">number</span> <span class="n">of</span> <span class="n">areas</span><span class="p">:</span> <span class="mi">47</span> <span class="o">&gt;</span> <span class="mi">46</span>
+<span class="n">WARNING</span><span class="p">:</span> <span class="n">Number</span> <span class="n">of</span> <span class="n">incorrect</span> <span class="n">boundaries</span><span class="p">:</span> <span class="mi">11</span>
+<span class="n">WARNING</span><span class="p">:</span> <span class="n">Number</span> <span class="n">of</span> <span class="n">centroids</span> <span class="n">outside</span> <span class="n">area</span><span class="p">:</span> <span class="mi">2</span>
+</pre></div>
+</div>
 <figure class="align-center" id="id2">
 <span id="topo-errors"></span><img alt="../_images/counties-broken.png" class="middle" src="../_images/counties-broken.png" />
 <figcaption>
@@ -80,7 +85,7 @@ settings</span> tab.</span><a class="headerlink" href="#id3" title="Permalink to
 dealing with basic vector primitives (points, lines, boundaries,
 centroids) or by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/libpython/pygrass.vector.html#pygrass.vector.VectorTopo">VectorTopo</a> which allows accessing
 topological primitives like areas or isles. See
-<a class="reference internal" href="03.html#vector-topo-section"><span class="std std-ref">Vector topology</span></a> section for details.</p>
+<a class="reference internal" href="03.html#vector-topo-section"><span class="std std-ref">Vector topology</span></a> section for details:</p>
 <p>Example below prints county names and area size in hectares.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">grass.pygrass.vector</span> <span class="kn">import</span> <span class="n">VectorTopo</span>
 <span class="n">counties</span> <span class="o">=</span> <span class="n">VectorTopo</span><span class="p">(</span><span class="s1">&#39;counties&#39;</span><span class="p">)</span>
@@ -140,7 +145,7 @@ primitives directly using PyGRASS. See <a class="reference internal" href="03.ht
 section in <a class="reference internal" href="03.html"><span class="doc">Unit 03 - Data Management</span></a>.</p>
 <p>Sample script below prints for each county number of its neighbours.</p>
 <ol class="arabic simple">
-<li><p>Vector map <span class="map">Counties</span> is open on line <span class="lcode">3</span> by
+<li><p>Vector map <span class="map">counties</span> is open on line <span class="lcode">3</span> by
 <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/libpython/pygrass.vector.html#pygrass.vector.VectorTopo">VectorTopo</a> and its method <code class="docutils literal notranslate"><span class="pre">open()</span></code>.</p></li>
 <li><p>Topological primitives (areas in this case) are sequentially read by <code class="docutils literal notranslate"><span class="pre">for</span></code> loop
 on line <span class="lcode">6</span>. Areas are interated by <code class="docutils literal notranslate"><span class="pre">viter()</span></code> function.</p></li>

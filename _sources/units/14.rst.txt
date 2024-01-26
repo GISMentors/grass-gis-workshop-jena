@@ -22,7 +22,13 @@ confirmed by a user, see :numref:`confirm-reprojection`.
 
 Data incosistency can cause significant topological errors when
 importing vector data into GRASS (as in our case
-:numref:`topo-errors`).
+:numref:`topo-errors`):
+
+::
+
+   WARNING: Number of centroids exceeds number of areas: 47 > 46
+   WARNING: Number of incorrect boundaries: 11
+   WARNING: Number of centroids outside area: 2
 
 .. _topo-errors:
 
@@ -45,7 +51,7 @@ Vector data can be treated by :pygrass-vector:`Vector` class when
 dealing with basic vector primitives (points, lines, boundaries,
 centroids) or by :pygrass-vector:`VectorTopo` which allows accessing
 topological primitives like areas or isles. See
-:ref:`vector-topo-section` section for details.
+:ref:`vector-topo-section` section for details:
 
 Example below prints county names and area size in hectares.
 
@@ -96,7 +102,7 @@ section in :doc:`03`.
 
 Sample script below prints for each county number of its neighbours.
 
-#. Vector map :map:`Counties` is open on line :lcode:`3` by
+#. Vector map :map:`counties` is open on line :lcode:`3` by
    :pygrass-vector:`VectorTopo` and its method ``open()``.
 #. Topological primitives (areas in this case) are sequentially read by ``for`` loop
    on line :lcode:`6`. Areas are interated by ``viter()`` function.
