@@ -70,7 +70,7 @@ downloaded.
 
 .. code-block:: bash
 
-   i.modis.download settings=settings.txt folder=/home/user/geodata/modis/h18v03_04 \
+   i.modis.download settings=settings.txt folder=geodata/modis/h18v03_04 \
    tiles=h18v03,h18v04 \
    product=lst_aqua_eight_1000,lst_terra_eight_1000 \
    startday=2021-01-01 endday=2021-12-31
@@ -95,10 +95,10 @@ by :grasscmdaddons:`i.modis.import`.
 
 .. code-block:: bash
 
-   i.modis.import -mw files=/home/user/geodata/modis/h18v03_04/listfileMOD11A2.006.txt \
+   i.modis.import -mw files=geodata/modis/h18v03_04/listfileMOD11A2.006.txt \
    spectral='( 1 0 0 0 1 0 0 0 0 0 0 0 )' outfile=tlist-mod.txt
 
-   i.modis.import -mw files=/home/user/geodata/modis/h18v03_04/listfileMYD11A2.006.txt \
+   i.modis.import -mw files=geodata/modis/h18v03_04/listfileMYD11A2.006.txt \
    spectral='( 1 0 0 0 1 0 0 0 0 0 0 0 )' outfile=tlist-myd.txt
 
 If ``-m`` flag is given mosaic from input tiles is created

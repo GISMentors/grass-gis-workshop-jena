@@ -77,7 +77,7 @@ check.
 
 .. code-block:: bash
                 
-   v.in.lidar -otb input=/home/user/geodata/lidar/las_681_5644_1_th_2014-2019.laz output=las_681_5644
+   v.in.lidar -otb input=geodata/lidar/las_681_5644_1_th_2014-2019.laz output=las_681_5644
 
 Note that computational region is ignored when importing data using
 :grasscmd:`v.in.lidar`.

@@ -55,10 +55,10 @@ raster dataset.
 
 .. code-block:: bash
 
-   i.sentinel.import -p input=/home/user/geodata/sentinel/2019 pattern="B0[4|8]_10m"
+   i.sentinel.import -p input=geodata/sentinel/2019 pattern="B0[4|8]_10m"
    
-   i.sentinel.import -l -c input=/home/user/geodata/sentinel/2019 pattern="B0[4|8]_10m" \
-   register_output=/home/user/sentinel-timestamps.txt
+   i.sentinel.import -l -c input=geodata/sentinel/2019 pattern="B0[4|8]_10m" \
+   register_output=sentinel-timestamps.txt
 
 Example of created timestamp file:
 
@@ -103,7 +103,7 @@ At this moment a new space-time dataset can be created by means of
 .. code-block:: bash
 
    t.create output=sentinel title="Sentinel L2A 2019" desc="Jena region"
-   t.register input=sentinel file=/home/user/sentinel-timestamps.txt
+   t.register input=sentinel file=sentinel-timestamps.txt
 
 Let's check basic metadata (:grasscmd:`t.info`) and list the registered
 maps (:grasscmd:`t.rast.list`).

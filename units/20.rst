@@ -15,10 +15,9 @@ It consists of six GRASS addon modules:
 * :grasscmdaddons:`i.sentinel.preproc`
 * :grasscmdaddons:`i.sentinel.mask`
 
-Addons modules are not internal part of GRASS installation.  Addons
-can be easily installed by :grasscmd:`g.extension`
-(:menuselection:`Settings --> Addons extensions --> Install
-extension from addons`).
+The addon can be installed by :grasscmd:`g.extension` or from the main menu
+:menuselection:`Settings --> Addons extensions --> Install extension
+from addons`.
 
 .. code-block:: bash
 
@@ -28,11 +27,10 @@ extension from addons`).
 
    Install :grasscmdaddons:`i.sentinel` GRASS Addon.
 
-Note that :grasscmdaddons:`i.sentinel.download` requires also
-`sentinelsat library <https://pypi.python.org/pypi/sentinelsat>`__ to
-be installed.
-
-.. note:: Sentinelsat library can be easily installed from the
+.. note:: Note that :grasscmdaddons:`i.sentinel.download` requires
+   also `sentinelsat library
+   <https://pypi.python.org/pypi/sentinelsat>`__ to be
+   installed. Sentinelsat library can be easily installed from the
    :item:`Console` tab by entering the command below.
 	
    .. code-block:: bash
@@ -44,22 +42,21 @@ be installed.
 Download data
 -------------
 
+Let's download suitable Sentinel products for our area of interest
+(AOI) and perform the NDVI calculation as described in :doc:`05`
+(implemented as a model in :doc:`08` or as a Python script in
+:doc:`11`). AOI region is defined by Jena city region created in
+:doc:`03`. `Sentinel-2 L2A products
+<https://docs.sentinel-hub.com/api/latest/data/sentinel-2-l2a/>`__
+will be used to avoid computing atmospheric corrections.
+
 .. important:: Pre-downloaded Sentinel scenes are available in the
    sample dataset `jena-sample-data-sentinel.7z
    <https://geo.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2022/jena-sample-data-sentinel.7z>`__
    (1.7GB) :file:`geodata/sentinel`. Readers can continue with
    :ref:`importing sample data <sentinel-import>`.
 
-Let's download suitable Sentinel products for our area of interest
-(AOI) and perform the NDVI calculation as described in :doc:`05`
-(implemented as a model in :doc:`08` or as a Python script in
-:doc:`11`). AOI region is defined by Jena city region created in
-:doc:`03`.
-
-`Sentinel-2 L2A products
-<https://www.sentinel-hub.com/blog/sentinel-2-l2a-products-available-sentinel-hub>`__
-will be used to avoid computing atmospheric corrections. Let's
-search for the latest available product by means of
+Let's search for the latest available product by means of
 :grasscmd:`i.sentinel.download`. Setting the :param:`-l` flag, the result will only
 be printed. The download procedure will be performed later. In order to
 search and download Sentinel products from the Copernicus Open Access Hub, 
@@ -117,7 +114,7 @@ where data should be saved.
 
    i.sentinel.download map=jena_boundary producttype=S2MSI2A settings=sentinel.txt \
    start=2021-04-01 end=2021-10-01 area_relation=Contains clouds=10 \
-   limit=1 output=/home/user/geodata/sentinel/2021
+   limit=1 output=geodata/sentinel/2021
 
 .. note:: Note all products are available online. In this case the
    module fails with ``Product
@@ -147,7 +144,7 @@ option.
 
 .. code-block:: bash
  
-   i.sentinel.import -p input=/home/user/geodata/sentinel/2019 pattern="20190626T102031_B0[4|8]_10m"
+   i.sentinel.import -p input=geodata/sentinel/2019 pattern="20190626T102031_B0[4|8]_10m"
 
 ::
 
@@ -163,7 +160,7 @@ which will be used in :doc:`21`.
 
 .. code-block:: bash
 
-   i.sentinel.import -l -c input=/home/user/geodata/sentinel/2019 pattern="20190626T102031_B0[4|8]_10m"
+   i.sentinel.import -l -c input=geodata/sentinel/2019 pattern="20190626T102031_B0[4|8]_10m"
 
 .. note:: Cloud mask is computed by
    :grasscmdaddons:`i.sentinel.import`, the module doesn't use cloud
