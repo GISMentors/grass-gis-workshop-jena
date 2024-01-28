@@ -102,7 +102,7 @@ created based on Open Data covering Germany and Jena region
 specifically. Sample dataset is split into four parts:
 
 * `jena-sample-data-base.7z <https://geo.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2022/jena-sample-data-base.7z>`__ (294MB) [Units 1-17]
-* `jena-sample-data-lidar.7z <https://geo.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2022/jena-sample-data-lidar.7z>`__ (541MB)
+* `jena-sample-data-lidar.7z <https://geo.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2022/jena-sample-data-lidar.7z>`__ (541MB) [Units 18-19]
 * `jena-sample-data-sentinel.7z <https://geo.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2022/jena-sample-data-sentinel.7z>`__ (1.7GB)
 * `jena-sample-data-modis.7z <https://geo.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2022/jena-sample-data-modis.7z>`__ (1.0GB)
   

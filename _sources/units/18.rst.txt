@@ -24,9 +24,9 @@ For importing LAS/LAZ data there are available two GRASS modules:
 * :grasscmd:`r.in.lidar` for importing point cloud data as raster map
 * :grasscmd:`v.in.lidar` for importing point cloud data as vector point map
 
-.. note:: GRASS requires `libLAS <http://www.liblas.org>`_ library for
+.. note:: GRASS requires `libLAS <https://liblas.org/>`__ library for
    reading LAS data. For compressed LAS (LAZ) there is another
-   dependency, a `laszip <https://www.laszip.org/>`__ library.
+   dependency, a `laszip <https://laszip.org/>`__ library.
 
    Basic metadata can be obtained by command line utility ``lasinfo``
    which is part of libLAS library.
@@ -42,7 +42,7 @@ For importing LAS/LAZ data there are available two GRASS modules:
 
    There is also a new generation of Lidar modules based on `PDAL
    <https://pdal.io/>`__ library: :grasscmd:`r.in.pdal` and
-   :grasscmd:`v.in.pdal`.
+   :grasscmd:`v.in.pdal`. 
 
 .. important:: Unfortunately on MS Windows PDAL-based modules are
    missing due to compilation problems (`#1821
@@ -70,9 +70,10 @@ Let's create a new GRASS location *jena-lidar* defined by
 Let's import selected tile into GRASS as vector point map. By
 :param:`-t` flag creation of attribute table is skipped. By
 :param:`-b` flag also building :ref:`topology <vector-topo-section>`
-will be skipped. The import process will be significantly faster.
-Information about data SRS can be missing, in this case use
-:param:`-o` flag to skip projection check.
+will be skipped (no topology is required for point data). The import
+process will be significantly faster.  Information about data SRS can
+be missing, in this case use :param:`-o` flag to skip projection
+check.
 
 .. code-block:: bash
                 
@@ -83,7 +84,7 @@ Note that computational region is ignored when importing data using
 
 Overall point density can be checked by :grasscmd:`v.outlier`. Note
 that :grasscmd:`v.outlier` is working in the current computation
-region(!). Computational region must be set based on imported
+region(!). It means that computational region must be set based on imported
 data. Since building topology was skipped by :param:`-b` flag, the map
 extent must be computed by scanning all points in input vector
 map. That is reason why :grasscmd:`g.region` can run for a while.
@@ -135,7 +136,7 @@ option. Cells covered by no points will get NULL (no-data) value assigned.
    
 .. code-block:: bash
 
-   r.in.lidar -oe input=/home/user/geodata/lidar/las_681_5644_1_th_2014-2019.laz output=las_681_5644 resolution=1
+   r.in.lidar -oe input=/home/martin/geodata/lidar/las_681_5644_1_th_2014-2019.laz output=las_681_5644 resolution=1
 
 Basic metadata about created raster map can be obtained by
 :grasscmd:`r.info`.
@@ -221,7 +222,7 @@ running in parallel, see :option:`nprocs` option.
    :grasscmd:`r.composite` it is possible to create color composite as
    a new raster map.
    
-.. note:: Similarly can built Digital Terrain Model (DTM) from
+.. task:: Similarly can built Digital Terrain Model (DTM) from
    filtered terrain only points by *edge detection*.
 
    The filter aims to recognize and extract attached and detached object

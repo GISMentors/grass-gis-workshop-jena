@@ -62,9 +62,9 @@ choose region in map viewer and download selected tiles.</p>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>GRASS requires <a class="reference external" href="http://www.liblas.org">libLAS</a> library for
+<p>GRASS requires <a class="reference external" href="https://liblas.org/">libLAS</a> library for
 reading LAS data. For compressed LAS (LAZ) there is another
-dependency, a <a class="reference external" href="https://www.laszip.org/">laszip</a> library.</p>
+dependency, a <a class="reference external" href="https://laszip.org/">laszip</a> library.</p>
 <p>Basic metadata can be obtained by command line utility <code class="docutils literal notranslate"><span class="pre">lasinfo</span></code>
 which is part of libLAS library.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>lasinfo<span class="w"> </span>las_681_5644_1_th_2014-2019.laz
@@ -103,9 +103,10 @@ from a list by EPSG or description</em>).</span><a class="headerlink" href="#id1
 <p>Let’s import selected tile into GRASS as vector point map. By
 <span class="param">-t</span> flag creation of attribute table is skipped. By
 <span class="param">-b</span> flag also building <a class="reference internal" href="03.html#vector-topo-section"><span class="std std-ref">topology</span></a>
-will be skipped. The import process will be significantly faster.
-Information about data SRS can be missing, in this case use
-<span class="param">-o</span> flag to skip projection check.</p>
+will be skipped (no topology is required for point data). The import
+process will be significantly faster.  Information about data SRS can
+be missing, in this case use <span class="param">-o</span> flag to skip projection
+check.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>v.in.lidar<span class="w"> </span>-otb<span class="w"> </span><span class="nv">input</span><span class="o">=</span>/home/user/geodata/lidar/las_681_5644_1_th_2014-2019.laz<span class="w"> </span><span class="nv">output</span><span class="o">=</span>las_681_5644
 </pre></div>
 </div>
@@ -113,7 +114,7 @@ Information about data SRS can be missing, in this case use
 <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.in.lidar.html">v.in.lidar</a>.</p>
 <p>Overall point density can be checked by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.outlier.html">v.outlier</a>. Note
 that <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.outlier.html">v.outlier</a> is working in the current computation
-region(!). Computational region must be set based on imported
+region(!). It means that computational region must be set based on imported
 data. Since building topology was skipped by <span class="param">-b</span> flag, the map
 extent must be computed by scanning all points in input vector
 map. That is reason why <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/g.region.html">g.region</a> can run for a while.</p>
@@ -155,7 +156,7 @@ data. Spatial resolution for output raster map is defined by
 <span class="param">resolution</span> option. By default, for cells with more points
 involved, the value is computed by mean value, see <span class="param">method</span>
 option. Cells covered by no points will get NULL (no-data) value assigned.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.in.lidar<span class="w"> </span>-oe<span class="w"> </span><span class="nv">input</span><span class="o">=</span>/home/user/geodata/lidar/las_681_5644_1_th_2014-2019.laz<span class="w"> </span><span class="nv">output</span><span class="o">=</span>las_681_5644<span class="w"> </span><span class="nv">resolution</span><span class="o">=</span><span class="m">1</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.in.lidar<span class="w"> </span>-oe<span class="w"> </span><span class="nv">input</span><span class="o">=</span>/home/martin/geodata/lidar/las_681_5644_1_th_2014-2019.laz<span class="w"> </span><span class="nv">output</span><span class="o">=</span>las_681_5644<span class="w"> </span><span class="nv">resolution</span><span class="o">=</span><span class="m">1</span>
 </pre></div>
 </div>
 <p>Basic metadata about created raster map can be obtained by
@@ -239,8 +240,8 @@ composition can be displayed using <a class="reference external" href="https://g
 <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.composite.html">r.composite</a> it is possible to create color composite as
 a new raster map.</p>
 </div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
+<div class="task admonition">
+<p class="admonition-title">Task</p>
 <p>Similarly can built Digital Terrain Model (DTM) from
 filtered terrain only points by <em>edge detection</em>.</p>
 <p>The filter aims to recognize and extract attached and detached object
