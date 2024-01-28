@@ -2,31 +2,23 @@ Unit 16 - Flooding simulation
 =============================
 
 Beside DEM (see :doc:`15`) also river streams are required. Such data
-can be downloaded from OSM database similarly as done in :doc:`02`
-in the case of Jena city region.
+can be downloaded from OSM database similarly as done in :doc:`02` in
+the case of Jena city region. See `Map Features
+<https://wiki.openstreetmap.org/wiki/Map_features>`__ for details.
 
 .. note::
    
    .. code-block:: xml
 		   
-      [bbox:50.85374080,11.50084754,50.98991003,11.67463202];
-      (
-      way
-      ["waterway"="river"];
-      way
-      ["waterway"="stream"]
-      );
-      /*added by auto repair*/
-      (._;>;);
-      /*end of auto repair*/
-      out;
-
-   .. code-block:: bash
-
-      ogr2ogr -f GPKG jena_rivers.gpkg -a_srs EPSG:4326 -t_srs EPSG:32632 /vsicurl_streaming/"\
-      http://overpass-api.de/api/interpreter?data=%5Bbbox%3A50%2E85374080%2C11%2E50084754%2C50%2\
-      E98991003%2C11%2E67463202%5D%3B%28way%5B%22waterway%22%3D%22river%22%5D%3Bway%5B%22waterway\
-      %22%3D%22stream%22%5D%3B%29%3B%28%2E%5F%3B%3E%3B%29%3Bout%3B%0A" lines
+       [bbox:50.85374080,11.50084754,50.98991003,11.67463202];
+       (
+       way["waterway"];
+       relation["water"];
+       );
+       /*added by auto repair*/
+       (._;>;);
+       /*end of auto repair*/
+       out;
 
 For simplification pre-processed river streams are included in sample
 dataset as :file:`geodata/osm/jena-rivers.gpkg` file.
@@ -63,8 +55,12 @@ module:
    
 .. _dem-what:
 
+.. figure:: ../images/units/16/goto-coordinates.png
+
+   Select :item:`Go to coordinates`.
+   
 .. figure:: ../images/units/16/dem-what.png
-   :class: middle
+   :class: large
            
    Query DEM layer for an elevation value.
 
@@ -92,7 +88,7 @@ based on :map:`dem` raster map.
    
 .. code-block:: bash
                 
-   r.lake elevation=dem water_level=150 lake=lake coordinates=681734,5644423
+   r.lake elevation=dem water_level=146 lake=lake coordinates=681734,5644423
 
 .. figure:: ../images/units/16/r-lake-150.png
    :class: large
