@@ -88,10 +88,10 @@ done in <a class="reference internal" href="20.html"><span class="doc">Unit 20 -
 selected. Use <code class="xref std std-option docutils literal notranslate"><span class="pre">register_output</span></code> in order to create timestamps
 file. This file will be used for registering bands into space-time
 raster dataset.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>i.sentinel.import<span class="w"> </span>-p<span class="w"> </span><span class="nv">input</span><span class="o">=</span>/home/user/geodata/sentinel/2019<span class="w"> </span><span class="nv">pattern</span><span class="o">=</span><span class="s2">&quot;B0[4|8]_10m&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>i.sentinel.import<span class="w"> </span>-p<span class="w"> </span><span class="nv">input</span><span class="o">=</span>geodata/sentinel/2019<span class="w"> </span><span class="nv">pattern</span><span class="o">=</span><span class="s2">&quot;B0[4|8]_10m&quot;</span>
 
-i.sentinel.import<span class="w"> </span>-l<span class="w"> </span>-c<span class="w"> </span><span class="nv">input</span><span class="o">=</span>/home/user/geodata/sentinel/2019<span class="w"> </span><span class="nv">pattern</span><span class="o">=</span><span class="s2">&quot;B0[4|8]_10m&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="nv">register_output</span><span class="o">=</span>/home/user/sentinel-timestamps.txt
+i.sentinel.import<span class="w"> </span>-l<span class="w"> </span>-c<span class="w"> </span><span class="nv">input</span><span class="o">=</span>geodata/sentinel/2019<span class="w"> </span><span class="nv">pattern</span><span class="o">=</span><span class="s2">&quot;B0[4|8]_10m&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="nv">register_output</span><span class="o">=</span>sentinel-timestamps.txt
 </pre></div>
 </div>
 <p>Example of created timestamp file:</p>
@@ -108,7 +108,7 @@ i.sentinel.import<span class="w"> </span>-l<span class="w"> </span>-c<span class
 <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.create.html">t.create</a> and all imported Sentinel bands registered with
 <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.register.html">t.register</a>.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.create<span class="w"> </span><span class="nv">output</span><span class="o">=</span>sentinel<span class="w"> </span><span class="nv">title</span><span class="o">=</span><span class="s2">&quot;Sentinel L2A 2019&quot;</span><span class="w"> </span><span class="nv">desc</span><span class="o">=</span><span class="s2">&quot;Jena region&quot;</span>
-t.register<span class="w"> </span><span class="nv">input</span><span class="o">=</span>sentinel<span class="w"> </span><span class="nv">file</span><span class="o">=</span>/home/user/sentinel-timestamps.txt
+t.register<span class="w"> </span><span class="nv">input</span><span class="o">=</span>sentinel<span class="w"> </span><span class="nv">file</span><span class="o">=</span>sentinel-timestamps.txt
 </pre></div>
 </div>
 <p>Let’s check basic metadata (<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.info.html">t.info</a>) and list the registered

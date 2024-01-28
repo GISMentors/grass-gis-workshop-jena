@@ -72,7 +72,7 @@ forget to enable :option:`-r` flag.
 
 .. code-block:: bash
 
-   r.in.gdal -r input=/home/user/geodata/eu-dem/dem_sample.tif output=dem 
+   r.in.gdal -r input=geodata/eu-dem/dem_sample.tif output=dem 
 
 .. figure:: ../images/units/15/dem-imported.png
    :class: middle

@@ -54,10 +54,9 @@ It consists of six GRASS addon modules:</p>
 <li><p><a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/i.sentinel.preproc.html">i.sentinel.preproc</a></p></li>
 <li><p><a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/i.sentinel.mask.html">i.sentinel.mask</a></p></li>
 </ul>
-<p>Addons modules are not internal part of GRASS installation.  Addons
-can be easily installed by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/g.extension.html">g.extension</a>
-(<span class="menuselection">Settings ‣ Addons extensions ‣ Install
-extension from addons</span>).</p>
+<p>The addon can be installed by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/g.extension.html">g.extension</a> or from the main menu
+<span class="menuselection">Settings ‣ Addons extensions ‣ Install extension
+from addons</span>.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>g.extension<span class="w"> </span><span class="nv">extension</span><span class="o">=</span>i.sentinel
 </pre></div>
 </div>
@@ -67,12 +66,11 @@ extension from addons</span>).</p>
 <p><span class="caption-number">Fig. 107 </span><span class="caption-text">Install <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/i.sentinel.html">i.sentinel</a> GRASS Addon.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
-<p>Note that <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/i.sentinel.download.html">i.sentinel.download</a> requires also
-<a class="reference external" href="https://pypi.python.org/pypi/sentinelsat">sentinelsat library</a> to
-be installed.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Sentinelsat library can be easily installed from the
+<p>Note that <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/i.sentinel.download.html">i.sentinel.download</a> requires
+also <a class="reference external" href="https://pypi.python.org/pypi/sentinelsat">sentinelsat library</a> to be
+installed. Sentinelsat library can be easily installed from the
 <span class="item">Console</span> tab by entering the command below.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>sentinelsat<span class="w"> </span>pandas
 </pre></div>
@@ -81,6 +79,12 @@ be installed.</p>
 <p><a class="reference internal" href="15.html#switch-location"><span class="std std-ref">Switch</span></a> to <cite>jena-region</cite> location.</p>
 <section id="download-data">
 <h2>Download data<a class="headerlink" href="#download-data" title="Permalink to this heading">¶</a></h2>
+<p>Let’s download suitable Sentinel products for our area of interest
+(AOI) and perform the NDVI calculation as described in <a class="reference internal" href="05.html"><span class="doc">Unit 05 - Raster processing</span></a>
+(implemented as a model in <a class="reference internal" href="08.html"><span class="doc">Unit 08 - Modeler</span></a> or as a Python script in
+<a class="reference internal" href="11.html"><span class="doc">Unit 11 - PyGRASS scripting</span></a>). AOI region is defined by Jena city region created in
+<a class="reference internal" href="03.html"><span class="doc">Unit 03 - Data Management</span></a>. <a class="reference external" href="https://docs.sentinel-hub.com/api/latest/data/sentinel-2-l2a/">Sentinel-2 L2A products</a>
+will be used to avoid computing atmospheric corrections.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>Pre-downloaded Sentinel scenes are available in the
@@ -88,14 +92,7 @@ sample dataset <a class="reference external" href="https://geo.fsv.cvut.cz/geofo
 (1.7GB) <code class="file docutils literal notranslate"><span class="pre">geodata/sentinel</span></code>. Readers can continue with
 <a class="reference internal" href="#sentinel-import"><span class="std std-ref">importing sample data</span></a>.</p>
 </div>
-<p>Let’s download suitable Sentinel products for our area of interest
-(AOI) and perform the NDVI calculation as described in <a class="reference internal" href="05.html"><span class="doc">Unit 05 - Raster processing</span></a>
-(implemented as a model in <a class="reference internal" href="08.html"><span class="doc">Unit 08 - Modeler</span></a> or as a Python script in
-<a class="reference internal" href="11.html"><span class="doc">Unit 11 - PyGRASS scripting</span></a>). AOI region is defined by Jena city region created in
-<a class="reference internal" href="03.html"><span class="doc">Unit 03 - Data Management</span></a>.</p>
-<p><a class="reference external" href="https://www.sentinel-hub.com/blog/sentinel-2-l2a-products-available-sentinel-hub">Sentinel-2 L2A products</a>
-will be used to avoid computing atmospheric corrections. Let’s
-search for the latest available product by means of
+<p>Let’s search for the latest available product by means of
 <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/i.sentinel.download.html">i.sentinel.download</a>. Setting the <span class="param">-l</span> flag, the result will only
 be printed. The download procedure will be performed later. In order to
 search and download Sentinel products from the Copernicus Open Access Hub,
@@ -141,7 +138,7 @@ add the <span class="param">output</span> option in order to define the path to 
 where data should be saved.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>i.sentinel.download<span class="w"> </span><span class="nv">map</span><span class="o">=</span>jena_boundary<span class="w"> </span><span class="nv">producttype</span><span class="o">=</span>S2MSI2A<span class="w"> </span><span class="nv">settings</span><span class="o">=</span>sentinel.txt<span class="w"> </span><span class="se">\</span>
 <span class="nv">start</span><span class="o">=</span><span class="m">2021</span>-04-01<span class="w"> </span><span class="nv">end</span><span class="o">=</span><span class="m">2021</span>-10-01<span class="w"> </span><span class="nv">area_relation</span><span class="o">=</span>Contains<span class="w"> </span><span class="nv">clouds</span><span class="o">=</span><span class="m">10</span><span class="w"> </span><span class="se">\</span>
-<span class="nv">limit</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">output</span><span class="o">=</span>/home/user/geodata/sentinel/2021
+<span class="nv">limit</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">output</span><span class="o">=</span>geodata/sentinel/2021
 </pre></div>
 </div>
 <div class="admonition note">
@@ -167,7 +164,7 @@ recursively. Before importing data let’s check content of the input
 directory by <span class="param">-p</span> flag. The import procedure will be limited to
 the 4th and 8th bands in 10m spatial resolution by <span class="param">pattern</span>
 option.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>i.sentinel.import<span class="w"> </span>-p<span class="w"> </span><span class="nv">input</span><span class="o">=</span>/home/user/geodata/sentinel/2019<span class="w"> </span><span class="nv">pattern</span><span class="o">=</span><span class="s2">&quot;20190626T102031_B0[4|8]_10m&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>i.sentinel.import<span class="w"> </span>-p<span class="w"> </span><span class="nv">input</span><span class="o">=</span>geodata/sentinel/2019<span class="w"> </span><span class="nv">pattern</span><span class="o">=</span><span class="s2">&quot;20190626T102031_B0[4|8]_10m&quot;</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">...</span><span class="n">L2A_T32UPB_A020940_20190626T102028</span><span class="o">/</span><span class="n">IMG_DATA</span><span class="o">/</span><span class="n">R10m</span><span class="o">/</span><span class="n">T32UPB_20190626T102031_B08_10m</span><span class="o">.</span><span class="n">jp2</span> <span class="mi">1</span> <span class="p">(</span><span class="n">EPSG</span><span class="p">:</span> <span class="mi">32632</span><span class="p">)</span>
@@ -179,7 +176,7 @@ Alternatively, data can be linked if <span class="param">-l</span> is given. It 
 useful to import cloud mask vector features by <span class="param">-c</span> flag. We also use
 <span class="param">register_output</span> option to produce a timestamp plain text file
 which will be used in <a class="reference internal" href="21.html"><span class="doc">Unit 21 - Sentinel spatio-temporal</span></a>.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>i.sentinel.import<span class="w"> </span>-l<span class="w"> </span>-c<span class="w"> </span><span class="nv">input</span><span class="o">=</span>/home/user/geodata/sentinel/2019<span class="w"> </span><span class="nv">pattern</span><span class="o">=</span><span class="s2">&quot;20190626T102031_B0[4|8]_10m&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>i.sentinel.import<span class="w"> </span>-l<span class="w"> </span>-c<span class="w"> </span><span class="nv">input</span><span class="o">=</span>geodata/sentinel/2019<span class="w"> </span><span class="nv">pattern</span><span class="o">=</span><span class="s2">&quot;20190626T102031_B0[4|8]_10m&quot;</span>
 </pre></div>
 </div>
 <div class="admonition note">

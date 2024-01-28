@@ -101,7 +101,7 @@ sample dataset <a class="reference external" href="https://geo.fsv.cvut.cz/geofo
 <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/i.modis.download.html">i.modis.download</a>.</p>
 <p>Land Surface Temperature eight day 1 Km (Terra/Aqua) product will be
 downloaded.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>i.modis.download<span class="w"> </span><span class="nv">settings</span><span class="o">=</span>settings.txt<span class="w"> </span><span class="nv">folder</span><span class="o">=</span>/home/user/geodata/modis/h18v03_04<span class="w"> </span><span class="se">\</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>i.modis.download<span class="w"> </span><span class="nv">settings</span><span class="o">=</span>settings.txt<span class="w"> </span><span class="nv">folder</span><span class="o">=</span>geodata/modis/h18v03_04<span class="w"> </span><span class="se">\</span>
 <span class="nv">tiles</span><span class="o">=</span>h18v03,h18v04<span class="w"> </span><span class="se">\</span>
 <span class="nv">product</span><span class="o">=</span>lst_aqua_eight_1000,lst_terra_eight_1000<span class="w"> </span><span class="se">\</span>
 <span class="nv">startday</span><span class="o">=</span><span class="m">2021</span>-01-01<span class="w"> </span><span class="nv">endday</span><span class="o">=</span><span class="m">2021</span>-12-31
@@ -121,10 +121,10 @@ register and set up your account.</p>
 <span id="modis-import"></span><h2>Import data<a class="headerlink" href="#import-data" title="Permalink to this heading">¶</a></h2>
 <p>Input MODIS data can be imported and reprojected into target location
 by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/i.modis.import.html">i.modis.import</a>.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>i.modis.import<span class="w"> </span>-mw<span class="w"> </span><span class="nv">files</span><span class="o">=</span>/home/user/geodata/modis/h18v03_04/listfileMOD11A2.006.txt<span class="w"> </span><span class="se">\</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>i.modis.import<span class="w"> </span>-mw<span class="w"> </span><span class="nv">files</span><span class="o">=</span>geodata/modis/h18v03_04/listfileMOD11A2.006.txt<span class="w"> </span><span class="se">\</span>
 <span class="nv">spectral</span><span class="o">=</span><span class="s1">&#39;( 1 0 0 0 1 0 0 0 0 0 0 0 )&#39;</span><span class="w"> </span><span class="nv">outfile</span><span class="o">=</span>tlist-mod.txt
 
-i.modis.import<span class="w"> </span>-mw<span class="w"> </span><span class="nv">files</span><span class="o">=</span>/home/user/geodata/modis/h18v03_04/listfileMYD11A2.006.txt<span class="w"> </span><span class="se">\</span>
+i.modis.import<span class="w"> </span>-mw<span class="w"> </span><span class="nv">files</span><span class="o">=</span>geodata/modis/h18v03_04/listfileMYD11A2.006.txt<span class="w"> </span><span class="se">\</span>
 <span class="nv">spectral</span><span class="o">=</span><span class="s1">&#39;( 1 0 0 0 1 0 0 0 0 0 0 0 )&#39;</span><span class="w"> </span><span class="nv">outfile</span><span class="o">=</span>tlist-myd.txt
 </pre></div>
 </div>
