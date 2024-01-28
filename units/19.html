@@ -71,26 +71,26 @@ computed an average value. This is main reason why <a class="reference external"
 is not used here.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">  1</span><span class="ch">#!/usr/bin/env python3</span>
 <span class="linenos">  2</span>
-<span class="linenos">  3</span><span class="c1">#%module</span>
-<span class="linenos">  4</span><span class="c1">#% description: Creates DTM from input LAS tiles.</span>
-<span class="linenos">  5</span><span class="c1">#%end</span>
-<span class="hll"><span class="linenos">  6</span><span class="c1">#%option G_OPT_M_DIR</span>
-</span><span class="linenos">  7</span><span class="c1">#% required: yes</span>
-<span class="linenos">  8</span><span class="c1">#%end</span>
-<span class="hll"><span class="linenos">  9</span><span class="c1">#%option G_OPT_R_ELEV</span>
-</span><span class="linenos"> 10</span><span class="c1">#% description: Name for output elevation raster map mosaics</span>
-<span class="linenos"> 11</span><span class="c1">#%end</span>
-<span class="linenos"> 12</span><span class="c1">#%option</span>
-<span class="hll"><span class="linenos"> 13</span><span class="c1">#% key: resolution</span>
-</span><span class="linenos"> 14</span><span class="c1">#% description: Output resolution</span>
-<span class="linenos"> 15</span><span class="c1">#% type: double</span>
-<span class="linenos"> 16</span><span class="c1">#%end</span>
-<span class="linenos"> 17</span><span class="c1">#%option</span>
-<span class="hll"><span class="linenos"> 18</span><span class="c1">#% key: nprocs</span>
-</span><span class="linenos"> 19</span><span class="c1">#% description: Number of processes per tile</span>
-<span class="linenos"> 20</span><span class="c1">#% answer: 1</span>
-<span class="linenos"> 21</span><span class="c1">#% type: integer</span>
-<span class="linenos"> 22</span><span class="c1">#%end</span>
+<span class="linenos">  3</span><span class="c1"># %module</span>
+<span class="linenos">  4</span><span class="c1"># % description: Creates DTM from input LAS tiles.</span>
+<span class="linenos">  5</span><span class="c1"># %end</span>
+<span class="hll"><span class="linenos">  6</span><span class="c1"># %option G_OPT_M_DIR</span>
+</span><span class="linenos">  7</span><span class="c1"># % required: yes</span>
+<span class="linenos">  8</span><span class="c1"># %end</span>
+<span class="hll"><span class="linenos">  9</span><span class="c1"># %option G_OPT_R_ELEV</span>
+</span><span class="linenos"> 10</span><span class="c1"># % description: Name for output elevation raster map mosaics</span>
+<span class="linenos"> 11</span><span class="c1"># %end</span>
+<span class="linenos"> 12</span><span class="c1"># %option</span>
+<span class="hll"><span class="linenos"> 13</span><span class="c1"># % key: resolution</span>
+</span><span class="linenos"> 14</span><span class="c1"># % description: Output resolution</span>
+<span class="linenos"> 15</span><span class="c1"># % type: double</span>
+<span class="linenos"> 16</span><span class="c1"># %end</span>
+<span class="linenos"> 17</span><span class="c1"># %option</span>
+<span class="hll"><span class="linenos"> 18</span><span class="c1"># % key: nprocs</span>
+</span><span class="linenos"> 19</span><span class="c1"># % description: Number of processes per tile</span>
+<span class="linenos"> 20</span><span class="c1"># % answer: 1</span>
+<span class="linenos"> 21</span><span class="c1"># % type: integer</span>
+<span class="linenos"> 22</span><span class="c1"># %end</span>
 <span class="linenos"> 23</span>
 <span class="linenos"> 24</span><span class="kn">import</span> <span class="nn">os</span>
 <span class="linenos"> 25</span><span class="kn">import</span> <span class="nn">sys</span>
@@ -187,7 +187,7 @@ is not used here.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The script is taking a long time with all the tiles from
-<code class="file docutils literal notranslate"><span class="pre">/home/user/geodata/lidar</span></code> directory. Choose few tiles
+<code class="file docutils literal notranslate"><span class="pre">geodata/lidar</span></code> directory. Choose few tiles
 for testing.</p>
 </div>
 <figure class="align-center" id="id1">

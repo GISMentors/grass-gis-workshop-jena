@@ -1,25 +1,25 @@
 #!/usr/bin/env python3
 
-#%module
-#% description: Creates DTM from input LAS tiles.
-#%end
-#%option G_OPT_M_DIR
-#% required: yes
-#%end
-#%option G_OPT_R_ELEV
-#% description: Name for output elevation raster map mosaics
-#%end
-#%option
-#% key: resolution
-#% description: Output resolution
-#% type: double
-#%end
-#%option
-#% key: nprocs
-#% description: Number of processes per tile
-#% answer: 1
-#% type: integer
-#%end
+# %module
+# % description: Creates DTM from input LAS tiles.
+# %end
+# %option G_OPT_M_DIR
+# % required: yes
+# %end
+# %option G_OPT_R_ELEV
+# % description: Name for output elevation raster map mosaics
+# %end
+# %option
+# % key: resolution
+# % description: Output resolution
+# % type: double
+# %end
+# %option
+# % key: nprocs
+# % description: Number of processes per tile
+# % answer: 1
+# % type: integer
+# %end
 
 import os
 import sys
