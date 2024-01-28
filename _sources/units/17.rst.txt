@@ -8,11 +8,11 @@ details.
 GRASS introduces three special data types that are designed to handle
 time-series data:
 
-* *Space-time raster datasets* (``strds``) for managing raster map
+* *Space-time raster datasets* (``strds``) for managing *raster* map
   time series.
-* *Space-time 3D raster datasets* (``str3ds``) for managing 3D raster
+* *Space-time 3D raster datasets* (``str3ds``) for managing *3D raster*
   map time series.
-* *Space-time vector datasets* (``stvds``) for managing vector map time
+* *Space-time vector datasets* (``stvds``) for managing *vector* map time
   series.
             
 Spatio-temporal flooding simulation
@@ -25,9 +25,9 @@ surpassed by addon :grasscmdaddons:`r.lake.series`.
 .. _grass-addons:
                 
 .. note:: Addons modules are not internal part of GRASS installation.
-   Addons can be easily installed by :grasscmd:`g.extension`
-   (:menuselection:`Settings --> Addons extensions --> Install
-   extension from addons`).
+   Addons can be easily installed by :grasscmd:`g.extension` or from
+   the main menu :menuselection:`Settings --> Addons extensions -->
+   Install extension from addons`.
 
    .. figure:: ../images/units/17/g-extension.png
 
