@@ -32,27 +32,27 @@ Python Temporal API
          
 .. _temporal-api:
 
-Functions from :grasscmd2:`GRASS GIS Temporal Framework
+Used functions from :grasscmd2:`GRASS GIS Temporal Framework
 <libpython/temporal_framework.html>`:
 
 * initialization must be done by :grasscmd2:`init
   <libpython/temporal.html#temporal.core.init>` function, see line
-  :lcode:`144`
-* space time datasets are open on lines :lcode:`146-148` by
+  :lcode:`142`
+* space time datasets are open on lines :lcode:`144-146` by
   :grasscmd2:`open_old_stds
   <libpython/temporal.html#temporal.open_stds.open_old_stds>`
 * raster maps registered in reference dataset (b4) are listed on line
-  :lcode:`152` by :grasscmd2:`get_registered_maps
+  :lcode:`151` by :grasscmd2:`get_registered_maps
   <libpython/temporal.html#temporal.abstract_space_time_dataset.AbstractSpaceTimeDataset.get_registered_maps>`
 * related raster maps in two other datasets (b8, cl) are searched on
-  lines :lcode:`155-158` by :grasscmd2:`get_registered_maps
+  lines :lcode:`154-157` by :grasscmd2:`get_registered_maps
   <libpython/temporal.html#temporal.abstract_space_time_dataset.AbstractSpaceTimeDataset.get_registered_maps>`
   with ``where`` parameter
 
 .. literalinclude:: ../_static/scripts/ndvi-tgrass-v1.py
    :language: python
    :linenos:
-   :emphasize-lines: 19, 23, 27, 30, 33, 38, 144, 146-148, 152, 155-158
+   :emphasize-lines: 19, 23, 27, 30, 33, 38, 142, 144-146, 151, 154-157
 
 Sample script to download: `ndvi-tgrass-v1.py
 <../_static/scripts/ndvi-tgrass-v1.py>`__
@@ -68,21 +68,23 @@ Possible output:
 ::
 
    --------------------------------------------------------------------------------
-   NDVI class statistics (ndvi_1: 2019-04-07 10:20:21)
+   NDVI class statistics (ndvi_1: 2019-04-07 10:26:45.035007)
    --------------------------------------------------------------------------------
-   NDVI class 1: 182.4 ha
-   NDVI class 2: 4923.4 ha
-   NDVI class 3: 6330.2 ha
-   NDVI class 1: -0.2073 (min) 0.4915 (max) 0.0554 (mean)
-   NDVI class 2: -0.2380 (min) 0.9989 (max) 0.3736 (mean)
+   NDVI class 1: 122.4 ha
+   NDVI class 2: 4873.0 ha
+   NDVI class 3: 6333.2 ha
+   --------------------------------------------------------------------------------
+   NDVI class 1: -0.2073 (min) 0.5353 (max) 0.0557 (mean)
+   NDVI class 2: -0.2380 (min) 0.9989 (max) 0.3754 (mean)
    NDVI class 3: -0.4533 (min) 0.9988 (max) 0.6468 (mean)
    ...
    --------------------------------------------------------------------------------
-   NDVI class statistics (ndvi_7: 2019-10-14 10:20:31)
+   NDVI class statistics (ndvi_7: 2019-10-14 10:26:46.742599)
    --------------------------------------------------------------------------------
-   NDVI class 1: 163.4 ha
-   NDVI class 2: 2669.2 ha
-   NDVI class 3: 8603.6 ha
-   NDVI class 1: -0.2253 (min) 0.7481 (max) 0.0457 (mean)
+   NDVI class 1: 159.8 ha
+   NDVI class 2: 2669.3 ha
+   NDVI class 3: 8602.4 ha
+   --------------------------------------------------------------------------------
+   NDVI class 1: -0.2253 (min) 0.7452 (max) 0.0478 (mean)
    NDVI class 2: -1.0000 (min) 0.9994 (max) 0.2999 (mean)
    NDVI class 3: -0.9978 (min) 0.9994 (max) 0.6992 (mean)
