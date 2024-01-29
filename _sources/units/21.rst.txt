@@ -2,11 +2,10 @@ Unit 21 - Sentinel spatio-temporal
 ==================================
 
 :ref:`Create a new mapset <create-mapset>` in *jena-region* location:
-`sentinel_ndvi` (don't use dashes in the mapset name otherwise
-:grasscmd:`t.rast.algebra` will most probably fail).
+`sentinel_ndvi`.
 
-.. todo:: Fix :grasscmd:`t.rast.algebra` to support also mapsets
-          containing dash(es) in the name.
+.. important:: Do not use dashes in the mapset name otherwise
+   :grasscmd:`t.rast.algebra` will most probably fail.
 
 Download data
 -------------
@@ -118,6 +117,7 @@ maps (:grasscmd:`t.rast.list`).
    | Start time:................. 2019-04-07 10:26:45.035007
    | End time:................... 2019-10-14 10:26:46.742599
    ...
+   | Semantic labels:............ S2_4,S2_8
    | Number of registered maps:.. 14
 
 .. code-block:: bash
@@ -127,9 +127,9 @@ maps (:grasscmd:`t.rast.list`).
 ::
 
    name|mapset|start_time|end_time
-   T32UPB_20190407T102021_B04_10m|sentinel|2019-04-07 10:26:45.035007|None
-   T32UPB_20190407T102021_B08_10m|sentinel|2019-04-07 10:26:45.035007|None
-   T32UPB_20190417T102031_B04_10m|sentinel|2019-04-17 10:26:46.415802|None
+   T32UPB_20190407T102021_B04_10m|sentinel_ndvi|2019-04-07 10:26:45.035007|None
+   T32UPB_20190407T102021_B08_10m|sentinel_ndvi|2019-04-07 10:26:45.035007|None
+   T32UPB_20190417T102031_B04_10m|sentinel_ndvi|2019-04-17 10:26:46.415802|None
    ...
 
 NDVI ST computation
@@ -143,10 +143,11 @@ be prepared by :grasscmd:`t.rast.extract`.
 
 .. code-block:: bash
 
-   t.rast.extract input=sentinel where="name like '%B04%'" output=b4
-   t.rast.extract input=sentinel where="name like '%B08%'" output=b8
+   t.rast.extract input=sentinel where="semantic_label = 'S2_4'" output=b4
+   t.rast.extract input=sentinel where="semantic_label = 'S2_8'" output=b8
 
-Let's check content of the new datasets by :grasscmd:`t.rast.list`.
+Let's check content of the new datasets by :grasscmd:`t.rast.list`
+using semantic labels.
 
 .. code-block:: bash
 
@@ -188,8 +189,8 @@ When computation is finished *ndvi* color table can be set with
    t.rast.colors input=ndvi color=ndvi
 
 .. figure:: ../images/units/21/simple-animation.gif
-   :class: middle
-
+   :class: large
+           
    Simple NDVI animation (no clouds mask applied) created by
    :grasscmd:`g.gui.animation`.
 
@@ -199,19 +200,17 @@ When computation is finished *ndvi* color table can be set with
 Cloud mask
 ^^^^^^^^^^
 
-Let's apply the cloud masks on our NDVI space-time dataset. At first, we will create
-a new space-time dataset containing computed raster masks. A sample
-Python script has been designed for this purpose below. Masks can
-be created with :grasscmd:`r.mask`, see line :lcode:`50`. But in this
-case, the mask should be kept for further usage. Note that
-:grasscmd:`r.mask` module produces a normal raster map with the unique name
-*MASK*. To disable a mask, it is enough to rename the *MASK* map with
-:grasscmd:`g.rename`, see line :lcode:`52`.
+Let's apply the cloud masks on our NDVI space-time dataset. At first,
+we will create a new space-time dataset containing computed raster
+masks. A sample Python script has been designed for this purpose
+below. In case the scene contains clouds (:lcode:`43`), a vector mask
+is created (:lcode:`44`), which is then rasterized using
+:grasscmd:`v.to.rast` (:lcode:`48`).
        
 .. literalinclude:: ../_static/scripts/sentinel-cloud-mask.py
    :language: python
    :linenos:
-   :emphasize-lines: 50, 52
+   :emphasize-lines: 43, 44, 48
 
 Sample script to download: `sentinel-cloud-mask.py
 <../_static/scripts/sentinel-cloud-mask.py>`__
@@ -246,7 +245,7 @@ We now apply the cloud masks map by map using :grasscmd:`t.rast.algebra` and set
    t.rast.colors in=ndvi_masked color=ndvi
 
 .. figure:: ../images/units/21/simple-animation-clouds.gif
-   :class: middle
+   :class: large
 
    Simple NDVI animation with clouds masks applied. Computation is limited
    to AOI only.

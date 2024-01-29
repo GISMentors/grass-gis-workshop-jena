@@ -1,20 +1,18 @@
 #!/usr/bin/env python3
 
-#%module
-#% description: Creates raster mask maps based on clouds mask features.
-#%end
-#%option G_OPT_V_MAP
-#% description: Name of AOI vector map
-#%end
-#%option G_OPT_STRDS_INPUT
-#% description: Name of input 4th band space time raster dataset
-#%end
-#%option G_OPT_F_OUTPUT
-#%end
+# %module
+# % description: Creates raster mask maps based on clouds mask features.
+# %end
+# %option G_OPT_V_MAP
+# % description: Name of AOI vector map
+# %end
+# %option G_OPT_STRDS_INPUT
+# % description: Name of input 4th band space time raster dataset
+# %end
+# %option G_OPT_F_OUTPUT
+# %end
 
 import sys
-import os
-from datetime import datetime, timedelta
 
 import grass.script as gs
 
@@ -47,9 +45,8 @@ def main():
                        output=mask_vect, overwrite=True)
             else:
                 copy(options['map'], mask_vect, 'vector')
-            Module('r.mask', vector=mask_vect, overwrite=True)
+            Module('v.to.rast', input=mask_vect, output=mask_vect, use='value', overwrite=True)
             Module('g.remove', flags='f', type='vector', name=mask_vect)
-            Module('g.rename', raster=['MASK', mask_vect])
             fd.write("{}|{}\n".format(
                 mask_vect,
                 d.strftime('%Y-%m-%d %H:%M:%S.%f'),

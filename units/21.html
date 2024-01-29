@@ -43,12 +43,11 @@
   <section id="unit-21-sentinel-spatio-temporal">
 <h1>Unit 21 - Sentinel spatio-temporal<a class="headerlink" href="#unit-21-sentinel-spatio-temporal" title="Permalink to this heading">¶</a></h1>
 <p><a class="reference internal" href="16.html#create-mapset"><span class="std std-ref">Create a new mapset</span></a> in <em>jena-region</em> location:
-<cite>sentinel_ndvi</cite> (don’t use dashes in the mapset name otherwise
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.rast.algebra.html">t.rast.algebra</a> will most probably fail).</p>
-<div class="admonition-todo admonition" id="id1">
-<p class="admonition-title">Todo</p>
-<p>Fix <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.rast.algebra.html">t.rast.algebra</a> to support also mapsets
-containing dash(es) in the name.</p>
+<cite>sentinel_ndvi</cite>.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Do not use dashes in the mapset name otherwise
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.rast.algebra.html">t.rast.algebra</a> will most probably fail.</p>
 </div>
 <section id="download-data">
 <h2>Download data<a class="headerlink" href="#download-data" title="Permalink to this heading">¶</a></h2>
@@ -120,6 +119,7 @@ maps (<a class="reference external" href="https://grass.osgeo.org/grass83/manual
 <span class="o">|</span> <span class="n">Start</span> <span class="n">time</span><span class="p">:</span><span class="o">.................</span> <span class="mi">2019</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">07</span> <span class="mi">10</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">45.035007</span>
 <span class="o">|</span> <span class="n">End</span> <span class="n">time</span><span class="p">:</span><span class="o">...................</span> <span class="mi">2019</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">14</span> <span class="mi">10</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">46.742599</span>
 <span class="o">...</span>
+<span class="o">|</span> <span class="n">Semantic</span> <span class="n">labels</span><span class="p">:</span><span class="o">............</span> <span class="n">S2_4</span><span class="p">,</span><span class="n">S2_8</span>
 <span class="o">|</span> <span class="n">Number</span> <span class="n">of</span> <span class="n">registered</span> <span class="n">maps</span><span class="p">:</span><span class="o">..</span> <span class="mi">14</span>
 </pre></div>
 </div>
@@ -127,9 +127,9 @@ maps (<a class="reference external" href="https://grass.osgeo.org/grass83/manual
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">name</span><span class="o">|</span><span class="n">mapset</span><span class="o">|</span><span class="n">start_time</span><span class="o">|</span><span class="n">end_time</span>
-<span class="n">T32UPB_20190407T102021_B04_10m</span><span class="o">|</span><span class="n">sentinel</span><span class="o">|</span><span class="mi">2019</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">07</span> <span class="mi">10</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">45.035007</span><span class="o">|</span><span class="kc">None</span>
-<span class="n">T32UPB_20190407T102021_B08_10m</span><span class="o">|</span><span class="n">sentinel</span><span class="o">|</span><span class="mi">2019</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">07</span> <span class="mi">10</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">45.035007</span><span class="o">|</span><span class="kc">None</span>
-<span class="n">T32UPB_20190417T102031_B04_10m</span><span class="o">|</span><span class="n">sentinel</span><span class="o">|</span><span class="mi">2019</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">17</span> <span class="mi">10</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">46.415802</span><span class="o">|</span><span class="kc">None</span>
+<span class="n">T32UPB_20190407T102021_B04_10m</span><span class="o">|</span><span class="n">sentinel_ndvi</span><span class="o">|</span><span class="mi">2019</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">07</span> <span class="mi">10</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">45.035007</span><span class="o">|</span><span class="kc">None</span>
+<span class="n">T32UPB_20190407T102021_B08_10m</span><span class="o">|</span><span class="n">sentinel_ndvi</span><span class="o">|</span><span class="mi">2019</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">07</span> <span class="mi">10</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">45.035007</span><span class="o">|</span><span class="kc">None</span>
+<span class="n">T32UPB_20190417T102031_B04_10m</span><span class="o">|</span><span class="n">sentinel_ndvi</span><span class="o">|</span><span class="mi">2019</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">17</span> <span class="mi">10</span><span class="p">:</span><span class="mi">26</span><span class="p">:</span><span class="mf">46.415802</span><span class="o">|</span><span class="kc">None</span>
 <span class="o">...</span>
 </pre></div>
 </div>
@@ -141,11 +141,12 @@ algebra for spatio-temporal data is performed by <a class="reference external" h
 which requires bands separated into different
 spatio-temporal datasets (see example in <a class="reference internal" href="22.html"><span class="doc">Unit 22 - Spatio-temporal scripting</span></a>). Such datasets can
 be prepared by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.rast.extract.html">t.rast.extract</a>.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>sentinel<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;name like &#39;%B04%&#39;&quot;</span><span class="w"> </span><span class="nv">output</span><span class="o">=</span>b4
-t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>sentinel<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;name like &#39;%B08%&#39;&quot;</span><span class="w"> </span><span class="nv">output</span><span class="o">=</span>b8
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>sentinel<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;semantic_label = &#39;S2_4&#39;&quot;</span><span class="w"> </span><span class="nv">output</span><span class="o">=</span>b4
+t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>sentinel<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;semantic_label = &#39;S2_8&#39;&quot;</span><span class="w"> </span><span class="nv">output</span><span class="o">=</span>b8
 </pre></div>
 </div>
-<p>Let’s check content of the new datasets by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.rast.list.html">t.rast.list</a>.</p>
+<p>Let’s check content of the new datasets by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.rast.list.html">t.rast.list</a>
+using semantic labels.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.list<span class="w"> </span><span class="nv">input</span><span class="o">=</span>b4
 t.rast.list<span class="w"> </span><span class="nv">input</span><span class="o">=</span>b8
 </pre></div>
@@ -179,11 +180,11 @@ series subsets as described above.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.colors<span class="w"> </span><span class="nv">input</span><span class="o">=</span>ndvi<span class="w"> </span><span class="nv">color</span><span class="o">=</span>ndvi
 </pre></div>
 </div>
-<figure class="align-center" id="id2">
-<img alt="../_images/simple-animation.gif" class="middle" src="../_images/simple-animation.gif" />
+<figure class="align-center" id="id1">
+<img alt="../_images/simple-animation.gif" class="large" src="../_images/simple-animation.gif" />
 <figcaption>
 <p><span class="caption-number">Fig. 110 </span><span class="caption-text">Simple NDVI animation (no clouds mask applied) created by
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/g.gui.animation.html">g.gui.animation</a>.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/g.gui.animation.html">g.gui.animation</a>.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <div class="admonition important">
@@ -193,77 +194,72 @@ dataset.</p>
 </div>
 <section id="cloud-mask">
 <h3>Cloud mask<a class="headerlink" href="#cloud-mask" title="Permalink to this heading">¶</a></h3>
-<p>Let’s apply the cloud masks on our NDVI space-time dataset. At first, we will create
-a new space-time dataset containing computed raster masks. A sample
-Python script has been designed for this purpose below. Masks can
-be created with <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.mask.html">r.mask</a>, see line <span class="lcode">50</span>. But in this
-case, the mask should be kept for further usage. Note that
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.mask.html">r.mask</a> module produces a normal raster map with the unique name
-<em>MASK</em>. To disable a mask, it is enough to rename the <em>MASK</em> map with
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/g.rename.html">g.rename</a>, see line <span class="lcode">52</span>.</p>
+<p>Let’s apply the cloud masks on our NDVI space-time dataset. At first,
+we will create a new space-time dataset containing computed raster
+masks. A sample Python script has been designed for this purpose
+below. In case the scene contains clouds (<span class="lcode">43</span>), a vector mask
+is created (<span class="lcode">44</span>), which is then rasterized using
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.to.rast.html">v.to.rast</a> (<span class="lcode">48</span>).</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="ch">#!/usr/bin/env python3</span>
 <span class="linenos"> 2</span>
-<span class="linenos"> 3</span><span class="c1">#%module</span>
-<span class="linenos"> 4</span><span class="c1">#% description: Creates raster mask maps based on clouds mask features.</span>
-<span class="linenos"> 5</span><span class="c1">#%end</span>
-<span class="linenos"> 6</span><span class="c1">#%option G_OPT_V_MAP</span>
-<span class="linenos"> 7</span><span class="c1">#% description: Name of AOI vector map</span>
-<span class="linenos"> 8</span><span class="c1">#%end</span>
-<span class="linenos"> 9</span><span class="c1">#%option G_OPT_STRDS_INPUT</span>
-<span class="linenos">10</span><span class="c1">#% description: Name of input 4th band space time raster dataset</span>
-<span class="linenos">11</span><span class="c1">#%end</span>
-<span class="linenos">12</span><span class="c1">#%option G_OPT_F_OUTPUT</span>
-<span class="linenos">13</span><span class="c1">#%end</span>
+<span class="linenos"> 3</span><span class="c1"># %module</span>
+<span class="linenos"> 4</span><span class="c1"># % description: Creates raster mask maps based on clouds mask features.</span>
+<span class="linenos"> 5</span><span class="c1"># %end</span>
+<span class="linenos"> 6</span><span class="c1"># %option G_OPT_V_MAP</span>
+<span class="linenos"> 7</span><span class="c1"># % description: Name of AOI vector map</span>
+<span class="linenos"> 8</span><span class="c1"># %end</span>
+<span class="linenos"> 9</span><span class="c1"># %option G_OPT_STRDS_INPUT</span>
+<span class="linenos">10</span><span class="c1"># % description: Name of input 4th band space time raster dataset</span>
+<span class="linenos">11</span><span class="c1"># %end</span>
+<span class="linenos">12</span><span class="c1"># %option G_OPT_F_OUTPUT</span>
+<span class="linenos">13</span><span class="c1"># %end</span>
 <span class="linenos">14</span>
 <span class="linenos">15</span><span class="kn">import</span> <span class="nn">sys</span>
-<span class="linenos">16</span><span class="kn">import</span> <span class="nn">os</span>
-<span class="linenos">17</span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+<span class="linenos">16</span>
+<span class="linenos">17</span><span class="kn">import</span> <span class="nn">grass.script</span> <span class="k">as</span> <span class="nn">gs</span>
 <span class="linenos">18</span>
-<span class="linenos">19</span><span class="kn">import</span> <span class="nn">grass.script</span> <span class="k">as</span> <span class="nn">gs</span>
-<span class="linenos">20</span>
-<span class="linenos">21</span><span class="kn">from</span> <span class="nn">grass.pygrass.gis</span> <span class="kn">import</span> <span class="n">Mapset</span>
-<span class="linenos">22</span><span class="kn">from</span> <span class="nn">grass.pygrass.modules</span> <span class="kn">import</span> <span class="n">Module</span>
-<span class="linenos">23</span><span class="kn">from</span> <span class="nn">grass.pygrass.vector</span> <span class="kn">import</span> <span class="n">VectorTopo</span>
-<span class="linenos">24</span><span class="kn">from</span> <span class="nn">grass.pygrass.utils</span> <span class="kn">import</span> <span class="n">copy</span>
-<span class="linenos">25</span><span class="kn">import</span> <span class="nn">grass.temporal</span> <span class="k">as</span> <span class="nn">tgis</span>
-<span class="linenos">26</span>
-<span class="linenos">27</span><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-<span class="linenos">28</span>    <span class="n">mapset</span> <span class="o">=</span> <span class="n">Mapset</span><span class="p">()</span>
-<span class="linenos">29</span>    <span class="n">mapset</span><span class="o">.</span><span class="n">current</span><span class="p">()</span>
-<span class="linenos">30</span>
-<span class="linenos">31</span>    <span class="n">tgis</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
-<span class="linenos">32</span>    <span class="n">sp4</span> <span class="o">=</span> <span class="n">tgis</span><span class="o">.</span><span class="n">open_old_stds</span><span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;input&#39;</span><span class="p">],</span> <span class="s1">&#39;raster&#39;</span><span class="p">)</span>
-<span class="linenos">33</span>    
-<span class="linenos">34</span>    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;output&#39;</span><span class="p">],</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
-<span class="linenos">35</span>        <span class="k">for</span> <span class="n">t_item</span> <span class="ow">in</span> <span class="n">sp4</span><span class="o">.</span><span class="n">get_registered_maps</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;name,start_time&#39;</span><span class="p">):</span>
-<span class="linenos">36</span>            <span class="n">items</span> <span class="o">=</span> <span class="n">t_item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)</span>
-<span class="linenos">37</span>            <span class="n">d</span> <span class="o">=</span> <span class="n">t_item</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-<span class="linenos">38</span>
-<span class="linenos">39</span>            <span class="n">vect</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">_MSK_CLOUDS&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">items</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-<span class="linenos">40</span>            <span class="n">mask_vect</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">vect</span><span class="p">,</span> <span class="n">options</span><span class="p">[</span><span class="s1">&#39;map&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;@&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
-<span class="linenos">41</span>            <span class="n">n_clouds</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="linenos">42</span>            <span class="k">with</span> <span class="n">VectorTopo</span><span class="p">(</span><span class="n">vect</span><span class="p">)</span> <span class="k">as</span> <span class="n">v</span><span class="p">:</span>
-<span class="linenos">43</span>                <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">exist</span><span class="p">():</span>
-<span class="linenos">44</span>                    <span class="n">n_clouds</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">num_primitive_of</span><span class="p">(</span><span class="s1">&#39;centroid&#39;</span><span class="p">)</span>
-<span class="linenos">45</span>            <span class="k">if</span> <span class="n">n_clouds</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-<span class="linenos">46</span>                <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;v.overlay&#39;</span><span class="p">,</span> <span class="n">ainput</span><span class="o">=</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;map&#39;</span><span class="p">],</span> <span class="n">binput</span><span class="o">=</span><span class="n">vect</span><span class="p">,</span> <span class="n">operator</span><span class="o">=</span><span class="s1">&#39;not&#39;</span><span class="p">,</span>
-<span class="linenos">47</span>                       <span class="n">output</span><span class="o">=</span><span class="n">mask_vect</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="linenos">48</span>            <span class="k">else</span><span class="p">:</span>
-<span class="linenos">49</span>                <span class="n">copy</span><span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;map&#39;</span><span class="p">],</span> <span class="n">mask_vect</span><span class="p">,</span> <span class="s1">&#39;vector&#39;</span><span class="p">)</span>
-<span class="hll"><span class="linenos">50</span>            <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;r.mask&#39;</span><span class="p">,</span> <span class="n">vector</span><span class="o">=</span><span class="n">mask_vect</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span><span class="linenos">51</span>            <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;g.remove&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;vector&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">mask_vect</span><span class="p">)</span>
-<span class="hll"><span class="linenos">52</span>            <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;g.rename&#39;</span><span class="p">,</span> <span class="n">raster</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;MASK&#39;</span><span class="p">,</span> <span class="n">mask_vect</span><span class="p">])</span>
-</span><span class="linenos">53</span>            <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">|</span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-<span class="linenos">54</span>                <span class="n">mask_vect</span><span class="p">,</span>
-<span class="linenos">55</span>                <span class="n">d</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S.</span><span class="si">%f</span><span class="s1">&#39;</span><span class="p">),</span>
-<span class="linenos">56</span>            <span class="p">))</span>
-<span class="linenos">57</span>        
-<span class="linenos">58</span>    <span class="k">return</span> <span class="mi">0</span>
-<span class="linenos">59</span>
-<span class="linenos">60</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-<span class="linenos">61</span>    <span class="n">options</span><span class="p">,</span> <span class="n">flags</span> <span class="o">=</span> <span class="n">gs</span><span class="o">.</span><span class="n">parser</span><span class="p">()</span>
-<span class="linenos">62</span>    
-<span class="linenos">63</span>    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+<span class="linenos">19</span><span class="kn">from</span> <span class="nn">grass.pygrass.gis</span> <span class="kn">import</span> <span class="n">Mapset</span>
+<span class="linenos">20</span><span class="kn">from</span> <span class="nn">grass.pygrass.modules</span> <span class="kn">import</span> <span class="n">Module</span>
+<span class="linenos">21</span><span class="kn">from</span> <span class="nn">grass.pygrass.vector</span> <span class="kn">import</span> <span class="n">VectorTopo</span>
+<span class="linenos">22</span><span class="kn">from</span> <span class="nn">grass.pygrass.utils</span> <span class="kn">import</span> <span class="n">copy</span>
+<span class="linenos">23</span><span class="kn">import</span> <span class="nn">grass.temporal</span> <span class="k">as</span> <span class="nn">tgis</span>
+<span class="linenos">24</span>
+<span class="linenos">25</span><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<span class="linenos">26</span>    <span class="n">mapset</span> <span class="o">=</span> <span class="n">Mapset</span><span class="p">()</span>
+<span class="linenos">27</span>    <span class="n">mapset</span><span class="o">.</span><span class="n">current</span><span class="p">()</span>
+<span class="linenos">28</span>
+<span class="linenos">29</span>    <span class="n">tgis</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+<span class="linenos">30</span>    <span class="n">sp4</span> <span class="o">=</span> <span class="n">tgis</span><span class="o">.</span><span class="n">open_old_stds</span><span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;input&#39;</span><span class="p">],</span> <span class="s1">&#39;raster&#39;</span><span class="p">)</span>
+<span class="linenos">31</span>    
+<span class="linenos">32</span>    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;output&#39;</span><span class="p">],</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
+<span class="linenos">33</span>        <span class="k">for</span> <span class="n">t_item</span> <span class="ow">in</span> <span class="n">sp4</span><span class="o">.</span><span class="n">get_registered_maps</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;name,start_time&#39;</span><span class="p">):</span>
+<span class="linenos">34</span>            <span class="n">items</span> <span class="o">=</span> <span class="n">t_item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)</span>
+<span class="linenos">35</span>            <span class="n">d</span> <span class="o">=</span> <span class="n">t_item</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="linenos">36</span>
+<span class="linenos">37</span>            <span class="n">vect</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">_MSK_CLOUDS&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">items</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="linenos">38</span>            <span class="n">mask_vect</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">vect</span><span class="p">,</span> <span class="n">options</span><span class="p">[</span><span class="s1">&#39;map&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;@&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+<span class="linenos">39</span>            <span class="n">n_clouds</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="linenos">40</span>            <span class="k">with</span> <span class="n">VectorTopo</span><span class="p">(</span><span class="n">vect</span><span class="p">)</span> <span class="k">as</span> <span class="n">v</span><span class="p">:</span>
+<span class="linenos">41</span>                <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">exist</span><span class="p">():</span>
+<span class="linenos">42</span>                    <span class="n">n_clouds</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">num_primitive_of</span><span class="p">(</span><span class="s1">&#39;centroid&#39;</span><span class="p">)</span>
+<span class="hll"><span class="linenos">43</span>            <span class="k">if</span> <span class="n">n_clouds</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+</span><span class="hll"><span class="linenos">44</span>                <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;v.overlay&#39;</span><span class="p">,</span> <span class="n">ainput</span><span class="o">=</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;map&#39;</span><span class="p">],</span> <span class="n">binput</span><span class="o">=</span><span class="n">vect</span><span class="p">,</span> <span class="n">operator</span><span class="o">=</span><span class="s1">&#39;not&#39;</span><span class="p">,</span>
+</span><span class="linenos">45</span>                       <span class="n">output</span><span class="o">=</span><span class="n">mask_vect</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="linenos">46</span>            <span class="k">else</span><span class="p">:</span>
+<span class="linenos">47</span>                <span class="n">copy</span><span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;map&#39;</span><span class="p">],</span> <span class="n">mask_vect</span><span class="p">,</span> <span class="s1">&#39;vector&#39;</span><span class="p">)</span>
+<span class="hll"><span class="linenos">48</span>            <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;v.to.rast&#39;</span><span class="p">,</span> <span class="nb">input</span><span class="o">=</span><span class="n">mask_vect</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="n">mask_vect</span><span class="p">,</span> <span class="n">use</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span class="linenos">49</span>            <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;g.remove&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;vector&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">mask_vect</span><span class="p">)</span>
+<span class="linenos">50</span>            <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">|</span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+<span class="linenos">51</span>                <span class="n">mask_vect</span><span class="p">,</span>
+<span class="linenos">52</span>                <span class="n">d</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S.</span><span class="si">%f</span><span class="s1">&#39;</span><span class="p">),</span>
+<span class="linenos">53</span>            <span class="p">))</span>
+<span class="linenos">54</span>        
+<span class="linenos">55</span>    <span class="k">return</span> <span class="mi">0</span>
+<span class="linenos">56</span>
+<span class="linenos">57</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="linenos">58</span>    <span class="n">options</span><span class="p">,</span> <span class="n">flags</span> <span class="o">=</span> <span class="n">gs</span><span class="o">.</span><span class="n">parser</span><span class="p">()</span>
+<span class="linenos">59</span>    
+<span class="linenos">60</span>    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
 </pre></div>
 </div>
 <p>Sample script to download: <a class="reference external" href="../_static/scripts/sentinel-cloud-mask.py">sentinel-cloud-mask.py</a></p>
@@ -289,11 +285,11 @@ t.register<span class="w"> </span><span class="nv">input</span><span class="o">=
 t.rast.colors<span class="w"> </span><span class="k">in</span><span class="o">=</span>ndvi_masked<span class="w"> </span><span class="nv">color</span><span class="o">=</span>ndvi
 </pre></div>
 </div>
-<figure class="align-center" id="id3">
-<img alt="../_images/simple-animation-clouds.gif" class="middle" src="../_images/simple-animation-clouds.gif" />
+<figure class="align-center" id="id2">
+<img alt="../_images/simple-animation-clouds.gif" class="large" src="../_images/simple-animation-clouds.gif" />
 <figcaption>
 <p><span class="caption-number">Fig. 111 </span><span class="caption-text">Simple NDVI animation with clouds masks applied. Computation is limited
-to AOI only.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+to AOI only.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 </section>
