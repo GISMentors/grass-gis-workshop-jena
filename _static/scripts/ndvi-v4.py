@@ -126,9 +126,9 @@ def main(options, flags):
     print('NDVI max value: {0:.4f}'.format(stats['max']))
     print('NDVI mean value: {0:.4f}'.format(stats['mean']))
 
-    print ('-' * 80)
-    print ('NDVI class statistics')
-    print ('-' * 80)
+    print('-' * 80)
+    print('NDVI class statistics')
+    print('-' * 80)
     ret = Module('r.stats', input=options["output"], flags='ian', stdout_=PIPE)
     for line in ret.outputs.stdout.splitlines():
         # parse line (eg. 1 2737300.000000)
@@ -137,7 +137,7 @@ def main(options, flags):
         area = float(data[-1])
         print('NDVI class {0}: {1:.1f} ha'.format(cat, area/1e4)) 
 
-    print ('-' * 80)
+    print('-' * 80)
     # we need integer map
     Module('r.mapcalc', expression='ndvi_class_filled_i = int({})'.format(options['output']))
     Module('r.to.vect', flags='v', input='ndvi_class_filled_i', output='ndvi_class_filled', type='area')
@@ -149,7 +149,7 @@ def main(options, flags):
     for line in ret.outputs.stdout.splitlines():
         # parse line (eg. 1,,-0.433962264150943,0.740350877192983,0.051388909449992)
         cat,label,min,max,mean = line.split(',')
-        print ('NDVI class {0}: {1:.4f} (min) {2:.4f} (max) {3:.4f} (mean)'.format(
+        print('NDVI class {0}: {1:.4f} (min) {2:.4f} (max) {3:.4f} (mean)'.format(
         cat, float(min), float(max), float(mean)))
     
     return 0
