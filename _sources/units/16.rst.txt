@@ -6,20 +6,28 @@ can be downloaded from OSM database similarly as done in :doc:`02` in
 the case of Jena city region. See `Map Features
 <https://wiki.openstreetmap.org/wiki/Map_features>`__ for details.
 
-.. note::
+.. note:: Rivers and lakes has been downloaded from OSM using
+   `Overpass API <https://overpass-turbo.eu/>`__.
    
    .. code-block:: xml
 		   
        [bbox:50.85374080,11.50084754,50.98991003,11.67463202];
        (
        way["waterway"];
-       relation["water"];
        );
        /*added by auto repair*/
        (._;>;);
        /*end of auto repair*/
        out;
 
+   Exported GeoJSON file has been converted to GeoPackage by GDAL :program:`ogr2ogr` utility:
+
+   .. code-block:: bash
+
+      ogr2ogr -f GPKG -dialect SQLite \
+      -sql "select * from export where st_geometrytype(geometry) IN ('LINESTRING', 'MULTILINESTRING')" \
+      -nln jena_rivers jena_rivers.gpkg export.geojson
+       
 For simplification pre-processed river streams are included in sample
 dataset as :file:`geodata/osm/jena-rivers.gpkg` file.
 

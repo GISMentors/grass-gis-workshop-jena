@@ -47,15 +47,22 @@ can be downloaded from OSM database similarly as done in <a class="reference int
 the case of Jena city region. See <a class="reference external" href="https://wiki.openstreetmap.org/wiki/Map_features">Map Features</a> for details.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
+<p>Rivers and lakes has been downloaded from OSM using
+<a class="reference external" href="https://overpass-turbo.eu/">Overpass API</a>.</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span>[bbox:50.85374080,11.50084754,50.98991003,11.67463202];
 (
 way[&quot;waterway&quot;];
-relation[&quot;water&quot;];
 );
 /*added<span class="w"> </span>by<span class="w"> </span>auto<span class="w"> </span>repair*/
 (._;&gt;;);
 /*end<span class="w"> </span>of<span class="w"> </span>auto<span class="w"> </span>repair*/
 out;
+</pre></div>
+</div>
+<p>Exported GeoJSON file has been converted to GeoPackage by GDAL <strong class="program">ogr2ogr</strong> utility:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ogr2ogr<span class="w"> </span>-f<span class="w"> </span>GPKG<span class="w"> </span>-dialect<span class="w"> </span>SQLite<span class="w"> </span><span class="se">\</span>
+-sql<span class="w"> </span><span class="s2">&quot;select * from export where st_geometrytype(geometry) IN (&#39;LINESTRING&#39;, &#39;MULTILINESTRING&#39;)&quot;</span><span class="w"> </span><span class="se">\</span>
+-nln<span class="w"> </span>jena_rivers<span class="w"> </span>jena_rivers.gpkg<span class="w"> </span>export.geojson
 </pre></div>
 </div>
 </div>

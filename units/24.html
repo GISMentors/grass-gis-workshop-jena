@@ -92,19 +92,19 @@ g.extension<span class="w"> </span><span class="nv">extension</span><span class=
 <h2>Download data<a class="headerlink" href="#download-data" title="Permalink to this heading">¶</a></h2>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>Pre-downloaded MODIS data (year 2019) is available in the
+<p>Pre-downloaded MODIS data (year 2023) is available in the
 sample dataset <a class="reference external" href="https://geo.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2022/jena-sample-data-modis.7z">jena-sample-data-modis.7z</a>
 (1.0GB) <code class="file docutils literal notranslate"><span class="pre">geodata/modis</span></code>. Readers can continue with
 <a class="reference internal" href="#modis-import"><span class="std std-ref">importing sample data</span></a>.</p>
 </div>
-<p>Let’s download desired tiles (h18v03 and h18v04) for year 2021 by
+<p>Let’s download desired tiles (h18v03 and h18v04) for year 2023 by
 <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/i.modis.download.html">i.modis.download</a>.</p>
 <p>Land Surface Temperature eight day 1 Km (Terra/Aqua) product will be
 downloaded.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>i.modis.download<span class="w"> </span><span class="nv">settings</span><span class="o">=</span>settings.txt<span class="w"> </span><span class="nv">folder</span><span class="o">=</span>geodata/modis/h18v03_04<span class="w"> </span><span class="se">\</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>i.modis.download<span class="w"> </span><span class="nv">settings</span><span class="o">=</span>settings.txt<span class="w"> </span><span class="nv">folder</span><span class="o">=</span>geodata/modis<span class="w"> </span><span class="se">\</span>
 <span class="nv">tiles</span><span class="o">=</span>h18v03,h18v04<span class="w"> </span><span class="se">\</span>
 <span class="nv">product</span><span class="o">=</span>lst_aqua_eight_1000,lst_terra_eight_1000<span class="w"> </span><span class="se">\</span>
-<span class="nv">startday</span><span class="o">=</span><span class="m">2021</span>-01-01<span class="w"> </span><span class="nv">endday</span><span class="o">=</span><span class="m">2021</span>-12-31
+<span class="nv">startday</span><span class="o">=</span><span class="m">2023</span>-01-01<span class="w"> </span><span class="nv">endday</span><span class="o">=</span><span class="m">2023</span>-12-31
 </pre></div>
 </div>
 <div class="admonition note">
@@ -121,10 +121,10 @@ register and set up your account.</p>
 <span id="modis-import"></span><h2>Import data<a class="headerlink" href="#import-data" title="Permalink to this heading">¶</a></h2>
 <p>Input MODIS data can be imported and reprojected into target location
 by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/i.modis.import.html">i.modis.import</a>.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>i.modis.import<span class="w"> </span>-mw<span class="w"> </span><span class="nv">files</span><span class="o">=</span>geodata/modis/h18v03_04/listfileMOD11A2.006.txt<span class="w"> </span><span class="se">\</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>i.modis.import<span class="w"> </span>-mw<span class="w"> </span><span class="nv">files</span><span class="o">=</span>geodata/modis/listfileMOD11A2.061.txt<span class="w"> </span><span class="se">\</span>
 <span class="nv">spectral</span><span class="o">=</span><span class="s1">&#39;( 1 0 0 0 1 0 0 0 0 0 0 0 )&#39;</span><span class="w"> </span><span class="nv">outfile</span><span class="o">=</span>tlist-mod.txt
 
-i.modis.import<span class="w"> </span>-mw<span class="w"> </span><span class="nv">files</span><span class="o">=</span>geodata/modis/h18v03_04/listfileMYD11A2.006.txt<span class="w"> </span><span class="se">\</span>
+i.modis.import<span class="w"> </span>-mw<span class="w"> </span><span class="nv">files</span><span class="o">=</span>geodata/modis/listfileMYD11A2.061.txt<span class="w"> </span><span class="se">\</span>
 <span class="nv">spectral</span><span class="o">=</span><span class="s1">&#39;( 1 0 0 0 1 0 0 0 0 0 0 0 )&#39;</span><span class="w"> </span><span class="nv">outfile</span><span class="o">=</span>tlist-myd.txt
 </pre></div>
 </div>
@@ -147,16 +147,16 @@ related to <code class="xref std std-option docutils literal notranslate"><span 
 <p>In this section <strong>Land Surface Temperature</strong> (LST) analysis will be
 perfmored for Germany.</p>
 <p>Let’s start by importing Germany administrative border located in the
-sample dataset <code class="file docutils literal notranslate"><span class="pre">osm/germany_boundary.gpkg</span></code>.</p>
+sample dataset <code class="file docutils literal notranslate"><span class="pre">osm/germany.gpkg</span></code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Administrative border of Germany has been downloaded from
-OSM database.</p>
+OSM using <a class="reference external" href="https://overpass-turbo.eu/">Overpass API</a>.</p>
 <div class="highlight-xml notranslate"><div class="highlight"><pre><span></span>(
 relation
 [&quot;boundary&quot;=&quot;administrative&quot;]
 [&quot;admin_level&quot;=&quot;2&quot;]
-[&quot;name&quot;=&quot;Deutschland&quot;]
+[&quot;name&quot;=&quot;Deutschland&quot;];
 );
 /*added<span class="w"> </span>by<span class="w"> </span>auto<span class="w"> </span>repair*/
 (._;&gt;;);
@@ -164,48 +164,27 @@ relation
 out;
 </pre></div>
 </div>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ogr2ogr<span class="w"> </span>-f<span class="w"> </span>GPKG<span class="w"> </span>germany_boundary.gpkg<span class="w"> </span>-a_srs<span class="w"> </span>EPSG:4326<span class="w"> </span>-t_srs<span class="w"> </span>EPSG:3035<span class="w"> </span>/vsicurl_streaming/<span class="s2">&quot;\</span>
-<span class="s2">http://overpass-api.de/api/interpreter?data=%28relation%5B%22boundary%22%3D%22\</span>
-<span class="s2">administrative%22%5D%5B%22admin%5Flevel%22%3D%222%22%5D%5B%22name%22%3D%22Deutschland\</span>
-<span class="s2">%22%5D%3B%29%3B%28%2E%5F%3B%3E%3B%29%3Bout%3B%0A&quot;</span><span class="w"> </span>lines
+<p>Exported GeoJSON file has been converted to GeoPackage by GDAL <strong class="program">ogr2ogr</strong> utility:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ogr2ogr<span class="w"> </span>-f<span class="w"> </span>GPKG<span class="w"> </span>-dialect<span class="w"> </span>SQLite<span class="w"> </span><span class="se">\</span>
+-sql<span class="w"> </span><span class="s2">&quot;select * from export where st_geometrytype(geometry) IN (&#39;POLYGON&#39;, &#39;MULTIPOLYGON&#39;)&quot;</span><span class="w"> </span><span class="se">\</span>
+-nln<span class="w"> </span>germany<span class="w"> </span>germany.gpkg<span class="w"> </span>export.geojson
 </pre></div>
 </div>
 </div>
-<p>The input file contains national border represented by linestring, see
-<a class="reference internal" href="#germany-boundary"><span class="std std-numref">Fig. 115</span></a> left part. Mask can be created only from
-area features (polygons). Input data have to be polygonized. This will
-be performed by two GRASS operations:</p>
-<ul class="simple">
-<li><p>change line border to <em>boundary</em> by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.type.html">v.type</a>
-(in GRASS topological model, an area is composition of boundaries
-and centroid, see <a class="reference internal" href="03.html#vector-topo-section"><span class="std std-ref">Unit 03</span></a>)</p></li>
-<li><p>add centroid by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.centroids.html">v.centroids</a></p></li>
-</ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>v.type<span class="w"> </span><span class="nv">input</span><span class="o">=</span>germany_boundary<span class="w"> </span><span class="nv">output</span><span class="o">=</span>germany_b<span class="w"> </span><span class="nv">from_type</span><span class="o">=</span>line<span class="w"> </span><span class="nv">to_type</span><span class="o">=</span>boundary
-v.centroids<span class="w"> </span><span class="nv">input</span><span class="o">=</span>germany_b<span class="w"> </span><span class="nv">output</span><span class="o">=</span>germany
-</pre></div>
-</div>
-<figure class="align-center" id="id4">
-<span id="germany-boundary"></span><img alt="../_images/germany_line_area.png" class="large" src="../_images/germany_line_area.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 115 </span><span class="caption-text">Germany national boundary as linestring on left and as polygon
-(area) on right part.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
-</figcaption>
-</figure>
 <p>Mask will be created by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.mask.html">r.mask</a>. Don’t forget that
 computational region must be set before creating a mask. Computational
 region will be defined by Germany vector map and aligned by the input
 MODIS data by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/g.region.html">g.region</a>.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>g.region<span class="w"> </span><span class="nv">vector</span><span class="o">=</span>germany<span class="w"> </span><span class="nv">align</span><span class="o">=</span>MOD11A2.A2019001_mosaic_LST_Day_1km
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>g.region<span class="w"> </span><span class="nv">vector</span><span class="o">=</span>germany<span class="w"> </span><span class="nv">align</span><span class="o">=</span>MOD11A2.A2023001_mosaic_LST_Day_1km
 r.mask<span class="w"> </span><span class="nv">vector</span><span class="o">=</span>germany
 </pre></div>
 </div>
-<p>Let’s check range values of our LST data by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.info.html">r.info</a> module:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.info<span class="w"> </span>-r<span class="w"> </span><span class="nv">map</span><span class="o">=</span>MOD11A2.A2019001_mosaic_LST_Day_1km
+<p>Let’s check range values of imported MODIS data by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.info.html">r.info</a> module:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.info<span class="w"> </span>-r<span class="w"> </span><span class="nv">map</span><span class="o">=</span>MOD11A2.A2023001_mosaic_LST_Day_1km
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">min</span><span class="o">=</span><span class="mi">0</span>
-<span class="nb">max</span><span class="o">=</span><span class="mi">14418</span>
+<span class="nb">max</span><span class="o">=</span><span class="mi">14511</span>
 </pre></div>
 </div>
 <p id="modis-dn-c">In order to determine LST from input data, digital values (DN) must be
@@ -215,24 +194,24 @@ converted into Celsius or Kelvin scale.</p>
 <p>Conversion to Celsium scale can be done by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.mapcalc.html">r.mapcalc</a> (see
 also <a class="reference internal" href="05.html"><span class="doc">Unit 05 - Raster processing</span></a>). It’s also suitable to replace zero values with
 no-data value (NULL value in GRASS terminology).</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.mapcalc<span class="w"> </span><span class="nv">expression</span><span class="o">=</span><span class="s2">&quot;MOD11A2.A2019001_mosaic_LST_Day_1km_c = \</span>
-<span class="s2">if(MOD11A2.A2019001_mosaic_LST_Day_1km != 0, \</span>
-<span class="s2">MOD11A2.A2019001_mosaic_LST_Day_1km * 0.02 - 273.15, null())&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.mapcalc<span class="w"> </span><span class="nv">expression</span><span class="o">=</span><span class="s2">&quot;MOD11A2.A2023001_mosaic_LST_Day_1km_c = \</span>
+<span class="s2">if(MOD11A2.A2023001_mosaic_LST_Day_1km != 0, \</span>
+<span class="s2">MOD11A2.A2023001_mosaic_LST_Day_1km * 0.02 - 273.15, null())&quot;</span>
 </pre></div>
 </div>
 <p>Let’s check range values of new LST data layer.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.info<span class="w"> </span>-r<span class="w"> </span><span class="nv">map</span><span class="o">=</span>MOD11A2.A2019001_mosaic_LST_Day_1km_c
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.info<span class="w"> </span>-r<span class="w"> </span><span class="nv">map</span><span class="o">=</span>MOD11A2.A2023001_mosaic_LST_Day_1km_c
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">min</span><span class="o">=-</span><span class="mf">26.65</span>
-<span class="nb">max</span><span class="o">=</span><span class="mf">8.09000000000003</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">min</span><span class="o">=-</span><span class="mf">22.21</span>
+<span class="nb">max</span><span class="o">=</span><span class="mf">12.09</span>
 </pre></div>
 </div>
-<figure class="align-center" id="id5">
+<figure class="align-center" id="id4">
 <img alt="../_images/lst-c.png" class="large" src="../_images/lst-c.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 116 </span><span class="caption-text">LST reconstruction for Germany in Celsius scale (color table
-<code class="docutils literal notranslate"><span class="pre">celsius</span></code> applied).</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 115 </span><span class="caption-text">LST reconstruction for Germany in Celsius scale (color table
+<code class="docutils literal notranslate"><span class="pre">celsius</span></code> applied).</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 </section>
