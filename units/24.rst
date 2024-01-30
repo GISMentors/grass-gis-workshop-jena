@@ -56,13 +56,13 @@ GRASS MODIS addon consists of two modules:
 Download data
 -------------
 
-.. important:: Pre-downloaded MODIS data (year 2019) is available in the
+.. important:: Pre-downloaded MODIS data (year 2023) is available in the
    sample dataset `jena-sample-data-modis.7z
    <https://geo.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2022/jena-sample-data-modis.7z>`__
    (1.0GB) :file:`geodata/modis`. Readers can continue with
    :ref:`importing sample data <modis-import>`.
 
-Let's download desired tiles (h18v03 and h18v04) for year 2021 by
+Let's download desired tiles (h18v03 and h18v04) for year 2023 by
 :grasscmdaddons:`i.modis.download`. 
   
 Land Surface Temperature eight day 1 Km (Terra/Aqua) product will be
@@ -70,10 +70,10 @@ downloaded.
 
 .. code-block:: bash
 
-   i.modis.download settings=settings.txt folder=geodata/modis/h18v03_04 \
+   i.modis.download settings=settings.txt folder=geodata/modis \
    tiles=h18v03,h18v04 \
    product=lst_aqua_eight_1000,lst_terra_eight_1000 \
-   startday=2021-01-01 endday=2021-12-31
+   startday=2023-01-01 endday=2023-12-31
 
 .. note:: Output folder (:file:`h18v03_04` in this case) must exists,
    otherwise the module will fail.
@@ -95,10 +95,10 @@ by :grasscmdaddons:`i.modis.import`.
 
 .. code-block:: bash
 
-   i.modis.import -mw files=geodata/modis/h18v03_04/listfileMOD11A2.006.txt \
+   i.modis.import -mw files=geodata/modis/listfileMOD11A2.061.txt \
    spectral='( 1 0 0 0 1 0 0 0 0 0 0 0 )' outfile=tlist-mod.txt
 
-   i.modis.import -mw files=geodata/modis/h18v03_04/listfileMYD11A2.006.txt \
+   i.modis.import -mw files=geodata/modis/listfileMYD11A2.061.txt \
    spectral='( 1 0 0 0 1 0 0 0 0 0 0 0 )' outfile=tlist-myd.txt
 
 If ``-m`` flag is given mosaic from input tiles is created
@@ -124,10 +124,10 @@ In this section **Land Surface Temperature** (LST) analysis will be
 perfmored for Germany. 
 
 Let's start by importing Germany administrative border located in the
-sample dataset :file:`osm/germany_boundary.gpkg`.
+sample dataset :file:`osm/germany.gpkg`.
 
 .. note:: Administrative border of Germany has been downloaded from
-   OSM database.
+   OSM using `Overpass API <https://overpass-turbo.eu/>`__.
           
    .. code-block:: xml
 
@@ -135,43 +135,21 @@ sample dataset :file:`osm/germany_boundary.gpkg`.
       relation
       ["boundary"="administrative"]
       ["admin_level"="2"]
-      ["name"="Deutschland"]
+      ["name"="Deutschland"];
       );
       /*added by auto repair*/
       (._;>;);
       /*end of auto repair*/
       out;
 
+   Exported GeoJSON file has been converted to GeoPackage by GDAL :program:`ogr2ogr` utility:
+
    .. code-block:: bash
 
-      ogr2ogr -f GPKG germany_boundary.gpkg -a_srs EPSG:4326 -t_srs EPSG:3035 /vsicurl_streaming/"\
-      http://overpass-api.de/api/interpreter?data=%28relation%5B%22boundary%22%3D%22\
-      administrative%22%5D%5B%22admin%5Flevel%22%3D%222%22%5D%5B%22name%22%3D%22Deutschland\
-      %22%5D%3B%29%3B%28%2E%5F%3B%3E%3B%29%3Bout%3B%0A" lines
-
-The input file contains national border represented by linestring, see
-:numref:`germany-boundary` left part. Mask can be created only from
-area features (polygons). Input data have to be polygonized. This will
-be performed by two GRASS operations:
-
-* change line border to *boundary* by :grasscmd:`v.type`
-  (in GRASS topological model, an area is composition of boundaries
-  and centroid, see :ref:`Unit 03 <vector-topo-section>`)
-* add centroid by :grasscmd:`v.centroids`
-
-.. code-block:: bash
-
-   v.type input=germany_boundary output=germany_b from_type=line to_type=boundary
-   v.centroids input=germany_b output=germany
-
-.. _germany-boundary:
-   
-.. figure:: ../images/units/24/germany_line_area.png
-   :class: large
-        
-   Germany national boundary as linestring on left and as polygon
-   (area) on right part.
-
+      ogr2ogr -f GPKG -dialect SQLite \
+      -sql "select * from export where st_geometrytype(geometry) IN ('POLYGON', 'MULTIPOLYGON')" \
+      -nln germany germany.gpkg export.geojson
+      
 Mask will be created by :grasscmd:`r.mask`. Don't forget that
 computational region must be set before creating a mask. Computational
 region will be defined by Germany vector map and aligned by the input
@@ -179,19 +157,19 @@ MODIS data by :grasscmd:`g.region`.
 
 .. code-block:: bash
 
-   g.region vector=germany align=MOD11A2.A2019001_mosaic_LST_Day_1km
+   g.region vector=germany align=MOD11A2.A2023001_mosaic_LST_Day_1km
    r.mask vector=germany
 
-Let's check range values of our LST data by :grasscmd:`r.info` module:
+Let's check range values of imported MODIS data by :grasscmd:`r.info` module:
 
 .. code-block:: bash
 
-   r.info -r map=MOD11A2.A2019001_mosaic_LST_Day_1km
+   r.info -r map=MOD11A2.A2023001_mosaic_LST_Day_1km
 
 ::
 
    min=0
-   max=14418    
+   max=14511
 
 .. _modis-dn-c:
   
@@ -208,20 +186,20 @@ no-data value (NULL value in GRASS terminology).
 
 .. code-block:: bash
                 
-   r.mapcalc expression="MOD11A2.A2019001_mosaic_LST_Day_1km_c = \
-   if(MOD11A2.A2019001_mosaic_LST_Day_1km != 0, \
-   MOD11A2.A2019001_mosaic_LST_Day_1km * 0.02 - 273.15, null())"
+   r.mapcalc expression="MOD11A2.A2023001_mosaic_LST_Day_1km_c = \
+   if(MOD11A2.A2023001_mosaic_LST_Day_1km != 0, \
+   MOD11A2.A2023001_mosaic_LST_Day_1km * 0.02 - 273.15, null())"
 
 Let's check range values of new LST data layer.
 
 .. code-block:: bash
 
-   r.info -r map=MOD11A2.A2019001_mosaic_LST_Day_1km_c
+   r.info -r map=MOD11A2.A2023001_mosaic_LST_Day_1km_c
 
 ::
 
-   min=-26.65
-   max=8.09000000000003
+   min=-22.21
+   max=12.09
 
 .. figure:: ../images/units/24/lst-c.png
    :class: large
