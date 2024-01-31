@@ -14,7 +14,7 @@ for computing statistics is created by :grasscmd:`t.rast.series` (line
 :lcode:`60`). Statistics will be printed by lines :lcode:`66-68`.
 
 In :doc:`25` we processed LST space time dataset only for
-year 2019. We will also check if input dates are valid, see line
+year 2023. We will also check if input dates are valid, see line
 :lcode:`31`.
 
 .. tip::
@@ -34,10 +34,10 @@ Example of usage:
 
 .. code-block:: bash
                 
-   modis-date-stats.py input=modis_c start=2019-03-01 end=2019-04-01
+   modis-date-stats.py input=modis_c start=2023-03-01 end=2023-04-01
 
 ::
-   
-   Min: -8.3
-   Max: 12.6
-   Mean: 7.3
+
+   Min: -10.3
+   Max: 15.4
+   Mean: 3.4

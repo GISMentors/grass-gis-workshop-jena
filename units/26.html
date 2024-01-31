@@ -54,7 +54,7 @@ for computing statistics is created by <a class="reference external" href="https
 <span class="lcode">50</span>), statistics is computed by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.univar.html">r.univar</a> (line
 <span class="lcode">60</span>). Statistics will be printed by lines <span class="lcode">66-68</span>.</p>
 <p>In <a class="reference internal" href="25.html"><span class="doc">Unit 25 - MODIS ST</span></a> we processed LST space time dataset only for
-year 2019. We will also check if input dates are valid, see line
+year 2023. We will also check if input dates are valid, see line
 <span class="lcode">31</span>.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
@@ -63,23 +63,23 @@ environment variable, see line <span class="lcode">47</span>.</p>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="ch">#!/usr/bin/env python3</span>
 <span class="linenos"> 2</span>
-<span class="linenos"> 3</span><span class="c1">#%module</span>
-<span class="linenos"> 4</span><span class="c1">#% description: Computes LST stats for given period (limited to Germany and 2019).</span>
-<span class="linenos"> 5</span><span class="c1">#%end</span>
-<span class="hll"><span class="linenos"> 6</span><span class="c1">#%option G_OPT_STRDS_INPUT</span>
-</span><span class="linenos"> 7</span><span class="c1">#%end</span>
-<span class="linenos"> 8</span><span class="c1">#%option </span>
-<span class="hll"><span class="linenos"> 9</span><span class="c1">#% key: start</span>
-</span><span class="linenos">10</span><span class="c1">#% description: Start date (eg. 2019-03-01)</span>
-<span class="linenos">11</span><span class="c1">#% type: string</span>
-<span class="linenos">12</span><span class="c1">#% required: yes</span>
-<span class="linenos">13</span><span class="c1">#%end</span>
-<span class="linenos">14</span><span class="c1">#%option </span>
-<span class="hll"><span class="linenos">15</span><span class="c1">#% key: end</span>
-</span><span class="linenos">16</span><span class="c1">#% description: End date (eg. 2019-04-01)</span>
-<span class="linenos">17</span><span class="c1">#% type: string</span>
-<span class="linenos">18</span><span class="c1">#% required: yes</span>
-<span class="linenos">19</span><span class="c1">#%end</span>
+<span class="linenos"> 3</span><span class="c1"># %module</span>
+<span class="linenos"> 4</span><span class="c1"># % description: Computes LST stats for given period (limited to Germany and 2023).</span>
+<span class="linenos"> 5</span><span class="c1"># %end</span>
+<span class="hll"><span class="linenos"> 6</span><span class="c1"># %option G_OPT_STRDS_INPUT</span>
+</span><span class="linenos"> 7</span><span class="c1"># %end</span>
+<span class="linenos"> 8</span><span class="c1"># %option </span>
+<span class="hll"><span class="linenos"> 9</span><span class="c1"># % key: start</span>
+</span><span class="linenos">10</span><span class="c1"># % description: Start date (eg. 2023-03-01)</span>
+<span class="linenos">11</span><span class="c1"># % type: string</span>
+<span class="linenos">12</span><span class="c1"># % required: yes</span>
+<span class="linenos">13</span><span class="c1"># %end</span>
+<span class="linenos">14</span><span class="c1"># %option </span>
+<span class="hll"><span class="linenos">15</span><span class="c1"># % key: end</span>
+</span><span class="linenos">16</span><span class="c1"># % description: End date (eg. 2023-04-01)</span>
+<span class="linenos">17</span><span class="c1"># % type: string</span>
+<span class="linenos">18</span><span class="c1"># % required: yes</span>
+<span class="linenos">19</span><span class="c1"># %end</span>
 <span class="linenos">20</span>
 <span class="linenos">21</span><span class="kn">import</span> <span class="nn">os</span>
 <span class="linenos">22</span><span class="kn">import</span> <span class="nn">sys</span>
@@ -93,8 +93,8 @@ environment variable, see line <span class="lcode">47</span>.</p>
 <span class="linenos">30</span>    
 <span class="hll"><span class="linenos">31</span><span class="k">def</span> <span class="nf">check_date</span><span class="p">(</span><span class="n">date_str</span><span class="p">):</span>
 </span><span class="linenos">32</span>    <span class="n">d</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">date_str</span><span class="p">,</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
-<span class="linenos">33</span>    <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">year</span> <span class="o">!=</span> <span class="mi">2019</span><span class="p">:</span>
-<span class="linenos">34</span>        <span class="n">gs</span><span class="o">.</span><span class="n">fatal</span><span class="p">(</span><span class="s2">&quot;Only year 2019 allowed&quot;</span><span class="p">)</span>
+<span class="linenos">33</span>    <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">year</span> <span class="o">!=</span> <span class="mi">2023</span><span class="p">:</span>
+<span class="linenos">34</span>        <span class="n">gs</span><span class="o">.</span><span class="n">fatal</span><span class="p">(</span><span class="s2">&quot;Only year 2023 allowed&quot;</span><span class="p">)</span>
 <span class="linenos">35</span>
 <span class="linenos">36</span><span class="k">def</span> <span class="nf">cleanup</span><span class="p">():</span>
 <span class="linenos">37</span>    <span class="k">try</span><span class="p">:</span>
@@ -125,10 +125,10 @@ environment variable, see line <span class="lcode">47</span>.</p>
 <span class="linenos">62</span>                 <span class="nb">map</span><span class="o">=</span><span class="n">output</span><span class="p">,</span>
 <span class="linenos">63</span>                 <span class="n">stdout_</span><span class="o">=</span><span class="n">PIPE</span>
 <span class="linenos">64</span>    <span class="p">)</span>
-<span class="linenos">65</span>    <span class="n">stats</span> <span class="o">=</span> <span class="n">gs</span><span class="o">.</span><span class="n">parse_key_val</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
-<span class="hll"><span class="linenos">66</span>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Min: </span><span class="si">{0:.1f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;min&#39;</span><span class="p">])))</span>
-</span><span class="hll"><span class="linenos">67</span>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Max: </span><span class="si">{0:.1f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;max&#39;</span><span class="p">])))</span>
-</span><span class="hll"><span class="linenos">68</span>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Mean: </span><span class="si">{0:.1f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">])))</span>
+<span class="linenos">65</span>    <span class="n">stats</span> <span class="o">=</span> <span class="n">gs</span><span class="o">.</span><span class="n">parse_key_val</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span> <span class="n">val_type</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+<span class="hll"><span class="linenos">66</span>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Min: </span><span class="si">{0:.1f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;min&#39;</span><span class="p">]))</span>
+</span><span class="hll"><span class="linenos">67</span>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Max: </span><span class="si">{0:.1f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;max&#39;</span><span class="p">]))</span>
+</span><span class="hll"><span class="linenos">68</span>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Mean: </span><span class="si">{0:.1f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">]))</span>
 </span><span class="linenos">69</span>        
 <span class="linenos">70</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
 <span class="linenos">71</span>    <span class="n">options</span><span class="p">,</span> <span class="n">flags</span> <span class="o">=</span> <span class="n">gs</span><span class="o">.</span><span class="n">parser</span><span class="p">()</span>
@@ -142,12 +142,12 @@ environment variable, see line <span class="lcode">47</span>.</p>
 </div>
 <p>Sample script to download: <a class="reference external" href="../_static/scripts/modis-date-stats.py">modis-date-stats.py</a></p>
 <p>Example of usage:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>modis-date-stats.py<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_c<span class="w"> </span><span class="nv">start</span><span class="o">=</span><span class="m">2019</span>-03-01<span class="w"> </span><span class="nv">end</span><span class="o">=</span><span class="m">2019</span>-04-01
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>modis-date-stats.py<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_c<span class="w"> </span><span class="nv">start</span><span class="o">=</span><span class="m">2023</span>-03-01<span class="w"> </span><span class="nv">end</span><span class="o">=</span><span class="m">2023</span>-04-01
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Min</span><span class="p">:</span> <span class="o">-</span><span class="mf">8.3</span>
-<span class="n">Max</span><span class="p">:</span> <span class="mf">12.6</span>
-<span class="n">Mean</span><span class="p">:</span> <span class="mf">7.3</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Min</span><span class="p">:</span> <span class="o">-</span><span class="mf">10.3</span>
+<span class="n">Max</span><span class="p">:</span> <span class="mf">15.4</span>
+<span class="n">Mean</span><span class="p">:</span> <span class="mf">3.4</span>
 </pre></div>
 </div>
 </section>
