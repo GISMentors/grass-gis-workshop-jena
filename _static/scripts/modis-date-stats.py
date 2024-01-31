@@ -1,22 +1,22 @@
 #!/usr/bin/env python3
 
-#%module
-#% description: Computes LST stats for given period (limited to Germany and 2019).
-#%end
-#%option G_OPT_STRDS_INPUT
-#%end
-#%option 
-#% key: start
-#% description: Start date (eg. 2019-03-01)
-#% type: string
-#% required: yes
-#%end
-#%option 
-#% key: end
-#% description: End date (eg. 2019-04-01)
-#% type: string
-#% required: yes
-#%end
+# %module
+# % description: Computes LST stats for given period (limited to Germany and 2023).
+# %end
+# %option G_OPT_STRDS_INPUT
+# %end
+# %option 
+# % key: start
+# % description: Start date (eg. 2023-03-01)
+# % type: string
+# % required: yes
+# %end
+# %option 
+# % key: end
+# % description: End date (eg. 2023-04-01)
+# % type: string
+# % required: yes
+# %end
 
 import os
 import sys
@@ -30,8 +30,8 @@ from grass.exceptions import CalledModuleError
     
 def check_date(date_str):
     d = datetime.strptime(date_str, '%Y-%m-%d')
-    if d.year != 2019:
-        gs.fatal("Only year 2019 allowed")
+    if d.year != 2023:
+        gs.fatal("Only year 2023 allowed")
 
 def cleanup():
     try:
@@ -62,10 +62,10 @@ def main():
                  map=output,
                  stdout_=PIPE
     )
-    stats = gs.parse_key_val(ret.outputs.stdout)
-    print('Min: {0:.1f}'.format(float(stats['min'])))
-    print('Max: {0:.1f}'.format(float(stats['max'])))
-    print('Mean: {0:.1f}'.format(float(stats['mean'])))
+    stats = gs.parse_key_val(ret.outputs.stdout, val_type=float)
+    print('Min: {0:.1f}'.format(stats['min']))
+    print('Max: {0:.1f}'.format(stats['max']))
+    print('Mean: {0:.1f}'.format(stats['mean']))
         
 if __name__ == "__main__":
     options, flags = gs.parser()
