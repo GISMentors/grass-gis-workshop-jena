@@ -52,7 +52,7 @@ dataset (strds).</p>
 <p>Creation of space time dataset including basic operations is explained
 in <a class="reference internal" href="17.html"><span class="doc">Unit 17 - Spatio-temporal intro</span></a> and <a class="reference internal" href="21.html"><span class="doc">Unit 21 - Sentinel spatio-temporal</span></a>.</p>
 <p>A new space time raster datasets is created by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.create.html">t.create</a>.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.create<span class="w"> </span><span class="nv">output</span><span class="o">=</span>modis<span class="w"> </span><span class="nv">title</span><span class="o">=</span><span class="s2">&quot;MODIS 2019&quot;</span><span class="w"> </span><span class="nv">desc</span><span class="o">=</span><span class="s2">&quot;MODIS data for Germany&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.create<span class="w"> </span><span class="nv">output</span><span class="o">=</span>modis<span class="w"> </span><span class="nv">title</span><span class="o">=</span><span class="s2">&quot;MODIS 2023&quot;</span><span class="w"> </span><span class="nv">desc</span><span class="o">=</span><span class="s2">&quot;MODIS data for Germany&quot;</span>
 </pre></div>
 </div>
 <p>In the next step imported MODIS data is registered into space time
@@ -68,8 +68,8 @@ t.register<span class="w"> </span><span class="nv">input</span><span class="o">=
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">...</span>
-<span class="o">|</span> <span class="n">Start</span> <span class="n">time</span><span class="p">:</span><span class="o">.................</span> <span class="mi">2019</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">01</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
-<span class="o">|</span> <span class="n">End</span> <span class="n">time</span><span class="p">:</span><span class="o">...................</span> <span class="mi">2020</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">04</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
+<span class="o">|</span> <span class="n">Start</span> <span class="n">time</span><span class="p">:</span><span class="o">.................</span> <span class="mi">2023</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">01</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
+<span class="o">|</span> <span class="n">End</span> <span class="n">time</span><span class="p">:</span><span class="o">...................</span> <span class="mi">2024</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">01</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
 <span class="o">...</span>
 <span class="o">|</span> <span class="n">Number</span> <span class="n">of</span> <span class="n">registered</span> <span class="n">maps</span><span class="p">:</span><span class="o">..</span> <span class="mi">184</span>
 </pre></div>
@@ -80,7 +80,7 @@ t.register<span class="w"> </span><span class="nv">input</span><span class="o">=
 daily 1-kilometer LST product (MOD11A1/MYD11A1) stored on a 1-km
 Sinusoidal grid as the average values of clear-sky LSTs during an
 8-day period is used.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MOD11A2</span><span class="o">.</span><span class="n">A2019297_mosaic_LST_Day_1km</span><span class="o">|</span><span class="mi">2019</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">24</span><span class="o">|</span><span class="mi">2019</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">01</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MOD11A2</span><span class="o">.</span><span class="n">A2023001_mosaic_LST_Day_1km</span><span class="o">|</span><span class="n">PERMANENT</span><span class="o">|</span><span class="mi">2023</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">01</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="o">|</span><span class="mi">2023</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">09</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
 </pre></div>
 </div>
 </div>
@@ -88,9 +88,9 @@ Sinusoidal grid as the average values of clear-sky LSTs during an
 <h2>Data querying<a class="headerlink" href="#data-querying" title="Permalink to this heading">¶</a></h2>
 <p>List of registered raster maps in spatio-temporal dataset can be
 printed by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.rast.list.html">t.rast.list</a>. In example below only relevant
-data from March 2019 will be listed.</p>
+data from March 2023 will be listed.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.list<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis<span class="w"> </span><span class="nv">order</span><span class="o">=</span>start_time<span class="w"> </span><span class="se">\</span>
-<span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt; &#39;2019-03-01&#39; and start_time &lt; &#39;2019-04-01&#39;&quot;</span>
+<span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt; &#39;2023-03-01&#39; and start_time &lt; &#39;2023-04-01&#39;&quot;</span>
 </pre></div>
 </div>
 <p>In the example below only raster maps coming from Aqua satellite are
@@ -99,29 +99,27 @@ printed.</p>
 </pre></div>
 </div>
 <p>Univariate statistics can be calculated by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.rast.univar.html">t.rast.univar</a>.
-In example below statistics only for March 2019 is calculated. Note
+In example below statistics only for March 2023 is calculated. Note
 that the command is running in the current computation region
 similarly as <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.univar.html">r.univar</a> does.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.univar<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt; &#39;2019-03-01&#39; and start_time &lt; &#39;2019-04-01&#39;&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.univar<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt; &#39;2023-03-01&#39; and start_time &lt; &#39;2023-04-01&#39;&quot;</span>
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">id</span><span class="o">|</span><span class="n">start</span><span class="o">|</span><span class="n">end</span><span class="o">|</span><span class="n">mean</span><span class="o">|</span><span class="nb">min</span><span class="o">|</span><span class="nb">max</span><span class="o">|</span><span class="n">mean_of_abs</span><span class="o">|</span><span class="n">stddev</span><span class="o">|</span><span class="n">variance</span><span class="o">|</span><span class="n">coeff_var</span><span class="o">|</span><span class="nb">sum</span><span class="o">|</span><span class="n">null_cells</span><span class="o">|</span><span class="n">cells</span>
-<span class="o">...|</span><span class="mi">2019</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">06</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="o">|</span><span class="mi">2019</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">14</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="o">|</span><span class="mf">11127.9119722696</span><span class="o">|</span><span class="mi">0</span><span class="o">|</span><span class="mi">14548</span><span class="o">|</span><span class="mf">11127.9119722696</span><span class="o">|...</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">id</span><span class="o">|</span><span class="n">semantic_label</span><span class="o">|</span><span class="n">start</span><span class="o">|</span><span class="n">end</span><span class="o">|</span><span class="n">mean</span><span class="o">|...</span>
+<span class="o">...||</span><span class="mi">2023</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">06</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="o">|</span><span class="mi">2023</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">14</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="o">|</span><span class="mf">6768.58097809702</span><span class="o">|...</span>
 </pre></div>
 </div>
 </section>
 <section id="data-extracting">
 <h2>Data extracting<a class="headerlink" href="#data-extracting" title="Permalink to this heading">¶</a></h2>
 <p>Raster spatio-temporal data can be extracted into a new dataset using
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.rast.extract.html">t.rast.extract</a>. In the example below are created four new
-datasets containing data of different satellite and datetime.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;name LIKE &#39;MOD%LST_Day_1km&#39;&quot;</span><span class="w"> </span><span class="nv">output</span><span class="o">=</span>modis_terra_day
-t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;name LIKE &#39;MOD%LST_Night_1km&#39;&quot;</span><span class="w"> </span><span class="nv">output</span><span class="o">=</span>modis_terra_night
-t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;name LIKE &#39;MYD%LST_Day_1km&#39;&quot;</span><span class="w"> </span><span class="nv">output</span><span class="o">=</span>modis_aqua_day
-t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;name LIKE &#39;MYD%LST_Night_1km&#39;&quot;</span><span class="w"> </span><span class="nv">output</span><span class="o">=</span>modis_aqua_night
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.rast.extract.html">t.rast.extract</a>. In the example below are created two new
+datasets containing data of different time of day.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;name LIKE &#39;%Day%&#39;&quot;</span><span class="w"> </span><span class="nv">output</span><span class="o">=</span>modis_day
+t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;name LIKE &#39;%Night%&#39;&quot;</span><span class="w"> </span><span class="nv">output</span><span class="o">=</span>modis_night
 </pre></div>
 </div>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.info<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_terra_day
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.info<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_day
 </pre></div>
 </div>
 </section>
@@ -146,11 +144,14 @@ maps in Celsius scale. Since new raster maps will be created, the
 command requires to define <span class="param">basename</span>. Note that new raster
 maps will be produced in the current computation region with mask
 respected.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.univar<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_c<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt; &#39;2019-03-01&#39; and start_time &lt; &#39;2019-04-01&#39;&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.univar<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_c<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt; &#39;2023-03-01&#39; and start_time &lt; &#39;2023-04-01&#39;&quot;</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">id</span><span class="o">|</span><span class="n">start</span><span class="o">|</span><span class="n">end</span><span class="o">|</span><span class="n">mean</span><span class="o">|</span><span class="nb">min</span><span class="o">|</span><span class="nb">max</span><span class="o">|</span><span class="n">mean_of_abs</span><span class="o">|</span><span class="n">stddev</span><span class="o">|</span><span class="n">variance</span><span class="o">|</span><span class="n">coeff_var</span><span class="o">|</span><span class="nb">sum</span><span class="o">|</span><span class="n">null_cells</span><span class="o">|</span><span class="n">cells</span>
-<span class="n">c_033</span><span class="nd">@PERMANENT</span><span class="o">|</span><span class="mi">2019</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">06</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="o">|</span><span class="mi">2019</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">14</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="o">|</span><span class="mf">8.38271624724276</span><span class="o">|-</span><span class="mf">20.35</span><span class="o">|</span><span class="mf">17.81</span><span class="o">|...</span>
+<span class="n">c_033</span><span class="nd">@PERMANENT</span><span class="o">|</span><span class="mi">2023</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">06</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="o">|</span><span class="mi">2023</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">14</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="o">|</span><span class="mf">8.38271624724276</span><span class="o">|-</span><span class="mf">20.35</span><span class="o">|</span><span class="mf">17.81</span><span class="o">|...</span>
+
+<span class="nb">id</span><span class="o">|</span><span class="n">semantic_label</span><span class="o">|</span><span class="n">start</span><span class="o">|</span><span class="n">end</span><span class="o">|</span><span class="n">mean</span><span class="o">|</span><span class="nb">min</span><span class="o">|</span><span class="nb">max</span><span class="o">|...</span>
+<span class="n">c_033</span><span class="nd">@PERMANENT</span><span class="o">||</span><span class="mi">2023</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">06</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="o">|</span><span class="mi">2023</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">14</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="o">|</span><span class="mf">2.64</span><span class="o">|-</span><span class="mf">21.93</span><span class="o">|</span><span class="mf">17.19</span><span class="o">|...</span>
 </pre></div>
 </div>
 <p>Color table for all the maps in a space time raster dataset can be set
@@ -173,7 +174,7 @@ a new temporal dataset with aggregated data is created.</p>
 </pre></div>
 </div>
 <p>Example for July and August only.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.univar<span class="w"> </span>modis_cm<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt; &#39;2019-07-01&#39; and start_time &lt; &#39;2019-09-01&#39;&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.univar<span class="w"> </span>modis_cm<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt; &#39;2023-07-01&#39; and start_time &lt; &#39;2023-09-01&#39;&quot;</span>
 </pre></div>
 </div>
 </section>
@@ -181,16 +182,16 @@ a new temporal dataset with aggregated data is created.</p>
 <h2>Data extraction<a class="headerlink" href="#data-extraction" title="Permalink to this heading">¶</a></h2>
 <p>A new space time dataset only with subset of data can be created by
 <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.rast.extract.html">t.rast.extract</a>. Example for the four seasons below.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_c<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt; &#39;2019-03-01&#39; and start_time &lt; &#39;2019-06-01&#39;&quot;</span><span class="w"> </span><span class="se">\</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_c<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt; &#39;2023-03-20&#39; and start_time &lt; &#39;2023-06-20&#39;&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="nv">output</span><span class="o">=</span>modis_spring
 
-t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_c<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt; &#39;2019-06-01&#39; and start_time &lt; &#39;2019-09-01&#39;&quot;</span><span class="w"> </span><span class="se">\</span>
+t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_c<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt; &#39;2023-06-20&#39; and start_time &lt; &#39;2023-09-22&#39;&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="nv">output</span><span class="o">=</span>modis_summer
 
-t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_c<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt; &#39;2019-09-01&#39; and start_time &lt; &#39;2019-12-01&#39;&quot;</span><span class="w"> </span><span class="se">\</span>
+t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_c<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt; &#39;2023-09-22&#39; and start_time &lt; &#39;2023-12-21&#39;&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="nv">output</span><span class="o">=</span>modis_autumn
 
-t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_c<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt; &#39;2019-12-01&#39; or start_time &lt; &#39;2019-03-01&#39;&quot;</span><span class="w"> </span><span class="se">\</span>
+t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_c<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt; &#39;2022-12-21&#39; and start_time &lt; &#39;2023-03-20&#39;&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="nv">output</span><span class="o">=</span>modis_winter
 </pre></div>
 </div>
@@ -209,18 +210,31 @@ values can be calculated by <a class="reference external" href="https://grass.os
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.univar<span class="w"> </span>modis_spring_avg
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">minimum</span><span class="p">:</span> <span class="o">-</span><span class="mf">3.51545</span>
-<span class="n">maximum</span><span class="p">:</span> <span class="mf">17.6643</span>
-<span class="nb">range</span><span class="p">:</span> <span class="mf">21.1797</span>
-<span class="n">mean</span><span class="p">:</span> <span class="mf">10.7001</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">minimum</span><span class="p">:</span> <span class="o">-</span><span class="mf">2.63857</span>
+<span class="n">maximum</span><span class="p">:</span> <span class="mf">22.1867</span>
+<span class="nb">range</span><span class="p">:</span> <span class="mf">24.8252</span>
+<span class="n">mean</span><span class="p">:</span> <span class="mf">12.6937</span>
+</pre></div>
+</div>
+<figure class="align-center">
+<img alt="../_images/spring_avg_2023.png" class="large" src="../_images/spring_avg_2023.png" />
+</figure>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Compare with year 2019:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">minimum</span><span class="p">:</span> <span class="o">-</span><span class="mf">6.425</span>
+<span class="n">maximum</span><span class="p">:</span> <span class="mf">17.45</span>
+<span class="nb">range</span><span class="p">:</span> <span class="mf">23.875</span>
+<span class="n">mean</span><span class="p">:</span> <span class="mf">8.99903</span>
 </pre></div>
 </div>
 <figure class="align-center" id="id1">
-<img alt="../_images/spring_avg.png" class="large" src="../_images/spring_avg.png" />
+<img alt="../_images/spring_avg_2019.png" class="large" src="../_images/spring_avg_2019.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 116 </span><span class="caption-text">Average temperature for spring 2019.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
+</div>
 </section>
 <section id="data-visualization">
 <h2>Data visualization<a class="headerlink" href="#data-visualization" title="Permalink to this heading">¶</a></h2>
@@ -241,6 +255,18 @@ values.</p>
 <p><span class="caption-number">Fig. 117 </span><span class="caption-text">Monthly average dataset animation with celsius color table applied.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Legend may be optimized by using <code class="docutils literal notranslate"><span class="pre">range</span></code> option of
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/d.legend.html">d.legend</a>. Let’s determine min and max values:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">t</span><span class="o">.</span><span class="n">info</span> <span class="n">modis_cm</span>
+<span class="o">...</span>
+<span class="o">|</span> <span class="n">Minimum</span> <span class="n">value</span> <span class="nb">min</span><span class="p">:</span><span class="o">..........</span> <span class="o">-</span><span class="mf">22.75</span>
+<span class="o">...</span>
+<span class="o">|</span> <span class="n">Maximum</span> <span class="n">value</span> <span class="nb">max</span><span class="p">:</span><span class="o">..........</span> <span class="mf">32.702</span>
+</pre></div>
+</div>
+</div>
 </section>
 </section>
 
