@@ -17,7 +17,7 @@ A new space time raster datasets is created by :grasscmd:`t.create`.
 
 .. code-block:: bash
 
-   t.create output=modis title="MODIS 2019" desc="MODIS data for Germany"
+   t.create output=modis title="MODIS 2023" desc="MODIS data for Germany"
 
 In the next step imported MODIS data is registered into space time
 dataset by :grasscmd:`t.register`. The command needs to be run
@@ -38,8 +38,8 @@ Let's check basic metedata about created dataset by
 ::
 
    ...
-   | Start time:................. 2019-01-01 00:00:00
-   | End time:................... 2020-01-04 00:00:00
+   | Start time:................. 2023-01-01 00:00:00
+   | End time:................... 2024-01-01 00:00:00
    ...
    | Number of registered maps:.. 184
 
@@ -52,29 +52,19 @@ Let's check basic metedata about created dataset by
 
    ::
       
-      MOD11A2.A2019297_mosaic_LST_Day_1km|2019-10-24|2019-11-01
+      MOD11A2.A2023001_mosaic_LST_Day_1km|PERMANENT|2023-01-01 00:00:00|2023-01-09 00:00:00
 
-.. todo     
-   It is possible to see our spatio-temporal dataset also graphically
-   using :grasscmd:`g.gui.timeline` (:menuselection:`Temporal --> GUI
-   tools --> Timeline tool`).
-
-   .. figure:: ../images/units/21/timeline.png
-   :class: large
-
-   Download MODIS data presented by Timeline tool.
-      
 Data querying
 -------------
 
 List of registered raster maps in spatio-temporal dataset can be
 printed by :grasscmd:`t.rast.list`. In example below only relevant
-data from March 2019 will be listed.
+data from March 2023 will be listed.
 
 .. code-block:: bash
                 
    t.rast.list input=modis order=start_time \
-   where="start_time > '2019-03-01' and start_time < '2019-04-01'"
+   where="start_time > '2023-03-01' and start_time < '2023-04-01'"
 
 In the example below only raster maps coming from Aqua satellite are
 printed.
@@ -84,36 +74,34 @@ printed.
    t.rast.list input=modis order=start_time where="name LIKE 'MYD%'"
 
 Univariate statistics can be calculated by :grasscmd:`t.rast.univar`.
-In example below statistics only for March 2019 is calculated. Note
+In example below statistics only for March 2023 is calculated. Note
 that the command is running in the current computation region
 similarly as :grasscmd:`r.univar` does.
 
 .. code-block:: bash
                 
-   t.rast.univar input=modis where="start_time > '2019-03-01' and start_time < '2019-04-01'"
+   t.rast.univar input=modis where="start_time > '2023-03-01' and start_time < '2023-04-01'"
 
 ::
-   
-   id|start|end|mean|min|max|mean_of_abs|stddev|variance|coeff_var|sum|null_cells|cells
-   ...|2019-03-06 00:00:00|2019-03-14 00:00:00|11127.9119722696|0|14548|11127.9119722696|...
+
+   id|semantic_label|start|end|mean|...
+   ...||2023-03-06 00:00:00|2023-03-14 00:00:00|6768.58097809702|...
 
 Data extracting
 ---------------
 
 Raster spatio-temporal data can be extracted into a new dataset using
-:grasscmd:`t.rast.extract`. In the example below are created four new
-datasets containing data of different satellite and datetime.
+:grasscmd:`t.rast.extract`. In the example below are created two new
+datasets containing data of different time of day.
 
 .. code-block:: bash
 
-   t.rast.extract input=modis where="name LIKE 'MOD%LST_Day_1km'" output=modis_terra_day
-   t.rast.extract input=modis where="name LIKE 'MOD%LST_Night_1km'" output=modis_terra_night
-   t.rast.extract input=modis where="name LIKE 'MYD%LST_Day_1km'" output=modis_aqua_day
-   t.rast.extract input=modis where="name LIKE 'MYD%LST_Night_1km'" output=modis_aqua_night
+   t.rast.extract input=modis where="name LIKE '%Day%'" output=modis_day
+   t.rast.extract input=modis where="name LIKE '%Night%'" output=modis_night
 
 .. code-block:: bash
 
-   t.info input=modis_terra_day
+   t.info input=modis_day
 
 LST
 ---
@@ -141,13 +129,16 @@ respected.
 
 .. code-block:: bash
 
-   t.rast.univar input=modis_c where="start_time > '2019-03-01' and start_time < '2019-04-01'"
+   t.rast.univar input=modis_c where="start_time > '2023-03-01' and start_time < '2023-04-01'"
 
 ::
    
    id|start|end|mean|min|max|mean_of_abs|stddev|variance|coeff_var|sum|null_cells|cells
-   c_033@PERMANENT|2019-03-06 00:00:00|2019-03-14 00:00:00|8.38271624724276|-20.35|17.81|...
+   c_033@PERMANENT|2023-03-06 00:00:00|2023-03-14 00:00:00|8.38271624724276|-20.35|17.81|...
 
+   id|semantic_label|start|end|mean|min|max|...
+   c_033@PERMANENT||2023-03-06 00:00:00|2023-03-14 00:00:00|2.64|-21.93|17.19|...
+   
 Color table for all the maps in a space time raster dataset can be set
 by :grasscmd:`t.rast.colors` similarly as :grasscmd:`r.colors` does
 for a single raster map.
@@ -177,7 +168,7 @@ Example for July and August only.
 
 .. code-block:: bash
 
-   t.rast.univar modis_cm where="start_time > '2019-07-01' and start_time < '2019-09-01'"
+   t.rast.univar modis_cm where="start_time > '2023-07-01' and start_time < '2023-09-01'"
 
 Data extraction
 ---------------
@@ -187,16 +178,16 @@ A new space time dataset only with subset of data can be created by
 
 .. code-block:: bash
                           
-   t.rast.extract input=modis_c where="start_time > '2019-03-01' and start_time < '2019-06-01'" \
+   t.rast.extract input=modis_c where="start_time > '2023-03-20' and start_time < '2023-06-20'" \
    output=modis_spring
 
-   t.rast.extract input=modis_c where="start_time > '2019-06-01' and start_time < '2019-09-01'" \
+   t.rast.extract input=modis_c where="start_time > '2023-06-20' and start_time < '2023-09-22'" \
    output=modis_summer
                 
-   t.rast.extract input=modis_c where="start_time > '2019-09-01' and start_time < '2019-12-01'" \
+   t.rast.extract input=modis_c where="start_time > '2023-09-22' and start_time < '2023-12-21'" \
    output=modis_autumn
                 
-   t.rast.extract input=modis_c where="start_time > '2019-12-01' or start_time < '2019-03-01'" \
+   t.rast.extract input=modis_c where="start_time > '2022-12-21' and start_time < '2023-03-20'" \
    output=modis_winter
 
 Another aggregation method is based on :grasscmd:`t.rast.series`, it
@@ -220,15 +211,29 @@ values can be calculated by :grasscmd:`r.univar`.
 
 ::
 
-   minimum: -3.51545
-   maximum: 17.6643
-   range: 21.1797
-   mean: 10.7001
+   minimum: -2.63857
+   maximum: 22.1867
+   range: 24.8252
+   mean: 12.6937
 
-.. figure:: ../images/units/25/spring_avg.png
+.. figure:: ../images/units/25/spring_avg_2023.png
    :class: large
-           
-   Average temperature for spring 2019.
+
+      Average temperature for spring 2023.
+   
+.. note:: Compare with year 2019:
+
+    ::
+
+       minimum: -6.425
+       maximum: 17.45
+       range: 23.875
+       mean: 8.99903
+
+    .. figure:: ../images/units/25/spring_avg_2019.png
+       :class: large
+
+       Average temperature for spring 2019.
 
 Data visualization
 ------------------
@@ -252,6 +257,16 @@ values.
 
    Monthly average dataset animation with celsius color table applied.
 
+.. tip:: Legend may be optimized by using ``range`` option of
+         :grasscmd:`d.legend`. Let's determine min and max values:
+
+         .. code-block::
+
+            t.info modis_cm
+            ...
+            | Minimum value min:.......... -22.75
+            ...
+            | Maximum value max:.......... 32.702
 
 ..
    The second tool, :grasscmd:`g.gui.tplot`, allows plotting the time
