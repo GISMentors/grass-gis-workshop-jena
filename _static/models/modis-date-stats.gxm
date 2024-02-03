@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE gxm SYSTEM "grass-gxm.dtd">
 <gxm>
-    <window pos="1007,616" size="803,466" />
+    <window pos="937,498" size="847,431" />
     <properties>
         <name>modis-date-stats</name>
         <description>Computes LST stats for given period (limited to Germany and 2023).</description>
