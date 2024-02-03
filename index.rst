@@ -62,7 +62,7 @@ Software used in this training materials
 .. figure:: ./images/grass-gis-logo.png
    :class: small
           
-* `GRASS GIS <http://grass.osgeo.org>`__ (recommended version 8.3) for
+* `GRASS GIS <http://grass.osgeo.org>`__ (recommended version 8.4) for
   geospatial raster, imagery, and vector data processing and providing
   spatial analysis.
 * `QGIS desktop <http://qgis.org>`__ (recommended version 3.28) for

@@ -77,30 +77,54 @@ Let's continue with creating our own WPS process.
 MODIS process
 -------------
 
-Go to :file:`pywps-flask/processes` directory and create a new process
-(:file:`grassbuffer.py` can be used as a template). Example of process
-below is based on the script created in :doc:`26`. Let's focus on
-important parts.
+Let's create a new process based on the model created in :doc:`26`. In
+Graphical Modeler go :item:`Python editor` tab and switch Python
+script type to :item:`PyWPS`. Generated process store (:item:`Save
+As`) in :file:`pywps-flask/processes` directory.
 
-Process itself is defined as a Python class, :class:`ModisV1` in this
-case (line :lcode:`7`). In class constructor input (lines :lcode:`9`
-and :lcode:`11`) and output parameters (line :lcode:`14`) are
-defined. Every process has its identifier (line :lcode:`20`), title
-and abstract. The process will operate in GRASS location defined on
-line :lcode:`30`. On line :lcode:`61` is assumed that space time LST
-dataset is located in PERMANENT, see :doc:`25`. For each job (executed
-process by a client) PyWPS creates in this location a temporary mapset
-which is deleted when process is finished. Process body is implemented
-as ``_handler()`` method, see line :lcode:`40`. Resultant statistics
-is stored to response output as a simple string on line :lcode:`80`.
+.. figure:: ../images/units/27/modis-date-stats-pywps.png
+   :class: middle
+   
+   Export model as PyWPS process.
 
+.. note:: Avoid dashes in the Python filename, use eg. :file:`modis_v1.py`.
+
+In the next step, we will enhance the PyWPS process similar to the
+Python script in :doc:`26`:
+
+1. The option :param:`where` will be split into two options
+   (:lcode:`21-24,59-61`): :param:`start` - Start date and
+   :param:`end` - End date. Also :param:`output` parameter is changed
+   to `string` data type (:lcode:`26-27`).
+
+2. New function ``check_date()`` to validate input dates will be added (:lcode:`8,44-47,49-50`)
+
+3. Output of :grasscmd:`r.univar` will be parsed and statistics
+   printed (:lcode:`7,72,74-78`)
+  
 .. literalinclude:: ../_static/scripts/modis_v1.py
    :language: python
    :linenos:
-   :emphasize-lines: 7, 9, 11, 14, 20, 30, 40, 61, 80
+   :emphasize-lines: 7,8,15,29,21-24,26-27,31,44-47,49-50,59-61,72,74-78,86
+
+It will also be useful to rename the ``Model`` class to ``ModisV1``
+(:lcode:`15,29,86`).
 
 Sample process to download: `modis_v1.py
 <../_static/scripts/modis_v1.py>`__
+
+Source code comments: process itself is defined as a Python class,
+:class:`ModisV1` in this case (line :lcode:`15`). In class constructor
+input (lines :lcode:`21-24`) and output parameters (line
+:lcode:`26-27`) are defined. Every process has its identifier (line
+:lcode:`31`), title and abstract. The process will operate in GRASS
+location defined on line :lcode:`36`. On line :lcode:`54` is assumed
+that space time LST dataset is located in PERMANENT, see
+:doc:`25`. For each job (executed process by a client) PyWPS creates
+in this location a temporary mapset which is deleted when process is
+finished. Process body is implemented as ``_handler()`` method, see
+line :lcode:`43`. Resultant statistics is stored to response output as
+a simple string on line :lcode:`78`.
 
 .. _process-import:
 
@@ -137,25 +161,23 @@ You should see your ``modis-v1`` process in the list. Click on
 
    .. code-block:: bash
                    
-      gisbase=/usr/lib/grass80
+      gisbase=/usr/lib/grass84
 
    On Windows specify path in Unix-like style:
 
    .. code-block:: bash
                 
-      gisbase=/C/Program Files/GRASS GIS 8.0
+      gisbase=/C/Program Files/GRASS GIS 8.4
    
 Now execute the process:
 
-http://localhost:5000/wps?request=Execute&service=WPS&identifier=modis-v1&version=1.0.0&datainputs=start=2019-03-01;end=2019-04-01
+http://localhost:5000/wps?request=Execute&service=WPS&identifier=modis-v1&version=1.0.0&datainputs=start=2023-03-01;end=2023-04-01
 
 Example of response:
 
 .. code-block:: xml
 
-   <wps:LiteralData dataType="string">
-   Min: -8.3;Max: 12.6;Mean: 7.3
-   </wps:LiteralData>
+   <wps:LiteralData dataType="string">Min: -10.6;Max: 11.5;Mean: 3.7</wps:LiteralData>
 
 .. tip:: When something goes wrong, check :file:`logs/pywps.log` for
    details.
