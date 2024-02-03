@@ -1,31 +1,38 @@
 Unit 26 - MODIS ST scripting
 ============================
 
-Let's create a simple Python script for computing LST statistics in
-Germany area for given period. Input parameters:
+Let's start with a simple model for computing LST statistics in
+Germany area for given period. The raster map is aggregated from input
+space-time raster dataset :map:`modis_cm` by
+:grasscmd:`t.rast.series`. Statistics is computed by
+:grasscmd:`r.univar`.
 
-* :param:`input` - Name of the input space time raster dataset (line :lcode:`6`)
-* :param:`start` - Start date (line :lcode:`9`)
-* :param:`end` - End date (line :lcode:`15`)
+.. code-block:: bash
 
-The script prints minimum, maximum and mean LST value. The raster map
-for computing statistics is created by :grasscmd:`t.rast.series` (line
-:lcode:`50`), statistics is computed by :grasscmd:`r.univar` (line
-:lcode:`60`). Statistics will be printed by lines :lcode:`66-68`.
+   t.rast.series input=modis_c output=t_rast_series_out \
+    where="start_time > '2023-03-01' and start_time < '2023-04-01'"
+   r.univar -g --overwrite map=t_rast_series_out
+   
+.. figure:: ../images/units/26/modis-date-stats.png
+   :class: middle
+   
+   Sample model to download: `modis-date-stats.gxm <../_static/models//modis-date-stats.gxm>`__.
 
-In :doc:`25` we processed LST space time dataset only for
-year 2023. We will also check if input dates are valid, see line
-:lcode:`31`.
+In the next step the exported model into Python will be improved:
 
-.. tip::
+1. The option :param:`where` will be split into two options
+   (:lcode:`18-29,34,60-61`): :param:`start` - Start date and
+   :param:`end` - End date
 
-   Verbosity level can be set globally by :envvar:`GRASS_VERBOSE`
-   environment variable, see line :lcode:`47`.
-    
+2. New function ``check_date()`` to validate input dates will be added (:lcode:`35,37,44-47,50-52`)
+
+3. Output of :grasscmd:`r.univar` will be parsed and statistics
+   printed (:lcode:`37,72,74-77`)
+  
 .. literalinclude:: ../_static/scripts/modis-date-stats.py
    :language: python
    :linenos:
-   :emphasize-lines: 6, 9, 15, 31, 47, 50, 60, 66-68
+   :emphasize-lines: 18-29,34-35,37,44-47,50-52,60-61,72,74-77
 
 Sample script to download: `modis-date-stats.py
 <../_static/scripts/modis-date-stats.py>`__
@@ -34,10 +41,10 @@ Example of usage:
 
 .. code-block:: bash
                 
-   modis-date-stats.py input=modis_c start=2023-03-01 end=2023-04-01
+   modis-date-stats.py start=2023-03-01 end=2023-04-01
 
 ::
 
-   Min: -10.3
-   Max: 15.4
-   Mean: 3.4
+   Min: -10.6
+   Max: 11.5
+   Mean: 3.7
