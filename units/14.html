@@ -51,16 +51,16 @@ reference system (CRS) of input data (<a class="reference external" href="https:
 <em>jena-region</em> CRS definition (<a class="reference external" href="https://epsg.io/32632">EPSG:32632</a>). GRASS will apply
 transformation of input data into target CRS provided by the current
 location (<code class="docutils literal notranslate"><span class="pre">Projection</span> <span class="pre">match:</span> <span class="pre">No</span></code>). This operation needs to be
-confirmed by a user, see <a class="reference internal" href="#confirm-reprojection"><span class="std std-numref">Fig. 79</span></a>.</p>
+confirmed by a user, see <a class="reference internal" href="#confirm-reprojection"><span class="std std-numref">Fig. 78</span></a>.</p>
 <figure class="align-center" id="id1">
 <span id="confirm-reprojection"></span><img alt="../_images/reproject.png" class="small" src="../_images/reproject.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 79 </span><span class="caption-text">Confirm reprojection of input data.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 78 </span><span class="caption-text">Confirm reprojection of input data.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>Data incosistency can cause significant topological errors when
 importing vector data into GRASS (as in our case
-<a class="reference internal" href="#topo-errors"><span class="std std-numref">Fig. 80</span></a>):</p>
+<a class="reference internal" href="#topo-errors"><span class="std std-numref">Fig. 79</span></a>):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">WARNING</span><span class="p">:</span> <span class="n">Number</span> <span class="n">of</span> <span class="n">centroids</span> <span class="n">exceeds</span> <span class="n">number</span> <span class="n">of</span> <span class="n">areas</span><span class="p">:</span> <span class="mi">47</span> <span class="o">&gt;</span> <span class="mi">46</span>
 <span class="n">WARNING</span><span class="p">:</span> <span class="n">Number</span> <span class="n">of</span> <span class="n">incorrect</span> <span class="n">boundaries</span><span class="p">:</span> <span class="mi">11</span>
 <span class="n">WARNING</span><span class="p">:</span> <span class="n">Number</span> <span class="n">of</span> <span class="n">centroids</span> <span class="n">outside</span> <span class="n">area</span><span class="p">:</span> <span class="mi">2</span>
@@ -69,15 +69,15 @@ importing vector data into GRASS (as in our case
 <figure class="align-center" id="id2">
 <span id="topo-errors"></span><img alt="../_images/counties-broken.png" class="middle" src="../_images/counties-broken.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 80 </span><span class="caption-text">Topological errors detected by import process.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 79 </span><span class="caption-text">Topological errors detected by import process.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>Usually helps to set up a “reasonable” snapping threshold when
-importing data into GRASS, see <a class="reference internal" href="#import-snap"><span class="std std-numref">Fig. 81</span></a>.</p>
+importing data into GRASS, see <a class="reference internal" href="#import-snap"><span class="std std-numref">Fig. 80</span></a>.</p>
 <figure class="align-center" id="id3">
 <span id="import-snap"></span><img alt="../_images/threshold_snap.png" src="../_images/threshold_snap.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 81 </span><span class="caption-text">Set threshold for snapping before data import in <span class="item">Import
+<p><span class="caption-number">Fig. 80 </span><span class="caption-text">Set threshold for snapping before data import in <span class="item">Import
 settings</span> tab.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>

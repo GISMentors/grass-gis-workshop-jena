@@ -188,17 +188,14 @@ based on the raster map used for computation (<em>Align computational region
 to selected map</em>).</p>
 <p>Current computation region extent is by default visualized in map
 window as <strong>a red rectangle</strong>.</p>
-<figure class="align-center" id="id8">
-<img alt="../_images/show-comp-region.png" src="../_images/show-comp-region.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 32 </span><span class="caption-text">Show/Hide computational region extent in map display.</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
-</figcaption>
-</figure>
-<p>Full flexibility for operating with computational region is allowed via the
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/g.region.html">g.region</a> module (<span class="menuselection">Settings ‣ Computational
-region ‣ Set region</span>). Example below:</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Full flexibility for operating with computational region is allowed
+via the <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/g.region.html">g.region</a> module (<span class="menuselection">Settings ‣
+Computational region ‣ Set region</span>). Example below:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>g.region<span class="w"> </span><span class="nv">vector</span><span class="o">=</span>jena_boundary<span class="w"> </span><span class="nv">align</span><span class="o">=</span>L2A_T32UPB_20170706T102021_B04_10m
 </pre></div>
+</div>
 </div>
 </section>
 <section id="color-table">
@@ -208,27 +205,27 @@ region ‣ Set region</span>). Example below:</p>
 let’s enhance color table of imported Sentinel band using histogram
 equalization (which is influenced by computation region as we already
 know).</p>
-<figure class="align-center" id="id9">
+<figure class="align-center" id="id8">
 <img alt="../_images/r-colors-menu.png" src="../_images/r-colors-menu.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 33 </span><span class="caption-text">Set color table from <span class="item">Layers</span> tab.</span><a class="headerlink" href="#id9" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 32 </span><span class="caption-text">Set color table from <span class="item">Layers</span> tab.</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>Example of command:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.colors<span class="w"> </span><span class="nv">map</span><span class="o">=</span>L2A_T32UPB_20170706T102021_B04_10m<span class="w"> </span><span class="nv">color</span><span class="o">=</span>grey.eq
 </pre></div>
 </div>
-<figure class="align-center" id="id10">
+<figure class="align-center" id="id9">
 <img alt="../_images/r-colors.png" src="../_images/r-colors.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 34 </span><span class="caption-text">Choose the predefined ‘grey.eq’ (enhanced grey scale) color table
-in the <span class="item">Define</span> tab.</span><a class="headerlink" href="#id10" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 33 </span><span class="caption-text">Choose the predefined ‘grey.eq’ (enhanced grey scale) color table
+in the <span class="item">Define</span> tab.</span><a class="headerlink" href="#id9" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
-<figure class="align-center" id="id11">
+<figure class="align-center" id="id10">
 <img alt="../_images/r-colors-jena.png" class="large" src="../_images/r-colors-jena.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 35 </span><span class="caption-text">Sentinel 4th band with enhanced grey color table.</span><a class="headerlink" href="#id11" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 34 </span><span class="caption-text">Sentinel 4th band with enhanced grey color table.</span><a class="headerlink" href="#id10" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <div class="admonition tip">

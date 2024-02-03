@@ -124,17 +124,13 @@ to selected map*).
 Current computation region extent is by default visualized in map
 window as **a red rectangle**.
 
-.. figure:: ../images/units/04/show-comp-region.png
+.. tip:: Full flexibility for operating with computational region is allowed
+   via the :grasscmd:`g.region` module (:menuselection:`Settings -->
+   Computational region --> Set region`). Example below:
 
-   Show/Hide computational region extent in map display.
+   .. code-block:: bash
 
-Full flexibility for operating with computational region is allowed via the 
-:grasscmd:`g.region` module (:menuselection:`Settings --> Computational
-region --> Set region`). Example below:
-
-.. code-block:: bash
-
-   g.region vector=jena_boundary align=L2A_T32UPB_20170706T102021_B04_10m
+      g.region vector=jena_boundary align=L2A_T32UPB_20170706T102021_B04_10m
           
 .. _color-table:
 
