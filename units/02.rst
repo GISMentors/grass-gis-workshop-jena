@@ -186,13 +186,6 @@ After connecting to the WMS server, desired layer can be chosen.
 
    Choose WMS layer to be displayed.
 
-.. warning:: On MS Windows is currently WMS functionality broken. Use
-   :file:`geodata/osm/basemap.pack` file which can be loaded into
-   GRASS in :item:`Data` tab by |grass-layer-import| :sup:`Unpack
-   GRASS raster map [r.unpack]`. New raster map :map:`basemap` should
-   appear in :item:`Data` tab. In opposite case refresh content by
-   |grass-reload| :sup:`Reload GRASS mapset only`.
-          
 In :item:`Layers` tab change order of layers (move
 :map:`jena-boundary` on the top) and tune display properities of
 :map:`jena-boundary` layer.
