@@ -231,7 +231,7 @@ Let's check maps registered in the new space-time dataset.
 
 .. code-block:: bash
 
-   t.rast.list clouds
+   t.rast.list input=clouds
    
 We now apply the cloud masks map by map using :grasscmd:`t.rast.algebra` and set 
 *ndvi* color table.
