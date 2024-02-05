@@ -96,7 +96,7 @@ based on :map:`dem` raster map.
    
 .. code-block:: bash
                 
-   r.lake elevation=dem water_level=146 lake=lake coordinates=681734,5644423
+   r.lake elevation=dem water_level=146.4 lake=lake coordinates=681734,5644423
 
 .. figure:: ../images/units/16/r-lake-150.png
    :class: large
