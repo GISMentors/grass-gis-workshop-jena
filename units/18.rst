@@ -77,7 +77,7 @@ check.
 
 .. code-block:: bash
                 
-   v.in.lidar -otb input=geodata/lidar/las_681_5644_1_th_2014-2019.laz output=las_681_5644
+   v.in.lidar -otb input=geodata/lidar/las_681_5644_1_th_2014-2019.las output=las_681_5644
 
 Note that computational region is ignored when importing data using
 :grasscmd:`v.in.lidar`.
@@ -136,7 +136,7 @@ option. Cells covered by no points will get NULL (no-data) value assigned.
    
 .. code-block:: bash
 
-   r.in.lidar -oe input=/home/martin/geodata/lidar/las_681_5644_1_th_2014-2019.laz output=las_681_5644 resolution=1
+   r.in.lidar -oe input=/home/martin/geodata/lidar/las_681_5644_1_th_2014-2019.las output=las_681_5644 resolution=1
 
 Basic metadata about created raster map can be obtained by
 :grasscmd:`r.info`.
@@ -236,7 +236,7 @@ running in parallel, see :option:`nprocs` option.
    .. code-block:: bash
 
       v.lidar.edgedetection input=las_681_5644 output=edge_681_5644 ew_step=8 ns_step=8 lambda_g=0.5
-      v.in.lidar -otb input=las_681_5644_1_th_2014-2019.laz output=las_681_5644_first return_filter=first                
+      v.in.lidar -otb input=las_681_5644_1_th_2014-2019.las output=las_681_5644_first return_filter=first
       v.lidar.growing input=edge_681_5644 output=grow_681_5644 first=las_681_5644_first
       v.lidar.correction input=grow_681_5644 output=corr_681_5644 terrain=terr_681_5644
 
