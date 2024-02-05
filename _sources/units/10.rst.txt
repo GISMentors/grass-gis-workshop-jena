@@ -119,13 +119,12 @@ dictionary. This can be done by:
    from grass.script import parse_key_val
    
    m = Module('r.univar', flags='g', map='ndvi', stdout_=PIPE)
-   stats = parse_key_val(m.outputs.stdout)
-   print('NDVI min value: {0:.4f}'.format(float(stats['min'])))
-   print('NDVI max value: {0:.4f}'.format(float(stats['max'])))
-   print('NDVI mean value: {0:.4f}'.format(float(stats['mean'])))
+   stats = parse_key_val(m.outputs.stdout, val_type=float)
+   print('NDVI min value: {0:.4f}'.format(stats['min']))
+   print('NDVI max value: {0:.4f}'.format(stats['max']))
+   print('NDVI mean value: {0:.4f}'.format(stats['mean']))
 
 .. figure:: ../images/units/10/python-result.png
-   :class: middle
            
    Running Python code in :item:`Python` tab.
 
