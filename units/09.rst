@@ -144,7 +144,6 @@ immediately. GUI dialog is shown to allow entering user-defined
 parameters before lauching model computation.
 
 .. figure:: ../images/units/09/model-params.png
-   :class: small
 
    Parameterized options are organized into tabs based on relevant tools.
 
