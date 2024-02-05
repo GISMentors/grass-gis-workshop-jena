@@ -107,7 +107,7 @@ will be skipped (no topology is required for point data). The import
 process will be significantly faster.  Information about data SRS can
 be missing, in this case use <span class="param">-o</span> flag to skip projection
 check.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>v.in.lidar<span class="w"> </span>-otb<span class="w"> </span><span class="nv">input</span><span class="o">=</span>geodata/lidar/las_681_5644_1_th_2014-2019.laz<span class="w"> </span><span class="nv">output</span><span class="o">=</span>las_681_5644
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>v.in.lidar<span class="w"> </span>-otb<span class="w"> </span><span class="nv">input</span><span class="o">=</span>geodata/lidar/las_681_5644_1_th_2014-2019.las<span class="w"> </span><span class="nv">output</span><span class="o">=</span>las_681_5644
 </pre></div>
 </div>
 <p>Note that computational region is ignored when importing data using
@@ -156,7 +156,7 @@ data. Spatial resolution for output raster map is defined by
 <span class="param">resolution</span> option. By default, for cells with more points
 involved, the value is computed by mean value, see <span class="param">method</span>
 option. Cells covered by no points will get NULL (no-data) value assigned.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.in.lidar<span class="w"> </span>-oe<span class="w"> </span><span class="nv">input</span><span class="o">=</span>/home/martin/geodata/lidar/las_681_5644_1_th_2014-2019.laz<span class="w"> </span><span class="nv">output</span><span class="o">=</span>las_681_5644<span class="w"> </span><span class="nv">resolution</span><span class="o">=</span><span class="m">1</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.in.lidar<span class="w"> </span>-oe<span class="w"> </span><span class="nv">input</span><span class="o">=</span>/home/martin/geodata/lidar/las_681_5644_1_th_2014-2019.las<span class="w"> </span><span class="nv">output</span><span class="o">=</span>las_681_5644<span class="w"> </span><span class="nv">resolution</span><span class="o">=</span><span class="m">1</span>
 </pre></div>
 </div>
 <p>Basic metadata about created raster map can be obtained by
@@ -252,7 +252,7 @@ workflow based on <a class="reference external" href="https://grass.osgeo.org/gr
 <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.lidar.growing.html">v.lidar.growing</a> and <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.lidar.correction.html">v.lidar.correction</a>
 below. Note that edge detection is usually a time and RAM consuming task.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>v.lidar.edgedetection<span class="w"> </span><span class="nv">input</span><span class="o">=</span>las_681_5644<span class="w"> </span><span class="nv">output</span><span class="o">=</span>edge_681_5644<span class="w"> </span><span class="nv">ew_step</span><span class="o">=</span><span class="m">8</span><span class="w"> </span><span class="nv">ns_step</span><span class="o">=</span><span class="m">8</span><span class="w"> </span><span class="nv">lambda_g</span><span class="o">=</span><span class="m">0</span>.5
-v.in.lidar<span class="w"> </span>-otb<span class="w"> </span><span class="nv">input</span><span class="o">=</span>las_681_5644_1_th_2014-2019.laz<span class="w"> </span><span class="nv">output</span><span class="o">=</span>las_681_5644_first<span class="w"> </span><span class="nv">return_filter</span><span class="o">=</span>first
+v.in.lidar<span class="w"> </span>-otb<span class="w"> </span><span class="nv">input</span><span class="o">=</span>las_681_5644_1_th_2014-2019.las<span class="w"> </span><span class="nv">output</span><span class="o">=</span>las_681_5644_first<span class="w"> </span><span class="nv">return_filter</span><span class="o">=</span>first
 v.lidar.growing<span class="w"> </span><span class="nv">input</span><span class="o">=</span>edge_681_5644<span class="w"> </span><span class="nv">output</span><span class="o">=</span>grow_681_5644<span class="w"> </span><span class="nv">first</span><span class="o">=</span>las_681_5644_first
 v.lidar.correction<span class="w"> </span><span class="nv">input</span><span class="o">=</span>grow_681_5644<span class="w"> </span><span class="nv">output</span><span class="o">=</span>corr_681_5644<span class="w"> </span><span class="nv">terrain</span><span class="o">=</span>terr_681_5644
 </pre></div>
