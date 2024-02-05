@@ -27,9 +27,12 @@ GRASS tools can be added to the model from menu
 :sup:`Add GRASS tool (module) to model` from the main toolbar.
 
 .. figure:: ../images/units/08/add-module.png
-   :class: small
    
    Add GRASS tool (module) to model, in this case :grasscmd:`r.mask`.
+
+.. important:: Graphical Modeler sometimes has a problem with rendering
+   the model. In this case it helps to redraw model canvas by
+   |grass-redraw| :sup:`Redraw model canvas`.
 
 After adding :grasscmd:`r.mask` module to the model let's open its
 properties dialog by double-click and enter vector map to be used as a
