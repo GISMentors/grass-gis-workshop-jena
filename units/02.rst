@@ -96,8 +96,8 @@ georeferenced data file`).
    GRASS location.
             
 In our case, a new location will be created by defining CRS from
-:file:`jena_boundary.gpkg` input file (available from
-:file:`jena-sample-data-base.7z`).
+:file:`jena_boundary.gpkg` input file (located in the sample dataset
+in :file:`osm` directory).
 
 .. figure:: ../images/units/02/create-location-2.png
 

@@ -57,9 +57,7 @@ Download data
 -------------
 
 .. important:: Pre-downloaded MODIS data (year 2023) is available in the
-   sample dataset `jena-sample-data-modis.7z
-   <https://geo.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2022/jena-sample-data-modis.7z>`__
-   (1.0GB) :file:`geodata/modis`. Readers can continue with
+   sample dataset (:file:`modis` directory). Readers can continue with
    :ref:`importing sample data <modis-import>`.
 
 Let's download desired tiles (h18v03 and h18v04) for year 2023 by
@@ -70,7 +68,7 @@ downloaded.
 
 .. code-block:: bash
 
-   i.modis.download settings=settings.txt folder=geodata/modis \
+   i.modis.download settings=settings.txt folder=modis \
    tiles=h18v03,h18v04 \
    product=lst_aqua_eight_1000,lst_terra_eight_1000 \
    startday=2023-01-01 endday=2023-12-31
@@ -95,10 +93,10 @@ by :grasscmdaddons:`i.modis.import`.
 
 .. code-block:: bash
 
-   i.modis.import -mw files=geodata/modis/listfileMOD11A2.061.txt \
+   i.modis.import -mw files=modis/listfileMOD11A2.061.txt \
    spectral='( 1 0 0 0 1 0 0 0 0 0 0 0 )' outfile=tlist-mod.txt
 
-   i.modis.import -mw files=geodata/modis/listfileMYD11A2.061.txt \
+   i.modis.import -mw files=modis/listfileMYD11A2.061.txt \
    spectral='( 1 0 0 0 1 0 0 0 0 0 0 0 )' outfile=tlist-myd.txt
 
 If ``-m`` flag is given mosaic from input tiles is created

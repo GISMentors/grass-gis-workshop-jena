@@ -1,7 +1,7 @@
 Unit 18 - Lidar, DTM interpolation
 ==================================
 
-LiDAR data used in this unit can be found in :file:`geodata/lidar`
+LiDAR data used in this unit can be found in :file:`lidar`
 directory. Data is stored in LAZ format (compressed LAS format).
 
 .. note:: There is open Lidar data for Thuringia region available, see
@@ -11,9 +11,7 @@ directory. Data is stored in LAZ format (compressed LAS format).
    <http://www.geoportal-th.de/de-de/Downloadbereiche/Download-Offene-Geodaten-Th%C3%BCringen/Download-H%C3%B6hendaten>`__,
    choose region in map viewer and download selected tiles.
 
-Download sample data for this unit: `jena-sample-data-lidar.7z
-<https://geo.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2022/jena-sample-data-lidar.7z>`__
-(541MB)
+Sample data for this unit are located in :file:`lidar` directory.
    
 
 Data import
@@ -77,7 +75,7 @@ check.
 
 .. code-block:: bash
                 
-   v.in.lidar -otb input=geodata/lidar/las_681_5644_1_th_2014-2019.las output=las_681_5644
+   v.in.lidar -otb input=lidar/las_681_5644_1_th_2014-2019.las output=las_681_5644
 
 Note that computational region is ignored when importing data using
 :grasscmd:`v.in.lidar`.
@@ -136,7 +134,7 @@ option. Cells covered by no points will get NULL (no-data) value assigned.
    
 .. code-block:: bash
 
-   r.in.lidar -oe input=/home/martin/geodata/lidar/las_681_5644_1_th_2014-2019.las output=las_681_5644 resolution=1
+   r.in.lidar -oe input=/home/martin/lidar/las_681_5644_1_th_2014-2019.las output=las_681_5644 resolution=1
 
 Basic metadata about created raster map can be obtained by
 :grasscmd:`r.info`.

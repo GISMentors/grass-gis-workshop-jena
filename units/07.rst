@@ -33,9 +33,9 @@ It is also possible to run GRASS tools from **Processing** plugin.
 
 Let's compute NDVI as described in :doc:`05` using :grasscmd:`i.vi`
 GRASS tool, but in this case directly from QGIS UI. Load into QGIS
-input data: Jena city region (:file:`geodata/osm/jena_boundary.gpkg`)
+input data: Jena city region (:file:`osm/jena_boundary.gpkg`)
 and Sentinel bands (red and near-infrared channels) from
-:file:`geodata/sentinel/sample`.
+:file:`sentinel/sample` directory.
 
 .. figure:: ../images/units/07/qgis-input-data.png
    :class: middle

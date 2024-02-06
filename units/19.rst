@@ -45,7 +45,7 @@ Sample script to download: `create-dtm.py <../_static/scripts/create-dtm.py>`__
 .. note::
 
 	The script is taking a long time with all the tiles from
-	:file:`geodata/lidar` directory. Choose few tiles
+	:file:`lidar` directory. Choose few tiles
 	for testing.
 	
 .. figure:: ../images/units/19/dtm_patched.png
