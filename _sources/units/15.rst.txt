@@ -19,14 +19,14 @@ imported data will be reprojected into target *jena-region*
 
 .. note:: In order to save disk space the original EU-DEM tile was
    clipped by larger region than Jena AOI. Modified tile is available
-   from :file:`geodata/eu-dem` directory.
+   from :file:`eu-dem` directory.
 
 Create location for data import
 -------------------------------
 
 EU-DEM dataset is provided in ETRS89-extended / LAEA Europe
 (:epsg:`3035`). Start a new GRASS session and create a new location
-*jena-eu-dem* based on input :file:`geodata/eu-dem/dem_sample.tif`
+*jena-eu-dem* based on input :file:`eu-dem/dem_sample.tif`
 file as described in :ref:`Unit 02 <create-location>`) or from EPSG code.
 
 .. important:: Skip data import provided by

@@ -51,10 +51,8 @@ Let's download suitable Sentinel products for our area of interest
 will be used to avoid computing atmospheric corrections.
 
 .. important:: Pre-downloaded Sentinel scenes are available in the
-   sample dataset `jena-sample-data-sentinel.7z
-   <https://geo.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2022/jena-sample-data-sentinel.7z>`__
-   (1.7GB) :file:`geodata/sentinel`. Readers can continue with
-   :ref:`importing sample data <sentinel-import>`.
+   sample dataset (directory :file:`sentinel/2019`). Readers can
+   continue with :ref:`importing sample data <sentinel-import>`.
 
 Let's search for the latest available product by means of
 :grasscmd:`i.sentinel.download`. Setting the :param:`-l` flag, the result will only

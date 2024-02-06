@@ -11,8 +11,8 @@ Download data
 -------------
 
 .. important:: Pre-downloaded Sentinel scenes are available in the
-   sample dataset :file:`geodata/sentinel`. Readers can continue
-   with :ref:`importing sample data <sentinel-import-st>`.
+   sample dataset (directory :file:`sentinel/2019`). Readers can
+   continue with :ref:`importing sample data <sentinel-import-st>`.
 
 Let's download Sentinel L2A products for spring/summer
 2021. There are 6 products available as shown below.

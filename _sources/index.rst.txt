@@ -99,12 +99,9 @@ Sample dataset
 
 For purpose of this training materials a sample dataset has been
 created based on Open Data covering Germany and Jena region
-specifically. Sample dataset is split into four parts:
+specifically:
 
-* `jena-sample-data-base.7z <https://geo.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2022/jena-sample-data-base.7z>`__ (294MB) [Units 1-17]
-* `jena-sample-data-lidar.7z <https://geo.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2022/jena-sample-data-lidar.7z>`__ (541MB) [Units 18-19]
-* `jena-sample-data-sentinel.7z <https://geo.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2022/jena-sample-data-sentinel.7z>`__ (1.7GB)
-* `jena-sample-data-modis.7z <https://geo.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2022/jena-sample-data-modis.7z>`__ (1.0GB)
+* `jena-sample-data.7z <https://geo.fsv.cvut.cz/data/geoforall/jena-sample-dataset.7z>`__ (3.8GB)
   
 It is recommended to have at least 10GB free space (GRASS GIS
 installation + sample data + computation results).

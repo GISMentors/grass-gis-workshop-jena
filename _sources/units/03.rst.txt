@@ -14,9 +14,8 @@ used :wikipedia:`GIS file format` is required.
    one "map". So "GRASS raster map" can be treated as "a raster
    layer" in other GIS packages.
 
-Data used in this unit is located in :file:`geodata/sentinel/sample`
-directory of a sample dataset (available from
-:file:`jena-sample-data-base.7z`).
+Data used in this unit is located in :file:`sentinel/sample`
+directory of a sample dataset.
 
 Raster data
 -----------
@@ -74,7 +73,7 @@ Vector data
 -----------
 
 Let's import sample vector cloud mask data layer from
-:file:`geodata/sentinel/sample/MSK_CLOUDS_B00.gml` :wikipedia:`GML`
+:file:`sentinel/sample/MSK_CLOUDS_B00.gml` :wikipedia:`GML`
 file (commonly used GIS exchange *vector* data format). Vector data can
 be imported into GRASS from the toolbar |grass-vector-import|
 :sup:`Import vector data [v.import]` or from the menu

@@ -29,7 +29,7 @@ the case of Jena city region. See `Map Features
       -nln jena_rivers jena_rivers.gpkg export.geojson
        
 For simplification pre-processed river streams are included in sample
-dataset as :file:`geodata/osm/jena-rivers.gpkg` file.
+dataset as :file:`osm/jena-rivers.gpkg` file.
 
 .. figure:: ../images/units/16/jena-rivers.png
    :class: large

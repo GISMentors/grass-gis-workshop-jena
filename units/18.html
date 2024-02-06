@@ -42,7 +42,7 @@
             
   <section id="unit-18-lidar-dtm-interpolation">
 <h1>Unit 18 - Lidar, DTM interpolation<a class="headerlink" href="#unit-18-lidar-dtm-interpolation" title="Permalink to this heading">¶</a></h1>
-<p>LiDAR data used in this unit can be found in <code class="file docutils literal notranslate"><span class="pre">geodata/lidar</span></code>
+<p>LiDAR data used in this unit can be found in <code class="file docutils literal notranslate"><span class="pre">lidar</span></code>
 directory. Data is stored in LAZ format (compressed LAS format).</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -51,8 +51,7 @@ related <a class="reference external" href="https://rapidlasso.com/2017/01/09/se
 by rapidlasso GmbH. Go to <a class="reference external" href="http://www.geoportal-th.de/de-de/Downloadbereiche/Download-Offene-Geodaten-Th%C3%BCringen/Download-H%C3%B6hendaten">Download Höhendaten</a>,
 choose region in map viewer and download selected tiles.</p>
 </div>
-<p>Download sample data for this unit: <a class="reference external" href="https://geo.fsv.cvut.cz/geoforall/grass-gis-workshop-jena/2022/jena-sample-data-lidar.7z">jena-sample-data-lidar.7z</a>
-(541MB)</p>
+<p>Sample data for this unit are located in <code class="file docutils literal notranslate"><span class="pre">lidar</span></code> directory.</p>
 <section id="data-import">
 <h2>Data import<a class="headerlink" href="#data-import" title="Permalink to this heading">¶</a></h2>
 <p>For importing LAS/LAZ data there are available two GRASS modules:</p>
@@ -107,7 +106,7 @@ will be skipped (no topology is required for point data). The import
 process will be significantly faster.  Information about data SRS can
 be missing, in this case use <span class="param">-o</span> flag to skip projection
 check.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>v.in.lidar<span class="w"> </span>-otb<span class="w"> </span><span class="nv">input</span><span class="o">=</span>geodata/lidar/las_681_5644_1_th_2014-2019.las<span class="w"> </span><span class="nv">output</span><span class="o">=</span>las_681_5644
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>v.in.lidar<span class="w"> </span>-otb<span class="w"> </span><span class="nv">input</span><span class="o">=</span>lidar/las_681_5644_1_th_2014-2019.las<span class="w"> </span><span class="nv">output</span><span class="o">=</span>las_681_5644
 </pre></div>
 </div>
 <p>Note that computational region is ignored when importing data using
@@ -156,7 +155,7 @@ data. Spatial resolution for output raster map is defined by
 <span class="param">resolution</span> option. By default, for cells with more points
 involved, the value is computed by mean value, see <span class="param">method</span>
 option. Cells covered by no points will get NULL (no-data) value assigned.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.in.lidar<span class="w"> </span>-oe<span class="w"> </span><span class="nv">input</span><span class="o">=</span>/home/martin/geodata/lidar/las_681_5644_1_th_2014-2019.las<span class="w"> </span><span class="nv">output</span><span class="o">=</span>las_681_5644<span class="w"> </span><span class="nv">resolution</span><span class="o">=</span><span class="m">1</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.in.lidar<span class="w"> </span>-oe<span class="w"> </span><span class="nv">input</span><span class="o">=</span>/home/martin/lidar/las_681_5644_1_th_2014-2019.las<span class="w"> </span><span class="nv">output</span><span class="o">=</span>las_681_5644<span class="w"> </span><span class="nv">resolution</span><span class="o">=</span><span class="m">1</span>
 </pre></div>
 </div>
 <p>Basic metadata about created raster map can be obtained by
