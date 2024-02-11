@@ -105,7 +105,7 @@ in :file:`osm` directory).
 
 .. _city_region_download:
 
-.. note:: Jena administrative boundary downloaded from OSM using
+.. note:: Jena administrative boundary has been downloaded from OSM using
    `Overpass API <https://overpass-turbo.eu/>`__.
 
    .. code:: xml
