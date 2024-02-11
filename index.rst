@@ -81,6 +81,9 @@ Software used in this training materials
 Installation notes
 ------------------
 
+It is recommended to have at least 10GB free space (GRASS GIS
+installation + sample data + computation results).
+
 Debian/Ubuntu Linux
 ^^^^^^^^^^^^^^^^^^^
 
@@ -103,9 +106,6 @@ specifically:
 
 * `jena-sample-data.7z <https://geo.fsv.cvut.cz/data/geoforall/jena-sample-dataset.7z>`__ (3.8GB)
   
-It is recommended to have at least 10GB free space (GRASS GIS
-installation + sample data + computation results).
-
 List of data sources used for sample dataset:
 
 * EU-DEM (directory: :file:`eu-dem`, source: `Copernicus Land Monitoring
