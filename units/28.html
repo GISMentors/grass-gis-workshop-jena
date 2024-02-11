@@ -43,13 +43,13 @@
   <section id="unit-28-pywps-lst-point-stats">
 <h1>Unit 28 - PyWPS LST point stats<a class="headerlink" href="#unit-28-pywps-lst-point-stats" title="Permalink to this heading">¶</a></h1>
 <p>A second version of the WPS process will return LST statistics for
-given point in Germany (referenced in <a class="reference external" href="https://epsg.io/3035">EPSG:3035</a>). New input
-parameters (<code class="docutils literal notranslate"><span class="pre">point</span></code>) is defined on <span class="lcode">18-19</span>. The
+given point in Germany (referenced in <a class="reference external" href="https://epsg.io/3035">EPSG:3035</a>). A new input
+parameter (<code class="docutils literal notranslate"><span class="pre">point</span></code>) is defined on <span class="lcode">18-19</span>. The
 output is defined as <a class="reference external" href="https://en.wikipedia.org/wiki/JSON">JSON</a>, the class is changed from <code class="docutils literal notranslate"><span class="pre">LiteralOutput</span></code> to <code class="docutils literal notranslate"><span class="pre">ComplexOutput</span></code>, see line <span class="lcode">9,25-26</span>.</p>
 <p>The pixel extraction is done by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.rast.what.html">t.rast.what</a> on line
 <span class="lcode">53</span>. Statistics is computed based on command output manually
 on lines <span class="lcode">62-84</span>. Resultant Python dictionary is converted to
-JSON structure using <code class="docutils literal notranslate"><span class="pre">json</span></code> Python library on line <span class="lcode">86</span>. The
+JSON structure using <code class="docutils literal notranslate"><span class="pre">json</span></code> Python package on line <span class="lcode">86</span>. The
 <code class="docutils literal notranslate"><span class="pre">json</span></code> package is imported on line <span class="lcode">3</span>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="ch">#!/usr/bin/env python3</span>
 <span class="linenos"> 2</span>
@@ -59,8 +59,8 @@ JSON structure using <code class="docutils literal notranslate"><span class="pre
 <span class="linenos"> 6</span>
 <span class="linenos"> 7</span><span class="kn">from</span> <span class="nn">grass.pygrass.modules</span> <span class="kn">import</span> <span class="n">Module</span>
 <span class="linenos"> 8</span><span class="kn">from</span> <span class="nn">grass.script</span> <span class="kn">import</span> <span class="n">parse_key_val</span>
-<span class="linenos"> 9</span><span class="kn">from</span> <span class="nn">pywps</span> <span class="kn">import</span> <span class="n">Process</span><span class="p">,</span> <span class="n">LiteralInput</span><span class="p">,</span> <span class="n">ComplexOutput</span><span class="p">,</span> <span class="n">Format</span>
-<span class="linenos">10</span>
+<span class="hll"><span class="linenos"> 9</span><span class="kn">from</span> <span class="nn">pywps</span> <span class="kn">import</span> <span class="n">Process</span><span class="p">,</span> <span class="n">LiteralInput</span><span class="p">,</span> <span class="n">ComplexOutput</span><span class="p">,</span> <span class="n">Format</span>
+</span><span class="linenos">10</span>
 <span class="linenos">11</span>
 <span class="linenos">12</span><span class="k">class</span> <span class="nc">ModisV2</span><span class="p">(</span><span class="n">Process</span><span class="p">):</span>
 <span class="linenos">13</span>
@@ -78,17 +78,17 @@ JSON structure using <code class="docutils literal notranslate"><span class="pre
 <span class="hll"><span class="linenos">25</span>        <span class="n">outputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ComplexOutput</span><span class="p">(</span><span class="s1">&#39;output&#39;</span><span class="p">,</span> <span class="s1">&#39;Computed LST statistics&#39;</span><span class="p">,</span>
 </span><span class="hll"><span class="linenos">26</span>                                     <span class="n">supported_formats</span><span class="o">=</span><span class="p">[</span><span class="n">Format</span><span class="p">(</span><span class="s1">&#39;application/json&#39;</span><span class="p">)])</span>
 </span><span class="linenos">27</span>
-<span class="linenos">28</span>        <span class="nb">super</span><span class="p">(</span><span class="n">ModisV2</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-<span class="linenos">29</span>            <span class="bp">self</span><span class="o">.</span><span class="n">_handler</span><span class="p">,</span>
-<span class="linenos">30</span>            <span class="n">identifier</span><span class="o">=</span><span class="s2">&quot;modis-v2&quot;</span><span class="p">,</span>
-<span class="linenos">31</span>            <span class="n">tiotle</span><span class="o">=</span><span class="s2">&quot;Modis process (v2)&quot;</span><span class="p">,</span>
-<span class="linenos">32</span>            <span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span>
+<span class="hll"><span class="linenos">28</span>        <span class="nb">super</span><span class="p">(</span><span class="n">ModisV2</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+</span><span class="linenos">29</span>            <span class="bp">self</span><span class="o">.</span><span class="n">_handler</span><span class="p">,</span>
+<span class="hll"><span class="linenos">30</span>            <span class="n">identifier</span><span class="o">=</span><span class="s2">&quot;modis-v2&quot;</span><span class="p">,</span>
+</span><span class="hll"><span class="linenos">31</span>            <span class="n">tiotle</span><span class="o">=</span><span class="s2">&quot;Modis process (v2)&quot;</span><span class="p">,</span>
+</span><span class="linenos">32</span>            <span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span>
 <span class="linenos">33</span>            <span class="n">outputs</span><span class="o">=</span><span class="n">outputs</span><span class="p">,</span>
 <span class="linenos">34</span>            <span class="c1"># here you could also specify the GRASS location, for example:</span>
 <span class="linenos">35</span>            <span class="c1"># grass_location=&quot;EPSG:5514&quot;,</span>
-<span class="linenos">36</span>            <span class="n">abstract</span><span class="o">=</span><span class="s2">&quot;Computes LST stats for given location and period (limited to Germany and 2023).&quot;</span><span class="p">,</span>
-<span class="linenos">37</span>            <span class="n">verosion</span><span class="o">=</span><span class="s2">&quot;0.2&quot;</span><span class="p">,</span>
-<span class="linenos">38</span>            <span class="n">store_supported</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="hll"><span class="linenos">36</span>            <span class="n">abstract</span><span class="o">=</span><span class="s2">&quot;Computes LST stats for given location and period (limited to Germany and 2023).&quot;</span><span class="p">,</span>
+</span><span class="hll"><span class="linenos">37</span>            <span class="n">verosion</span><span class="o">=</span><span class="s2">&quot;0.2&quot;</span><span class="p">,</span>
+</span><span class="linenos">38</span>            <span class="n">store_supported</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 <span class="linenos">39</span>            <span class="n">status_supported</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="linenos">40</span>
 <span class="linenos">41</span>    <span class="nd">@staticmethod</span>
@@ -148,11 +148,14 @@ JSON structure using <code class="docutils literal notranslate"><span class="pre
 <span class="linenos">95</span>    <span class="n">application</span> <span class="o">=</span> <span class="n">Service</span><span class="p">(</span><span class="n">processes</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Also class name (<span class="lcode">28</span>), process identifier (<span class="lcode">30</span>), title
-(<span class="lcode">31</span>), abstract (<span class="lcode">36</span>) and version (<span class="lcode">37</span>) needs
-to be updated.</p>
+<p>Note that also class name (<span class="lcode">28</span>), process identifier
+(<span class="lcode">30</span>), title (<span class="lcode">31</span>), abstract (<span class="lcode">36</span>) and version
+(<span class="lcode">37</span>) needs to be updated.</p>
 <p>Sample process to download: <a class="reference external" href="../_static/scripts/modis_v2.py">modis_v2.py</a></p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
 <p>Do not forget to import process as done in <a class="reference internal" href="27.html#process-import"><span class="std std-ref">Unit 27</span></a> and restart demo PyWPS server.</p>
+</div>
 <p>Example of execute request:</p>
 <p><a class="reference external" href="http://localhost:5000/wps?request=Execute&amp;service=WPS&amp;identifier=modis-v2&amp;version=1.0.0&amp;datainputs=start=2023-03-01;end=2023-04-01;point=4351849,3120313">http://localhost:5000/wps?request=Execute&amp;service=WPS&amp;identifier=modis-v2&amp;version=1.0.0&amp;datainputs=start=2023-03-01;end=2023-04-01;point=4351849,3120313</a></p>
 <p>Possible response.</p>

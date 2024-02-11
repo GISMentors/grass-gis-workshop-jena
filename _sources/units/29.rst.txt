@@ -3,7 +3,7 @@ Unit 29 - PyWPS LST region stats
 
 A third version of the process will return LST statistics for region
 in Germany defined by input vector (polygon) data. Input area of
-interest is defined as ``region`` input ``ComplexInput`` parameter
+interest is defined as ``region`` ``ComplexInput`` parameter
 (:lcode:`9,18-21`) and imported by :grasscmd:`v.import` (line
 :lcode:`53`), resultant statistics is computed similarly as in process
 verion 1 (:doc:`27`) by :grasscmd:`t.rast.series` (line :lcode:`59`)
@@ -16,17 +16,19 @@ on line :lcode:`83`.
 .. literalinclude:: ../_static/scripts/modis_v3.py
    :language: python
    :linenos:
-   :emphasize-lines: 10, 62, 68, 78
+   :emphasize-lines: 9,18-21,30,32,33,38,39,53,56,57,59,72,83
 
-Also class name (:lcode:`30`), process identifier (:lcode:`32`), title
-(:lcode:`33`), abstract (:lcode:`38`) and version (:lcode:`39`) needs
-to be updated.
+.. todo:: Probably `text/xml` is not needed.
+
+Note that also class name (:lcode:`30`), process identifier
+(:lcode:`32`), title (:lcode:`33`), abstract (:lcode:`38`) and version
+(:lcode:`39`) needs to be updated.
                      
 Sample process to download: `modis_v3.py
 <../_static/scripts/modis_v3.py>`__
 
-Do not forget to import process as done in :ref:`Unit 27
-<process-import>` and restart demo PyWPS server.
+.. important:: Do not forget to import process as done in :ref:`Unit 27
+   <process-import>` and restart demo PyWPS server.
 
 Copy :file:`jena_boundary.gpkg` to :file:`pywps-flask/static/data` and
 execute the process.

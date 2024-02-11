@@ -2,30 +2,30 @@ Unit 28 - PyWPS LST point stats
 ===============================
 
 A second version of the WPS process will return LST statistics for
-given point in Germany (referenced in :epsg:`3035`). New input
-parameters (``point``) is defined on :lcode:`18-19`. The
+given point in Germany (referenced in :epsg:`3035`). A new input
+parameter (``point``) is defined on :lcode:`18-19`. The
 output is defined as :wikipedia:`JSON`, the class is changed from ``LiteralOutput`` to ``ComplexOutput``, see line :lcode:`9,25-26`.
 
 The pixel extraction is done by :grasscmd:`t.rast.what` on line
 :lcode:`53`. Statistics is computed based on command output manually
 on lines :lcode:`62-84`. Resultant Python dictionary is converted to
-JSON structure using ``json`` Python library on line :lcode:`86`. The
+JSON structure using ``json`` Python package on line :lcode:`86`. The
 ``json`` package is imported on line :lcode:`3`.
 
 .. literalinclude:: ../_static/scripts/modis_v2.py
    :language: python
    :linenos:
-   :emphasize-lines: 3,18-19,25-26,53,62-84,86
+   :emphasize-lines: 3,9,18-19,25-26,28,30,31,36,37,53,62-84,86
 
-Also class name (:lcode:`28`), process identifier (:lcode:`30`), title
-(:lcode:`31`), abstract (:lcode:`36`) and version (:lcode:`37`) needs
-to be updated.
+Note that also class name (:lcode:`28`), process identifier
+(:lcode:`30`), title (:lcode:`31`), abstract (:lcode:`36`) and version
+(:lcode:`37`) needs to be updated.
 
 Sample process to download: `modis_v2.py
 <../_static/scripts/modis_v2.py>`__
 
-Do not forget to import process as done in :ref:`Unit 27
-<process-import>` and restart demo PyWPS server.
+.. important:: Do not forget to import process as done in :ref:`Unit 27
+   <process-import>` and restart demo PyWPS server.
 
 Example of execute request:
 

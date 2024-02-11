@@ -40,123 +40,124 @@
   <section id="unit-30-pywps-lst-region-zones">
 <h1>Unit 30 - PyWPS LST region zones<a class="headerlink" href="#unit-30-pywps-lst-region-zones" title="Permalink to this heading">¶</a></h1>
 <p>A last (fourth) version of the process will return for input region
-and dates, LST zones in vector format (<a class="reference external" href="https://en.wikipedia.org/wiki/GML">GML</a>), see line
-<span class="lcode">17</span>.  Zones are defined on line <span class="lcode">83</span> by
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.recode.html">r.recode</a>. Raster classes are convert to vector by
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.to.vect.html">r.to.vect</a> on line <span class="lcode">96</span>. Finally vector classes are
-exported into GML format on line <span class="lcode">102</span> by
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.out.ogr.html">v.out.ogr</a>.</p>
+and dates, LST zones in vector format (<a class="reference external" href="https://en.wikipedia.org/wiki/GML">GML</a>). The output
+parameter is defined as <code class="docutils literal notranslate"><span class="pre">ComplexOutput</span></code>, see lines <span class="lcode">26-27</span>.
+Zones defined on lines <span class="lcode">83-86</span> are created by
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.recode.html">r.recode</a> (<span class="lcode">90</span>). Than raster zones are convert to
+vector by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.to.vect.html">r.to.vect</a> on line <span class="lcode">97</span>. Finally vector
+zones are exported into GML format on line <span class="lcode">104</span> by
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.out.ogr.html">v.out.ogr</a>. Response content is set on line <span class="lcode">110</span>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">  1</span><span class="ch">#!/usr/bin/env python3</span>
 <span class="linenos">  2</span>
-<span class="linenos">  3</span><span class="kn">import</span> <span class="nn">json</span> 
-<span class="linenos">  4</span><span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">PIPE</span>
-<span class="linenos">  5</span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
-<span class="linenos">  6</span>
-<span class="linenos">  7</span><span class="kn">from</span> <span class="nn">grass.pygrass.modules</span> <span class="kn">import</span> <span class="n">Module</span>
-<span class="linenos">  8</span><span class="kn">from</span> <span class="nn">grass.script</span> <span class="kn">import</span> <span class="n">parse_key_val</span>
-<span class="linenos">  9</span><span class="kn">from</span> <span class="nn">pywps</span> <span class="kn">import</span> <span class="n">Process</span><span class="p">,</span> <span class="n">LiteralInput</span><span class="p">,</span> <span class="n">ComplexInput</span><span class="p">,</span> <span class="n">ComplexOutput</span><span class="p">,</span> <span class="n">Format</span>
+<span class="linenos">  3</span><span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">PIPE</span>
+<span class="linenos">  4</span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="linenos">  5</span>
+<span class="linenos">  6</span><span class="kn">from</span> <span class="nn">grass.pygrass.modules</span> <span class="kn">import</span> <span class="n">Module</span>
+<span class="linenos">  7</span><span class="kn">from</span> <span class="nn">grass.script</span> <span class="kn">import</span> <span class="n">parse_key_val</span>
+<span class="linenos">  8</span><span class="kn">from</span> <span class="nn">pywps</span> <span class="kn">import</span> <span class="n">Process</span><span class="p">,</span> <span class="n">LiteralInput</span><span class="p">,</span> <span class="n">ComplexInput</span><span class="p">,</span> <span class="n">ComplexOutput</span><span class="p">,</span> <span class="n">Format</span>
+<span class="linenos">  9</span>
 <span class="linenos"> 10</span>
-<span class="linenos"> 11</span>
-<span class="linenos"> 12</span><span class="k">class</span> <span class="nc">ModisV4</span><span class="p">(</span><span class="n">Process</span><span class="p">):</span>
-<span class="linenos"> 13</span>
-<span class="linenos"> 14</span>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="linenos"> 15</span>        <span class="n">inputs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
-<span class="linenos"> 16</span>        <span class="n">outputs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
-<span class="hll"><span class="linenos"> 17</span>
-</span><span class="linenos"> 18</span>        <span class="n">inputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ComplexInput</span><span class="p">(</span><span class="s1">&#39;region&#39;</span><span class="p">,</span> <span class="s1">&#39;Input vector region&#39;</span><span class="p">,</span>
-<span class="linenos"> 19</span>                    <span class="n">supported_formats</span><span class="o">=</span><span class="p">[</span>
-<span class="linenos"> 20</span>                        <span class="n">Format</span><span class="p">(</span><span class="s1">&#39;text/xml&#39;</span><span class="p">),</span> <span class="c1"># requires QGIS WPS client</span>
-<span class="linenos"> 21</span>                        <span class="n">Format</span><span class="p">(</span><span class="s1">&#39;application/gml+xml&#39;</span><span class="p">)]))</span>
-<span class="linenos"> 22</span>        <span class="n">inputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">LiteralInput</span><span class="p">(</span><span class="s1">&#39;start&#39;</span><span class="p">,</span> <span class="s1">&#39;Start date (eg. 2023-03-01)&#39;</span><span class="p">,</span>
-<span class="linenos"> 23</span>                                   <span class="n">data_type</span><span class="o">=</span><span class="s1">&#39;string&#39;</span><span class="p">))</span>
-<span class="linenos"> 24</span>        <span class="n">inputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">LiteralInput</span><span class="p">(</span><span class="s1">&#39;end&#39;</span><span class="p">,</span> <span class="s1">&#39;End date (eg. 2023-03-01)&#39;</span><span class="p">,</span>
-<span class="linenos"> 25</span>                                   <span class="n">data_type</span><span class="o">=</span><span class="s1">&#39;string&#39;</span><span class="p">))</span>
-<span class="linenos"> 26</span>
-<span class="linenos"> 27</span>        <span class="n">outputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ComplexOutput</span><span class="p">(</span><span class="s1">&#39;zones&#39;</span><span class="p">,</span> <span class="s1">&#39;Output LST zones&#39;</span><span class="p">,</span>
-<span class="linenos"> 28</span>                                     <span class="n">supported_formats</span><span class="o">=</span><span class="p">[</span><span class="n">Format</span><span class="p">(</span><span class="s1">&#39;application/gml+xml&#39;</span><span class="p">)])</span>
-<span class="linenos"> 29</span>
-<span class="linenos"> 30</span>        <span class="nb">super</span><span class="p">(</span><span class="n">ModisV4</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-<span class="linenos"> 31</span>            <span class="bp">self</span><span class="o">.</span><span class="n">_handler</span><span class="p">,</span>
-<span class="linenos"> 32</span>            <span class="n">identifier</span><span class="o">=</span><span class="s2">&quot;modis-v4&quot;</span><span class="p">,</span>
-<span class="linenos"> 33</span>            <span class="n">tiotle</span><span class="o">=</span><span class="s2">&quot;Modis process (v4)&quot;</span><span class="p">,</span>
-<span class="linenos"> 34</span>            <span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span>
-<span class="linenos"> 35</span>            <span class="n">outputs</span><span class="o">=</span><span class="n">outputs</span><span class="p">,</span>
-<span class="linenos"> 36</span>            <span class="c1"># here you could also specify the GRASS location, for example:</span>
-<span class="linenos"> 37</span>            <span class="c1"># grass_location=&quot;EPSG:5514&quot;,</span>
-<span class="linenos"> 38</span>            <span class="n">abstract</span><span class="o">=</span><span class="s2">&quot;Computes LST stats for given area and period (limited to Germany and 2023).&quot;</span><span class="p">,</span>
-<span class="linenos"> 39</span>            <span class="n">verosion</span><span class="o">=</span><span class="s2">&quot;0.4&quot;</span><span class="p">,</span>
-<span class="linenos"> 40</span>            <span class="n">store_supported</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-<span class="linenos"> 41</span>            <span class="n">status_supported</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="linenos"> 42</span>
-<span class="linenos"> 43</span>    <span class="nd">@staticmethod</span>
-<span class="linenos"> 44</span>    <span class="k">def</span> <span class="nf">_handler</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
-<span class="linenos"> 45</span>        <span class="k">def</span> <span class="nf">check_date</span><span class="p">(</span><span class="n">date_str</span><span class="p">):</span>
-<span class="linenos"> 46</span>            <span class="n">d</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">date_str</span><span class="p">,</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
-<span class="linenos"> 47</span>            <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">year</span> <span class="o">!=</span> <span class="mi">2023</span><span class="p">:</span>
-<span class="linenos"> 48</span>                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Only year 2023 allowed&quot;</span><span class="p">)</span>
-<span class="linenos"> 49</span>
-<span class="linenos"> 50</span>        <span class="n">check_date</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;start&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
-<span class="linenos"> 51</span>        <span class="n">check_date</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;end&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
-<span class="linenos"> 52</span>
-<span class="linenos"> 53</span>        <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;v.import&#39;</span><span class="p">,</span>
-<span class="linenos"> 54</span>                <span class="nb">input</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;region&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">file</span><span class="p">,</span>
-<span class="linenos"> 55</span>                <span class="n">output</span><span class="o">=</span><span class="s1">&#39;poly&#39;</span><span class="p">)</span>
-<span class="linenos"> 56</span>        <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;g.region&#39;</span><span class="p">,</span> <span class="n">vector</span><span class="o">=</span><span class="s1">&#39;poly&#39;</span><span class="p">,</span> <span class="n">align</span><span class="o">=</span><span class="s1">&#39;c_001&#39;</span><span class="p">)</span>
-<span class="linenos"> 57</span>        <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;r.mask&#39;</span><span class="p">,</span> <span class="n">vector</span><span class="o">=</span><span class="s1">&#39;poly&#39;</span><span class="p">)</span>
-<span class="linenos"> 58</span>
-<span class="linenos"> 59</span>        <span class="n">Module</span><span class="p">(</span><span class="s2">&quot;t.rast.series&quot;</span><span class="p">,</span>
-<span class="linenos"> 60</span>               <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-<span class="linenos"> 61</span>               <span class="nb">input</span><span class="o">=</span><span class="s2">&quot;modis_c@PERMANENT&quot;</span><span class="p">,</span>
-<span class="linenos"> 62</span>               <span class="n">method</span><span class="o">=</span><span class="s2">&quot;average&quot;</span><span class="p">,</span>
-<span class="linenos"> 63</span>               <span class="n">order</span><span class="o">=</span><span class="s2">&quot;start_time&quot;</span><span class="p">,</span>
-<span class="linenos"> 64</span>               <span class="n">nprocs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-<span class="linenos"> 65</span>               <span class="n">memory</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
-<span class="linenos"> 66</span>               <span class="n">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt; &#39;</span><span class="si">{}</span><span class="s2">&#39; and start_time &lt; &#39;</span><span class="si">{}</span><span class="s2">&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-<span class="linenos"> 67</span>                   <span class="n">request</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="s2">&quot;start&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
-<span class="linenos"> 68</span>                   <span class="n">request</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="s2">&quot;end&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">),</span>
-<span class="linenos"> 69</span>               <span class="n">output</span><span class="o">=</span><span class="s2">&quot;t_rast_series_out&quot;</span><span class="p">,</span>
-<span class="linenos"> 70</span>               <span class="n">file_limit</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
-<span class="linenos"> 71</span>
-<span class="linenos"> 72</span>        <span class="n">m</span> <span class="o">=</span> <span class="n">Module</span><span class="p">(</span><span class="s2">&quot;r.univar&quot;</span><span class="p">,</span>
-<span class="linenos"> 73</span>                   <span class="n">flags</span><span class="o">=</span><span class="s2">&quot;g&quot;</span><span class="p">,</span>
-<span class="linenos"> 74</span>                   <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-<span class="linenos"> 75</span>                   <span class="nb">map</span><span class="o">=</span><span class="s2">&quot;t_rast_series_out&quot;</span><span class="p">,</span>
-<span class="linenos"> 76</span>                   <span class="n">percentile</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span>
-<span class="linenos"> 77</span>                   <span class="n">nprocs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-<span class="linenos"> 78</span>                   <span class="n">separator</span><span class="o">=</span><span class="s2">&quot;pipe&quot;</span><span class="p">,</span>
-<span class="linenos"> 79</span>                   <span class="n">stdout_</span><span class="o">=</span><span class="n">PIPE</span><span class="p">)</span>
-<span class="linenos"> 80</span>
-<span class="linenos"> 81</span>        <span class="n">stats</span> <span class="o">=</span> <span class="n">parse_key_val</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span> <span class="n">val_type</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-<span class="linenos"> 82</span>
-<span class="hll"><span class="linenos"> 83</span>        <span class="n">output</span> <span class="o">=</span> <span class="s1">&#39;stats&#39;</span>
-</span><span class="linenos"> 84</span>        <span class="n">recode_table</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span><span class="si">{min}</span><span class="s2">:</span><span class="si">{first}</span><span class="s2">:1</span>
-<span class="linenos"> 85</span><span class="si">{first}</span><span class="s2">:</span><span class="si">{median}</span><span class="s2">:2</span>
-<span class="linenos"> 86</span><span class="si">{median}</span><span class="s2">:</span><span class="si">{third}</span><span class="s2">:3</span>
-<span class="linenos"> 87</span><span class="si">{third}</span><span class="s2">:</span><span class="si">{max}</span><span class="s2">:4&quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-<span class="linenos"> 88</span>    <span class="nb">min</span><span class="o">=</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;min&#39;</span><span class="p">],</span> <span class="n">first</span><span class="o">=</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;first_quartile&#39;</span><span class="p">],</span>
-<span class="linenos"> 89</span>    <span class="n">median</span><span class="o">=</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;median&#39;</span><span class="p">],</span> <span class="n">third</span><span class="o">=</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;third_quartile&#39;</span><span class="p">],</span>
-<span class="linenos"> 90</span>    <span class="nb">max</span><span class="o">=</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;max&#39;</span><span class="p">])</span>                     
-<span class="linenos"> 91</span>        <span class="n">Module</span><span class="p">(</span><span class="s2">&quot;r.recode&quot;</span><span class="p">,</span>
-<span class="linenos"> 92</span>               <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>               
-<span class="linenos"> 93</span>               <span class="nb">input</span> <span class="o">=</span> <span class="n">output</span><span class="p">,</span>
-<span class="linenos"> 94</span>               <span class="n">output</span> <span class="o">=</span> <span class="n">output</span> <span class="o">+</span> <span class="s1">&#39;_zones&#39;</span><span class="p">,</span>
-<span class="linenos"> 95</span>               <span class="n">rules</span> <span class="o">=</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span>
-<span class="hll"><span class="linenos"> 96</span>               <span class="n">stdin_</span><span class="o">=</span><span class="n">recode_table</span>
-</span><span class="linenos"> 97</span>        <span class="p">)</span>
-<span class="linenos"> 98</span>
-<span class="linenos"> 99</span>        <span class="n">Module</span><span class="p">(</span><span class="s2">&quot;r.to.vect&quot;</span><span class="p">,</span>
-<span class="linenos">100</span> <span class="mi">97</span>               <span class="n">flags</span> <span class="o">=</span> <span class="s1">&#39;sv&#39;</span><span class="p">,</span>
-<span class="linenos">101</span> <span class="mi">98</span>               <span class="nb">input</span> <span class="o">=</span> <span class="n">output</span> <span class="o">+</span> <span class="s1">&#39;_zones&#39;</span><span class="p">,</span>
-<span class="hll"><span class="linenos">102</span> <span class="mi">99</span>               <span class="n">output</span> <span class="o">=</span> <span class="n">output</span> <span class="o">+</span> <span class="s1">&#39;_zones&#39;</span><span class="p">,</span>
-</span><span class="linenos">103</span><span class="mi">100</span>               <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;area&quot;</span><span class="p">)</span>
-<span class="linenos">104</span><span class="mi">101</span>        
-<span class="linenos">105</span><span class="mi">102</span>        <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;v.out.ogr&#39;</span><span class="p">,</span>
-<span class="linenos">106</span><span class="mi">103</span>               <span class="nb">input</span><span class="o">=</span><span class="n">output</span> <span class="o">+</span> <span class="s1">&#39;_zones&#39;</span><span class="p">,</span>
-<span class="linenos">107</span><span class="mi">104</span>               <span class="n">output</span><span class="o">=</span><span class="s1">&#39;zones.gml&#39;</span><span class="p">,</span>
-<span class="linenos">108</span><span class="mi">105</span>               <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;GML&#39;</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="linenos">109</span><span class="mi">106</span>
-<span class="linenos">110</span><span class="mi">107</span>        <span class="n">response</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="s1">&#39;zones&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="s1">&#39;zones.gml&#39;</span>
-<span class="linenos">111</span>
+<span class="linenos"> 11</span><span class="k">class</span> <span class="nc">ModisV4</span><span class="p">(</span><span class="n">Process</span><span class="p">):</span>
+<span class="linenos"> 12</span>
+<span class="linenos"> 13</span>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="linenos"> 14</span>        <span class="n">inputs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+<span class="linenos"> 15</span>        <span class="n">outputs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+<span class="linenos"> 16</span>
+<span class="linenos"> 17</span>        <span class="n">inputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ComplexInput</span><span class="p">(</span><span class="s1">&#39;region&#39;</span><span class="p">,</span> <span class="s1">&#39;Input vector region&#39;</span><span class="p">,</span>
+<span class="linenos"> 18</span>                    <span class="n">supported_formats</span><span class="o">=</span><span class="p">[</span>
+<span class="linenos"> 19</span>                        <span class="n">Format</span><span class="p">(</span><span class="s1">&#39;text/xml&#39;</span><span class="p">),</span> <span class="c1"># requires QGIS WPS client</span>
+<span class="linenos"> 20</span>                        <span class="n">Format</span><span class="p">(</span><span class="s1">&#39;application/gml+xml&#39;</span><span class="p">)]))</span>
+<span class="linenos"> 21</span>        <span class="n">inputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">LiteralInput</span><span class="p">(</span><span class="s1">&#39;start&#39;</span><span class="p">,</span> <span class="s1">&#39;Start date (eg. 2023-03-01)&#39;</span><span class="p">,</span>
+<span class="linenos"> 22</span>                                   <span class="n">data_type</span><span class="o">=</span><span class="s1">&#39;string&#39;</span><span class="p">))</span>
+<span class="linenos"> 23</span>        <span class="n">inputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">LiteralInput</span><span class="p">(</span><span class="s1">&#39;end&#39;</span><span class="p">,</span> <span class="s1">&#39;End date (eg. 2023-03-01)&#39;</span><span class="p">,</span>
+<span class="linenos"> 24</span>                                   <span class="n">data_type</span><span class="o">=</span><span class="s1">&#39;string&#39;</span><span class="p">))</span>
+<span class="linenos"> 25</span>
+<span class="hll"><span class="linenos"> 26</span>        <span class="n">outputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ComplexOutput</span><span class="p">(</span><span class="s1">&#39;zones&#39;</span><span class="p">,</span> <span class="s1">&#39;Output LST zones&#39;</span><span class="p">,</span>
+</span><span class="hll"><span class="linenos"> 27</span>                                     <span class="n">supported_formats</span><span class="o">=</span><span class="p">[</span><span class="n">Format</span><span class="p">(</span><span class="s1">&#39;application/gml+xml&#39;</span><span class="p">)])</span>
+</span><span class="linenos"> 28</span>
+<span class="hll"><span class="linenos"> 29</span>        <span class="nb">super</span><span class="p">(</span><span class="n">ModisV4</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+</span><span class="linenos"> 30</span>            <span class="bp">self</span><span class="o">.</span><span class="n">_handler</span><span class="p">,</span>
+<span class="hll"><span class="linenos"> 31</span>            <span class="n">identifier</span><span class="o">=</span><span class="s2">&quot;modis-v4&quot;</span><span class="p">,</span>
+</span><span class="hll"><span class="linenos"> 32</span>            <span class="n">tiotle</span><span class="o">=</span><span class="s2">&quot;Modis process (v4)&quot;</span><span class="p">,</span>
+</span><span class="linenos"> 33</span>            <span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span>
+<span class="linenos"> 34</span>            <span class="n">outputs</span><span class="o">=</span><span class="n">outputs</span><span class="p">,</span>
+<span class="linenos"> 35</span>            <span class="c1"># here you could also specify the GRASS location, for example:</span>
+<span class="linenos"> 36</span>            <span class="c1"># grass_location=&quot;EPSG:5514&quot;,</span>
+<span class="hll"><span class="linenos"> 37</span>            <span class="n">abstract</span><span class="o">=</span><span class="s2">&quot;Computes LST stats for given area and period (limited to Germany and 2023).&quot;</span><span class="p">,</span>
+</span><span class="hll"><span class="linenos"> 38</span>            <span class="n">verosion</span><span class="o">=</span><span class="s2">&quot;0.4&quot;</span><span class="p">,</span>
+</span><span class="linenos"> 39</span>            <span class="n">store_supported</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="linenos"> 40</span>            <span class="n">status_supported</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="linenos"> 41</span>
+<span class="linenos"> 42</span>    <span class="nd">@staticmethod</span>
+<span class="linenos"> 43</span>    <span class="k">def</span> <span class="nf">_handler</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+<span class="linenos"> 44</span>        <span class="k">def</span> <span class="nf">check_date</span><span class="p">(</span><span class="n">date_str</span><span class="p">):</span>
+<span class="linenos"> 45</span>            <span class="n">d</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">date_str</span><span class="p">,</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="linenos"> 46</span>            <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">year</span> <span class="o">!=</span> <span class="mi">2023</span><span class="p">:</span>
+<span class="linenos"> 47</span>                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Only year 2023 allowed&quot;</span><span class="p">)</span>
+<span class="linenos"> 48</span>
+<span class="linenos"> 49</span>        <span class="n">check_date</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;start&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+<span class="linenos"> 50</span>        <span class="n">check_date</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;end&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+<span class="linenos"> 51</span>
+<span class="linenos"> 52</span>        <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;v.import&#39;</span><span class="p">,</span>
+<span class="linenos"> 53</span>                <span class="nb">input</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;region&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">file</span><span class="p">,</span>
+<span class="linenos"> 54</span>                <span class="n">output</span><span class="o">=</span><span class="s1">&#39;poly&#39;</span><span class="p">)</span>
+<span class="linenos"> 55</span>        <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;g.region&#39;</span><span class="p">,</span> <span class="n">vector</span><span class="o">=</span><span class="s1">&#39;poly&#39;</span><span class="p">,</span> <span class="n">align</span><span class="o">=</span><span class="s1">&#39;c_001&#39;</span><span class="p">)</span>
+<span class="linenos"> 56</span>        <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;r.mask&#39;</span><span class="p">,</span> <span class="n">vector</span><span class="o">=</span><span class="s1">&#39;poly&#39;</span><span class="p">)</span>
+<span class="linenos"> 57</span>
+<span class="linenos"> 58</span>        <span class="n">Module</span><span class="p">(</span><span class="s2">&quot;t.rast.series&quot;</span><span class="p">,</span>
+<span class="linenos"> 59</span>               <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="linenos"> 60</span>               <span class="nb">input</span><span class="o">=</span><span class="s2">&quot;modis_c@PERMANENT&quot;</span><span class="p">,</span>
+<span class="linenos"> 61</span>               <span class="n">method</span><span class="o">=</span><span class="s2">&quot;average&quot;</span><span class="p">,</span>
+<span class="linenos"> 62</span>               <span class="n">order</span><span class="o">=</span><span class="s2">&quot;start_time&quot;</span><span class="p">,</span>
+<span class="linenos"> 63</span>               <span class="n">nprocs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<span class="linenos"> 64</span>               <span class="n">memory</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+<span class="linenos"> 65</span>               <span class="n">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt; &#39;</span><span class="si">{}</span><span class="s2">&#39; and start_time &lt; &#39;</span><span class="si">{}</span><span class="s2">&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+<span class="linenos"> 66</span>                   <span class="n">request</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="s2">&quot;start&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+<span class="linenos"> 67</span>                   <span class="n">request</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="s2">&quot;end&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">),</span>
+<span class="linenos"> 68</span>               <span class="n">output</span><span class="o">=</span><span class="s2">&quot;t_rast_series_out&quot;</span><span class="p">,</span>
+<span class="linenos"> 69</span>               <span class="n">file_limit</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="linenos"> 70</span>
+<span class="linenos"> 71</span>        <span class="n">m</span> <span class="o">=</span> <span class="n">Module</span><span class="p">(</span><span class="s2">&quot;r.univar&quot;</span><span class="p">,</span>
+<span class="linenos"> 72</span>                   <span class="n">flags</span><span class="o">=</span><span class="s2">&quot;g&quot;</span><span class="p">,</span>
+<span class="linenos"> 73</span>                   <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="linenos"> 74</span>                   <span class="nb">map</span><span class="o">=</span><span class="s2">&quot;t_rast_series_out&quot;</span><span class="p">,</span>
+<span class="linenos"> 75</span>                   <span class="n">percentile</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span>
+<span class="linenos"> 76</span>                   <span class="n">nprocs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<span class="linenos"> 77</span>                   <span class="n">separator</span><span class="o">=</span><span class="s2">&quot;pipe&quot;</span><span class="p">,</span>
+<span class="linenos"> 78</span>                   <span class="n">stdout_</span><span class="o">=</span><span class="n">PIPE</span><span class="p">)</span>
+<span class="linenos"> 79</span>
+<span class="linenos"> 80</span>        <span class="n">stats</span> <span class="o">=</span> <span class="n">parse_key_val</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span> <span class="n">val_type</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+<span class="linenos"> 81</span>
+<span class="linenos"> 82</span>        <span class="n">output</span> <span class="o">=</span> <span class="s1">&#39;stats&#39;</span>
+<span class="hll"><span class="linenos"> 83</span>        <span class="n">recode_table</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span><span class="si">{min}</span><span class="s2">:</span><span class="si">{first}</span><span class="s2">:1</span>
+</span><span class="hll"><span class="linenos"> 84</span><span class="si">{first}</span><span class="s2">:</span><span class="si">{median}</span><span class="s2">:2</span>
+</span><span class="hll"><span class="linenos"> 85</span><span class="si">{median}</span><span class="s2">:</span><span class="si">{third}</span><span class="s2">:3</span>
+</span><span class="hll"><span class="linenos"> 86</span><span class="si">{third}</span><span class="s2">:</span><span class="si">{max}</span><span class="s2">:4&quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+</span><span class="linenos"> 87</span>    <span class="nb">min</span><span class="o">=</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;min&#39;</span><span class="p">],</span> <span class="n">first</span><span class="o">=</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;first_quartile&#39;</span><span class="p">],</span>
+<span class="linenos"> 88</span>    <span class="n">median</span><span class="o">=</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;median&#39;</span><span class="p">],</span> <span class="n">third</span><span class="o">=</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;third_quartile&#39;</span><span class="p">],</span>
+<span class="linenos"> 89</span>    <span class="nb">max</span><span class="o">=</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;max&#39;</span><span class="p">])</span>                     
+<span class="hll"><span class="linenos"> 90</span>        <span class="n">Module</span><span class="p">(</span><span class="s2">&quot;r.recode&quot;</span><span class="p">,</span>
+</span><span class="linenos"> 91</span>               <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>               
+<span class="linenos"> 92</span>               <span class="nb">input</span> <span class="o">=</span> <span class="n">output</span><span class="p">,</span>
+<span class="linenos"> 93</span>               <span class="n">output</span> <span class="o">=</span> <span class="n">output</span> <span class="o">+</span> <span class="s1">&#39;_zones&#39;</span><span class="p">,</span>
+<span class="linenos"> 94</span>               <span class="n">rules</span> <span class="o">=</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span>
+<span class="linenos"> 95</span>               <span class="n">stdin_</span><span class="o">=</span><span class="n">recode_table</span><span class="p">)</span>
+<span class="linenos"> 96</span>
+<span class="hll"><span class="linenos"> 97</span>        <span class="n">Module</span><span class="p">(</span><span class="s2">&quot;r.to.vect&quot;</span><span class="p">,</span>
+</span><span class="linenos"> 98</span>               <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="linenos"> 99</span>               <span class="n">flags</span> <span class="o">=</span> <span class="s1">&#39;sv&#39;</span><span class="p">,</span>
+<span class="linenos">100</span>               <span class="nb">input</span> <span class="o">=</span> <span class="n">output</span> <span class="o">+</span> <span class="s1">&#39;_zones&#39;</span><span class="p">,</span>
+<span class="linenos">101</span>               <span class="n">output</span> <span class="o">=</span> <span class="n">output</span> <span class="o">+</span> <span class="s1">&#39;_zones&#39;</span><span class="p">,</span>
+<span class="linenos">102</span>               <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;area&quot;</span><span class="p">)</span>
+<span class="linenos">103</span>
+<span class="hll"><span class="linenos">104</span>        <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;v.out.ogr&#39;</span><span class="p">,</span>
+</span><span class="linenos">105</span>               <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="linenos">106</span>               <span class="nb">input</span><span class="o">=</span><span class="n">output</span> <span class="o">+</span> <span class="s1">&#39;_zones&#39;</span><span class="p">,</span>
+<span class="linenos">107</span>               <span class="n">output</span><span class="o">=</span><span class="s1">&#39;zones.gml&#39;</span><span class="p">,</span>
+<span class="linenos">108</span>               <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;GML&#39;</span><span class="p">)</span>
+<span class="linenos">109</span>
+<span class="hll"><span class="linenos">110</span>        <span class="n">response</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="s1">&#39;zones&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="s1">&#39;zones.gml&#39;</span>
+</span><span class="linenos">111</span>
 <span class="linenos">112</span>        <span class="k">return</span> <span class="n">response</span>
 <span class="linenos">113</span>
 <span class="linenos">114</span>
@@ -167,19 +168,33 @@ exported into GML format on line <span class="lcode">102</span> by
 <span class="linenos">119</span>    <span class="n">application</span> <span class="o">=</span> <span class="n">Service</span><span class="p">(</span><span class="n">processes</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>Note that also class name (<span class="lcode">29</span>), process identifier
+(<span class="lcode">31</span>), title (<span class="lcode">32</span>), abstract (<span class="lcode">37</span>) and version
+(<span class="lcode">38</span>) needs to be updated.</p>
 <p>Sample process to download: <a class="reference external" href="../_static/scripts/modis_v4.py">modis_v4.py</a></p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
 <p>Do not forget to import process as done in <a class="reference internal" href="27.html#process-import"><span class="std std-ref">Unit 27</span></a> and restart demo PyWPS server.</p>
+</div>
 <p>Execute process:</p>
-<p><a class="reference external" href="http://localhost:5000/wps?request=Execute&amp;service=WPS&amp;identifier=modis-v4&amp;version=1.0.0&amp;datainputs=start=2019-03-01;end=2019-04-01;region=&#64;xlink:href=http://localhost:5000/static/data/jena_boundary.gpkg">http://localhost:5000/wps?request=Execute&amp;service=WPS&amp;identifier=modis-v4&amp;version=1.0.0&amp;datainputs=start=2019-03-01;end=2019-04-01;region=&#64;xlink:href=http://localhost:5000/static/data/jena_boundary.gpkg</a></p>
+<p><a class="reference external" href="http://localhost:5000/wps?request=Execute&amp;service=WPS&amp;identifier=modis-v4&amp;version=1.0.0&amp;datainputs=start=2023-03-01;end=2023-04-01;region=&#64;xlink:href=http://localhost:5000/static/data/jena_boundary.gpkg">http://localhost:5000/wps?request=Execute&amp;service=WPS&amp;identifier=modis-v4&amp;version=1.0.0&amp;datainputs=start=2023-03-01;end=2023-04-01;region=&#64;xlink:href=http://localhost:5000/static/data/jena_boundary.gpkg</a></p>
 <p>Compare with (output return as reference):</p>
-<p><a class="reference external" href="http://localhost:5000/wps?request=Execute&amp;service=WPS&amp;identifier=modis-v4&amp;version=1.0.0&amp;datainputs=start=2019-03-01;end=2019-04-01;region=&#64;xlink:href=http://localhost:5000/static/data/jena_boundary.gpkg&amp;responsedocument=zones=&#64;asReference=true">http://localhost:5000/wps?request=Execute&amp;service=WPS&amp;identifier=modis-v4&amp;version=1.0.0&amp;datainputs=start=2019-03-01;end=2019-04-01;region=&#64;xlink:href=http://localhost:5000/static/data/jena_boundary.gpkg&amp;responsedocument=zones=&#64;asReference=true</a></p>
-<figure class="align-center" id="id1">
+<p><a class="reference external" href="http://localhost:5000/wps?request=Execute&amp;service=WPS&amp;identifier=modis-v4&amp;version=1.0.0&amp;datainputs=start=2023-03-01;end=2023-04-01;region=&#64;xlink:href=http://localhost:5000/static/data/jena_boundary.gpkg&amp;responsedocument=zones=&#64;asReference=true">http://localhost:5000/wps?request=Execute&amp;service=WPS&amp;identifier=modis-v4&amp;version=1.0.0&amp;datainputs=start=2023-03-01;end=2023-04-01;region=&#64;xlink:href=http://localhost:5000/static/data/jena_boundary.gpkg&amp;responsedocument=zones=&#64;asReference=true</a></p>
+<figure class="align-center" id="id3">
 <img alt="../_images/qgis-result.png" class="large" src="../_images/qgis-result.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 123 </span><span class="caption-text">Example of WPS process consumption in QGIS using WPS client plugin.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 123 </span><span class="caption-text">Example of WPS process consumption in QGIS using WPS client plugin.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
-<p><strong>It is the end (of the workshop), enjoy GRASS GIS, PyWPS (and your real life)! :-)</strong></p>
+<div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p>Output to be updated</p>
+</div>
+<div class="admonition-todo admonition" id="id2">
+<p class="admonition-title">Todo</p>
+<p>Release QGIS plugin</p>
+</div>
+<p><strong>It is the end (of the workshop), enjoy GRASS GIS (and your real life)! :-)</strong></p>
 </section>
 
 

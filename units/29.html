@@ -44,7 +44,7 @@
 <h1>Unit 29 - PyWPS LST region stats<a class="headerlink" href="#unit-29-pywps-lst-region-stats" title="Permalink to this heading">¶</a></h1>
 <p>A third version of the process will return LST statistics for region
 in Germany defined by input vector (polygon) data. Input area of
-interest is defined as <code class="docutils literal notranslate"><span class="pre">region</span></code> input <code class="docutils literal notranslate"><span class="pre">ComplexInput</span></code> parameter
+interest is defined as <code class="docutils literal notranslate"><span class="pre">region</span></code> <code class="docutils literal notranslate"><span class="pre">ComplexInput</span></code> parameter
 (<span class="lcode">9,18-21</span>) and imported by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.import.html">v.import</a> (line
 <span class="lcode">53</span>), resultant statistics is computed similarly as in process
 verion 1 (<a class="reference internal" href="27.html"><span class="doc">Unit 27 - PyWPS intro</span></a>) by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.rast.series.html">t.rast.series</a> (line <span class="lcode">59</span>)
@@ -61,20 +61,20 @@ on line <span class="lcode">83</span>.</p>
 <span class="linenos"> 6</span>
 <span class="linenos"> 7</span><span class="kn">from</span> <span class="nn">grass.pygrass.modules</span> <span class="kn">import</span> <span class="n">Module</span>
 <span class="linenos"> 8</span><span class="kn">from</span> <span class="nn">grass.script</span> <span class="kn">import</span> <span class="n">parse_key_val</span>
-<span class="linenos"> 9</span><span class="kn">from</span> <span class="nn">pywps</span> <span class="kn">import</span> <span class="n">Process</span><span class="p">,</span> <span class="n">LiteralInput</span><span class="p">,</span> <span class="n">ComplexInput</span><span class="p">,</span> <span class="n">ComplexOutput</span><span class="p">,</span> <span class="n">Format</span>
-<span class="hll"><span class="linenos">10</span>
-</span><span class="linenos">11</span>
+<span class="hll"><span class="linenos"> 9</span><span class="kn">from</span> <span class="nn">pywps</span> <span class="kn">import</span> <span class="n">Process</span><span class="p">,</span> <span class="n">LiteralInput</span><span class="p">,</span> <span class="n">ComplexInput</span><span class="p">,</span> <span class="n">ComplexOutput</span><span class="p">,</span> <span class="n">Format</span>
+</span><span class="linenos">10</span>
+<span class="linenos">11</span>
 <span class="linenos">12</span><span class="k">class</span> <span class="nc">ModisV3</span><span class="p">(</span><span class="n">Process</span><span class="p">):</span>
 <span class="linenos">13</span>
 <span class="linenos">14</span>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="linenos">15</span>        <span class="n">inputs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
 <span class="linenos">16</span>        <span class="n">outputs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
 <span class="linenos">17</span>
-<span class="linenos">18</span>        <span class="n">inputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ComplexInput</span><span class="p">(</span><span class="s1">&#39;region&#39;</span><span class="p">,</span> <span class="s1">&#39;Input vector region&#39;</span><span class="p">,</span>
-<span class="linenos">19</span>                    <span class="n">supported_formats</span><span class="o">=</span><span class="p">[</span>
-<span class="linenos">20</span>                        <span class="n">Format</span><span class="p">(</span><span class="s1">&#39;text/xml&#39;</span><span class="p">),</span> <span class="c1"># requires QGIS WPS client</span>
-<span class="linenos">21</span>                        <span class="n">Format</span><span class="p">(</span><span class="s1">&#39;application/gml+xml&#39;</span><span class="p">)]))</span>
-<span class="linenos">22</span>        <span class="n">inputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">LiteralInput</span><span class="p">(</span><span class="s1">&#39;start&#39;</span><span class="p">,</span> <span class="s1">&#39;Start date (eg. 2023-03-01)&#39;</span><span class="p">,</span>
+<span class="hll"><span class="linenos">18</span>        <span class="n">inputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ComplexInput</span><span class="p">(</span><span class="s1">&#39;region&#39;</span><span class="p">,</span> <span class="s1">&#39;Input vector region&#39;</span><span class="p">,</span>
+</span><span class="hll"><span class="linenos">19</span>                    <span class="n">supported_formats</span><span class="o">=</span><span class="p">[</span>
+</span><span class="hll"><span class="linenos">20</span>                        <span class="n">Format</span><span class="p">(</span><span class="s1">&#39;text/xml&#39;</span><span class="p">),</span> <span class="c1"># requires QGIS WPS client</span>
+</span><span class="hll"><span class="linenos">21</span>                        <span class="n">Format</span><span class="p">(</span><span class="s1">&#39;application/gml+xml&#39;</span><span class="p">)]))</span>
+</span><span class="linenos">22</span>        <span class="n">inputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">LiteralInput</span><span class="p">(</span><span class="s1">&#39;start&#39;</span><span class="p">,</span> <span class="s1">&#39;Start date (eg. 2023-03-01)&#39;</span><span class="p">,</span>
 <span class="linenos">23</span>                                   <span class="n">data_type</span><span class="o">=</span><span class="s1">&#39;string&#39;</span><span class="p">))</span>
 <span class="linenos">24</span>        <span class="n">inputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">LiteralInput</span><span class="p">(</span><span class="s1">&#39;end&#39;</span><span class="p">,</span> <span class="s1">&#39;End date (eg. 2023-03-01)&#39;</span><span class="p">,</span>
 <span class="linenos">25</span>                                   <span class="n">data_type</span><span class="o">=</span><span class="s1">&#39;string&#39;</span><span class="p">))</span>
@@ -82,17 +82,17 @@ on line <span class="lcode">83</span>.</p>
 <span class="linenos">27</span>        <span class="n">outputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ComplexOutput</span><span class="p">(</span><span class="s1">&#39;output&#39;</span><span class="p">,</span> <span class="s1">&#39;Computed LST statistics&#39;</span><span class="p">,</span>
 <span class="linenos">28</span>                                     <span class="n">supported_formats</span><span class="o">=</span><span class="p">[</span><span class="n">Format</span><span class="p">(</span><span class="s1">&#39;application/json&#39;</span><span class="p">)])</span>
 <span class="linenos">29</span>
-<span class="linenos">30</span>        <span class="nb">super</span><span class="p">(</span><span class="n">ModisV3</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-<span class="linenos">31</span>            <span class="bp">self</span><span class="o">.</span><span class="n">_handler</span><span class="p">,</span>
-<span class="linenos">32</span>            <span class="n">identifier</span><span class="o">=</span><span class="s2">&quot;modis-v3&quot;</span><span class="p">,</span>
-<span class="linenos">33</span>            <span class="n">tiotle</span><span class="o">=</span><span class="s2">&quot;Modis process (v3)&quot;</span><span class="p">,</span>
-<span class="linenos">34</span>            <span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span>
+<span class="hll"><span class="linenos">30</span>        <span class="nb">super</span><span class="p">(</span><span class="n">ModisV3</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+</span><span class="linenos">31</span>            <span class="bp">self</span><span class="o">.</span><span class="n">_handler</span><span class="p">,</span>
+<span class="hll"><span class="linenos">32</span>            <span class="n">identifier</span><span class="o">=</span><span class="s2">&quot;modis-v3&quot;</span><span class="p">,</span>
+</span><span class="hll"><span class="linenos">33</span>            <span class="n">tiotle</span><span class="o">=</span><span class="s2">&quot;Modis process (v3)&quot;</span><span class="p">,</span>
+</span><span class="linenos">34</span>            <span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span>
 <span class="linenos">35</span>            <span class="n">outputs</span><span class="o">=</span><span class="n">outputs</span><span class="p">,</span>
 <span class="linenos">36</span>            <span class="c1"># here you could also specify the GRASS location, for example:</span>
 <span class="linenos">37</span>            <span class="c1"># grass_location=&quot;EPSG:5514&quot;,</span>
-<span class="linenos">38</span>            <span class="n">abstract</span><span class="o">=</span><span class="s2">&quot;Computes LST stats for given area and period (limited to Germany and 2023).&quot;</span><span class="p">,</span>
-<span class="linenos">39</span>            <span class="n">verosion</span><span class="o">=</span><span class="s2">&quot;0.3&quot;</span><span class="p">,</span>
-<span class="linenos">40</span>            <span class="n">store_supported</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="hll"><span class="linenos">38</span>            <span class="n">abstract</span><span class="o">=</span><span class="s2">&quot;Computes LST stats for given area and period (limited to Germany and 2023).&quot;</span><span class="p">,</span>
+</span><span class="hll"><span class="linenos">39</span>            <span class="n">verosion</span><span class="o">=</span><span class="s2">&quot;0.3&quot;</span><span class="p">,</span>
+</span><span class="linenos">40</span>            <span class="n">store_supported</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 <span class="linenos">41</span>            <span class="n">status_supported</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="linenos">42</span>
 <span class="linenos">43</span>    <span class="nd">@staticmethod</span>
@@ -105,38 +105,38 @@ on line <span class="lcode">83</span>.</p>
 <span class="linenos">50</span>        <span class="n">check_date</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;start&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
 <span class="linenos">51</span>        <span class="n">check_date</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;end&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
 <span class="linenos">52</span>
-<span class="linenos">53</span>        <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;v.import&#39;</span><span class="p">,</span>
-<span class="linenos">54</span>                <span class="nb">input</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;region&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">file</span><span class="p">,</span>
+<span class="hll"><span class="linenos">53</span>        <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;v.import&#39;</span><span class="p">,</span>
+</span><span class="linenos">54</span>                <span class="nb">input</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;region&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">file</span><span class="p">,</span>
 <span class="linenos">55</span>                <span class="n">output</span><span class="o">=</span><span class="s1">&#39;poly&#39;</span><span class="p">)</span>
-<span class="linenos">56</span>        <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;g.region&#39;</span><span class="p">,</span> <span class="n">vector</span><span class="o">=</span><span class="s1">&#39;poly&#39;</span><span class="p">,</span> <span class="n">align</span><span class="o">=</span><span class="s1">&#39;c_001&#39;</span><span class="p">)</span>
-<span class="linenos">57</span>        <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;r.mask&#39;</span><span class="p">,</span> <span class="n">vector</span><span class="o">=</span><span class="s1">&#39;poly&#39;</span><span class="p">)</span>
-<span class="linenos">58</span>
-<span class="linenos">59</span>        <span class="n">Module</span><span class="p">(</span><span class="s2">&quot;t.rast.series&quot;</span><span class="p">,</span>
-<span class="linenos">60</span>               <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="hll"><span class="linenos">56</span>        <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;g.region&#39;</span><span class="p">,</span> <span class="n">vector</span><span class="o">=</span><span class="s1">&#39;poly&#39;</span><span class="p">,</span> <span class="n">align</span><span class="o">=</span><span class="s1">&#39;c_001&#39;</span><span class="p">)</span>
+</span><span class="hll"><span class="linenos">57</span>        <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;r.mask&#39;</span><span class="p">,</span> <span class="n">vector</span><span class="o">=</span><span class="s1">&#39;poly&#39;</span><span class="p">)</span>
+</span><span class="linenos">58</span>
+<span class="hll"><span class="linenos">59</span>        <span class="n">Module</span><span class="p">(</span><span class="s2">&quot;t.rast.series&quot;</span><span class="p">,</span>
+</span><span class="linenos">60</span>               <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 <span class="linenos">61</span>               <span class="nb">input</span><span class="o">=</span><span class="s2">&quot;modis_c@PERMANENT&quot;</span><span class="p">,</span>
-<span class="hll"><span class="linenos">62</span>               <span class="n">method</span><span class="o">=</span><span class="s2">&quot;average&quot;</span><span class="p">,</span>
-</span><span class="linenos">63</span>               <span class="n">order</span><span class="o">=</span><span class="s2">&quot;start_time&quot;</span><span class="p">,</span>
+<span class="linenos">62</span>               <span class="n">method</span><span class="o">=</span><span class="s2">&quot;average&quot;</span><span class="p">,</span>
+<span class="linenos">63</span>               <span class="n">order</span><span class="o">=</span><span class="s2">&quot;start_time&quot;</span><span class="p">,</span>
 <span class="linenos">64</span>               <span class="n">nprocs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
 <span class="linenos">65</span>               <span class="n">memory</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
 <span class="linenos">66</span>               <span class="n">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt; &#39;</span><span class="si">{}</span><span class="s2">&#39; and start_time &lt; &#39;</span><span class="si">{}</span><span class="s2">&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
 <span class="linenos">67</span>                   <span class="n">request</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="s2">&quot;start&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
-<span class="hll"><span class="linenos">68</span>                   <span class="n">request</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="s2">&quot;end&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">),</span>
-</span><span class="linenos">69</span>               <span class="n">output</span><span class="o">=</span><span class="s2">&quot;t_rast_series_out&quot;</span><span class="p">,</span>
+<span class="linenos">68</span>                   <span class="n">request</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="s2">&quot;end&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">),</span>
+<span class="linenos">69</span>               <span class="n">output</span><span class="o">=</span><span class="s2">&quot;t_rast_series_out&quot;</span><span class="p">,</span>
 <span class="linenos">70</span>               <span class="n">file_limit</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
 <span class="linenos">71</span>
-<span class="linenos">72</span>        <span class="n">m</span> <span class="o">=</span> <span class="n">Module</span><span class="p">(</span><span class="s2">&quot;r.univar&quot;</span><span class="p">,</span>
-<span class="linenos">73</span>                   <span class="n">flags</span><span class="o">=</span><span class="s2">&quot;g&quot;</span><span class="p">,</span>
+<span class="hll"><span class="linenos">72</span>        <span class="n">m</span> <span class="o">=</span> <span class="n">Module</span><span class="p">(</span><span class="s2">&quot;r.univar&quot;</span><span class="p">,</span>
+</span><span class="linenos">73</span>                   <span class="n">flags</span><span class="o">=</span><span class="s2">&quot;g&quot;</span><span class="p">,</span>
 <span class="linenos">74</span>                   <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 <span class="linenos">75</span>                   <span class="nb">map</span><span class="o">=</span><span class="s2">&quot;t_rast_series_out&quot;</span><span class="p">,</span>
 <span class="linenos">76</span>                   <span class="n">percentile</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span>
 <span class="linenos">77</span>                   <span class="n">nprocs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-<span class="hll"><span class="linenos">78</span>                   <span class="n">separator</span><span class="o">=</span><span class="s2">&quot;pipe&quot;</span><span class="p">,</span>
-</span><span class="linenos">79</span>                   <span class="n">stdout_</span><span class="o">=</span><span class="n">PIPE</span><span class="p">)</span>
+<span class="linenos">78</span>                   <span class="n">separator</span><span class="o">=</span><span class="s2">&quot;pipe&quot;</span><span class="p">,</span>
+<span class="linenos">79</span>                   <span class="n">stdout_</span><span class="o">=</span><span class="n">PIPE</span><span class="p">)</span>
 <span class="linenos">80</span>
 <span class="linenos">81</span>        <span class="n">stats</span> <span class="o">=</span> <span class="n">parse_key_val</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span> <span class="n">val_type</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
 <span class="linenos">82</span>
-<span class="linenos">83</span>        <span class="n">response</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="s1">&#39;stats&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">stats</span><span class="p">)</span>
-<span class="linenos">84</span>
+<span class="hll"><span class="linenos">83</span>        <span class="n">response</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="s1">&#39;stats&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">stats</span><span class="p">)</span>
+</span><span class="linenos">84</span>
 <span class="linenos">85</span>        <span class="k">return</span> <span class="n">response</span>
 <span class="linenos">86</span>
 <span class="linenos">87</span>
@@ -147,11 +147,18 @@ on line <span class="lcode">83</span>.</p>
 <span class="linenos">92</span>    <span class="n">application</span> <span class="o">=</span> <span class="n">Service</span><span class="p">(</span><span class="n">processes</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Also class name (<span class="lcode">30</span>), process identifier (<span class="lcode">32</span>), title
-(<span class="lcode">33</span>), abstract (<span class="lcode">38</span>) and version (<span class="lcode">39</span>) needs
-to be updated.</p>
+<div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p>Probably <cite>text/xml</cite> is not needed.</p>
+</div>
+<p>Note that also class name (<span class="lcode">30</span>), process identifier
+(<span class="lcode">32</span>), title (<span class="lcode">33</span>), abstract (<span class="lcode">38</span>) and version
+(<span class="lcode">39</span>) needs to be updated.</p>
 <p>Sample process to download: <a class="reference external" href="../_static/scripts/modis_v3.py">modis_v3.py</a></p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
 <p>Do not forget to import process as done in <a class="reference internal" href="27.html#process-import"><span class="std std-ref">Unit 27</span></a> and restart demo PyWPS server.</p>
+</div>
 <p>Copy <code class="file docutils literal notranslate"><span class="pre">jena_boundary.gpkg</span></code> to <code class="file docutils literal notranslate"><span class="pre">pywps-flask/static/data</span></code> and
 execute the process.</p>
 <p><a class="reference external" href="http://localhost:5000/wps?request=Execute&amp;service=WPS&amp;identifier=modis-v3&amp;version=1.0.0&amp;datainputs=start=2023-03-01;end=2023-04-01;region=&#64;xlink:href=http://localhost:5000/static/data/jena_boundary.gpkg">http://localhost:5000/wps?request=Execute&amp;service=WPS&amp;identifier=modis-v3&amp;version=1.0.0&amp;datainputs=start=2023-03-01;end=2023-04-01;region=&#64;xlink:href=http://localhost:5000/static/data/jena_boundary.gpkg</a></p>
@@ -161,7 +168,7 @@ execute the process.</p>
 <span class="nt">&lt;/wps:ComplexData&gt;</span>
 </pre></div>
 </div>
-<div class="admonition-todo admonition" id="id1">
+<div class="admonition-todo admonition" id="id2">
 <p class="admonition-title">Todo</p>
 <p>Output to be updated</p>
 </div>
