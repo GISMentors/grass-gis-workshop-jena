@@ -1,9 +1,5 @@
 #!/usr/bin/env python3
 
-import sys
-import os
-import atexit
-import tempfile
 from subprocess import PIPE
 from datetime import datetime
 
@@ -18,9 +14,9 @@ class ModisV1(Process):
         inputs = list()
         outputs = list()
 
-        inputs.append(LiteralInput('start', 'Start date (eg. 2019-03-01)',
+        inputs.append(LiteralInput('start', 'Start date (eg. 2023-03-01)',
                                    data_type='string'))
-        inputs.append(LiteralInput('end', 'End date (eg. 2019-03-01)',
+        inputs.append(LiteralInput('end', 'End date (eg. 2023-03-01)',
                                    data_type='string'))
 
         outputs.append(LiteralOutput('output', 'Computed LST statistics',
@@ -29,13 +25,13 @@ class ModisV1(Process):
         super(ModisV1, self).__init__(
             self._handler,
             identifier="modis-v1",
-            title="modis-date-stats",
+            title="Modis process (v1)",
             inputs=inputs,
             outputs=outputs,
             # here you could also specify the GRASS location, for example:
             # grass_location="EPSG:5514",
             abstract="Computes LST stats for given period (limited to Germany and 2023).",
-            version="1.0",
+            version="0.1",
             store_supported=True,
             status_supported=True)
 
@@ -83,5 +79,5 @@ class ModisV1(Process):
 if __name__ == "__main__":
     from pywps.app.Service import Service
 
-    processes = [Model()]
+    processes = [ModisV1()]
     application = Service(processes)

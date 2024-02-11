@@ -2,21 +2,25 @@ Unit 28 - PyWPS LST point stats
 ===============================
 
 A second version of the WPS process will return LST statistics for
-given point in Germany (referenced in :epsg:`3035`). Input parameters
-are defined on lines :lcode:`10, 12, 14`. The output is defined as
-:wikipedia:`JSON`, see line :lcode:`17`.
+given point in Germany (referenced in :epsg:`3035`). New input
+parameters (``point``) is defined on :lcode:`18-19`. The
+output is defined as :wikipedia:`JSON`, the class is changed from ``LiteralOutput`` to ``ComplexOutput``, see line :lcode:`9,25-26`.
 
 The pixel extraction is done by :grasscmd:`t.rast.what` on line
-:lcode:`62`. Statistics is computed based on command output somehow
-manually on lines :lcode:`73-96`. Resultant Python dictionary is
-converted to JSON structure using ``json`` Python library on line
-:lcode:`98`.
+:lcode:`53`. Statistics is computed based on command output manually
+on lines :lcode:`62-84`. Resultant Python dictionary is converted to
+JSON structure using ``json`` Python library on line :lcode:`86`. The
+``json`` package is imported on line :lcode:`3`.
 
 .. literalinclude:: ../_static/scripts/modis_v2.py
    :language: python
    :linenos:
-   :emphasize-lines: 10, 12, 14, 17, 62, 73-96, 98
-                     
+   :emphasize-lines: 3,18-19,25-26,53,62-84,86
+
+Also class name (:lcode:`28`), process identifier (:lcode:`30`), title
+(:lcode:`31`), abstract (:lcode:`36`) and version (:lcode:`37`) needs
+to be updated.
+
 Sample process to download: `modis_v2.py
 <../_static/scripts/modis_v2.py>`__
 
@@ -25,7 +29,7 @@ Do not forget to import process as done in :ref:`Unit 27
 
 Example of execute request:
 
-http://localhost:5000/wps?request=Execute&service=WPS&identifier=modis-v2&version=1.0.0&datainputs=start=2019-03-01;end=2019-04-01;coords=4351849,3120313
+http://localhost:5000/wps?request=Execute&service=WPS&identifier=modis-v2&version=1.0.0&datainputs=start=2023-03-01;end=2023-04-01;point=4351849,3120313
 
 Possible response.
 
@@ -34,6 +38,8 @@ Possible response.
    <wps:ComplexData mimeType="application/json" encoding="" schema="">
    {"min": -0.309999999999945, "max": 17.97, "mean": 6.830000000000014, "count": 14}
    </wps:ComplexData>
+
+.. todo:: Output to be updated
 
 .. task:: Try to improve the process in order to validate
    coordinates. Only point located in Germany is allowed.
