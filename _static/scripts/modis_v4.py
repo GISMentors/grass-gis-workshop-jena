@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import json 
 from subprocess import PIPE
 from datetime import datetime
 
@@ -93,21 +92,22 @@ class ModisV4(Process):
                input = output,
                output = output + '_zones',
                rules = "-",
-               stdin_=recode_table
-        )
+               stdin_=recode_table)
 
         Module("r.to.vect",
- 97               flags = 'sv',
- 98               input = output + '_zones',
- 99               output = output + '_zones',
-100               type = "area")
-101        
-102        Module('v.out.ogr',
-103               input=output + '_zones',
-104               output='zones.gml',
-105               format='GML', overwrite=True)
-106
-107        response.outputs['zones'].file = 'zones.gml'
+               overwrite=True,
+               flags = 'sv',
+               input = output + '_zones',
+               output = output + '_zones',
+               type = "area")
+
+        Module('v.out.ogr',
+               overwrite=True,
+               input=output + '_zones',
+               output='zones.gml',
+               format='GML')
+
+        response.outputs['zones'].file = 'zones.gml'
 
         return response
 
