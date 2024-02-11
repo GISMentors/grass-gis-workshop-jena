@@ -93,38 +93,38 @@ In the next step, we will enhance the PyWPS process similar to the
 Python script in :doc:`26`:
 
 1. The option :param:`where` will be split into two options
-   (:lcode:`21-24,59-61`): :param:`start` - Start date and
+   (:lcode:`17-20,55-57`): :param:`start` - Start date and
    :param:`end` - End date. Also :param:`output` parameter is changed
-   to `string` data type (:lcode:`26-27`).
+   to `string` data type (:lcode:`22-23`).
 
-2. New function ``check_date()`` to validate input dates will be added (:lcode:`8,44-47,49-50`)
+2. New function ``check_date()`` to validate input dates will be added (:lcode:`4,404-43,45-45`)
 
 3. Output of :grasscmd:`r.univar` will be parsed and statistics
-   printed (:lcode:`7,72,74-78`)
+   printed (:lcode:`3,68,70-74`)
   
 .. literalinclude:: ../_static/scripts/modis_v1.py
    :language: python
    :linenos:
-   :emphasize-lines: 7,8,15,29,21-24,26-27,31,44-47,49-50,59-61,72,74-78,86
+   :emphasize-lines: 3,4,11,25,17-20,22-23,27,40-43,45-46,55-57,68,70-74,82
 
 It will also be useful to rename the ``Model`` class to ``ModisV1``
-(:lcode:`15,29,86`).
+(:lcode:`11,25,82`).
 
 Sample process to download: `modis_v1.py
 <../_static/scripts/modis_v1.py>`__
 
 Source code comments: process itself is defined as a Python class,
-:class:`ModisV1` in this case (line :lcode:`15`). In class constructor
-input (lines :lcode:`21-24`) and output parameters (line
-:lcode:`26-27`) are defined. Every process has its identifier (line
-:lcode:`31`), title and abstract. The process will operate in GRASS
-location defined on line :lcode:`36`. On line :lcode:`54` is assumed
+:class:`ModisV1` in this case (line :lcode:`11`). In class constructor
+input (lines :lcode:`17-20`) and output parameters (line
+:lcode:`22-23`) are defined. Every process has its identifier (line
+:lcode:`27`), title and abstract. The process will operate in GRASS
+location defined on line :lcode:`32`. On line :lcode:`50` is assumed
 that space time LST dataset is located in PERMANENT, see
 :doc:`25`. For each job (executed process by a client) PyWPS creates
 in this location a temporary mapset which is deleted when process is
 finished. Process body is implemented as ``_handler()`` method, see
-line :lcode:`43`. Resultant statistics is stored to response output as
-a simple string on line :lcode:`78`.
+line :lcode:`39`. Resultant statistics is stored to response output as
+a simple string on line :lcode:`74`.
 
 .. _process-import:
 

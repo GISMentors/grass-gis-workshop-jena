@@ -3,14 +3,24 @@ Unit 29 - PyWPS LST region stats
 
 A third version of the process will return LST statistics for region
 in Germany defined by input vector (polygon) data. Input area of
-interest is imported by :grasscmd:`v.import` (line :lcode:`62`),
-resultant statistics is computed by :grasscmd:`t.rast.series` (line
-:lcode:`68`) and :grasscmd:`r.univar` (line :lcode:`78`).
+interest is defined as ``region`` input ``ComplexInput`` parameter
+(:lcode:`9,18-21`) and imported by :grasscmd:`v.import` (line
+:lcode:`53`), resultant statistics is computed similarly as in process
+verion 1 (:doc:`27`) by :grasscmd:`t.rast.series` (line :lcode:`59`)
+and :grasscmd:`r.univar` (line :lcode:`72`). Before computation the
+computational region and mask is set by :grasscmd:`g.region`
+(:lcode:`56`) and :grasscmd:`r.mask` (:lcode:`57`). Statistics is
+provided in JSON structure similary to process version 2 (:doc:`28`)
+on line :lcode:`83`.
 
 .. literalinclude:: ../_static/scripts/modis_v3.py
    :language: python
    :linenos:
    :emphasize-lines: 10, 62, 68, 78
+
+Also class name (:lcode:`30`), process identifier (:lcode:`32`), title
+(:lcode:`33`), abstract (:lcode:`38`) and version (:lcode:`39`) needs
+to be updated.
                      
 Sample process to download: `modis_v3.py
 <../_static/scripts/modis_v3.py>`__
@@ -21,7 +31,7 @@ Do not forget to import process as done in :ref:`Unit 27
 Copy :file:`jena_boundary.gpkg` to :file:`pywps-flask/static/data` and
 execute the process.
 
-http://localhost:5000/wps?request=Execute&service=WPS&identifier=modis-v3&version=1.0.0&datainputs=start=2019-03-01;end=2019-04-01;region=@xlink:href=http://localhost:5000/static/data/jena_boundary.gpkg
+http://localhost:5000/wps?request=Execute&service=WPS&identifier=modis-v3&version=1.0.0&datainputs=start=2023-03-01;end=2023-04-01;region=@xlink:href=http://localhost:5000/static/data/jena_boundary.gpkg
 
 Possible response.
 
@@ -30,3 +40,5 @@ Possible response.
    <wps:ComplexData mimeType="application/json" encoding="" schema="">
    {"n": 115.0, "null_cells": 109.0, "cells": 224.0, "min": 7.07625000000003,...
    </wps:ComplexData>
+
+.. todo:: Output to be updated
