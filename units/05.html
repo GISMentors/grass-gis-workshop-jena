@@ -93,6 +93,8 @@ city in red color).</span><a class="headerlink" href="#id2" title="Permalink to 
 setting a mask to ignore cloudy areas by the computation. Raster mask
 can be created by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.mask.html">r.mask</a>. Like other modules from the
 <code class="docutils literal notranslate"><span class="pre">r.*</span></code> family, it operates in the current computational region.</p>
+<section id="mask">
+<h2>Mask<a class="headerlink" href="#mask" title="Permalink to this heading">¶</a></h2>
 <p>Let’s create raster mask from cloud mask vector map in inverse manner.</p>
 <figure class="align-center" id="id3">
 <img alt="../_images/r-mask.png" src="../_images/r-mask.png" />
@@ -102,6 +104,11 @@ can be created by <a class="reference external" href="https://grass.osgeo.org/gr
 </figure>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.mask<span class="w"> </span>-i<span class="w"> </span><span class="nv">vector</span><span class="o">=</span>MaskFeature
 </pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><strong>The mask is used globally in the given mapset for each
+subsequent calculation operation until it is deleted.</strong></p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -117,6 +124,7 @@ legend</em>) from Map Display toolbar.</span><a class="headerlink" href="#id4" t
 </figcaption>
 </figure>
 <p>A mask can be deactivated <code class="docutils literal notranslate"><span class="pre">r.mask</span> <span class="pre">-r</span></code> command.</p>
+</section>
 <section id="recommended-approach-for-computing-ndvi">
 <h2>Recommended approach for computing NDVI<a class="headerlink" href="#recommended-approach-for-computing-ndvi" title="Permalink to this heading">¶</a></h2>
 <p>Note that there is specialized module for computing various vegetation
@@ -145,6 +153,7 @@ shorten):</p>
 <li class="toctree-l1"><a class="reference internal" href="03.html">Unit 03 - Data Management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Modules, Region</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Unit 05 - Raster processing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#mask">Mask</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#recommended-approach-for-computing-ndvi">Recommended approach for computing NDVI</a></li>
 </ul>
 </li>

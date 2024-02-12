@@ -156,7 +156,6 @@ by :grasscmd:`v.external` (*Link external vector data*) which are also
 accessible from the toolbar |grass-layer-import| in :item:`Data` tab.
 
 .. figure:: ../images/units/03/link-data-menu.png
-   :class: middle
            
    Link raster or vector data.
 
