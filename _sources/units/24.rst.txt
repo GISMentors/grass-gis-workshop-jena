@@ -117,9 +117,9 @@ Germany administrative border
 -----------------------------
 
 Germany administrative border can created by dissolving
-:map:`counties` used in :doc:`14`. First copy the vector map
-:map:`counties` from `jena-region` GRASS location to the current
-mapset and location (see :ref:`Unit 15 <data-reproject-fig>`).
+:map:`counties` used in :doc:`14`. Let's import
+:file:`osm/counties.gpkg` into the current GRASS location as described
+in :doc:`03`.
 
 Next, open the attribute table |grass-table| :sup:`Show attribute data
 for selected vector map` and add a new column used for dissolving.
