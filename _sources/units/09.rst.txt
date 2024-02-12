@@ -17,8 +17,8 @@ stage. Let's classify NDVI into 3 major classes:
 * Class 2: from 0.2 to 0.6
 * Class 3: from 0.6 to 1.0
 
-The desired output will be a simplified vector map with NDVI
-classes
+The desired output will be a simplified raster map with NDVI
+classes.
 
 From GRASS perspective a computation workflow may be decomposed to the
 following steps:
@@ -158,7 +158,7 @@ After setting the input parameters the model can be :item:`Run`.
 .. figure:: ../images/units/09/ndvi-no-reduction.png
    :class: middle
            
-   NDVI vector class without small area reduction.
+   NDVI classes without small area reduction.
 
 .. figure:: ../images/units/09/ndvi-2000m2.png
    :class: middle
@@ -175,6 +175,6 @@ After setting the input parameters the model can be :item:`Run`.
 .. figure:: ../images/units/09/ndvi-jena-5km.png
    :class: middle
 
-   NDVI vector classes computed in 5km buffer around Jena city region.
+   NDVI classes computed in 5km buffer around Jena city region.
 
 Sample model to download: `ndvi-v3.gxm <../_static/models/ndvi-v3.gxm>`__

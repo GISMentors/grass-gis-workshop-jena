@@ -128,5 +128,5 @@ Sample script to download: `ndvi-v3.py <../_static/scripts/ndvi-v3.py>`__
 
 .. task:: Solve issue with statistics which do not follow class
           definition: eg. minimum value of class 3 (-0.6) is out of
-          range (0.6 to 1.0). This is caused by removing small area
+          range (0.6 to 1.0). This is caused by removing small areas
           and filling holes by adjacent class.
