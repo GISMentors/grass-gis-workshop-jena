@@ -72,7 +72,7 @@ The workflow is represented by a set of GRASS commands (map names shorten):
    .. figure:: ../images/units/10/history-panel.png
       :class: large
               
-      GRASS GIS 8.4 will come with much better command history management.
+      GRASS GIS 8.4 comes with much better command history management.
             
 Python code may be interactively run from :item:`Python` tab. In the
 following units PyGRASS API will be systematically used.
