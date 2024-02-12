@@ -165,7 +165,7 @@ Units
 Lecturer
 ========
 
-* `Martin Landa <http://geo.fsv.cvut.cz/gwiki/Landa>`__, GeoForAll
+* `Martin Landa <https://geomatics.fsv.cvut.cz/en/employees/martin-landa/>`__, GeoForAll
   Lab, Czech Technical University in Prague, Czech Republic
 
 Materials proudly provided by `GISMentors
