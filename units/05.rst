@@ -54,6 +54,9 @@ setting a mask to ignore cloudy areas by the computation. Raster mask
 can be created by :grasscmd:`r.mask`. Like other modules from the
 ``r.*`` family, it operates in the current computational region.
 
+Mask
+----
+
 Let's create raster mask from cloud mask vector map in inverse manner.
 
 .. figure:: ../images/units/05/r-mask.png
@@ -63,6 +66,9 @@ Let's create raster mask from cloud mask vector map in inverse manner.
 .. code-block:: bash
 
    r.mask -i vector=MaskFeature
+
+.. important:: **The mask is used globally in the given mapset for each
+   subsequent calculation operation until it is deleted.**
 
 .. note:: Cloud mask provided by Sentinel products is not perfect, but
    it is a good starting point for us.
