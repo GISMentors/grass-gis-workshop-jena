@@ -112,7 +112,46 @@ automatically, see :numref:`modis-mosaics`.
    :class: large
         
    Data mosaic created from h18v03 and h18v04 tiles.
-   
+
+Germany administrative border
+-----------------------------
+
+Germany administrative border can created by dissolving
+:map:`counties` used in :doc:`14`. First copy the vector map
+:map:`counties` from `jena-region` GRASS location to the current
+mapset and location (see :ref:`Unit 15 <data-reproject-fig>`).
+
+Next, open the attribute table |grass-table| :sup:`Show attribute data
+for selected vector map` and add a new column used for dissolving.
+
+.. figure:: ../images/units/24/counties-add-column.png
+
+   Add a new column 'value'.
+
+.. figure:: ../images/units/24/counties-fill-column-0.png
+   :class: middle
+           
+   Open Field calculator.
+
+.. figure:: ../images/units/24/counties-fill-column-1.png
+   :class: middle
+           
+   Fill new column by value of 1.
+
+.. tip:: Steps described above may me performed from command line by
+   :grasscmd:`v.db.addcolumn` and :grasscmd:`v.db.update`.
+
+   .. code-block:: bash
+
+      v.db.addcolumn map=counties columns="value int"
+      v.db.update map=counties column=value value=1
+             
+Now, we can perform dissolving all counties by :grasscmd:`v.dissolve`:
+
+.. code-block:: bash
+
+   v.dissolve input=counties output=germany column=value
+     
 .. _modis-lst:
    
 LST
@@ -121,33 +160,6 @@ LST
 In this section **Land Surface Temperature** (LST) analysis will be
 perfmored for Germany. 
 
-Let's start by importing Germany administrative border located in the
-sample dataset :file:`osm/germany.gpkg`.
-
-.. note:: Administrative border of Germany has been downloaded from
-   OSM using `Overpass API <https://overpass-turbo.eu/>`__.
-          
-   .. code-block:: xml
-
-      (
-      relation
-      ["boundary"="administrative"]
-      ["admin_level"="2"]
-      ["name"="Deutschland"];
-      );
-      /*added by auto repair*/
-      (._;>;);
-      /*end of auto repair*/
-      out;
-
-   Exported GeoJSON file has been converted to GeoPackage by GDAL :program:`ogr2ogr` utility:
-
-   .. code-block:: bash
-
-      ogr2ogr -f GPKG -dialect SQLite \
-      -sql "select * from export where st_geometrytype(geometry) IN ('POLYGON', 'MULTIPOLYGON')" \
-      -nln germany germany.gpkg export.geojson
-      
 Mask will be created by :grasscmd:`r.mask`. Don't forget that
 computational region must be set before creating a mask. Computational
 region will be defined by Germany vector map and aligned by the input
