@@ -2,8 +2,7 @@ Unit 20 - Sentinel downloader
 =============================
 
 There are plenty of libraries or tools which allow downloading
-Sentinel products from `Copernicus Open Access Hub
-<https://scihub.copernicus.eu/>`__.
+Sentinel products.
 
 For GRASS GIS there is the :grasscmdaddons:`i.sentinel` toolbox.
 It consists of six GRASS addon modules:
@@ -28,14 +27,24 @@ from addons`.
    Install :grasscmdaddons:`i.sentinel` GRASS Addon.
 
 .. note:: Note that :grasscmdaddons:`i.sentinel.download` requires
-   also `sentinelsat library
-   <https://pypi.python.org/pypi/sentinelsat>`__ to be
-   installed. Sentinelsat library can be easily installed from the
-   :item:`Console` tab by entering the command below.
+   also `sentinelsat <https://pypi.python.org/pypi/sentinelsat>`__ to
+   be installed. It can be easily installed from the :item:`Console`
+   tab by entering the command below.
 	
    .. code-block:: bash
 	
       python3 -m pip install sentinelsat pandas
+
+.. important:: Copernicus Open Access Hub was closed at the end of
+   October 2023 (`source
+   <https://scihub.copernicus.eu/>`__). Copernicus Sentinel data are
+   now available in the Copernicus Data Space Ecosystem. Currently,
+   sentinelsat package is currently not compatible with the new
+   Copernicus Data Space Ecosystem. See `sentinelsat Github repository
+   <https://github.com/sentinelsat/sentinelsat?tab=readme-ov-file#sentinelsat>`__
+   for details. See also related `GRASS issue
+   <https://github.com/OSGeo/grass-addons/issues/883>`__ reported on
+   GitHub.
 
 :ref:`Switch <switch-location>` to `jena-region` location.
 

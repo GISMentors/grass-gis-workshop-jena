@@ -43,7 +43,7 @@
   <section id="unit-20-sentinel-downloader">
 <h1>Unit 20 - Sentinel downloader<a class="headerlink" href="#unit-20-sentinel-downloader" title="Permalink to this heading">¶</a></h1>
 <p>There are plenty of libraries or tools which allow downloading
-Sentinel products from <a class="reference external" href="https://scihub.copernicus.eu/">Copernicus Open Access Hub</a>.</p>
+Sentinel products.</p>
 <p>For GRASS GIS there is the <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/i.sentinel.html">i.sentinel</a> toolbox.
 It consists of six GRASS addon modules:</p>
 <ul class="simple">
@@ -69,12 +69,22 @@ from addons</span>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Note that <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/i.sentinel.download.html">i.sentinel.download</a> requires
-also <a class="reference external" href="https://pypi.python.org/pypi/sentinelsat">sentinelsat library</a> to be
-installed. Sentinelsat library can be easily installed from the
-<span class="item">Console</span> tab by entering the command below.</p>
+also <a class="reference external" href="https://pypi.python.org/pypi/sentinelsat">sentinelsat</a> to
+be installed. It can be easily installed from the <span class="item">Console</span>
+tab by entering the command below.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>sentinelsat<span class="w"> </span>pandas
 </pre></div>
 </div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Copernicus Open Access Hub was closed at the end of
+October 2023 (<a class="reference external" href="https://scihub.copernicus.eu/">source</a>). Copernicus Sentinel data are
+now available in the Copernicus Data Space Ecosystem. Currently,
+sentinelsat package is currently not compatible with the new
+Copernicus Data Space Ecosystem. See <a class="reference external" href="https://github.com/sentinelsat/sentinelsat?tab=readme-ov-file#sentinelsat">sentinelsat Github repository</a>
+for details. See also related <a class="reference external" href="https://github.com/OSGeo/grass-addons/issues/883">GRASS issue</a> reported on
+GitHub.</p>
 </div>
 <p><a class="reference internal" href="15.html#switch-location"><span class="std std-ref">Switch</span></a> to <cite>jena-region</cite> location.</p>
 <section id="download-data">
