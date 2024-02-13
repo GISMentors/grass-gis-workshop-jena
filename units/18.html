@@ -188,7 +188,7 @@ interpolated values using IDW. Let’s use the second module which fill
 nulls rapidly compared to <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.fillnulls.html">r.fillnulls</a>. By <code class="xref std std-option docutils literal notranslate"><span class="pre">-k</span></code>
 flag it is ensured that original values will be kept untouched. Only
 cells with no-data value will be modified.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.fill.stats<span class="w"> </span>-k<span class="w"> </span><span class="nv">input</span><span class="o">=</span>las_681_5644<span class="w"> </span><span class="nv">output</span><span class="o">=</span>las_681_5644_no_gaps
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.fill.stats<span class="w"> </span>-k<span class="w"> </span><span class="nv">input</span><span class="o">=</span>las_681_5644<span class="w"> </span><span class="nv">output</span><span class="o">=</span>las_681_5644_filled
 </pre></div>
 </div>
 <figure class="align-center" id="id3">

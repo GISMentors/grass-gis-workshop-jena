@@ -170,7 +170,7 @@ cells with no-data value will be modified.
 
 .. code-block:: bash
 
-   r.fill.stats -k input=las_681_5644 output=las_681_5644_no_gaps
+   r.fill.stats -k input=las_681_5644 output=las_681_5644_filled
 
 .. figure:: ../images/units/18/rast-gaps-fill.png
    :class: middle
