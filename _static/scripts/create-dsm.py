@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # %module
-# % description: Creates DTM from input LAS tiles.
+# % description: Creates DSM from input LAS tiles.
 # %end
 # %option G_OPT_M_DIR
 # % required: yes
@@ -64,7 +64,7 @@ def import_files(directory):
 
     return maps
 
-def create_dtm_tiles(maps, res, nprocs, offset_multiplier=10):
+def create_dsm_tiles(maps, res, nprocs, offset_multiplier=10):
     offset=res * offset_multiplier
 
     for mapname in maps:
@@ -93,7 +93,7 @@ def main():
     start = time.time()
 
     maps = import_files(options['input'])
-    create_dtm_tiles(maps,
+    create_dsm_tiles(maps,
                      float(options['resolution']),
                      int(options['nprocs'])
     )
