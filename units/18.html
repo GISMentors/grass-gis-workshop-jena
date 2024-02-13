@@ -52,8 +52,6 @@ by rapidlasso GmbH. Go to <a class="reference external" href="http://www.geoport
 choose region in map viewer and download selected tiles.</p>
 </div>
 <p>Sample data for this unit are located in <code class="file docutils literal notranslate"><span class="pre">lidar</span></code> directory.</p>
-<section id="data-import">
-<h2>Data import<a class="headerlink" href="#data-import" title="Permalink to this heading">¶</a></h2>
 <p>For importing LAS/LAZ data there are available two GRASS modules:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.in.lidar.html">r.in.lidar</a> for importing point cloud data as raster map</p></li>
@@ -88,10 +86,8 @@ command-line tool:</p>
 </pre></div>
 </div>
 </div>
-<section id="vector-import">
-<h3>Vector import<a class="headerlink" href="#vector-import" title="Permalink to this heading">¶</a></h3>
 <p>Let’s create a new GRASS location <em>jena-lidar</em> defined by
-<a class="reference external" href="https://epsg.io/25832">EPSG:25832</a>.</p>
+<a class="reference external" href="https://epsg.io/25832">EPSG:25832</a> (the SRS in which the Lidar data is referenced).</p>
 <figure class="align-center" id="id1">
 <img alt="../_images/create-location-epsg.png" src="../_images/create-location-epsg.png" />
 <figcaption>
@@ -99,6 +95,74 @@ command-line tool:</p>
 from a list by EPSG or description</em>).</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
+<section id="raster-processing">
+<h2>Raster processing<a class="headerlink" href="#raster-processing" title="Permalink to this heading">¶</a></h2>
+<p>Input point cloud can be imported by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.in.lidar.html">r.in.lidar</a> into
+raster map. Flag <span class="param">-e</span> extends current computational region to
+cover all imported points. Otherwise user would need to set up
+computational region by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/g.region.html">g.region</a> before importing
+data. Spatial resolution for output raster map is defined by
+<span class="param">resolution</span> option. By default, for cells with more points
+involved, the value is computed by mean value, see <span class="param">method</span>
+option. Cells covered by no points will get NULL (no-data) value assigned.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.in.lidar<span class="w"> </span>-oe<span class="w"> </span><span class="nv">input</span><span class="o">=</span>/home/martin/lidar/las_681_5644_1_th_2014-2019.las<span class="w"> </span><span class="nv">output</span><span class="o">=</span>las_681_5644<span class="w"> </span><span class="nv">resolution</span><span class="o">=</span><span class="m">1</span>
+</pre></div>
+</div>
+<p>Basic metadata about created raster map can be obtained by
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.info.html">r.info</a>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.info<span class="w"> </span><span class="nv">map</span><span class="o">=</span>las_681_5644
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">...</span>
+<span class="o">|</span>            <span class="n">N</span><span class="p">:</span>    <span class="mi">5645000</span>    <span class="n">S</span><span class="p">:</span>    <span class="mi">5644000</span>   <span class="n">Res</span><span class="p">:</span>     <span class="mi">1</span>                     <span class="o">|</span>
+<span class="o">|</span>            <span class="n">E</span><span class="p">:</span>     <span class="mi">682000</span>    <span class="n">W</span><span class="p">:</span>     <span class="mi">681000</span>   <span class="n">Res</span><span class="p">:</span>     <span class="mi">1</span>                     <span class="o">|</span>
+<span class="o">|</span>   <span class="n">Range</span> <span class="n">of</span> <span class="n">data</span><span class="p">:</span>    <span class="nb">min</span> <span class="o">=</span> <span class="mf">65.51301</span>  <span class="nb">max</span> <span class="o">=</span> <span class="mf">346.671</span>                          <span class="o">|</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<figure class="align-center" id="id2">
+<img alt="../_images/import-rast-vect.png" class="middle" src="../_images/import-rast-vect.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 99 </span><span class="caption-text">Imported data as vector points. Raster map with 1m resolution in the
+background.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<section id="filling-gaps">
+<h3>Filling gaps<a class="headerlink" href="#filling-gaps" title="Permalink to this heading">¶</a></h3>
+<p>There are several GRASS modules for filling gaps in raster maps like
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.fillnulls.html">r.fillnulls</a> or <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.fill.stats.html">r.fill.stats</a>. The first module
+is based on spline interpolation, the second fills gaps with
+interpolated values using IDW. Let’s use the second module which fill
+nulls rapidly compared to <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.fillnulls.html">r.fillnulls</a>. By <code class="xref std std-option docutils literal notranslate"><span class="pre">-k</span></code>
+flag it is ensured that original values will be kept untouched. Only
+cells with no-data value will be modified.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.fill.stats<span class="w"> </span>-k<span class="w"> </span><span class="nv">input</span><span class="o">=</span>las_681_5644<span class="w"> </span><span class="nv">output</span><span class="o">=</span>las_681_5644_filled
+</pre></div>
+</div>
+<figure class="align-center" id="id3">
+<img alt="../_images/rast-gaps-fill.png" class="middle" src="../_images/rast-gaps-fill.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 100 </span><span class="caption-text">NULL values (on left part) filled by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.fill.stats.html">r.fill.stats</a>
+(right part).</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<div class="task admonition">
+<p class="admonition-title">Task</p>
+<p>Note that only cells in given distance (3 cells by default, see
+<code class="xref std std-option docutils literal notranslate"><span class="pre">distance</span></code> option) are processed, see <a class="reference internal" href="#lidar-gaps"><span class="std std-numref">Fig. 101</span></a>.</p>
+<figure class="align-center" id="id4">
+<span id="lidar-gaps"></span><img alt="../_images/rast-gaps.png" class="middle" src="../_images/rast-gaps.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 101 </span><span class="caption-text">Cells out of distance not filled.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>Try to enlarge <code class="xref std std-option docutils literal notranslate"><span class="pre">distance</span></code> option and re-run
+<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.fill.stats.html">r.fill.stats</a>.</p>
+</div>
+</section>
+</section>
+<section id="vector-processing">
+<h2>Vector processing<a class="headerlink" href="#vector-processing" title="Permalink to this heading">¶</a></h2>
 <p>Let’s import selected tile into GRASS as vector point map. By
 <span class="param">-t</span> flag creation of attribute table is skipped. By
 <span class="param">-b</span> flag also building <a class="reference internal" href="03.html#vector-topo-section"><span class="std std-ref">topology</span></a>
@@ -144,76 +208,8 @@ is built, the module must scan all points in the map):</p>
 <span class="o">...</span>
 </pre></div>
 </div>
-</section>
-<section id="raster-import">
-<h3>Raster import<a class="headerlink" href="#raster-import" title="Permalink to this heading">¶</a></h3>
-<p>Input point cloud can be imported by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.in.lidar.html">r.in.lidar</a> into
-raster map. Flag <span class="param">-e</span> extends current computational region to
-cover all imported points. Otherwise user would need to set up
-computational region by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/g.region.html">g.region</a> before importing
-data. Spatial resolution for output raster map is defined by
-<span class="param">resolution</span> option. By default, for cells with more points
-involved, the value is computed by mean value, see <span class="param">method</span>
-option. Cells covered by no points will get NULL (no-data) value assigned.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.in.lidar<span class="w"> </span>-oe<span class="w"> </span><span class="nv">input</span><span class="o">=</span>/home/martin/lidar/las_681_5644_1_th_2014-2019.las<span class="w"> </span><span class="nv">output</span><span class="o">=</span>las_681_5644<span class="w"> </span><span class="nv">resolution</span><span class="o">=</span><span class="m">1</span>
-</pre></div>
-</div>
-<p>Basic metadata about created raster map can be obtained by
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.info.html">r.info</a>.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.info<span class="w"> </span><span class="nv">map</span><span class="o">=</span>las_681_5644
-</pre></div>
-</div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">...</span>
-<span class="o">|</span>            <span class="n">N</span><span class="p">:</span>    <span class="mi">5645000</span>    <span class="n">S</span><span class="p">:</span>    <span class="mi">5644000</span>   <span class="n">Res</span><span class="p">:</span>     <span class="mi">1</span>                     <span class="o">|</span>
-<span class="o">|</span>            <span class="n">E</span><span class="p">:</span>     <span class="mi">682000</span>    <span class="n">W</span><span class="p">:</span>     <span class="mi">681000</span>   <span class="n">Res</span><span class="p">:</span>     <span class="mi">1</span>                     <span class="o">|</span>
-<span class="o">|</span>   <span class="n">Range</span> <span class="n">of</span> <span class="n">data</span><span class="p">:</span>    <span class="nb">min</span> <span class="o">=</span> <span class="mf">65.51301</span>  <span class="nb">max</span> <span class="o">=</span> <span class="mf">346.671</span>                          <span class="o">|</span>
-<span class="o">...</span>
-</pre></div>
-</div>
-<figure class="align-center" id="id2">
-<img alt="../_images/import-rast-vect.png" class="middle" src="../_images/import-rast-vect.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 99 </span><span class="caption-text">Imported data as vector points. Raster map with 1m resolution in the
-background.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
-</figcaption>
-</figure>
-</section>
-</section>
-<section id="filling-gaps">
-<h2>Filling gaps<a class="headerlink" href="#filling-gaps" title="Permalink to this heading">¶</a></h2>
-<p>There are several GRASS modules for filling gaps in raster maps like
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.fillnulls.html">r.fillnulls</a> or <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.fill.stats.html">r.fill.stats</a>. The first module
-is based on spline interpolation, the second fills gaps with
-interpolated values using IDW. Let’s use the second module which fill
-nulls rapidly compared to <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.fillnulls.html">r.fillnulls</a>. By <code class="xref std std-option docutils literal notranslate"><span class="pre">-k</span></code>
-flag it is ensured that original values will be kept untouched. Only
-cells with no-data value will be modified.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.fill.stats<span class="w"> </span>-k<span class="w"> </span><span class="nv">input</span><span class="o">=</span>las_681_5644<span class="w"> </span><span class="nv">output</span><span class="o">=</span>las_681_5644_filled
-</pre></div>
-</div>
-<figure class="align-center" id="id3">
-<img alt="../_images/rast-gaps-fill.png" class="middle" src="../_images/rast-gaps-fill.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 100 </span><span class="caption-text">NULL values (on left part) filled by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.fill.stats.html">r.fill.stats</a>
-(right part).</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
-</figcaption>
-</figure>
-<div class="task admonition">
-<p class="admonition-title">Task</p>
-<p>Note that only cells in given distance (3 cells by default, see
-<code class="xref std std-option docutils literal notranslate"><span class="pre">distance</span></code> option) are processed, see <a class="reference internal" href="#lidar-gaps"><span class="std std-numref">Fig. 101</span></a>.</p>
-<figure class="align-center" id="id4">
-<span id="lidar-gaps"></span><img alt="../_images/rast-gaps.png" class="middle" src="../_images/rast-gaps.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 101 </span><span class="caption-text">Cells out of distance not filled.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
-</figcaption>
-</figure>
-<p>Try to enlarge <code class="xref std std-option docutils literal notranslate"><span class="pre">distance</span></code> option and re-run
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.fill.stats.html">r.fill.stats</a>.</p>
-</div>
-</section>
 <section id="high-resolution-dsm">
-<span id="edge-detection"></span><h2>High resolution DSM<a class="headerlink" href="#high-resolution-dsm" title="Permalink to this heading">¶</a></h2>
+<span id="edge-detection"></span><h3>High resolution DSM<a class="headerlink" href="#high-resolution-dsm" title="Permalink to this heading">¶</a></h3>
 <p>Digital Surface Model (DSM) can be interpolated by
 <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.surf.rst.html">v.surf.rst</a> using regularized spline with tension
 approximation. Output resolution set to 0.5 meter. The computation can
@@ -267,6 +263,7 @@ v.lidar.correction<span class="w"> </span><span class="nv">input</span><span cla
 </div>
 </section>
 </section>
+</section>
 
 
             <div class="clearer"></div>
@@ -296,9 +293,8 @@ v.lidar.correction<span class="w"> </span><span class="nv">input</span><span cla
 <li class="toctree-l1"><a class="reference internal" href="16.html">Unit 16 - Flooding simulation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="17.html">Unit 17 - Spatio-temporal intro</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Unit 18 - Lidar, DTM interpolation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#data-import">Data import</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#filling-gaps">Filling gaps</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#high-resolution-dsm">High resolution DSM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#raster-processing">Raster processing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#vector-processing">Vector processing</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="19.html">Unit 19 - DTM script parallelization</a></li>

@@ -13,10 +13,6 @@ directory. Data is stored in LAZ format (compressed LAS format).
 
 Sample data for this unit are located in :file:`lidar` directory.
    
-
-Data import
------------
-
 For importing LAS/LAZ data there are available two GRASS modules:
 
 * :grasscmd:`r.in.lidar` for importing point cloud data as raster map
@@ -53,17 +49,90 @@ For importing LAS/LAZ data there are available two GRASS modules:
    .. code-block:: sh
 
       pdal translate las_681_5644_1_th_2014-2019.laz las_681_5644_1_th_2014-2019.las
-               
-Vector import
-^^^^^^^^^^^^^
 
 Let's create a new GRASS location *jena-lidar* defined by
-:epsg:`25832`.
+:epsg:`25832` (the SRS in which the Lidar data is referenced).
 
 .. figure:: ../images/units/18/create-location-epsg.png
 
    Create a new GRASS location by specifying EPSG code (*Select CRS
    from a list by EPSG or description*).
+      
+Raster processing
+-----------------
+
+Input point cloud can be imported by :grasscmd:`r.in.lidar` into
+raster map. Flag :param:`-e` extends current computational region to
+cover all imported points. Otherwise user would need to set up
+computational region by :grasscmd:`g.region` before importing
+data. Spatial resolution for output raster map is defined by
+:param:`resolution` option. By default, for cells with more points
+involved, the value is computed by mean value, see :param:`method`
+option. Cells covered by no points will get NULL (no-data) value assigned.
+   
+.. code-block:: bash
+
+   r.in.lidar -oe input=/home/martin/lidar/las_681_5644_1_th_2014-2019.las output=las_681_5644 resolution=1
+
+Basic metadata about created raster map can be obtained by
+:grasscmd:`r.info`.
+
+.. code-block:: bash
+
+   r.info map=las_681_5644
+
+::
+   
+   ...
+   |            N:    5645000    S:    5644000   Res:     1                     |
+   |            E:     682000    W:     681000   Res:     1                     |
+   |   Range of data:    min = 65.51301  max = 346.671                          |
+   ...
+
+.. figure:: ../images/units/18/import-rast-vect.png
+   :class: middle
+           
+   Imported data as vector points. Raster map with 1m resolution in the
+   background.
+
+Filling gaps
+^^^^^^^^^^^^
+
+There are several GRASS modules for filling gaps in raster maps like
+:grasscmd:`r.fillnulls` or :grasscmd:`r.fill.stats`. The first module
+is based on spline interpolation, the second fills gaps with
+interpolated values using IDW. Let's use the second module which fill
+nulls rapidly compared to :grasscmd:`r.fillnulls`. By :option:`-k`
+flag it is ensured that original values will be kept untouched. Only
+cells with no-data value will be modified.
+
+.. code-block:: bash
+
+   r.fill.stats -k input=las_681_5644 output=las_681_5644_filled
+
+.. figure:: ../images/units/18/rast-gaps-fill.png
+   :class: middle
+           
+   NULL values (on left part) filled by :grasscmd:`r.fill.stats`
+   (right part).
+
+.. task::
+
+   Note that only cells in given distance (3 cells by default, see
+   :option:`distance` option) are processed, see :numref:`lidar-gaps`.
+
+   .. _lidar-gaps:
+
+   .. figure:: ../images/units/18/rast-gaps.png
+      :class: middle
+           
+      Cells out of distance not filled.
+
+   Try to enlarge :option:`distance` option and re-run
+   :grasscmd:`r.fill.stats`.
+
+Vector processing
+-----------------
 
 Let's import selected tile into GRASS as vector point map. By
 :param:`-t` flag creation of attribute table is skipped. By
@@ -119,84 +188,11 @@ is built, the module must scan all points in the map):
    |               E:         681999.99    W:            681000                 |
    |               B:           -43.382    T:           968.621                 |
    ...
-
-Raster import
-^^^^^^^^^^^^^
-
-Input point cloud can be imported by :grasscmd:`r.in.lidar` into
-raster map. Flag :param:`-e` extends current computational region to
-cover all imported points. Otherwise user would need to set up
-computational region by :grasscmd:`g.region` before importing
-data. Spatial resolution for output raster map is defined by
-:param:`resolution` option. By default, for cells with more points
-involved, the value is computed by mean value, see :param:`method`
-option. Cells covered by no points will get NULL (no-data) value assigned.
-   
-.. code-block:: bash
-
-   r.in.lidar -oe input=/home/martin/lidar/las_681_5644_1_th_2014-2019.las output=las_681_5644 resolution=1
-
-Basic metadata about created raster map can be obtained by
-:grasscmd:`r.info`.
-
-.. code-block:: bash
-
-   r.info map=las_681_5644
-
-::
-   
-   ...
-   |            N:    5645000    S:    5644000   Res:     1                     |
-   |            E:     682000    W:     681000   Res:     1                     |
-   |   Range of data:    min = 65.51301  max = 346.671                          |
-   ...
-
-.. figure:: ../images/units/18/import-rast-vect.png
-   :class: middle
-           
-   Imported data as vector points. Raster map with 1m resolution in the
-   background.
-
-Filling gaps
-------------
-
-There are several GRASS modules for filling gaps in raster maps like
-:grasscmd:`r.fillnulls` or :grasscmd:`r.fill.stats`. The first module
-is based on spline interpolation, the second fills gaps with
-interpolated values using IDW. Let's use the second module which fill
-nulls rapidly compared to :grasscmd:`r.fillnulls`. By :option:`-k`
-flag it is ensured that original values will be kept untouched. Only
-cells with no-data value will be modified.
-
-.. code-block:: bash
-
-   r.fill.stats -k input=las_681_5644 output=las_681_5644_filled
-
-.. figure:: ../images/units/18/rast-gaps-fill.png
-   :class: middle
-           
-   NULL values (on left part) filled by :grasscmd:`r.fill.stats`
-   (right part).
-
-.. task::
-
-   Note that only cells in given distance (3 cells by default, see
-   :option:`distance` option) are processed, see :numref:`lidar-gaps`.
-
-   .. _lidar-gaps:
-
-   .. figure:: ../images/units/18/rast-gaps.png
-      :class: middle
-           
-      Cells out of distance not filled.
-
-   Try to enlarge :option:`distance` option and re-run
-   :grasscmd:`r.fill.stats`.
-
+             
 .. _edge-detection:
 
 High resolution DSM
--------------------
+^^^^^^^^^^^^^^^^^^^
 
 Digital Surface Model (DSM) can be interpolated by
 :grasscmd:`v.surf.rst` using regularized spline with tension
