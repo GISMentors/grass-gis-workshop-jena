@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Unit 19 - DTM script parallelization &#8212; Jena GRASS GIS Workshop</title>
+    <title>Unit 19 - DSM script parallelization &#8212; Jena GRASS GIS Workshop</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/gismentors.css" />
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
@@ -17,14 +17,14 @@
     <script src="../_static/sphinx_highlight.js"></script>
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Unit 20 - Sentinel downloader" href="20.html" />
-    <link rel="prev" title="Unit 18 - Lidar, DTM interpolation" href="18.html" /> 
+    <link rel="prev" title="Unit 18 - Lidar, DSM interpolation" href="18.html" /> 
   </head><body>
     <div class="header-wrapper" role="banner">
       <div class="header">
         <div class="headertitle"><a
           href="../index.html">Jena GRASS GIS Workshop</a></div>
         <div class="rel" role="navigation" aria-label="related navigation">
-          <a href="18.html" title="Unit 18 - Lidar, DTM interpolation"
+          <a href="18.html" title="Unit 18 - Lidar, DSM interpolation"
              accesskey="P">previous</a> |
           <a href="20.html" title="Unit 20 - Sentinel downloader"
              accesskey="N">next</a>
@@ -40,18 +40,18 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="unit-19-dtm-script-parallelization">
-<h1>Unit 19 - DTM script parallelization<a class="headerlink" href="#unit-19-dtm-script-parallelization" title="Permalink to this heading">¶</a></h1>
+  <section id="unit-19-dsm-script-parallelization">
+<h1>Unit 19 - DSM script parallelization<a class="headerlink" href="#unit-19-dsm-script-parallelization" title="Permalink to this heading">¶</a></h1>
 <p>This unit is focused on <strong>parallel computing</strong>. Sample script
-below produces seamless DTM (Digital Terrain Model, see <a class="reference internal" href="18.html"><span class="doc">Unit 18 - Lidar, DTM interpolation</span></a>)
+below produces seamless DSM (Digital Terrain Model, see <a class="reference internal" href="18.html"><span class="doc">Unit 18 - Lidar, DSM interpolation</span></a>)
 from bunch of LAS/LAZ files. Computation will be split into tiles and
 performed in parallel.</p>
-<section id="dtm-interpolation-in-parallel">
-<h2>DTM interpolation in parallel<a class="headerlink" href="#dtm-interpolation-in-parallel" title="Permalink to this heading">¶</a></h2>
+<section id="dsm-interpolation-in-parallel">
+<h2>DSM interpolation in parallel<a class="headerlink" href="#dsm-interpolation-in-parallel" title="Permalink to this heading">¶</a></h2>
 <p>User interface defines two parameters, <span class="param">directory</span> (line
 <span class="lcode">6</span>) for input directory with input LAS/LAZ files, and
 <span class="param">elevation</span> (line <span class="lcode">9</span>) name for output elevation raster
-map mosaics. The resolution of output DTM is defined by
+map mosaics. The resolution of output DSM is defined by
 <span class="param">resolution</span> parameter (line <span class="lcode">13</span>). And finally number
 of processes running in parallel will be controlled by <span class="param">nproc</span>
 (line <span class="lcode">18</span>) parameter.</p>
@@ -60,12 +60,12 @@ of processes running in parallel will be controlled by <span class="param">nproc
 <span class="lcode">33</span>). Import process can be performed in parallel by
 <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/libpython/pygrass.modules.interface.html#pygrass.modules.interface.module.ParallelModuleQueue">ParallelModuleQueue</a> from PyGRASS library (see
 <a class="reference internal" href="11.html"><span class="doc">Unit 11 - PyGRASS scripting</span></a> for PyGRASS introduction), lines <span class="lcode">37, 42, 57-58, 60</span>.</p>
-<p>2. <code class="docutils literal notranslate"><span class="pre">create_dtm_tiles()</span></code> to compute DTM per tile (line <span class="lcode">67</span>)
-using <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.surf.rst.html">v.surf.rst</a>. DTM tiles need to be computed with a
+<p>2. <code class="docutils literal notranslate"><span class="pre">create_dtm_tiles()</span></code> to compute DSM per tile (line <span class="lcode">67</span>)
+using <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.surf.rst.html">v.surf.rst</a>. DSM tiles need to be computed with a
 reasonable overlap in order to create seamless mosaics, see
 <span class="lcode">73-76</span>. Tiles can be processed in parallel too, see
 <span class="param">nproc</span> option on line <span class="lcode">82</span>.</p>
-<p>3. <code class="docutils literal notranslate"><span class="pre">patch_tiles()</span></code> to patch DTM tiles together by
+<p>3. <code class="docutils literal notranslate"><span class="pre">patch_tiles()</span></code> to patch DSM tiles together by
 <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.series.html">r.series</a>, see <span class="lcode">86</span>. From overlapping cell values is
 computed an average value. This is main reason why <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.patch.html">r.patch</a>
 is not used here.</p>
@@ -193,14 +193,14 @@ for testing.</p>
 <figure class="align-center" id="id1">
 <img alt="../_images/dtm_patched.png" class="middle" src="../_images/dtm_patched.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 104 </span><span class="caption-text">DTM created from all available tiles.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 104 </span><span class="caption-text">DSM created from all available tiles.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 </section>
-<section id="dtm-comparision">
-<span id="dmt-comparision"></span><h2>DTM comparision<a class="headerlink" href="#dtm-comparision" title="Permalink to this heading">¶</a></h2>
+<section id="canopy-height-model">
+<span id="dmt-comparision"></span><h2>Canopy Height Model<a class="headerlink" href="#canopy-height-model" title="Permalink to this heading">¶</a></h2>
 <p>In this session we will compute the Canopy Height Model (CHM), as the
-difference between interpolated DSM and imported EU-DEM DTM from
+difference between interpolated DSM and imported EU-DEM (DTM) from
 <a class="reference internal" href="15.html"><span class="doc">Unit 15 - Data reprojection</span></a>.</p>
 <p>The CHM is computed using <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.mapcalc.html">r.mapcalc</a>, executing the difference between
 DSM and DTM.</p>
@@ -213,6 +213,13 @@ DSM and DTM.</p>
 <p><span class="caption-number">Fig. 105 </span><span class="caption-text">The CHM map.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
+<div class="task admonition">
+<p class="admonition-title">Task</p>
+<p>Note that DSM created from Lidar data and EU-DEM have
+completely different qualitative characteristics. For a reasonable
+result it would be necessary to substitute DEM from another
+qualitatively similar source like DSM.</p>
+</div>
 </section>
 </section>
 
@@ -243,10 +250,10 @@ DSM and DTM.</p>
 <li class="toctree-l1"><a class="reference internal" href="15.html">Unit 15 - Data reprojection</a></li>
 <li class="toctree-l1"><a class="reference internal" href="16.html">Unit 16 - Flooding simulation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="17.html">Unit 17 - Spatio-temporal intro</a></li>
-<li class="toctree-l1"><a class="reference internal" href="18.html">Unit 18 - Lidar, DTM interpolation</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Unit 19 - DTM script parallelization</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#dtm-interpolation-in-parallel">DTM interpolation in parallel</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#dtm-comparision">DTM comparision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18.html">Unit 18 - Lidar, DSM interpolation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Unit 19 - DSM script parallelization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#dsm-interpolation-in-parallel">DSM interpolation in parallel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#canopy-height-model">Canopy Height Model</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="20.html">Unit 20 - Sentinel downloader</a></li>
@@ -279,7 +286,7 @@ DSM and DTM.</p>
       <div class="footer">
         <div class="left">
           <div role="navigation" aria-label="related navigaton">
-            <a href="18.html" title="Unit 18 - Lidar, DTM interpolation"
+            <a href="18.html" title="Unit 18 - Lidar, DSM interpolation"
               >previous</a> |
             <a href="20.html" title="Unit 20 - Sentinel downloader"
               >next</a>
