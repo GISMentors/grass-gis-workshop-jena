@@ -21,7 +21,6 @@
 # % type: integer
 # %end
 
-import os
 import sys
 import time
 from copy import deepcopy

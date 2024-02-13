@@ -22,23 +22,23 @@ A script consists of three main functions:
 1. ``import_files()`` to import input LAS/LAZ files (line
 :lcode:`33`). Import process can be performed in parallel by
 :pygrass-modules:`ParallelModuleQueue` from PyGRASS library (see
-:doc:`11` for PyGRASS introduction), lines :lcode:`37, 42, 57-58, 60`.
+:doc:`11` for PyGRASS introduction), lines :lcode:`37, 42, 54-55, 57`.
 
-2. ``create_dsm_tiles()`` to compute DSM per tile (line :lcode:`67`)
+2. ``create_dsm_tiles()`` to compute DSM per tile (line :lcode:`64`)
 using :grasscmd:`v.surf.rst`. DSM tiles need to be computed with a
 reasonable overlap in order to create seamless mosaics, see
-:lcode:`73-76`. Tiles can be processed in parallel too, see
-:param:`nproc` option on line :lcode:`82`.
+:lcode:`70-73`. Tiles can be processed in parallel too, see
+:param:`nproc` option on line :lcode:`79`.
 
 3. ``patch_tiles()`` to patch DSM tiles together by
-:grasscmd:`r.series`, see :lcode:`86`. From overlapping cell values is
+:grasscmd:`r.series`, see :lcode:`83`. From overlapping cell values is
 computed an average value. This is main reason why :grasscmd:`r.patch`
 is not used here.
   
 .. literalinclude:: ../_static/scripts/create-dsm.py
    :language: python
    :linenos:
-   :emphasize-lines: 6, 9, 13, 18, 33, 37, 42, 57-58, 60, 67, 73-76, 82, 86
+   :emphasize-lines: 6, 9, 13, 18, 33, 37, 42, 54-55, 57, 64, 70-73, 79, 83
 
 Sample script to download: `create-dsm.py <../_static/scripts/create-dsm.py>`__
 
