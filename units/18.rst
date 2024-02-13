@@ -1,4 +1,4 @@
-Unit 18 - Lidar, DTM interpolation
+Unit 18 - Lidar, DSM interpolation
 ==================================
 
 LiDAR data used in this unit can be found in :file:`lidar`

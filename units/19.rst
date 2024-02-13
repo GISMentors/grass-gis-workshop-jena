@@ -1,18 +1,18 @@
-Unit 19 - DTM script parallelization
+Unit 19 - DSM script parallelization
 ====================================
 
 This unit is focused on **parallel computing**. Sample script
-below produces seamless DTM (Digital Terrain Model, see :doc:`18`)
+below produces seamless DSM (Digital Terrain Model, see :doc:`18`)
 from bunch of LAS/LAZ files. Computation will be split into tiles and
 performed in parallel.
 
-DTM interpolation in parallel
+DSM interpolation in parallel
 -----------------------------
 
 User interface defines two parameters, :param:`directory` (line
 :lcode:`6`) for input directory with input LAS/LAZ files, and
 :param:`elevation` (line :lcode:`9`) name for output elevation raster
-map mosaics. The resolution of output DTM is defined by
+map mosaics. The resolution of output DSM is defined by
 :param:`resolution` parameter (line :lcode:`13`). And finally number
 of processes running in parallel will be controlled by :param:`nproc`
 (line :lcode:`18`) parameter.
@@ -24,13 +24,13 @@ A script consists of three main functions:
 :pygrass-modules:`ParallelModuleQueue` from PyGRASS library (see
 :doc:`11` for PyGRASS introduction), lines :lcode:`37, 42, 57-58, 60`.
 
-2. ``create_dtm_tiles()`` to compute DTM per tile (line :lcode:`67`)
-using :grasscmd:`v.surf.rst`. DTM tiles need to be computed with a
+2. ``create_dtm_tiles()`` to compute DSM per tile (line :lcode:`67`)
+using :grasscmd:`v.surf.rst`. DSM tiles need to be computed with a
 reasonable overlap in order to create seamless mosaics, see
 :lcode:`73-76`. Tiles can be processed in parallel too, see
 :param:`nproc` option on line :lcode:`82`.
 
-3. ``patch_tiles()`` to patch DTM tiles together by
+3. ``patch_tiles()`` to patch DSM tiles together by
 :grasscmd:`r.series`, see :lcode:`86`. From overlapping cell values is
 computed an average value. This is main reason why :grasscmd:`r.patch`
 is not used here.
@@ -51,18 +51,18 @@ Sample script to download: `create-dtm.py <../_static/scripts/create-dtm.py>`__
 .. figure:: ../images/units/19/dtm_patched.png
    :class: middle
    
-   DTM created from all available tiles.
+   DSM created from all available tiles.
 
 ..   
    .. todo:: update
           
 .. _dmt-comparision:
 
-DTM comparision
----------------
+Canopy Height Model
+-------------------
 
 In this session we will compute the Canopy Height Model (CHM), as the
-difference between interpolated DSM and imported EU-DEM DTM from
+difference between interpolated DSM and imported EU-DEM (DTM) from
 :doc:`15`.
 
 The CHM is computed using :grasscmd:`r.mapcalc`, executing the difference between
@@ -77,5 +77,8 @@ DSM and DTM.
    
    The CHM map.
 
-..
-    .. todo:: update screenshot
+.. task:: Note that DSM created from Lidar data and EU-DEM have
+   completely different qualitative characteristics. For a reasonable
+   result it would be necessary to substitute DEM from another
+   qualitatively similar source like DSM.
+
