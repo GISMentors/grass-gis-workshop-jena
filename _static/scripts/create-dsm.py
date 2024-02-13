@@ -25,6 +25,7 @@ import os
 import sys
 import time
 from copy import deepcopy
+from pathlib import Path
 
 import grass.script as gs
 
@@ -43,19 +44,16 @@ def import_files(directory):
     )
 
     maps = []
-    for f in os.listdir(directory):
-        if os.path.splitext(f)[1] != '.laz':
-            continue
-        fullname = os.path.join(directory, f)
-        basename = os.path.basename(f)
+    for fullname in Path(directory).glob('*.las'):
+        basename = fullname.name
         # '-' is not valid for vector map names
         # vector map names cannot start with number
-        mapname = os.path.splitext(basename)[0].replace('-', '_')
-        
+        mapname = Path(basename).stem.replace('-', '_')
+
         maps.append(mapname)
         gs.message("Importing <{}>...".format(fullname))
         import_task = deepcopy(import_module)
-        queue.put(import_task(input=fullname, output=mapname))
+        queue.put(import_task(input=str(fullname), output=mapname))
     
     queue.wait()
 
