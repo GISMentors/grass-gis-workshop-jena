@@ -24,7 +24,7 @@ A script consists of three main functions:
 :pygrass-modules:`ParallelModuleQueue` from PyGRASS library (see
 :doc:`11` for PyGRASS introduction), lines :lcode:`37, 42, 57-58, 60`.
 
-2. ``create_dtm_tiles()`` to compute DSM per tile (line :lcode:`67`)
+2. ``create_dsm_tiles()`` to compute DSM per tile (line :lcode:`67`)
 using :grasscmd:`v.surf.rst`. DSM tiles need to be computed with a
 reasonable overlap in order to create seamless mosaics, see
 :lcode:`73-76`. Tiles can be processed in parallel too, see
@@ -35,12 +35,12 @@ reasonable overlap in order to create seamless mosaics, see
 computed an average value. This is main reason why :grasscmd:`r.patch`
 is not used here.
   
-.. literalinclude:: ../_static/scripts/create-dtm.py
+.. literalinclude:: ../_static/scripts/create-dsm.py
    :language: python
    :linenos:
    :emphasize-lines: 6, 9, 13, 18, 33, 37, 42, 57-58, 60, 67, 73-76, 82, 86
 
-Sample script to download: `create-dtm.py <../_static/scripts/create-dtm.py>`__
+Sample script to download: `create-dsm.py <../_static/scripts/create-dsm.py>`__
 
 .. note::
 

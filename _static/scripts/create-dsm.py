@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # %module
-# % description: Creates DTM from input LAS tiles.
+# % description: Creates DSM from input LAS tiles.
 # %end
 # %option G_OPT_M_DIR
 # % required: yes
@@ -25,6 +25,7 @@ import os
 import sys
 import time
 from copy import deepcopy
+from pathlib import Path
 
 import grass.script as gs
 
@@ -43,19 +44,16 @@ def import_files(directory):
     )
 
     maps = []
-    for f in os.listdir(directory):
-        if os.path.splitext(f)[1] != '.laz':
-            continue
-        fullname = os.path.join(directory, f)
-        basename = os.path.basename(f)
+    for fullname in Path(directory).glob('*.las'):
+        basename = fullname.name
         # '-' is not valid for vector map names
         # vector map names cannot start with number
-        mapname = os.path.splitext(basename)[0].replace('-', '_')
-        
+        mapname = Path(basename).stem.replace('-', '_')
+
         maps.append(mapname)
         gs.message("Importing <{}>...".format(fullname))
         import_task = deepcopy(import_module)
-        queue.put(import_task(input=fullname, output=mapname))
+        queue.put(import_task(input=str(fullname), output=mapname))
     
     queue.wait()
 
@@ -64,7 +62,7 @@ def import_files(directory):
 
     return maps
 
-def create_dtm_tiles(maps, res, nprocs, offset_multiplier=10):
+def create_dsm_tiles(maps, res, nprocs, offset_multiplier=10):
     offset=res * offset_multiplier
 
     for mapname in maps:
@@ -93,7 +91,7 @@ def main():
     start = time.time()
 
     maps = import_files(options['input'])
-    create_dtm_tiles(maps,
+    create_dsm_tiles(maps,
                      float(options['resolution']),
                      int(options['nprocs'])
     )
