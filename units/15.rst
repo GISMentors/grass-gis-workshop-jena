@@ -6,6 +6,10 @@ In this unit EU-DEM global dataset provided by `Copernicus programme
 will be used. Jena region is covered by tile E40N30. Be aware that
 EU-DEM tiles covers large regions (4GB per tile).
 
+.. important:: Note that a new Copernicus DEM product is available at
+   `Copernicus Contributing Missions Online
+   <https://spacedata.copernicus.eu/collections/copernicus-digital-elevation-model>`__.
+
 Normally :grasscmd:`r.import` could be used to import and
 automatically reproject data into target location. In our case there
 is no need to import into GRASS a whole big DEM tile. By using ``-r``
