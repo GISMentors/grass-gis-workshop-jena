@@ -38,15 +38,14 @@ from addons`.
 .. important:: Copernicus Open Access Hub was closed at the end of
    October 2023 (`source
    <https://scihub.copernicus.eu/>`__). Copernicus Sentinel data are
-   now available in the Copernicus Data Space Ecosystem. Currently,
-   sentinelsat package is currently not compatible with the new
-   Copernicus Data Space Ecosystem. See `sentinelsat Github repository
+   now available in the Copernicus Data Space Ecosystem (CDSE). **Currently,
+   sentinelsat package is not compatible with the new CDSE.** See `sentinelsat Github repository
    <https://github.com/sentinelsat/sentinelsat?tab=readme-ov-file#sentinelsat>`__
    for details. See also related `GRASS issue
    <https://github.com/OSGeo/grass-addons/issues/883>`__ reported on
    GitHub.
 
-:ref:`Switch <switch-location>` to `jena-region` location.
+:ref:`Switch <switch-location>` to `jena-region` location which was created in :doc:`02`.
 
 Download data
 -------------
@@ -56,7 +55,7 @@ Let's download suitable Sentinel products for our area of interest
 (implemented as a model in :doc:`08` or as a Python script in
 :doc:`11`). AOI region is defined by Jena city region created in
 :doc:`03`. `Sentinel-2 L2A products
-<https://docs.sentinel-hub.com/api/latest/data/sentinel-2-l2a/>`__
+<https://sentinels.copernicus.eu/web/sentinel/user-guides/sentinel-2-msi/product-types/level-2a/>`__
 will be used to avoid computing atmospheric corrections.
 
 .. important:: Pre-downloaded Sentinel scenes are available in the
@@ -123,11 +122,11 @@ where data should be saved.
    start=2021-04-01 end=2021-10-01 area_relation=Contains clouds=10 \
    limit=1 output=geodata/sentinel/2021
 
-.. note:: Note all products are available online. In this case the
+.. note:: Note all products are NOT available online. In this case the
    module fails with ``Product
    a844500a-049f-46a3-92de-bcda2c38fc3c is not
    online. Triggering retrieval from long term archive.`` error
-   message. In this case try to download affected product in the next days.
+   message. Try to download affected product in the next days.
 
 Import data
 -----------
@@ -161,9 +160,7 @@ option.
 
 By default, input data are imported into GRASS data format.
 Alternatively, data can be linked if :param:`-l` is given. It is also
-useful to import cloud mask vector features by :param:`-c` flag. We also use 
-:param:`register_output` option to produce a timestamp plain text file 
-which will be used in :doc:`21`.
+useful to import cloud mask vector features by :param:`-c` flag. 
 
 .. code-block:: bash
 

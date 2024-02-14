@@ -80,20 +80,19 @@ tab by entering the command below.</p>
 <p class="admonition-title">Important</p>
 <p>Copernicus Open Access Hub was closed at the end of
 October 2023 (<a class="reference external" href="https://scihub.copernicus.eu/">source</a>). Copernicus Sentinel data are
-now available in the Copernicus Data Space Ecosystem. Currently,
-sentinelsat package is currently not compatible with the new
-Copernicus Data Space Ecosystem. See <a class="reference external" href="https://github.com/sentinelsat/sentinelsat?tab=readme-ov-file#sentinelsat">sentinelsat Github repository</a>
+now available in the Copernicus Data Space Ecosystem (CDSE). <strong>Currently,
+sentinelsat package is not compatible with the new CDSE.</strong> See <a class="reference external" href="https://github.com/sentinelsat/sentinelsat?tab=readme-ov-file#sentinelsat">sentinelsat Github repository</a>
 for details. See also related <a class="reference external" href="https://github.com/OSGeo/grass-addons/issues/883">GRASS issue</a> reported on
 GitHub.</p>
 </div>
-<p><a class="reference internal" href="15.html#switch-location"><span class="std std-ref">Switch</span></a> to <cite>jena-region</cite> location.</p>
+<p><a class="reference internal" href="15.html#switch-location"><span class="std std-ref">Switch</span></a> to <cite>jena-region</cite> location which was created in <a class="reference internal" href="02.html"><span class="doc">Unit 02 - First steps</span></a>.</p>
 <section id="download-data">
 <h2>Download data<a class="headerlink" href="#download-data" title="Permalink to this heading">¶</a></h2>
 <p>Let’s download suitable Sentinel products for our area of interest
 (AOI) and perform the NDVI calculation as described in <a class="reference internal" href="05.html"><span class="doc">Unit 05 - Raster processing</span></a>
 (implemented as a model in <a class="reference internal" href="08.html"><span class="doc">Unit 08 - Modeler</span></a> or as a Python script in
 <a class="reference internal" href="11.html"><span class="doc">Unit 11 - PyGRASS scripting</span></a>). AOI region is defined by Jena city region created in
-<a class="reference internal" href="03.html"><span class="doc">Unit 03 - Data Management</span></a>. <a class="reference external" href="https://docs.sentinel-hub.com/api/latest/data/sentinel-2-l2a/">Sentinel-2 L2A products</a>
+<a class="reference internal" href="03.html"><span class="doc">Unit 03 - Data Management</span></a>. <a class="reference external" href="https://sentinels.copernicus.eu/web/sentinel/user-guides/sentinel-2-msi/product-types/level-2a/">Sentinel-2 L2A products</a>
 will be used to avoid computing atmospheric corrections.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
@@ -152,11 +151,11 @@ where data should be saved.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Note all products are available online. In this case the
+<p>Note all products are NOT available online. In this case the
 module fails with <code class="docutils literal notranslate"><span class="pre">Product</span>
 <span class="pre">a844500a-049f-46a3-92de-bcda2c38fc3c</span> <span class="pre">is</span> <span class="pre">not</span>
 <span class="pre">online.</span> <span class="pre">Triggering</span> <span class="pre">retrieval</span> <span class="pre">from</span> <span class="pre">long</span> <span class="pre">term</span> <span class="pre">archive.</span></code> error
-message. In this case try to download affected product in the next days.</p>
+message. Try to download affected product in the next days.</p>
 </div>
 </section>
 <section id="import-data">
@@ -182,9 +181,7 @@ option.</p>
 </div>
 <p>By default, input data are imported into GRASS data format.
 Alternatively, data can be linked if <span class="param">-l</span> is given. It is also
-useful to import cloud mask vector features by <span class="param">-c</span> flag. We also use
-<span class="param">register_output</span> option to produce a timestamp plain text file
-which will be used in <a class="reference internal" href="21.html"><span class="doc">Unit 21 - Sentinel spatio-temporal</span></a>.</p>
+useful to import cloud mask vector features by <span class="param">-c</span> flag.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>i.sentinel.import<span class="w"> </span>-l<span class="w"> </span>-c<span class="w"> </span><span class="nv">input</span><span class="o">=</span>geodata/sentinel/2019<span class="w"> </span><span class="nv">pattern</span><span class="o">=</span><span class="s2">&quot;20190626T102031_B0[4|8]_10m&quot;</span>
 </pre></div>
 </div>
