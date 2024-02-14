@@ -2,7 +2,7 @@ Unit 21 - Sentinel spatio-temporal
 ==================================
 
 :ref:`Create a new mapset <create-mapset>` in *jena-region* location:
-`sentinel_ndvi`.
+`sentinel_st`.
 
 .. important:: Do not use dashes in the mapset name otherwise
    :grasscmd:`t.rast.algebra` will most probably fail.
