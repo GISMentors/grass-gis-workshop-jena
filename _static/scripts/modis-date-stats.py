@@ -55,7 +55,7 @@ def main(options, flags):
            input="modis_c",
            method="average",
            order="start_time",
-           nprocs=3,
+           nprocs=1,
            memory=300,
            where="start_time > '{}' and start_time < '{}'".format(
                  options["start"], options["end"]),
