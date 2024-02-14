@@ -131,7 +131,7 @@ def compute(b4, b8, msk, min_area_ha, output, idx, queue):
     
     queue.put(MultiModule(modules, sync=False, set_temp_region=True))
 
-def stats(output, date, fd):
+def stats(output, date, fd, idx):
     fd.write('-' * 80)
     fd.write('\n')
     fd.write('NDVI class statistics ({0}: {1})'.format(output, date))
@@ -153,7 +153,7 @@ def stats(output, date, fd):
     Module('r.mapcalc', expression='ndvi_class_filled_i = int({})'.format(output))
     Module('r.to.vect', flags='v', input='ndvi_class_filled_i', output='ndvi_class_filled', type='area')
 
-    Module('v.rast.stats', flags='c', map='ndvi_class_filled', raster='ndvi',
+    Module('v.rast.stats', flags='c', map='ndvi_class_filled', raster='ndvi'+idx,
            column_prefix='ndvi', method=['minimum','maximum','average'])
     # v.db.select: don't print column names (-c)
     ret = Module('v.db.select', flags='c', map='ndvi_class_filled', separator='comma', stdout_=PIPE)
@@ -194,7 +194,7 @@ def main(queue):
     idx = 1
     fd = open(options['output'], 'w')
     for output, date in data:
-        stats(output, date, fd)
+        stats(output, date, fd, str(idx))
         cleanup(str(idx))
         idx += 1
 
