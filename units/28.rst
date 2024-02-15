@@ -12,14 +12,14 @@ on lines :lcode:`62-84`. Resultant Python dictionary is converted to
 JSON structure using ``json`` Python package on line :lcode:`86`. The
 ``json`` package is imported on line :lcode:`3`.
 
+Note that also class name (:lcode:`28`), process identifier
+(:lcode:`30`), title (:lcode:`31`), abstract (:lcode:`36`) and version
+(:lcode:`37`) needs to be updated.
+
 .. literalinclude:: ../_static/scripts/modis_v2.py
    :language: python
    :linenos:
    :emphasize-lines: 3,9,18-19,25-26,28,30,31,36,37,53,62-84,86
-
-Note that also class name (:lcode:`28`), process identifier
-(:lcode:`30`), title (:lcode:`31`), abstract (:lcode:`36`) and version
-(:lcode:`37`) needs to be updated.
 
 Sample process to download: `modis_v2.py
 <../_static/scripts/modis_v2.py>`__
@@ -29,17 +29,15 @@ Sample process to download: `modis_v2.py
 
 Example of execute request:
 
-http://localhost:5000/wps?request=Execute&service=WPS&identifier=modis-v2&version=1.0.0&datainputs=start=2023-03-01;end=2023-04-01;point=4351849,3120313
+http://localhost:5000/wps?request=Execute&service=WPS&identifier=modis-v2&version=1.0.0&datainputs=start=2023-03-01;end=2023-04-01;coordinates=4351849,3120313
 
 Possible response.
 
 .. code-block:: xml
 
    <wps:ComplexData mimeType="application/json" encoding="" schema="">
-   {"min": -0.309999999999945, "max": 17.97, "mean": 6.830000000000014, "count": 14}
+   {"min": -3.54999999999995, "max": 15.33, "mean": 4.673076923076951}
    </wps:ComplexData>
-
-.. todo:: Output to be updated
 
 .. task:: Try to improve the process in order to validate
    coordinates. Only point located in Germany is allowed.

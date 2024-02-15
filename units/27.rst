@@ -43,7 +43,7 @@ Install PyWPS and Flask dependency from GRASS :item:`Console` tab.
 
    python3 -m pip install flask==1.1.4 werkzeug==1.0.1 pywps==4.2.11 markupsafe==2.0.1
 
-In GRASS terminal go to :file:`pywps-flask` directory (by
+In GRASS terminal go to :file:`pywps-flask-master` directory (by
 :program:`cd` command) and start PyWPS demo server:
 
 .. code-block:: bash
@@ -78,7 +78,7 @@ MODIS process
 Let's create a new process based on the model created in :doc:`26`. In
 Graphical Modeler go :item:`Python editor` tab and switch Python
 script type to :item:`PyWPS`. Generated process store (:item:`Save
-As`) in :file:`pywps-flask/processes` directory.
+As`) in :file:`pywps-flask-master/processes` directory.
 
 .. figure:: ../images/units/27/modis-date-stats-pywps.png
    :class: middle

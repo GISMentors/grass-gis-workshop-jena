@@ -13,24 +13,22 @@ computational region and mask is set by :grasscmd:`g.region`
 provided in JSON structure similary to process version 2 (:doc:`28`)
 on line :lcode:`83`.
 
+Note that also class name (:lcode:`30`), process identifier
+(:lcode:`32`), title (:lcode:`33`), abstract (:lcode:`38`) and version
+(:lcode:`39`) needs to be updated.
+
 .. literalinclude:: ../_static/scripts/modis_v3.py
    :language: python
    :linenos:
    :emphasize-lines: 9,18-21,30,32,33,38,39,53,56,57,59,72,83
 
-.. todo:: Probably `text/xml` is not needed.
-
-Note that also class name (:lcode:`30`), process identifier
-(:lcode:`32`), title (:lcode:`33`), abstract (:lcode:`38`) and version
-(:lcode:`39`) needs to be updated.
-                     
 Sample process to download: `modis_v3.py
 <../_static/scripts/modis_v3.py>`__
 
 .. important:: Do not forget to import process as done in :ref:`Unit 27
    <process-import>` and restart demo PyWPS server.
 
-Copy :file:`jena_boundary.gpkg` to :file:`pywps-flask/static/data` and
+Copy :file:`jena_boundary.gpkg` to :file:`pywps-flask-master/static/data` and
 execute the process.
 
 http://localhost:5000/wps?request=Execute&service=WPS&identifier=modis-v3&version=1.0.0&datainputs=start=2023-03-01;end=2023-04-01;region=@xlink:href=http://localhost:5000/static/data/jena_boundary.gpkg
@@ -40,7 +38,5 @@ Possible response.
 .. code-block:: xml
 
    <wps:ComplexData mimeType="application/json" encoding="" schema="">
-   {"n": 115.0, "null_cells": 109.0, "cells": 224.0, "min": 7.07625000000003,...
+   {"n": 115.0, "null_cells": 109.0, "cells": 224.0, "min": 1.02076923076927,...}
    </wps:ComplexData>
-
-.. todo:: Output to be updated

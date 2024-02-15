@@ -17,7 +17,7 @@ class ModisV3(Process):
 
         inputs.append(ComplexInput('region', 'Input vector region',
                     supported_formats=[
-                        Format('text/xml'), # requires QGIS WPS client
+                        Format('text/xml'),
                         Format('application/gml+xml')]))
         inputs.append(LiteralInput('start', 'Start date (eg. 2023-03-01)',
                                    data_type='string'))
@@ -25,18 +25,18 @@ class ModisV3(Process):
                                    data_type='string'))
 
         outputs.append(ComplexOutput('output', 'Computed LST statistics',
-                                     supported_formats=[Format('application/json')])
+                                     supported_formats=[Format('application/json')]))
 
         super(ModisV3, self).__init__(
             self._handler,
             identifier="modis-v3",
-            tiotle="Modis process (v3)",
+            title="Modis process (v3)",
             inputs=inputs,
             outputs=outputs,
             # here you could also specify the GRASS location, for example:
             # grass_location="EPSG:5514",
             abstract="Computes LST stats for given area and period (limited to Germany and 2023).",
-            verosion="0.3",
+            version="0.3",
             store_supported=True,
             status_supported=True)
 
@@ -52,9 +52,9 @@ class ModisV3(Process):
 
         Module('v.import',
                 input=request.inputs['region'][0].file,
-                output='poly')
+                output='poly', overwrite=True)
         Module('g.region', vector='poly', align='c_001')
-        Module('r.mask', vector='poly')
+        Module('r.mask', vector='poly', overwrite=True)
 
         Module("t.rast.series",
                overwrite=True,
@@ -80,7 +80,7 @@ class ModisV3(Process):
 
         stats = parse_key_val(m.outputs.stdout, val_type=float)
 
-        response.outputs['stats'].data = json.dumps(stats)
+        response.outputs['output'].data = json.dumps(stats)
 
         return response
 
