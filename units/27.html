@@ -124,11 +124,14 @@ Python script in <a class="reference internal" href="26.html"><span class="doc">
 <ol class="arabic simple">
 <li><p>The option <span class="param">where</span> will be split into two options
 (<span class="lcode">17-20,55-57</span>): <span class="param">start</span> - Start date and
-<span class="param">end</span> - End date. Also <span class="param">output</span> parameter is changed
-to <cite>string</cite> data type (<span class="lcode">22-23</span>).</p></li>
-<li><p>New function <code class="docutils literal notranslate"><span class="pre">check_date()</span></code> to validate input dates will be added (<span class="lcode">4,404-43,45-45</span>)</p></li>
+<span class="param">end</span> - End date.</p></li>
+<li><p>New <span class="param">output</span> parameter is defined (<span class="lcode">22-23</span>).</p></li>
+<li><p>New function <code class="docutils literal notranslate"><span class="pre">check_date()</span></code> to validate input dates will be added
+(<span class="lcode">4,404-43,45-45</span>).</p></li>
 <li><p>Output of <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.univar.html">r.univar</a> will be parsed and statistics
-printed (<span class="lcode">3,68,70-74</span>)</p></li>
+printed (<span class="lcode">3,68,70-74</span>).</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">Model</span></code> class (too generic name) is renamed to <code class="docutils literal notranslate"><span class="pre">ModisV1</span></code>
+(<span class="lcode">11,25,82</span>).</p></li>
 </ol>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="ch">#!/usr/bin/env python3</span>
 <span class="linenos"> 2</span>
@@ -215,9 +218,6 @@ printed (<span class="lcode">3,68,70-74</span>)</p></li>
 </span><span class="linenos">83</span>    <span class="n">application</span> <span class="o">=</span> <span class="n">Service</span><span class="p">(</span><span class="n">processes</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>It will also be useful to rename the <code class="docutils literal notranslate"><span class="pre">Model</span></code> class to <code class="docutils literal notranslate"><span class="pre">ModisV1</span></code>
-(<span class="lcode">11,25,82</span>).</p>
-<p>Sample process to download: <a class="reference external" href="../_static/scripts/modis_v1.py">modis_v1.py</a></p>
 <p>Source code comments: process itself is defined as a Python class,
 <code class="xref py py-class docutils literal notranslate"><span class="pre">ModisV1</span></code> in this case (line <span class="lcode">11</span>). In class constructor
 input (lines <span class="lcode">17-20</span>) and output parameters (line
@@ -230,6 +230,7 @@ in this location a temporary mapset which is deleted when process is
 finished. Process body is implemented as <code class="docutils literal notranslate"><span class="pre">_handler()</span></code> method, see
 line <span class="lcode">39</span>. Resultant statistics is stored to response output as
 a simple string on line <span class="lcode">74</span>.</p>
+<p>Sample process to download: <a class="reference external" href="../_static/scripts/modis_v1.py">modis_v1.py</a></p>
 <p id="process-import">The process has to be activated in <code class="file docutils literal notranslate"><span class="pre">demo.py</span></code>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">...</span>
 <span class="kn">from</span> <span class="nn">processes.modis_v1</span> <span class="kn">import</span> <span class="n">ModisV1</span>
