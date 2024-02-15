@@ -76,13 +76,20 @@ server. (source: <a class="reference external" href="http://pywps.readthedocs.io
 will be tested in <a class="reference external" href="https://github.com/geopython/pywps-flask">PyWPS demo</a> environment. <a class="reference external" href="https://github.com/geopython/pywps-flask/archive/master.zip">Download</a> the
 demo and extract into your working directory.</p>
 <p>Install PyWPS and Flask dependency from GRASS <span class="item">Console</span> tab.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="nv">pywps</span><span class="o">==</span><span class="m">4</span>.6.0<span class="w"> </span><span class="nv">markupsafe</span><span class="o">==</span><span class="m">2</span>.0.1
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="nv">flask</span><span class="o">==</span><span class="m">1</span>.1.4<span class="w"> </span><span class="nv">werkzeug</span><span class="o">==</span><span class="m">1</span>.0.1<span class="w"> </span><span class="nv">pywps</span><span class="o">==</span><span class="m">4</span>.2.11<span class="w"> </span><span class="nv">markupsafe</span><span class="o">==</span><span class="m">2</span>.0.1
 </pre></div>
 </div>
-<p>Go to <code class="file docutils literal notranslate"><span class="pre">pywps-flask</span></code> directory and start PyWPS demo server</p>
+<p>In GRASS terminal go to <code class="file docutils literal notranslate"><span class="pre">pywps-flask</span></code> directory (by
+<strong class="program">cd</strong> command) and start PyWPS demo server:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>demo.py
 </pre></div>
 </div>
+<figure class="align-center" id="id4">
+<img alt="../_images/launch-demo.png" class="middle" src="../_images/launch-demo.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 124 </span><span class="caption-text">Launch PyWPS demo service from GRASS terminal.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>Open <a class="reference external" href="http://127.0.0.1:5000">http://127.0.0.1:5000</a> in order to see all available WPS demo
 processes. Let’s request process description of selected process,
 eg. <em>say_hello</em> process. Try to run the process by <code class="docutils literal notranslate"><span class="pre">execute</span></code>
@@ -101,10 +108,10 @@ Hello<span class="w"> </span>Martin
 Graphical Modeler go <span class="item">Python editor</span> tab and switch Python
 script type to <span class="item">PyWPS</span>. Generated process store (<span class="item">Save
 As</span>) in <code class="file docutils literal notranslate"><span class="pre">pywps-flask/processes</span></code> directory.</p>
-<figure class="align-center" id="id4">
+<figure class="align-center" id="id5">
 <img alt="../_images/modis-date-stats-pywps.png" class="middle" src="../_images/modis-date-stats-pywps.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 124 </span><span class="caption-text">Export model as PyWPS process.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 125 </span><span class="caption-text">Export model as PyWPS process.</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <div class="admonition note">
@@ -240,10 +247,10 @@ a simple string on line <span class="lcode">74</span>.</p>
 </div>
 <p>You should see your <code class="docutils literal notranslate"><span class="pre">modis-v1</span></code> process in the list. Click on
 <code class="docutils literal notranslate"><span class="pre">DescribeProcess</span></code> to check input and outputs parameters description.</p>
-<figure class="align-center" id="id5">
+<figure class="align-center" id="id6">
 <img alt="../_images/modis-v1.png" src="../_images/modis-v1.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 125 </span><span class="caption-text">Process modis-v1 available on PyWPS demo server.</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 126 </span><span class="caption-text">Process modis-v1 available on PyWPS demo server.</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <div class="admonition important">
