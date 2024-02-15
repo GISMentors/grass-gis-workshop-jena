@@ -241,18 +241,6 @@ a simple string on line <span class="lcode">74</span>.</p>
 <span class="p">]</span>
 </pre></div>
 </div>
-<p>Stop running demo PyWPS server by <kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">Ctrl</kbd>+<kbd class="kbd docutils literal notranslate">C</kbd></kbd> and start again.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>./demo.py
-</pre></div>
-</div>
-<p>You should see your <code class="docutils literal notranslate"><span class="pre">modis-v1</span></code> process in the list. Click on
-<code class="docutils literal notranslate"><span class="pre">DescribeProcess</span></code> to check input and outputs parameters description.</p>
-<figure class="align-center" id="id6">
-<img alt="../_images/modis-v1.png" src="../_images/modis-v1.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 126 </span><span class="caption-text">Process modis-v1 available on PyWPS demo server.</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
-</figcaption>
-</figure>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>In order to use GRASS GIS functionality update PyWPS
@@ -266,6 +254,18 @@ installation directory, eg.</p>
 </pre></div>
 </div>
 </div>
+<p>Stop running demo PyWPS server by <kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">Ctrl</kbd>+<kbd class="kbd docutils literal notranslate">C</kbd></kbd> and start again.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>./demo.py
+</pre></div>
+</div>
+<p>You should see your <code class="docutils literal notranslate"><span class="pre">modis-v1</span></code> process in the list. Click on
+<code class="docutils literal notranslate"><span class="pre">DescribeProcess</span></code> to check input and outputs parameters description.</p>
+<figure class="align-center" id="id6">
+<img alt="../_images/modis-v1.png" src="../_images/modis-v1.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 126 </span><span class="caption-text">Process modis-v1 available on PyWPS demo server.</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>Now execute the process:</p>
 <p><a class="reference external" href="http://localhost:5000/wps?request=Execute&amp;service=WPS&amp;identifier=modis-v1&amp;version=1.0.0&amp;datainputs=start=2023-03-01;end=2023-04-01">http://localhost:5000/wps?request=Execute&amp;service=WPS&amp;identifier=modis-v1&amp;version=1.0.0&amp;datainputs=start=2023-03-01;end=2023-04-01</a></p>
 <p>Example of response:</p>
