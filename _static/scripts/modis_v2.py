@@ -15,7 +15,7 @@ class ModisV2(Process):
         inputs = list()
         outputs = list()
 
-        inputs.append(LiteralInput('point', 'ETRS-89 coordinates',
+        inputs.append(LiteralInput('coordinates', 'ETRS-89 coordinates',
                                   data_type='string'))
         inputs.append(LiteralInput('start', 'Start date (eg. 2023-03-01)',
                                    data_type='string'))
@@ -23,18 +23,18 @@ class ModisV2(Process):
                                    data_type='string'))
 
         outputs.append(ComplexOutput('output', 'Computed LST statistics',
-                                     supported_formats=[Format('application/json')])
+                                     supported_formats=[Format('application/json')]))
 
         super(ModisV2, self).__init__(
             self._handler,
             identifier="modis-v2",
-            tiotle="Modis process (v2)",
+            title="Modis process (v2)",
             inputs=inputs,
             outputs=outputs,
             # here you could also specify the GRASS location, for example:
             # grass_location="EPSG:5514",
             abstract="Computes LST stats for given location and period (limited to Germany and 2023).",
-            verosion="0.2",
+            version="0.2",
             store_supported=True,
             status_supported=True)
 
@@ -48,7 +48,7 @@ class ModisV2(Process):
         check_date(request.inputs['start'][0].data)
         check_date(request.inputs['end'][0].data)
 
-        x, y = request.inputs['coords'][0].data.split(',')
+        x, y = request.inputs['coordinates'][0].data.split(',')
 
         m = Module('t.rast.what',
                    strds='modis_c@PERMANENT',
@@ -59,15 +59,14 @@ class ModisV2(Process):
                    request.inputs["end"][0].data),
                    stdout_=PIPE)
 
-        tsum = 0
         stats = {
             'min' : None,
             'max' : None,
             'mean' : None,
-            'count' : 0,
         }
+        tsum = 0
         count = 0
-        for line in ret.outputs.stdout.splitlines():
+        for line in m.outputs.stdout.splitlines():
             items = line.split(',')
             if items[-1] == '*': # no data
                 continue
@@ -80,10 +79,10 @@ class ModisV2(Process):
                 if val > stats['max']:
                     stats['max'] = val
             tsum += val
-            stats['count'] += 1
-        stats['mean'] = tsum / stats['count']
+            count += 1
+        stats['mean'] = tsum / count
         
-        response.outputs['stats'].data = json.dumps(stats)
+        response.outputs['output'].data = json.dumps(stats)
 
         return response
 

@@ -2,23 +2,23 @@ Unit 30 - PyWPS LST region zones
 ================================
 
 A last (fourth) version of the process will return for input region
-and dates, LST zones in vector format (:wikipedia:`GML`). The output
-parameter is defined as ``ComplexOutput``, see lines :lcode:`26-27`.
-Zones defined on lines :lcode:`83-86` are created by
-:grasscmd:`r.recode` (:lcode:`90`). Than raster zones are convert to
-vector by :grasscmd:`r.to.vect` on line :lcode:`97`. Finally vector
-zones are exported into GML format on line :lcode:`104` by
-:grasscmd:`v.out.ogr`. Response content is set on line :lcode:`110`.
+and dates LST zones in vector format (:wikipedia:`GML`). The output
+parameter is defined as ``ComplexOutput``, see lines :lcode:`26-29`.
+Zones defined on lines :lcode:`85-88` are created by
+:grasscmd:`r.recode` (:lcode:`92`). Than raster zones are convert to
+vector by :grasscmd:`r.to.vect` on line :lcode:`99`. Finally vector
+zones are exported into GML format on line :lcode:`106` by
+:grasscmd:`v.out.ogr`. Response content is set on line :lcode:`112`.
 
+Note that also class name (:lcode:`31`), process identifier
+(:lcode:`33`), title (:lcode:`34`), abstract (:lcode:`39`) and version
+(:lcode:`40`) needs to be updated.
+          
 .. literalinclude:: ../_static/scripts/modis_v4.py
    :language: python
    :linenos:
-   :emphasize-lines: 26-27,29,31,32,37,38,83-86,90,97,104,110
+   :emphasize-lines: 26-29,31,33,34,39,40,85-88,92,99,106,112
 
-Note that also class name (:lcode:`29`), process identifier
-(:lcode:`31`), title (:lcode:`32`), abstract (:lcode:`37`) and version
-(:lcode:`38`) needs to be updated.
-                     
 Sample process to download: `modis_v4.py
 <../_static/scripts/modis_v4.py>`__
       
@@ -31,15 +31,16 @@ http://localhost:5000/wps?request=Execute&service=WPS&identifier=modis-v4&versio
 
 Compare with (output return as reference):
 
-http://localhost:5000/wps?request=Execute&service=WPS&identifier=modis-v4&version=1.0.0&datainputs=start=2023-03-01;end=2023-04-01;region=@xlink:href=http://localhost:5000/static/data/jena_boundary.gpkg&responsedocument=zones=@asReference=true
+http://localhost:5000/wps?request=Execute&service=WPS&identifier=modis-v4&version=1.0.0&datainputs=start=2023-03-01;end=2023-04-01;region=@xlink:href=http://localhost:5000/static/data/jena_boundary.gpkg&responsedocument=output=@asReference=true
 
 .. figure:: ../images/units/30/qgis-result.png
    :class: large
            
-   Example of WPS process consumption in QGIS using WPS client plugin.
+   Example of WPS process consumption in QGIS using WPS Client
+   plugin. Install the plugin from `ZIP
+   <https://github.com/OpenGeoLabs/qgis-wps-plugin/archive/refs/heads/master.zip>`__
+   file.
 
-.. todo:: Output to be updated
-
-.. todo:: Release QGIS plugin
+----
 
 **It is the end (of the workshop), enjoy GRASS GIS (and your real life)! :-)**
