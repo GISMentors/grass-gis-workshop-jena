@@ -45,7 +45,7 @@ Download selected Sentinel scenes:
 Import data
 -----------
 
-Data can be imported by :grasscmd:`i.sentinel.import` similarly as
+Data can be imported by :grasscmdaddons:`i.sentinel.import` similarly as
 done in :doc:`20`. At fisrt check list of bands to be imported by
 :param:`-p` flag. Since NDVI is computed only 4th and 8th band are
 selected. Use :option:`register_output` in order to create timestamps
