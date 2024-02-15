@@ -39,16 +39,9 @@ demo and extract into your working directory.
 
 Install PyWPS and Flask dependency from GRASS :item:`Console` tab.
 
-.. note:: On MS Windows download fiona package from
-   https://www.lfd.uci.edu/~gohlke/pythonlibs/ and install it:
-
-   .. code-block:: bash
-
-      python3 -m pip install C:\Users\martin\Downloads\Fiona-1.8.21-cp39-cp39-win_amd64.whl
-
 .. code-block:: bash
 
-   python3 -m pip install flask==1.1.4 werkzeug==1.0.1 pywps==4.2.11 markupsafe==2.0.1
+   python3 -m pip install pywps==4.6.0 markupsafe==2.0.1
 
 Go to :file:`pywps-flask` directory and start PyWPS demo server
 
