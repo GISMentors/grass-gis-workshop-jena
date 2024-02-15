@@ -123,8 +123,8 @@ def stats(output, date, fd):
     fd.write('-' * 80)
     fd.write('\n')
     # we need integer map
-    Module('r.mapcalc', expression='ndvi_class_filled_i = int({})'.format(output))
-    Module('r.to.vect', flags='v', input='ndvi_class_filled_i', output='ndvi_class_filled', type='area')
+    Module('r.mapcalc', expression='ndvi_class_filled_i = int({})'.format(output), overwrite=True)
+    Module('r.to.vect', flags='v', input='ndvi_class_filled_i', output='ndvi_class_filled', type='area', overwrite=True)
 
     Module('v.rast.stats', flags='c', map='ndvi_class_filled', raster='ndvi',
            column_prefix='ndvi', method=['minimum','maximum','average'])
