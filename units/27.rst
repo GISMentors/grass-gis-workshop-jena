@@ -41,14 +41,19 @@ Install PyWPS and Flask dependency from GRASS :item:`Console` tab.
 
 .. code-block:: bash
 
-   python3 -m pip install pywps==4.6.0 markupsafe==2.0.1
+   python3 -m pip install flask==1.1.4 werkzeug==1.0.1 pywps==4.2.11 markupsafe==2.0.1
 
-Go to :file:`pywps-flask` directory and start PyWPS demo server
+In GRASS terminal go to :file:`pywps-flask` directory (by
+:program:`cd` command) and start PyWPS demo server:
 
 .. code-block:: bash
 
    python3 demo.py
 
+.. figure:: ../images/units/27/launch-demo.png
+   :class: middle
+   
+   Launch PyWPS demo service from GRASS terminal.
 
 Open http://127.0.0.1:5000 in order to see all available WPS demo
 processes. Let's request process description of selected process,
