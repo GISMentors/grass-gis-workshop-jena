@@ -63,11 +63,11 @@ will be used to avoid computing atmospheric corrections.
    continue with :ref:`importing sample data <sentinel-import>`.
 
 Let's search for the latest available product by means of
-:grasscmd:`i.sentinel.download`. Setting the :param:`-l` flag, the result will only
+:grasscmdaddons:`i.sentinel.download`. Setting the :param:`-l` flag, the result will only
 be printed. The download procedure will be performed later. In order to
 search and download Sentinel products from the Copernicus Open Access Hub, 
 you have to create an account first. See the manual page of
-:grasscmd:`i.sentinel.download` module for details. Create a new text
+:grasscmdaddons:`i.sentinel.download` module for details. Create a new text
 file :file:`sentinel.txt` containing two lines (username and
 password).
 
@@ -174,7 +174,8 @@ useful to import cloud mask vector features by :param:`-c` flag.
           respect :option:`pattern` parameter.
           
 Now launch the NDVI sample script created in :doc:`12` (`ndvi-v4.py
-<../_static/scripts/ndvi-v4.py>`__) in order to compute NDVI classes.
+<../_static/scripts/ndvi-v4.py>`__) in order to compute NDVI classes
+(see processing workflow described in :doc:`09`).
    
 .. figure:: ../images/units/20/run-script.png
         
