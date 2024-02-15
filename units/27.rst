@@ -141,20 +141,6 @@ The process has to be activated in :file:`demo.py`.
     ModisV1(),
    ]
 
-Stop running demo PyWPS server by :kbd:`Ctrl+C` and start again.
-
-.. code-block:: bash
-
-                
-   python3 ./demo.py
-
-You should see your ``modis-v1`` process in the list. Click on
-``DescribeProcess`` to check input and outputs parameters description.
-
-.. figure:: ../images/units/27/modis-v1.png
-
-   Process modis-v1 available on PyWPS demo server.
-
 .. important:: In order to use GRASS GIS functionality update PyWPS
    configuration. Open :file:`pywps.cfg` and set correct GRASS
    installation directory, eg.
@@ -169,6 +155,19 @@ You should see your ``modis-v1`` process in the list. Click on
                 
       gisbase=/C/Program Files/GRASS GIS 8.4
    
+Stop running demo PyWPS server by :kbd:`Ctrl+C` and start again.
+
+.. code-block:: bash
+
+   python3 ./demo.py
+
+You should see your ``modis-v1`` process in the list. Click on
+``DescribeProcess`` to check input and outputs parameters description.
+
+.. figure:: ../images/units/27/modis-v1.png
+
+   Process modis-v1 available on PyWPS demo server.
+
 Now execute the process:
 
 http://localhost:5000/wps?request=Execute&service=WPS&identifier=modis-v1&version=1.0.0&datainputs=start=2023-03-01;end=2023-04-01
