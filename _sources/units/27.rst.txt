@@ -33,18 +33,20 @@ server. (source: `PyWPS documentation
 
 This unit shows how to write your own WPS processes. The processes
 will be tested in `PyWPS demo
-<https://github.com/geopython/pywps-flask>`__ environment. `Download
-<https://github.com/geopython/pywps-flask/archive/master.zip>`__ the
-demo and extract into your working directory.
+<https://github.com/geopython/pywps-flask>`__ environment.
 
-Install PyWPS and Flask dependency from GRASS :item:`Console` tab.
+.. important:: `Download PyWPS demo
+   <https://github.com/geopython/pywps-flask/archive/master.zip>`__
+   and extract into your working directory.
+
+In GRASS terminal install PyWPS and its dependecies:
 
 .. code-block:: bash
 
    python3 -m pip install flask==1.1.4 werkzeug==1.0.1 pywps==4.2.11 markupsafe==2.0.1
 
-In GRASS terminal go to :file:`pywps-flask-master` directory (by
-:program:`cd` command) and start PyWPS demo server:
+Go to :file:`pywps-flask-master` directory (by :program:`cd` command)
+and start PyWPS demo server:
 
 .. code-block:: bash
 

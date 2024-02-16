@@ -73,14 +73,18 @@ server. (source: <a class="reference external" href="http://pywps.readthedocs.io
 </figcaption>
 </figure>
 <p>This unit shows how to write your own WPS processes. The processes
-will be tested in <a class="reference external" href="https://github.com/geopython/pywps-flask">PyWPS demo</a> environment. <a class="reference external" href="https://github.com/geopython/pywps-flask/archive/master.zip">Download</a> the
-demo and extract into your working directory.</p>
-<p>Install PyWPS and Flask dependency from GRASS <span class="item">Console</span> tab.</p>
+will be tested in <a class="reference external" href="https://github.com/geopython/pywps-flask">PyWPS demo</a> environment.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p><a class="reference external" href="https://github.com/geopython/pywps-flask/archive/master.zip">Download PyWPS demo</a>
+and extract into your working directory.</p>
+</div>
+<p>In GRASS terminal install PyWPS and its dependecies:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="nv">flask</span><span class="o">==</span><span class="m">1</span>.1.4<span class="w"> </span><span class="nv">werkzeug</span><span class="o">==</span><span class="m">1</span>.0.1<span class="w"> </span><span class="nv">pywps</span><span class="o">==</span><span class="m">4</span>.2.11<span class="w"> </span><span class="nv">markupsafe</span><span class="o">==</span><span class="m">2</span>.0.1
 </pre></div>
 </div>
-<p>In GRASS terminal go to <code class="file docutils literal notranslate"><span class="pre">pywps-flask-master</span></code> directory (by
-<strong class="program">cd</strong> command) and start PyWPS demo server:</p>
+<p>Go to <code class="file docutils literal notranslate"><span class="pre">pywps-flask-master</span></code> directory (by <strong class="program">cd</strong> command)
+and start PyWPS demo server:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>demo.py
 </pre></div>
 </div>
