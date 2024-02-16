@@ -10,7 +10,7 @@ space-time raster dataset :map:`modis_cm` by
 .. code-block:: bash
 
    t.rast.series input=modis_c output=t_rast_series_out \
-    where="start_time > '2023-03-01' and start_time < '2023-04-01'"
+    where="start_time >= '2023-03-01' and start_time < '2023-04-01'"
    r.univar -g --overwrite map=t_rast_series_out
    
 .. figure:: ../images/units/26/modis-date-stats.png

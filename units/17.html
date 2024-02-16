@@ -158,7 +158,7 @@ subsequent analysis like univariate statistics:</p>
 <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.rast.extract.html">t.rast.extract</a>. In the example below three new datasets
 are created for the first, second and third six hours of flooding.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>lakes<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt; 0 and start_time &lt; 361&quot;</span><span class="w"> </span><span class="nv">output</span><span class="o">=</span>lakes_1
-t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>lakes<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt; 360 and start_time &lt; 720&quot;</span><span class="w"> </span><span class="nv">output</span><span class="o">=</span>lakes_2
+t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>lakes<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt; 360 and start_time &lt; 721&quot;</span><span class="w"> </span><span class="nv">output</span><span class="o">=</span>lakes_2
 t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>lakes<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt; 720&quot;</span><span class="w"> </span><span class="nv">output</span><span class="o">=</span>lakes_3
 </pre></div>
 </div>

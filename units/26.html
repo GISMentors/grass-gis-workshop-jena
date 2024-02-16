@@ -48,7 +48,7 @@ space-time raster dataset <span class="map">modis_cm</span> by
 <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.rast.series.html">t.rast.series</a>. Statistics is computed by
 <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.univar.html">r.univar</a>.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.series<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_c<span class="w"> </span><span class="nv">output</span><span class="o">=</span>t_rast_series_out<span class="w"> </span><span class="se">\</span>
-<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt; &#39;2023-03-01&#39; and start_time &lt; &#39;2023-04-01&#39;&quot;</span>
+<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt;= &#39;2023-03-01&#39; and start_time &lt; &#39;2023-04-01&#39;&quot;</span>
 r.univar<span class="w"> </span>-g<span class="w"> </span>--overwrite<span class="w"> </span><span class="nv">map</span><span class="o">=</span>t_rast_series_out
 </pre></div>
 </div>
@@ -126,7 +126,7 @@ printed (<span class="lcode">37,72,74-77</span>)</p></li>
 <span class="linenos">57</span>           <span class="n">order</span><span class="o">=</span><span class="s2">&quot;start_time&quot;</span><span class="p">,</span>
 <span class="linenos">58</span>           <span class="n">nprocs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
 <span class="linenos">59</span>           <span class="n">memory</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
-<span class="hll"><span class="linenos">60</span>           <span class="n">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt; &#39;</span><span class="si">{}</span><span class="s2">&#39; and start_time &lt; &#39;</span><span class="si">{}</span><span class="s2">&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+<span class="hll"><span class="linenos">60</span>           <span class="n">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt;= &#39;</span><span class="si">{}</span><span class="s2">&#39; and start_time &lt; &#39;</span><span class="si">{}</span><span class="s2">&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
 </span><span class="hll"><span class="linenos">61</span>                 <span class="n">options</span><span class="p">[</span><span class="s2">&quot;start&quot;</span><span class="p">],</span> <span class="n">options</span><span class="p">[</span><span class="s2">&quot;end&quot;</span><span class="p">]),</span>
 </span><span class="linenos">62</span>           <span class="n">output</span><span class="o">=</span><span class="s2">&quot;t_rast_series_out&quot;</span><span class="p">,</span>
 <span class="linenos">63</span>           <span class="n">file_limit</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>

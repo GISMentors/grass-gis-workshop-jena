@@ -90,7 +90,7 @@ Sinusoidal grid as the average values of clear-sky LSTs during an
 printed by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.rast.list.html">t.rast.list</a>. In example below only relevant
 data from March 2023 will be listed.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.list<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis<span class="w"> </span><span class="nv">order</span><span class="o">=</span>start_time<span class="w"> </span><span class="se">\</span>
-<span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt; &#39;2023-03-01&#39; and start_time &lt; &#39;2023-04-01&#39;&quot;</span>
+<span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt;= &#39;2023-03-01&#39; and start_time &lt; &#39;2023-04-01&#39;&quot;</span>
 </pre></div>
 </div>
 <p>In the example below only raster maps coming from Aqua satellite are
@@ -102,7 +102,7 @@ printed.</p>
 In example below statistics only for March 2023 is calculated. Note
 that the command is running in the current computation region
 similarly as <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.univar.html">r.univar</a> does.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.univar<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt; &#39;2023-03-01&#39; and start_time &lt; &#39;2023-04-01&#39;&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.univar<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt;= &#39;2023-03-01&#39; and start_time &lt; &#39;2023-04-01&#39;&quot;</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">id</span><span class="o">|</span><span class="n">semantic_label</span><span class="o">|</span><span class="n">start</span><span class="o">|</span><span class="n">end</span><span class="o">|</span><span class="n">mean</span><span class="o">|...</span>
@@ -144,7 +144,7 @@ maps in Celsius scale. Since new raster maps will be created, the
 command requires to define <span class="param">basename</span>. Note that new raster
 maps will be produced in the current computation region with mask
 respected.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.univar<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_c<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt; &#39;2023-03-01&#39; and start_time &lt; &#39;2023-04-01&#39;&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.univar<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_c<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt;= &#39;2023-03-01&#39; and start_time &lt; &#39;2023-04-01&#39;&quot;</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">id</span><span class="o">|</span><span class="n">start</span><span class="o">|</span><span class="n">end</span><span class="o">|</span><span class="n">mean</span><span class="o">|</span><span class="nb">min</span><span class="o">|</span><span class="nb">max</span><span class="o">|</span><span class="n">mean_of_abs</span><span class="o">|</span><span class="n">stddev</span><span class="o">|</span><span class="n">variance</span><span class="o">|</span><span class="n">coeff_var</span><span class="o">|</span><span class="nb">sum</span><span class="o">|</span><span class="n">null_cells</span><span class="o">|</span><span class="n">cells</span>
@@ -174,7 +174,7 @@ a new temporal dataset with aggregated data is created.</p>
 </pre></div>
 </div>
 <p>Example for July and August only.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.univar<span class="w"> </span>modis_cm<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt; &#39;2023-07-01&#39; and start_time &lt; &#39;2023-09-01&#39;&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.univar<span class="w"> </span>modis_cm<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt;= &#39;2023-07-01&#39; and start_time &lt; &#39;2023-09-01&#39;&quot;</span>
 </pre></div>
 </div>
 </section>
@@ -182,16 +182,16 @@ a new temporal dataset with aggregated data is created.</p>
 <h2>Data extraction<a class="headerlink" href="#data-extraction" title="Permalink to this heading">¶</a></h2>
 <p>A new space time dataset only with subset of data can be created by
 <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.rast.extract.html">t.rast.extract</a>. Example for the four seasons below.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_c<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt; &#39;2023-03-20&#39; and start_time &lt; &#39;2023-06-20&#39;&quot;</span><span class="w"> </span><span class="se">\</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_c<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt;= &#39;2023-03-20&#39; and start_time &lt; &#39;2023-06-20&#39;&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="nv">output</span><span class="o">=</span>modis_spring
 
-t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_c<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt; &#39;2023-06-20&#39; and start_time &lt; &#39;2023-09-22&#39;&quot;</span><span class="w"> </span><span class="se">\</span>
+t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_c<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt;= &#39;2023-06-20&#39; and start_time &lt; &#39;2023-09-22&#39;&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="nv">output</span><span class="o">=</span>modis_summer
 
-t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_c<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt; &#39;2023-09-22&#39; and start_time &lt; &#39;2023-12-21&#39;&quot;</span><span class="w"> </span><span class="se">\</span>
+t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_c<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt;= &#39;2023-09-22&#39; and start_time &lt; &#39;2023-12-21&#39;&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="nv">output</span><span class="o">=</span>modis_autumn
 
-t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_c<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt; &#39;2022-12-21&#39; and start_time &lt; &#39;2023-03-20&#39;&quot;</span><span class="w"> </span><span class="se">\</span>
+t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_c<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt;= &#39;2022-12-21&#39; and start_time &lt; &#39;2023-03-20&#39;&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="nv">output</span><span class="o">=</span>modis_winter
 </pre></div>
 </div>
