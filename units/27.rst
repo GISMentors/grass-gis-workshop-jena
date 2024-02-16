@@ -109,7 +109,6 @@ Python script in :doc:`26`:
    
 .. literalinclude:: ../_static/scripts/modis_v1.py
    :language: python
-   :linenos:
    :emphasize-lines: 3,4,11,25,17-20,22-23,27,40-43,45-46,55-57,68,70-74,82
 
 Source code comments: process itself is defined as a Python class,

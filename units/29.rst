@@ -19,7 +19,6 @@ Note that also class name (:lcode:`30`), process identifier
 
 .. literalinclude:: ../_static/scripts/modis_v3.py
    :language: python
-   :linenos:
    :emphasize-lines: 9,18-21,30,32,33,38,39,53,56,57,59,72,83
 
 Sample process to download: `modis_v3.py
