@@ -141,8 +141,8 @@ are created for the first, second and third six hours of flooding.
 .. code-block:: bash
 		
    t.rast.extract input=lakes where="start_time > 0 and start_time < 361" output=lakes_1
-   t.rast.extract input=lakes where="start_time > 360 and start_time < 720" output=lakes_2
-   t.rast.extract input=lakes where="start_time > 720" output=lakes_3         
+   t.rast.extract input=lakes where="start_time > 360 and start_time < 721" output=lakes_2
+   t.rast.extract input=lakes where="start_time > 720" output=lakes_3
 
 Aggregation into single raster output can be performed by
 :grasscmd:`t.rast.series`:

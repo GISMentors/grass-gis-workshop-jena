@@ -63,7 +63,7 @@ class ModisV3(Process):
                order="start_time",
                nprocs=1,
                memory=300,
-               where="start_time > '{}' and start_time < '{}'".format(
+               where="start_time >= '{}' and start_time < '{}'".format(
                    request.inputs["start"][0].data,
                    request.inputs["end"][0].data),
                output="t_rast_series_out",

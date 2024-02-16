@@ -57,7 +57,7 @@ def main(options, flags):
            order="start_time",
            nprocs=1,
            memory=300,
-           where="start_time > '{}' and start_time < '{}'".format(
+           where="start_time >= '{}' and start_time < '{}'".format(
                  options["start"], options["end"]),
            output="t_rast_series_out",
            file_limit=1000)

@@ -64,7 +64,7 @@ data from March 2023 will be listed.
 .. code-block:: bash
                 
    t.rast.list input=modis order=start_time \
-   where="start_time > '2023-03-01' and start_time < '2023-04-01'"
+   where="start_time >= '2023-03-01' and start_time < '2023-04-01'"
 
 In the example below only raster maps coming from Aqua satellite are
 printed.
@@ -80,7 +80,7 @@ similarly as :grasscmd:`r.univar` does.
 
 .. code-block:: bash
                 
-   t.rast.univar input=modis where="start_time > '2023-03-01' and start_time < '2023-04-01'"
+   t.rast.univar input=modis where="start_time >= '2023-03-01' and start_time < '2023-04-01'"
 
 ::
 
@@ -129,7 +129,7 @@ respected.
 
 .. code-block:: bash
 
-   t.rast.univar input=modis_c where="start_time > '2023-03-01' and start_time < '2023-04-01'"
+   t.rast.univar input=modis_c where="start_time >= '2023-03-01' and start_time < '2023-04-01'"
 
 ::
    
@@ -168,7 +168,7 @@ Example for July and August only.
 
 .. code-block:: bash
 
-   t.rast.univar modis_cm where="start_time > '2023-07-01' and start_time < '2023-09-01'"
+   t.rast.univar modis_cm where="start_time >= '2023-07-01' and start_time < '2023-09-01'"
 
 Data extraction
 ---------------
@@ -178,16 +178,16 @@ A new space time dataset only with subset of data can be created by
 
 .. code-block:: bash
                           
-   t.rast.extract input=modis_c where="start_time > '2023-03-20' and start_time < '2023-06-20'" \
+   t.rast.extract input=modis_c where="start_time >= '2023-03-20' and start_time < '2023-06-20'" \
    output=modis_spring
 
-   t.rast.extract input=modis_c where="start_time > '2023-06-20' and start_time < '2023-09-22'" \
+   t.rast.extract input=modis_c where="start_time >= '2023-06-20' and start_time < '2023-09-22'" \
    output=modis_summer
                 
-   t.rast.extract input=modis_c where="start_time > '2023-09-22' and start_time < '2023-12-21'" \
+   t.rast.extract input=modis_c where="start_time >= '2023-09-22' and start_time < '2023-12-21'" \
    output=modis_autumn
                 
-   t.rast.extract input=modis_c where="start_time > '2022-12-21' and start_time < '2023-03-20'" \
+   t.rast.extract input=modis_c where="start_time >= '2022-12-21' and start_time < '2023-03-20'" \
    output=modis_winter
 
 Another aggregation method is based on :grasscmd:`t.rast.series`, it

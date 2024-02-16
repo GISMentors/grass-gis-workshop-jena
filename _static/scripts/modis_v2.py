@@ -54,7 +54,7 @@ class ModisV2(Process):
                    strds='modis_c@PERMANENT',
                    coordinates=[x, y],
                    separator=',',
-                   where="start_time > '{}' and start_time < '{}'".format(
+                   where="start_time >= '{}' and start_time < '{}'".format(
                    request.inputs["start"][0].data,
                    request.inputs["end"][0].data),
                    stdout_=PIPE)
