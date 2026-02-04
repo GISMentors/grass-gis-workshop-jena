@@ -102,11 +102,11 @@ Useful links
 -------------
 
 * `GRASS GIS homepage <https://grass.osgeo.org>`__
+* `GRASS GIS tutorials <https://grass-tutorials.osgeo.org/>`__:
+  growing list of tutorials related to GRASS GIS
 * `GRASS GIS wiki <https://grasswiki.osgeo.org>`__: a lot of information, with examples
   and tutorials
-* `GRASS GIS user mailing list <http://lists.osgeo.org/mailman/listinfo/grass-user>`__:
+* `GRASS GIS forum <https://discourse.osgeo.org/tag/grass>`__:
   the simpler and most used way to ask for support
 * `GRASS GIS on StackExchange <https://gis.stackexchange.com/questions/tagged/grass>`__:
   another way to ask for support
-* `GRASS GIS tutorials <https://grass.osgeo.org/documentation/tutorials/>`__:
-  an incomplete list of tutorials related to GRASS GIS
