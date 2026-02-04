@@ -62,7 +62,7 @@ In a nutshell
 
 * want to visualize geodata in an easy and quick way (use QGIS instead)
 * want to access simple features
-* being scared of location and mapsets ;-)
+* being scared of projects and mapsets ;-)
 * *add your point here...*
 
 How to install

@@ -45,7 +45,7 @@ from addons`.
    <https://github.com/OSGeo/grass-addons/issues/883>`__ reported on
    GitHub.
 
-:ref:`Switch <switch-location>` to `jena-region` location which was created in :doc:`02`.
+:ref:`Switch <switch-project>` to `jena-region` project which was created in :doc:`02`.
 
 Download data
 -------------
@@ -136,11 +136,11 @@ Import data
 
 Before importing or linking Sentinel data try to print a list of
 filtered raster files including projection match (second column, 1 for
-match otherwise 0). If the CRS of input data differs from the current location
-consider reprojection (:param:`-r`) or creating a new location for
+match otherwise 0). If the CRS of input data differs from the current project
+consider reprojection (:param:`-r`) or creating a new project for
 import.
 
-Data will be imported into the GRASS location by means of the
+Data will be imported into the GRASS project by means of the
 :grasscmdaddons:`i.sentinel.import` tool. The command will import
 **all** Sentinel bands from :param:`input` directory
 recursively. Before importing data let's check content of the input

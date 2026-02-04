@@ -116,10 +116,10 @@ Source code comments: process itself is defined as a Python class,
 input (lines :lcode:`17-20`) and output parameters (line
 :lcode:`22-23`) are defined. Every process has its identifier (line
 :lcode:`27`), title and abstract. The process will operate in GRASS
-location defined on line :lcode:`32`. On line :lcode:`50` is assumed
+project defined on line :lcode:`32`. On line :lcode:`50` is assumed
 that space time LST dataset is located in PERMANENT, see
 :doc:`25`. For each job (executed process by a client) PyWPS creates
-in this location a temporary mapset which is deleted when process is
+in this project a temporary mapset which is deleted when process is
 finished. Process body is implemented as ``_handler()`` method, see
 line :lcode:`39`. Resultant statistics is stored to response output as
 a simple string on line :lcode:`74`.

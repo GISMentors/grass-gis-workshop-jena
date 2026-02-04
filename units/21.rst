@@ -1,7 +1,7 @@
 Unit 21 - Sentinel spatio-temporal
 ==================================
 
-:ref:`Create a new mapset <create-mapset>` in *jena-region* location:
+:ref:`Create a new mapset <create-mapset>` in *jena-region* project:
 `sentinel_st`.
 
 .. important:: Do not use dashes in the mapset name otherwise

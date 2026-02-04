@@ -95,9 +95,9 @@ Notes
 -----
 
 .. important:: If a spatial reference system (SRS) of raster/vector
-   file differs from GRASS location (:item:`Project match`) input data
+   file differs from GRASS project (:item:`Project match`) input data
    is automatically reprojected into SRS of the current GRASS
-   location. Note that GRASS simply does not support on the fly
+   project. Note that GRASS simply does not support on the fly
    transformation from several reasons.
 
 .. _import-no-srs:
@@ -105,13 +105,13 @@ Notes
 .. note:: In some cases SRS of imported file can be missing or
    invalid. GRASS reports this issue as *In case of no
    significant differences in the projection definitions, use
-   the -o flag to ignore them and use current location
-   definition.  Consider generating a new location from the
-   input dataset using the 'location' parameter.*
+   the -o flag to ignore them and use current project
+   definition.  Consider generating a new project from the
+   input dataset using the 'project' parameter.*
 
    GRASS allows importing such file by overriding project check
    (if you are really sure that SRS of input file is the same
-   as GRASS location).
+   as GRASS project).
 
 .. _vector-topo-section:
 

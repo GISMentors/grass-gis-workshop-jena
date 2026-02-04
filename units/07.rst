@@ -62,8 +62,8 @@ open :menuselection:`Processing --> Toolbox` and search for
    be optionally defined in :item:`Advanced parameters` section.
 
 :numref:`processing-i-vi-running` shows how Processing plugin
-works. First of all a temporary GRASS location is created by
-:grasscmd:`g.proj`, input data is linked into temporary location by
+works. First of all a temporary GRASS project is created by
+:grasscmd:`g.proj`, input data is linked into temporary project by
 :grasscmd:`r.external`. Then computation can finally starts by running
 :grasscmd:`i.vi` module. In the last step output data is exported out
 of GRASS using :grasscmd:`r.out.gdal`. The resultant GeoTiff file is
@@ -74,7 +74,7 @@ vizualized in QGIS map window.
 .. figure:: ../images/units/07/processing-i-vi-running.png
            
    Running :grasscmd:`i.vi` tool and exporting result from GRASS
-   temporary location.
+   temporary project.
    
 .. _processing-result:
 

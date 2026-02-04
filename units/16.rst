@@ -79,7 +79,7 @@ module:
    data like DEM, Jena city region, cloud mask vector map, Sentinel
    bands, results of NDVI computation and so on. Data organization can
    be improved by using multiple mapsets. Let's create a new mapset
-   *flooding* in the current location *jena-region*. New mapset from
+   *flooding* in the current project *jena-region*. New mapset from
    :item:`Data` tab or by :grasscmd:`g.mapset` module.
 
    .. figure:: ../images/units/16/create_mapset.png

@@ -50,12 +50,12 @@ For importing LAS/LAZ data there are available two GRASS modules:
 
       pdal translate las_681_5644_1_th_2014-2019.laz las_681_5644_1_th_2014-2019.las
 
-Let's create a new GRASS location *jena-lidar* defined by
+Let's create a new GRASS project *jena-lidar* defined by
 :epsg:`25832` (the SRS in which the Lidar data is referenced).
 
-.. figure:: ../images/units/18/create-location-epsg.png
+.. figure:: ../images/units/18/create-project-epsg.png
 
-   Create a new GRASS location by specifying EPSG code (*Select CRS
+   Create a new GRASS project by specifying EPSG code (*Select CRS
    from a list by EPSG or description*).
       
 Raster processing

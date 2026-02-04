@@ -21,17 +21,17 @@ MODIS data is provided in 3 projections (Sinusoidal, Lambert Azimuthal
 Equal-Area, and Geographic). For our purpose, data will be reprojected
 to ETRS89 / LAEA Europe :epsg:`3035`.
 
-.. _create-location-epsg:
+.. _create-project-epsg:
 
-Create a new GRASS location *germany-modis* (see :ref:`Unit 02
-<create-location>`) using EPSG code (*Select CRS from a list by EPSG
+Create a new GRASS project *germany-modis* (see :ref:`Unit 02
+<create-project>`) using EPSG code (*Select CRS from a list by EPSG
 or description*).
 
-.. figure:: ../images/units/24/create-location-epsg-0.png
+.. figure:: ../images/units/24/create-project-epsg-0.png
 
-   Create a new location based on EPSG code.
+   Create a new project based on EPSG code.
 
-.. figure:: ../images/units/24/create-location-epsg-1.png
+.. figure:: ../images/units/24/create-project-epsg-1.png
 
    Enter EPSG code.
 
@@ -88,7 +88,7 @@ downloaded.
 Import data
 -----------
           
-Input MODIS data can be imported and reprojected into target location
+Input MODIS data can be imported and reprojected into target project
 by :grasscmdaddons:`i.modis.import`.
 
 .. code-block:: bash
@@ -118,7 +118,7 @@ Germany administrative border
 
 Germany administrative border can created by dissolving
 :map:`counties` used in :doc:`14`. Let's import
-:file:`osm/counties.gpkg` into the current GRASS location as described
+:file:`osm/counties.gpkg` into the current GRASS project as described
 in :doc:`03`.
 
 Next, open the attribute table |grass-table| :sup:`Show attribute data
