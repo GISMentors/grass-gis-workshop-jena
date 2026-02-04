@@ -44,9 +44,8 @@ default project *World LatLong WGS84*. Also, a sample *world* vector
 layer (in GRASS terminology *vector map*) is shown.
 
 GRASS GUI is designed as a *simple and lightweight* graphical user
-interface. Basically, it is a GUI front-end calling GRASS commands (see
-:ref:`grass-tools`) in the background. The GUI consists of two main
-windows, see :numref:`startup8`.
+interface, see :numref:`startup8`. Basically, it is a GUI front-end
+calling GRASS commands (see :ref:`grass-tools`) in the background.
 
 .. _startup8:
 
@@ -60,8 +59,8 @@ windows, see :numref:`startup8`.
          
 GRASS GUI guides users by means of tooltips as shown in
 :numref:`startup8`. The default project is not designed for real
-work. The next step is usually to create new "project(s)" (in GRASS
-terminology *a project*) with user-defined spatial coordinate systems.
+work. The next step is usually to create a new project with
+user-defined spatial coordinate systems.
 
 .. note:: Consider changing language settings to English in
    :menuselection:`Settings --> Preferences --> Appearance`. Change
@@ -171,9 +170,8 @@ Imported :map:`jena_boundary` data layer can be easily displayed from
 Let's also add a basemap from freely available OpenStreeMap map
 service. In our case *OpenStreetMap WMS* provided by `mundialis
 <https://mundialis.de>`__ company
-(http://ows.mundialis.de/services/service). WMS layer can be added
-from :item:`Layers` tab |grass-layer-wms-add| :sup:`Add web service
-layer`.
+(https://ows.mundialis.de/osm/service). WMS layer can be added from
+:item:`Layers` tab |grass-layer-wms-add| :sup:`Add web service layer`.
 
 .. figure:: ../images/units/02/d-wms-0.png
 
