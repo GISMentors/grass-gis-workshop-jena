@@ -62,7 +62,7 @@ Software used in this training materials
 .. figure:: ./images/grass-gis-logo.png
    :class: small
           
-* `GRASS GIS <http://grass.osgeo.org>`__ (recommended version 8.4) for
+* `GRASS <http://grass.osgeo.org>`__ (recommended version 8.4) for
   geospatial raster, imagery, and vector data processing and providing
   spatial analysis.
 * `QGIS desktop <http://qgis.org>`__ (recommended version 3.40) for
@@ -81,7 +81,7 @@ Software used in this training materials
 Installation notes
 ------------------
 
-It is recommended to have at least 10GB free space (GRASS GIS
+It is recommended to have at least 10GB free space (GRASS
 installation + sample data + computation results).
 
 Debian/Ubuntu Linux
@@ -94,7 +94,7 @@ Debian/Ubuntu Linux
 MS Windows
 ^^^^^^^^^^
 
-* Install GRASS GIS 8 using `standalone installer
+* Install GRASS 8 using `standalone installer
   <https://grass.osgeo.org/download/windows/#standalone-installers>`__
 
 Sample dataset

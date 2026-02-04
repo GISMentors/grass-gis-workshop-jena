@@ -4,7 +4,7 @@ Unit 20 - Sentinel downloader
 There are plenty of libraries or tools which allow downloading
 Sentinel products.
 
-For GRASS GIS there is the :grasscmdaddons:`i.sentinel` toolbox.
+For GRASS there is the :grasscmdaddons:`i.sentinel` toolbox.
 It consists of six GRASS addon modules:
 
 * :grasscmdaddons:`i.sentinel.coverage`

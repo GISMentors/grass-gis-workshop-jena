@@ -35,7 +35,7 @@ The GRASS data structure has three levels:
    
    .. figure:: ../images/units/02/grass7-start.png
 
-      GRASS GIS startup screen in version 7.
+      GRASS startup screen in version 7.
 
 Obstacles (especially for newcomers) related to the startup screen have
 been reduced in GRASS 8. The startup screen has been
@@ -54,7 +54,7 @@ windows, see :numref:`startup8`.
 .. figure:: ../images/units/02/grass8-start.png
    :class: large
            
-   GRASS GIS 8 on startup.
+   GRASS 8 on startup.
 
 .. tip:: If GUI crashes, it can be started again by :grasscmd:`g.gui`
    command from the underlying terminal (command prompt).
@@ -145,7 +145,7 @@ optionally import data used for defining the new location (in our case
 .. figure:: ../images/units/02/create-location-4.png
    :class: small
 
-   Let's import data to simplify our first steps in GRASS GIS.
+   Let's import data to simplify our first steps in GRASS.
 
 By default GRASS creates a *PERMANENT mapset* in the new location.
 Here, all location settings are stored. This mapset is commonly used

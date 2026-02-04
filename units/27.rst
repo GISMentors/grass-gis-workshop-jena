@@ -142,7 +142,7 @@ The process has to be activated in :file:`demo.py`.
     ModisV1(),
    ]
 
-.. important:: In order to use GRASS GIS functionality update PyWPS
+.. important:: In order to use GRASS functionality update PyWPS
    configuration. Open :file:`pywps.cfg` and set correct GRASS
    installation directory, eg.
 
@@ -154,7 +154,7 @@ The process has to be activated in :file:`demo.py`.
 
    .. code-block:: bash
                 
-      gisbase=/C/Program Files/GRASS GIS 8.4
+      gisbase=/C/Program Files/GRASS 8.4
    
 Stop running demo PyWPS server by :kbd:`Ctrl+C` and start again.
 

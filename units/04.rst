@@ -6,7 +6,7 @@ Unit 04 - Modules, Region
 Accessing GRASS modules
 -----------------------
 
-GRASS GIS is a **modular system** which consists of several hundreds
+GRASS is a **modular system** which consists of several hundreds
 *tools* ("modules" in GRASS terminology). Modules are accessible from
 the menu, :item:`Tools` tab, or from command prompt (:item:`Console`
 tab).

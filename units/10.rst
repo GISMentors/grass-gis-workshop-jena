@@ -15,14 +15,14 @@ GRASS Python environment consists various libraries, see
 details. Let's focus on three main libraries related to this workshop:
 
 * :grasscmd2:`GRASS Script Package <libpython/script_intro.html>`
-  as entering node to Python scripting capabilities in GRASS GIS
+  as entering node to Python scripting capabilities in GRASS
 * object-oriented (native for Python) :grasscmd2:`pyGRASS
   <libpython/pygrass_index.html>`
-* spatio-temporal :grasscmd2:`GRASS GIS Temporal Framework
+* spatio-temporal :grasscmd2:`GRASS Temporal Framework
   <libpython/temporal_framework.html>`
 
 :grasscmd2:`PyGRASS <libpython/pygrass_index.html>` is designed as an
-**object-oriented** Python API for GRASS GIS. This is a major
+**object-oriented** Python API for GRASS. This is a major
 difference to GRASS Script Package which consists of procedures - Python
 functions. It is important to highlight that PyGRASS is not a
 replacement for GRASS Script Package. The both packages are living
@@ -72,7 +72,7 @@ The workflow is represented by a set of GRASS commands (map names shorten):
    .. figure:: ../images/units/10/history-panel.png
       :class: large
               
-      GRASS GIS 8.4 comes with much better command history management.
+      GRASS 8.4 comes with much better command history management.
             
 Python code may be interactively run from :item:`Python` tab. In the
 following units PyGRASS API will be systematically used.

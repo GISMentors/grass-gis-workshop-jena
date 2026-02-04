@@ -1,7 +1,7 @@
 Unit 17 - Spatio-temporal intro
 ===============================
 
-GRASS GIS offers specialized tools for spatio-temporal data
+GRASS offers specialized tools for spatio-temporal data
 processing, see :grasscmd:`GRASS documentation <temporalintro>` for
 details.
 

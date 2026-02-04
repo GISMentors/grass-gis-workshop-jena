@@ -1,24 +1,24 @@
 Unit 07 - QGIS loves GRASS
 ==========================
 
-Let's step out of the GRASS GIS environment for a moment. `QGIS
+Let's step out of the GRASS environment for a moment. `QGIS
 <http://qgis.org>`__ is a very popular open source GIS package which
 made a significant progress in the last years. Nowadays it's used in
 education, academic environment, but also in commercial settings. In
 2002 QGIS started a multiplatform viewer for geospatial data. In the
 recent years QGIS made important steps for being analytical
 tool. Beside native algoritms QGIS offers also connection to
-third-party software packages as SAGA, Orfeo or GRASS GIS. GRASS tools
+third-party software packages as SAGA, Orfeo or GRASS. GRASS tools
 can be run directly from QGIS enviroment without starting GRASS
 explicitly.
 
-Data produced by GRASS GIS may be easily accessed directly from
+Data produced by GRASS may be easily accessed directly from
 :item:`Browser` tab.
 
 .. figure:: ../images/units/07/qgis-display-grass-data.png
    :class: middle
            
-   Show data produced by GRASS GIS in QGIS environment.
+   Show data produced by GRASS in QGIS environment.
 
 .. note::
 
