@@ -22,7 +22,7 @@ below:
    :lines:  92-98,113-118
    :emphasize-lines: 6, 11
                      
-Note that many of GRASS modules allows sending data via standard input
+Note that many of GRASS tools allows sending data via standard input
 by option value ``-`` (dash). In our case the both commands will be
 changed to use ``rules="-"`` syntax.
 

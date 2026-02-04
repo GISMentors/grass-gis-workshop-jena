@@ -6,7 +6,7 @@ Raster data processing is **always** limited to the current
      
 Let's demostrate raster processing on :wikipedia:`map algebra` based
 computation of :wikipedia:`NDVI` (Normalized difference vegetation
-index). The key GRASS module that allows a user to do the map algebra
+index). The key GRASS tool that allows a user to do the map algebra
 is :grasscmd:`r.mapcalc`. A GUI tool for map algebra can be launched
 from :menuselection:`Raster --> Raster map calculator` or by
 |grass-raster-calculator| :sup:`Raster map calculator` from the main
@@ -40,7 +40,7 @@ Corresponding command (map names shorten):
 .. figure:: ../images/units/05/ndvi-mapcalc.png
    :class: large
            
-   NDVI computed by :grasscmd:`r.mapcalc` map algebra module (Jena
+   NDVI computed by :grasscmd:`r.mapcalc` map algebra tool (Jena
    city in red color).
 
 Result requires some improvements:
@@ -51,7 +51,7 @@ Result requires some improvements:
 The first shortcoming can be easily solved by changing color table to
 `ndvi` as described in :ref:`color-table` section. The second requires
 setting a mask to ignore cloudy areas by the computation. Raster mask
-can be created by :grasscmd:`r.mask`. Like other modules from the
+can be created by :grasscmd:`r.mask`. Like other tools from the
 ``r.*`` family, it operates in the current computational region.
 
 Mask
@@ -85,8 +85,8 @@ A mask can be deactivated ``r.mask -r`` command.
 Recommended approach for computing NDVI
 ---------------------------------------
 
-Note that there is specialized module for computing various vegetation
-indices including NDVI - :grasscmd:`i.vi`. This module makes NDVI
+Note that there is specialized tool for computing various vegetation
+indices including NDVI - :grasscmd:`i.vi`. This tool makes NDVI
 computing even simpler.
 
 Let's recompute :map:`ndvi` map using :grasscmd:`i.vi` (map names

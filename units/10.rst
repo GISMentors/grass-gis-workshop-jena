@@ -6,7 +6,7 @@ language is very popular in the field of GIS and data science in
 general. Python is also the main scripting platform for Esri products
 (see `arcpy
 <http://pro.arcgis.com/en/pro-app/arcpy/get-started/what-is-arcpy-.htm>`__
-package). GRASS is not an exception. In reality, many GRASS modules
+package). GRASS is not an exception. In reality, many GRASS tools
 are basically Python scripts, eg. :grasscmd:`r.mask` (see *Source
 Code* section).
 
@@ -62,7 +62,7 @@ The workflow is represented by a set of GRASS commands (map names shorten):
    # 5.
    r.univar map=ndvi
 
-.. tip:: GRASS modules run from :item:`Console` or GUI dialogs are
+.. tip:: GRASS tools run from :item:`Console` or GUI dialogs are
    logged by commands history. This history may be exported by
    :item:`Export history` button in :item:`Console` tab. Logged
    commands can be used as a starting point for your first Python
@@ -79,24 +79,24 @@ following units PyGRASS API will be systematically used.
 
 .. _python-code:
 
-GRASS commands can be run in by :pygrass-modules:`Module` object.
+GRASS commands can be run in by :pygrass-tools:`Tool` object.
 
 .. code-block:: python
 
-   from grass.pygrass.modules import Module
+   from grass.pygrass.tools import Tool
    
    # 1.
-   Module('g.region', vector='jena_boundary', align='L2A_T32UPB_20170706T102021_B04_10m')
+   Tool('g.region', vector='jena_boundary', align='L2A_T32UPB_20170706T102021_B04_10m')
    # 2.
-   Module('g.region', n='n+1000', s='s-1000', e='e+1000', w='w-1000')
+   Tool('g.region', n='n+1000', s='s-1000', e='e+1000', w='w-1000')
    # 3.
-   Module('r.mask', flags='i', vector='MaskFeature', overwrite=True)
+   Tool('r.mask', flags='i', vector='MaskFeature', overwrite=True)
    # 4.
-   Module('i.vi', red='L2A_T32UPB_20170706T102021_B04_10m', output='ndvi',
+   Tool('i.vi', red='L2A_T32UPB_20170706T102021_B04_10m', output='ndvi',
           viname='ndvi', nir='L2A_T32UPB_20170706T102021_B08_10m', overwrite=True)
    # 5.
    from subprocess import PIPE
-   m = Module('r.univar', map='ndvi', stdout_=PIPE)
+   m = Tool('r.univar', map='ndvi', stdout_=PIPE)
    print(m.outputs.stdout)
 
 .. tip:: Python shell has also its history, previous commands can be browsed by
@@ -118,7 +118,7 @@ dictionary. This can be done by:
    # 5.
    from grass.script import parse_key_val
    
-   m = Module('r.univar', flags='g', map='ndvi', stdout_=PIPE)
+   m = Tool('r.univar', flags='g', map='ndvi', stdout_=PIPE)
    stats = parse_key_val(m.outputs.stdout, val_type=float)
    print('NDVI min value: {0:.4f}'.format(stats['min']))
    print('NDVI max value: {0:.4f}'.format(stats['max']))

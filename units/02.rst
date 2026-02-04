@@ -45,7 +45,7 @@ layer (in GRASS terminology *vector map*) is shown.
 
 GRASS GUI is designed as a *simple and lightweight* graphical user
 interface. Basically, it is a GUI front-end calling GRASS commands (see
-:ref:`grass-modules`) in the background. The GUI consists of two main
+:ref:`grass-tools`) in the background. The GUI consists of two main
 windows, see :numref:`startup8`.
 
 .. _startup8:

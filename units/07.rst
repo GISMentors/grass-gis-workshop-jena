@@ -48,12 +48,12 @@ Processing plugin
 Processing plugin is a generic toolbox which allows to run tools
 provided by QGIS or third-party software packages like eg. GRASS. Let's
 open :menuselection:`Processing --> Toolbox` and search for
-:grasscmd:`i.vi` GRASS module.
+:grasscmd:`i.vi` GRASS tool.
 
 .. figure:: ../images/units/07/processing-i-vi.png
    :class: small
            
-   Search for :grasscmd:`i.vi` GRASS module in Processing toolbox.
+   Search for :grasscmd:`i.vi` GRASS tool in Processing toolbox.
 
 .. figure:: ../images/units/07/processing-i-vi-params.png
    :class: middle
@@ -65,7 +65,7 @@ open :menuselection:`Processing --> Toolbox` and search for
 works. First of all a temporary GRASS project is created by
 :grasscmd:`g.proj`, input data is linked into temporary project by
 :grasscmd:`r.external`. Then computation can finally starts by running
-:grasscmd:`i.vi` module. In the last step output data is exported out
+:grasscmd:`i.vi` tool. In the last step output data is exported out
 of GRASS using :grasscmd:`r.out.gdal`. The resultant GeoTiff file is
 vizualized in QGIS map window.
 

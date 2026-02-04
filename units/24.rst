@@ -48,7 +48,7 @@ MODIS data (note that you have to install also `pyMODIS Python Library
    
    g.extension extension=i.modis
 
-GRASS MODIS addon consists of two modules:
+GRASS MODIS addon consists of two tools:
 
 * :grasscmdaddons:`i.modis.download` and
 * :grasscmdaddons:`i.modis.import`
@@ -74,7 +74,7 @@ downloaded.
    startday=2023-01-01 endday=2023-12-31
 
 .. note:: Output folder (:file:`h18v03_04` in this case) must exists,
-   otherwise the module will fail.
+   otherwise the tool will fail.
              
    File :file:`settings.txt` contains two lines: *username* and
    *password* for accessing MODIS download service.
@@ -170,7 +170,7 @@ MODIS data by :grasscmd:`g.region`.
    g.region vector=germany align=MOD11A2.A2023001_mosaic_LST_Day_1km
    r.mask vector=germany
 
-Let's check range values of imported MODIS data by :grasscmd:`r.info` module:
+Let's check range values of imported MODIS data by :grasscmd:`r.info` tool:
 
 .. code-block:: bash
 

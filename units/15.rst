@@ -13,7 +13,7 @@ EU-DEM tiles covers large regions (4GB per tile).
 Normally :grasscmd:`r.import` could be used to import and
 automatically reproject data into target project. In our case there
 is no need to import into GRASS a whole big DEM tile. By using ``-r``
-flag of :grasscmd:`r.in.gdal` GRASS module only a subregion covering
+flag of :grasscmd:`r.in.gdal` GRASS tool only a subregion covering
 AOI can be imported. Unfortunately :grasscmd:`r.import` do not offer
 such flag. This is a reason why data will be reprojected
 manually. Input data will be imported into a new project

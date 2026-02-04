@@ -5,7 +5,7 @@ There are plenty of libraries or tools which allow downloading
 Sentinel products.
 
 For GRASS there is the :grasscmdaddons:`i.sentinel` toolbox.
-It consists of six GRASS addon modules:
+It consists of six GRASS addon tools:
 
 * :grasscmdaddons:`i.sentinel.coverage`
 * :grasscmdaddons:`i.sentinel.download`
@@ -67,7 +67,7 @@ Let's search for the latest available product by means of
 be printed. The download procedure will be performed later. In order to
 search and download Sentinel products from the Copernicus Open Access Hub, 
 you have to create an account first. See the manual page of
-:grasscmdaddons:`i.sentinel.download` module for details. Create a new text
+:grasscmdaddons:`i.sentinel.download` tool for details. Create a new text
 file :file:`sentinel.txt` containing two lines (username and
 password).
 
@@ -89,7 +89,7 @@ password).
    f2a604a6-8e50-4c62-b98b-22077365df7a ... 2022-01-21T10:23:31Z 65% S2MSI2A 933.01 MB
    ...
 
-By default the module returns products for the last 60 days. Let's
+By default the tool returns products for the last 60 days. Let's
 change the search period setting :param:`start` and :param:`end`
 options. To be sure that our AOI is fully covered by a Sentinel
 product we also set :param:`area_relation` option.  We will also limit
@@ -123,7 +123,7 @@ where data should be saved.
    limit=1 output=geodata/sentinel/2021
 
 .. note:: Note all products are NOT available online. In this case the
-   module fails with ``Product
+   tool fails with ``Product
    a844500a-049f-46a3-92de-bcda2c38fc3c is not
    online. Triggering retrieval from long term archive.`` error
    message. Try to download affected product in the next days.
@@ -167,7 +167,7 @@ useful to import cloud mask vector features by :param:`-c` flag.
    i.sentinel.import -l -c input=geodata/sentinel/2019 pattern="20190626T102031_B0[4|8]_10m"
 
 .. note:: Cloud mask is computed by
-   :grasscmdaddons:`i.sentinel.import`, the module doesn't use cloud
+   :grasscmdaddons:`i.sentinel.import`, the tool doesn't use cloud
    mask product stored in a SAFE directory.
 
 .. todo:: Fix :grasscmdaddons:`i.sentinel.import` :option:`-c` flag to

@@ -21,7 +21,7 @@ A script consists of three main functions:
 
 1. ``import_files()`` to import input LAS/LAZ files (line
 :lcode:`33`). Import process can be performed in parallel by
-:pygrass-modules:`ParallelModuleQueue` from PyGRASS library (see
+:pygrass-tools:`ParallelToolQueue` from PyGRASS library (see
 :doc:`11` for PyGRASS introduction), lines :lcode:`37, 42, 54-55, 57`.
 
 2. ``create_dsm_tiles()`` to compute DSM per tile (line :lcode:`64`)

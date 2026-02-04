@@ -66,7 +66,7 @@ In Python:
    :language: python
    :lines:  113-122
 
-Output of :grasscmd:`r.stats` module need to be parsed. Unfortunately
+Output of :grasscmd:`r.stats` tool need to be parsed. Unfortunately
 the command does not offer a shell script output similarly to
 :grasscmd:`r.univar`. This may be solved by Python functions like
 ``splitlines()`` and ``split()``.

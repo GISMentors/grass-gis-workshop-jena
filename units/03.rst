@@ -141,9 +141,9 @@ linestrings, polygons, ...) into GRASS topological model.
           
 Topological errors are checked and repaired by GRASS when
 importing data, be awere of :param:`snap` option of
-:grasscmd:`v.import` module. Topological errors which is not possible
+:grasscmd:`v.import` tool. Topological errors which is not possible
 repair automatically without user specification can fixed using
-:grasscmd:`v.clean` module.
+:grasscmd:`v.clean` tool.
 
           .. _link-external:
 
