@@ -83,7 +83,6 @@ tool:
    :item:`Data` tab or by :grasscmd:`g.mapset` tool.
 
    .. figure:: ../images/units/16/create_mapset.png
-      :class: middle
            
       Create a new mapset in :item:`Data` tab.
          
