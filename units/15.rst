@@ -43,10 +43,8 @@ Enter new project (PERMANENT mapset) and copy (ie. reproject)
 .. _data-reproject-fig:
 
 .. figure:: ../images/units/15/data-reproject.png
-   :class: middle
            
 .. figure:: ../images/units/15/data-reproject-1.png
-   :class: middle
            
    Copy :map:`jena_boundary` vector map from `jena-region` project
    (:epsg:`32632`) to the current project (:epsg:`3035`).
@@ -92,7 +90,6 @@ Now switch back to *jena-region* (target) project (PERMANENT mapset).
 .. _switch-project:
 
 .. figure:: ../images/units/15/switch-project.png
-   :class: middle
 	   
    Switch to jena-region project and PERMANENT mapset from
    :item:`Data` tab.
