@@ -21,6 +21,11 @@ details. Let's focus on three main libraries related to this workshop:
 * spatio-temporal :grasscmd2:`GRASS Temporal Framework
   <libpython/temporal_framework.html>`
 
+.. tip:: GRASS 8.5 comes with a new `GRASS tools
+         <https://grass.osgeo.org/grass85/manuals/libpython/grass.tools.html>`_
+         package which provides a specialized Python interface to
+         GRASS tools.
+         
 :grasscmd2:`PyGRASS <libpython/pygrass_index.html>` is designed as an
 **object-oriented** Python API for GRASS. This is a major
 difference to GRASS Script Package which consists of procedures - Python
@@ -34,7 +39,6 @@ Let's do our first steps towards Python scripting in :item:`Python`
 tab.
 
 .. figure:: ../images/units/10/layer-manager-python.png
-   :class: middle
            
    Interactive prompt in :item:`Python` tab.
             
@@ -142,7 +146,7 @@ Graphical Modeler and Python
 
 Model created in Graphical Modeler can be easily converted into Python
 script. Let's open the model created in :doc:`09`: `ndvi-v3.gxm
-<../_static/models/ndvi-v3.gxm>`__ and switch to :item:`Python editor`
+<../_static/models/ndvi-v3.gxm>`__ and switch to :item:`Script editor`
 tab.
 
 .. figure:: ../images/units/10/model-python-editor.png
