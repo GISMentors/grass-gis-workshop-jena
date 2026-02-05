@@ -67,7 +67,8 @@ are placed at the end of a computation workflow which is not
 desired. Commands order can be changed in :item:`Items` tab.
 
 .. figure:: ../images/units/09/reorder-items.png
-
+   :class: large
+           
    Reorder model items (GRASS tools) by :item:`Up/Down` buttons. In
    this case move :grasscmd:`v.overlay` up to the first position.
 
@@ -100,7 +101,8 @@ simple:
    <../_static/models/colors.txt>`__
          
 .. figure:: ../images/units/09/model-v2.png
-
+   :class: large
+           
    Extended model.
 
 Sample model to download: `ndvi-v2.gxm <../_static/models/ndvi-v2.gxm>`__
