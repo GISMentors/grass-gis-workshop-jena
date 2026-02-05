@@ -25,7 +25,8 @@ have any just use GRASS-integrated Python editor |grass-python| :sub:`Open
 a simple Python code editor`.
 
 .. figure:: ../images/units/11/editor.png
-
+   :class: middle
+           
    Simple GRASS Python code editor in action.
 
 Load script by |grass-open| :sup:`Open` and improve the script by
