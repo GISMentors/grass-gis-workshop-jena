@@ -154,3 +154,12 @@ tab.
    
    Python editor integrated in Graphical Modeler. Python code can be
    modified, run or saved into file (:file:`ndvi-v3.py`).
+
+.. note:: Don't forget to change Modeler's settings
+   (:menuselection:`Modeler --> Settings --> Preferences`) to use
+   PyGRASS API (default is GRASS Script package).
+
+   .. figure:: ../images/units/10/gmodeler-settings-pygrass.png
+      :class: small
+              
+      Change Python API to PyGRASS in the Modeler settings. 
