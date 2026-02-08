@@ -83,24 +83,24 @@ following units PyGRASS API will be systematically used.
 
 .. _python-code:
 
-GRASS commands can be run in by :pygrass-tools:`Tool` object.
+GRASS commands can be run in by :pygrass-modules:`Module` object.
 
 .. code-block:: python
 
-   from grass.pygrass.tools import Tool
+   from grass.pygrass.modules import Module
    
    # 1.
-   Tool('g.region', vector='jena_boundary', align='L2A_T32UPB_20170706T102021_B04_10m')
+   Module('g.region', vector='jena_boundary', align='L2A_T32UPB_20170706T102021_B04_10m')
    # 2.
-   Tool('g.region', n='n+1000', s='s-1000', e='e+1000', w='w-1000')
+   Module('g.region', n='n+1000', s='s-1000', e='e+1000', w='w-1000')
    # 3.
-   Tool('r.mask', flags='i', vector='MaskFeature', overwrite=True)
+   Module('r.mask', flags='i', vector='MaskFeature', overwrite=True)
    # 4.
-   Tool('i.vi', red='L2A_T32UPB_20170706T102021_B04_10m', output='ndvi',
+   Module('i.vi', red='L2A_T32UPB_20170706T102021_B04_10m', output='ndvi',
           viname='ndvi', nir='L2A_T32UPB_20170706T102021_B08_10m', overwrite=True)
    # 5.
    from subprocess import PIPE
-   m = Tool('r.univar', map='ndvi', stdout_=PIPE)
+   m = Module('r.univar', map='ndvi', stdout_=PIPE)
    print(m.outputs.stdout)
 
 .. tip:: Python shell has also its history, previous commands can be browsed by
@@ -122,7 +122,7 @@ dictionary. This can be done by:
    # 5.
    from grass.script import parse_key_val
    
-   m = Tool('r.univar', flags='g', map='ndvi', stdout_=PIPE)
+   m = Module('r.univar', flags='g', map='ndvi', stdout_=PIPE)
    stats = parse_key_val(m.outputs.stdout, val_type=float)
    print('NDVI min value: {0:.4f}'.format(stats['min']))
    print('NDVI max value: {0:.4f}'.format(stats['max']))
