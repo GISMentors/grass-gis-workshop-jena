@@ -74,10 +74,10 @@ his/her scripts. It’s also possible to compine both packages in one
 single script (not recommended).</p>
 <p>Let’s do our first steps towards Python scripting in <span class="item">Python</span>
 tab.</p>
-<figure class="align-center" id="id3">
+<figure class="align-center" id="id1">
 <img alt="../_images/layer-manager-python.png" src="../_images/layer-manager-python.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 65 </span><span class="caption-text">Interactive prompt in <span class="item">Python</span> tab.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 65 </span><span class="caption-text">Interactive prompt in <span class="item">Python</span> tab.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>Let’s perform a simple computation workflow below in Python:</p>
@@ -110,30 +110,30 @@ logged by commands history. This history may be exported by
 commands can be used as a starting point for your first Python
 script. The commands just need to be changed to satisfy Python
 syntax. Let’s learn how to do it :-)</p>
-<figure class="align-center" id="id4">
+<figure class="align-center" id="id2">
 <img alt="../_images/history-panel.png" class="large" src="../_images/history-panel.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 66 </span><span class="caption-text">GRASS 8.4 comes with much better command history management.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 66 </span><span class="caption-text">GRASS 8.4 comes with much better command history management.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 </div>
 <p>Python code may be interactively run from <span class="item">Python</span> tab. In the
 following units PyGRASS API will be systematically used.</p>
-<p id="python-code">GRASS commands can be run in by <a href="#id1"><span class="problematic" id="id2">:pygrass-tools:`Tool`</span></a> object.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">grass.pygrass.tools</span><span class="w"> </span><span class="kn">import</span> <span class="n">Tool</span>
+<p id="python-code">GRASS commands can be run in by <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/libpython/pygrass.modules.interface.html#pygrass.modules.interface.module.Module">Module</a> object.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">grass.pygrass.modules</span><span class="w"> </span><span class="kn">import</span> <span class="n">Module</span>
 
 <span class="c1"># 1.</span>
-<span class="n">Tool</span><span class="p">(</span><span class="s1">&#39;g.region&#39;</span><span class="p">,</span> <span class="n">vector</span><span class="o">=</span><span class="s1">&#39;jena_boundary&#39;</span><span class="p">,</span> <span class="n">align</span><span class="o">=</span><span class="s1">&#39;L2A_T32UPB_20170706T102021_B04_10m&#39;</span><span class="p">)</span>
+<span class="n">Module</span><span class="p">(</span><span class="s1">&#39;g.region&#39;</span><span class="p">,</span> <span class="n">vector</span><span class="o">=</span><span class="s1">&#39;jena_boundary&#39;</span><span class="p">,</span> <span class="n">align</span><span class="o">=</span><span class="s1">&#39;L2A_T32UPB_20170706T102021_B04_10m&#39;</span><span class="p">)</span>
 <span class="c1"># 2.</span>
-<span class="n">Tool</span><span class="p">(</span><span class="s1">&#39;g.region&#39;</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="s1">&#39;n+1000&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="s1">&#39;s-1000&#39;</span><span class="p">,</span> <span class="n">e</span><span class="o">=</span><span class="s1">&#39;e+1000&#39;</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="s1">&#39;w-1000&#39;</span><span class="p">)</span>
+<span class="n">Module</span><span class="p">(</span><span class="s1">&#39;g.region&#39;</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="s1">&#39;n+1000&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="s1">&#39;s-1000&#39;</span><span class="p">,</span> <span class="n">e</span><span class="o">=</span><span class="s1">&#39;e+1000&#39;</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="s1">&#39;w-1000&#39;</span><span class="p">)</span>
 <span class="c1"># 3.</span>
-<span class="n">Tool</span><span class="p">(</span><span class="s1">&#39;r.mask&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="n">vector</span><span class="o">=</span><span class="s1">&#39;MaskFeature&#39;</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">Module</span><span class="p">(</span><span class="s1">&#39;r.mask&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="n">vector</span><span class="o">=</span><span class="s1">&#39;MaskFeature&#39;</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="c1"># 4.</span>
-<span class="n">Tool</span><span class="p">(</span><span class="s1">&#39;i.vi&#39;</span><span class="p">,</span> <span class="n">red</span><span class="o">=</span><span class="s1">&#39;L2A_T32UPB_20170706T102021_B04_10m&#39;</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s1">&#39;ndvi&#39;</span><span class="p">,</span>
+<span class="n">Module</span><span class="p">(</span><span class="s1">&#39;i.vi&#39;</span><span class="p">,</span> <span class="n">red</span><span class="o">=</span><span class="s1">&#39;L2A_T32UPB_20170706T102021_B04_10m&#39;</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s1">&#39;ndvi&#39;</span><span class="p">,</span>
        <span class="n">viname</span><span class="o">=</span><span class="s1">&#39;ndvi&#39;</span><span class="p">,</span> <span class="n">nir</span><span class="o">=</span><span class="s1">&#39;L2A_T32UPB_20170706T102021_B08_10m&#39;</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="c1"># 5.</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">subprocess</span><span class="w"> </span><span class="kn">import</span> <span class="n">PIPE</span>
-<span class="n">m</span> <span class="o">=</span> <span class="n">Tool</span><span class="p">(</span><span class="s1">&#39;r.univar&#39;</span><span class="p">,</span> <span class="nb">map</span><span class="o">=</span><span class="s1">&#39;ndvi&#39;</span><span class="p">,</span> <span class="n">stdout_</span><span class="o">=</span><span class="n">PIPE</span><span class="p">)</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;r.univar&#39;</span><span class="p">,</span> <span class="nb">map</span><span class="o">=</span><span class="s1">&#39;ndvi&#39;</span><span class="p">,</span> <span class="n">stdout_</span><span class="o">=</span><span class="n">PIPE</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -156,17 +156,17 @@ output and store result as a Python dictionary object</p></li>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 5.</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">grass.script</span><span class="w"> </span><span class="kn">import</span> <span class="n">parse_key_val</span>
 
-<span class="n">m</span> <span class="o">=</span> <span class="n">Tool</span><span class="p">(</span><span class="s1">&#39;r.univar&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="nb">map</span><span class="o">=</span><span class="s1">&#39;ndvi&#39;</span><span class="p">,</span> <span class="n">stdout_</span><span class="o">=</span><span class="n">PIPE</span><span class="p">)</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;r.univar&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="nb">map</span><span class="o">=</span><span class="s1">&#39;ndvi&#39;</span><span class="p">,</span> <span class="n">stdout_</span><span class="o">=</span><span class="n">PIPE</span><span class="p">)</span>
 <span class="n">stats</span> <span class="o">=</span> <span class="n">parse_key_val</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span> <span class="n">val_type</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;NDVI min value: </span><span class="si">{0:.4f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;min&#39;</span><span class="p">]))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;NDVI max value: </span><span class="si">{0:.4f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;max&#39;</span><span class="p">]))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;NDVI mean value: </span><span class="si">{0:.4f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">]))</span>
 </pre></div>
 </div>
-<figure class="align-center" id="id5">
+<figure class="align-center" id="id3">
 <img alt="../_images/python-result.png" src="../_images/python-result.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 67 </span><span class="caption-text">Running Python code in <span class="item">Python</span> tab.</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 67 </span><span class="caption-text">Running Python code in <span class="item">Python</span> tab.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>Resultant NDVI raster map can be displayed easily by calling
@@ -179,11 +179,11 @@ output and store result as a Python dictionary object</p></li>
 <p>Model created in Graphical Modeler can be easily converted into Python
 script. Let’s open the model created in <a class="reference internal" href="09.html"><span class="doc">Unit 09 - Model tuning</span></a>: <a class="reference external" href="../_static/models/ndvi-v3.gxm">ndvi-v3.gxm</a> and switch to <span class="item">Script editor</span>
 tab.</p>
-<figure class="align-center" id="id6">
+<figure class="align-center" id="id4">
 <img alt="../_images/model-python-editor.png" class="large" src="../_images/model-python-editor.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 68 </span><span class="caption-text">Python editor integrated in Graphical Modeler. Python code can be
-modified, run or saved into file (<code class="file docutils literal notranslate"><span class="pre">ndvi-v3.py</span></code>).</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+modified, run or saved into file (<code class="file docutils literal notranslate"><span class="pre">ndvi-v3.py</span></code>).</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 </section>
