@@ -1,7 +1,7 @@
 Unit 17 - Spatio-temporal intro
 ===============================
 
-GRASS GIS offers specialized tools for spatio-temporal data
+GRASS offers specialized tools for spatio-temporal data
 processing, see :grasscmd:`GRASS documentation <temporalintro>` for
 details.
 
@@ -18,13 +18,13 @@ time-series data:
 Spatio-temporal flooding simulation
 -----------------------------------
 
-Module :grasscmd:`r.lake` itself allows to generating only one level
+Tool :grasscmd:`r.lake` itself allows to generating only one level
 (represented by one raster map) within one run. This limitation is
 surpassed by addon :grasscmdaddons:`r.lake.series`.
 
 .. _grass-addons:
                 
-.. note:: Addons modules are not internal part of GRASS installation.
+.. note:: Addons tools are not internal part of GRASS installation.
    Addons can be easily installed by :grasscmd:`g.extension` or from
    the main menu :menuselection:`Settings --> Addons extensions -->
    Install extension from addons`.
@@ -33,7 +33,7 @@ surpassed by addon :grasscmdaddons:`r.lake.series`.
 
       Install :grasscmdaddons:`r.lake.series` GRASS Addon.
 
-:grasscmdaddons:`r.lake.series` module outputs multiple raster maps
+:grasscmdaddons:`r.lake.series` tool outputs multiple raster maps
 registered in space-time raster dataset.
 
 .. code-block:: bash

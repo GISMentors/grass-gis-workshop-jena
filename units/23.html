@@ -44,14 +44,14 @@
 <h1>Unit 23 - Spatio-temporal parallelization<a class="headerlink" href="#unit-23-spatio-temporal-parallelization" title="Permalink to this heading">¶</a></h1>
 <p>This unit is focused on improving the script created in <a class="reference internal" href="22.html"><span class="doc">Unit 22 - Spatio-temporal scripting</span></a> by
 processing Sentinel scenes in parallel. Paralelization is performed by
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/libpython/pygrass.modules.interface.html#pygrass.modules.interface.module.ParallelModuleQueue">ParallelModuleQueue</a> similarly as in <a class="reference internal" href="19.html"><span class="doc">Unit 19 - DSM script parallelization</span></a>, see
+<a href="#id1"><span class="problematic" id="id2">:pygrass-tools:`ParallelToolQueue`</span></a> similarly as in <a class="reference internal" href="19.html"><span class="doc">Unit 19 - DSM script parallelization</span></a>, see
 line <span class="lcode">209</span>.</p>
 <p>New PyGRASS functionality is introduced on line <span class="lcode">132</span>. By
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/libpython/pygrass.modules.interface.html#pygrass.modules.interface.module.MultiModule">MultiModule</a> it is possible to define a list of
-modules which will work as isolated units not influenced by other
+<a href="#id3"><span class="problematic" id="id4">:pygrass-tools:`MultiTool`</span></a> it is possible to define a list of
+tools which will work as isolated units not influenced by other
 processes running parallel. By setting <code class="docutils literal notranslate"><span class="pre">set_temp_region</span></code> computation
 region settings will be also isolated from other processes. By
-<code class="docutils literal notranslate"><span class="pre">sync=True</span></code> all modules will run in serial order in a background
+<code class="docutils literal notranslate"><span class="pre">sync=True</span></code> all tools will run in serial order in a background
 process. Tools are added to the queue (<span class="lcode">132</span>) with
 <code class="docutils literal notranslate"><span class="pre">run_=False</span></code> to prevent them from running immediately, see
 eg. <span class="lcode">72</span>. Queue with calculation tools is processed on line
@@ -59,10 +59,10 @@ eg. <span class="lcode">72</span>. Queue with calculation tools is processed on 
 <p>The option <span class="param">ncproc</span> on line <span class="lcode">43</span> enables controlling
 number of processes running in parallel.</p>
 <p>Compared to <a class="reference external" href="../_static/scripts/ndvi-tgrass-v1.py">ndvi-tgrass-v1.py</a>: NDVI is computed by
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.mapcalc.html">r.mapcalc</a> (<span class="lcode">74</span>) instead of combination of
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.mask.html">r.mask</a> and <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/i.vi.html">i.vi</a>. The concept of raster masks
-created by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.mask.html">r.mask</a> would not be functional in the case of
-parallel computation (the module creates raster map named
+<a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.mapcalc.html">r.mapcalc</a> (<span class="lcode">74</span>) instead of combination of
+<a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.mask.html">r.mask</a> and <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/i.vi.html">i.vi</a>. The concept of raster masks
+created by <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.mask.html">r.mask</a> would not be functional in the case of
+parallel computation (the tool creates raster map named
 <span class="map">MASK</span>). The for loop (<span class="lcode">179</span>) is split into two parts: 1)
 perform computation in parallel (<span class="lcode">192</span>) and 2) compute
 statistics (<span class="lcode">196</span>).</p>
@@ -114,15 +114,15 @@ statistics (<span class="lcode">196</span>).</p>
 <span class="linenos"> 46</span><span class="c1"># % type: integer</span>
 <span class="linenos"> 47</span><span class="c1"># %end</span>
 <span class="linenos"> 48</span>
-<span class="linenos"> 49</span><span class="kn">import</span> <span class="nn">sys</span>
-<span class="linenos"> 50</span><span class="kn">import</span> <span class="nn">os</span>
-<span class="linenos"> 51</span><span class="kn">import</span> <span class="nn">atexit</span>
-<span class="linenos"> 52</span><span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">PIPE</span>
+<span class="linenos"> 49</span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="linenos"> 50</span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="linenos"> 51</span><span class="kn">import</span><span class="w"> </span><span class="nn">atexit</span>
+<span class="linenos"> 52</span><span class="kn">from</span><span class="w"> </span><span class="nn">subprocess</span><span class="w"> </span><span class="kn">import</span> <span class="n">PIPE</span>
 <span class="linenos"> 53</span>
-<span class="linenos"> 54</span><span class="kn">from</span> <span class="nn">grass.script</span> <span class="kn">import</span> <span class="n">parser</span><span class="p">,</span> <span class="n">parse_key_val</span>
-<span class="linenos"> 55</span><span class="kn">from</span> <span class="nn">grass.pygrass.modules</span> <span class="kn">import</span> <span class="n">Module</span><span class="p">,</span> <span class="n">MultiModule</span><span class="p">,</span> <span class="n">ParallelModuleQueue</span>
+<span class="linenos"> 54</span><span class="kn">from</span><span class="w"> </span><span class="nn">grass.script</span><span class="w"> </span><span class="kn">import</span> <span class="n">parser</span><span class="p">,</span> <span class="n">parse_key_val</span>
+<span class="linenos"> 55</span><span class="kn">from</span><span class="w"> </span><span class="nn">grass.pygrass.modules</span><span class="w"> </span><span class="kn">import</span> <span class="n">Module</span><span class="p">,</span> <span class="n">MultiModule</span><span class="p">,</span> <span class="n">ParallelModuleQueue</span>
 <span class="linenos"> 56</span>    
-<span class="linenos"> 57</span><span class="k">def</span> <span class="nf">cleanup</span><span class="p">(</span><span class="n">idx</span><span class="p">):</span>
+<span class="linenos"> 57</span><span class="k">def</span><span class="w"> </span><span class="nf">cleanup</span><span class="p">(</span><span class="n">idx</span><span class="p">):</span>
 <span class="linenos"> 58</span>    <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;g.remove&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;region_mask&#39;</span> <span class="o">+</span> <span class="n">idx</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;vector&#39;</span><span class="p">)</span>
 <span class="linenos"> 59</span>    <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;g.remove&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ndvi&#39;</span> <span class="o">+</span> <span class="n">idx</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;raster&#39;</span><span class="p">)</span>
 <span class="linenos"> 60</span>    <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;g.remove&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ndvi_class&#39;</span> <span class="o">+</span> <span class="n">idx</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;raster&#39;</span><span class="p">)</span>
@@ -130,7 +130,7 @@ statistics (<span class="lcode">196</span>).</p>
 <span class="linenos"> 62</span>    <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;g.remove&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ndvi_class_filled_i&#39;</span> <span class="o">+</span> <span class="n">idx</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;raster&#39;</span><span class="p">)</span>
 <span class="linenos"> 63</span>    <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;g.remove&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ndvi_class_filled&#39;</span> <span class="o">+</span> <span class="n">idx</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;vector&#39;</span><span class="p">)</span>
 <span class="linenos"> 64</span>
-<span class="linenos"> 65</span><span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="n">b4</span><span class="p">,</span> <span class="n">b8</span><span class="p">,</span> <span class="n">msk</span><span class="p">,</span> <span class="n">min_area_ha</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">queue</span><span class="p">):</span>
+<span class="linenos"> 65</span><span class="k">def</span><span class="w"> </span><span class="nf">compute</span><span class="p">(</span><span class="n">b4</span><span class="p">,</span> <span class="n">b8</span><span class="p">,</span> <span class="n">msk</span><span class="p">,</span> <span class="n">min_area_ha</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">queue</span><span class="p">):</span>
 <span class="linenos"> 66</span>    <span class="n">modules</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="linenos"> 67</span>    <span class="n">modules</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
 <span class="linenos"> 68</span>        <span class="n">Module</span><span class="p">(</span><span class="s2">&quot;g.region&quot;</span><span class="p">,</span>
@@ -199,7 +199,7 @@ statistics (<span class="lcode">196</span>).</p>
 <span class="linenos">131</span>    
 <span class="hll"><span class="linenos">132</span>    <span class="n">queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">MultiModule</span><span class="p">(</span><span class="n">modules</span><span class="p">,</span> <span class="n">sync</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">set_temp_region</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
 </span><span class="linenos">133</span>
-<span class="linenos">134</span><span class="k">def</span> <span class="nf">stats</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">date</span><span class="p">,</span> <span class="n">fd</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+<span class="linenos">134</span><span class="k">def</span><span class="w"> </span><span class="nf">stats</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">date</span><span class="p">,</span> <span class="n">fd</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
 <span class="linenos">135</span>    <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
 <span class="linenos">136</span>    <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
 <span class="linenos">137</span>    <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;NDVI class statistics (</span><span class="si">{0}</span><span class="s1">: </span><span class="si">{1}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">date</span><span class="p">))</span>
@@ -231,8 +231,8 @@ statistics (<span class="lcode">196</span>).</p>
 <span class="linenos">163</span>        <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;NDVI class </span><span class="si">{0}</span><span class="s1">: </span><span class="si">{1:.4f}</span><span class="s1"> (min) </span><span class="si">{2:.4f}</span><span class="s1"> (max) </span><span class="si">{3:.4f}</span><span class="s1"> (mean)</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
 <span class="linenos">164</span>        <span class="n">cat</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="nb">min</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="nb">max</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">mean</span><span class="p">)))</span>
 <span class="linenos">165</span>        
-<span class="linenos">166</span><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">queue</span><span class="p">):</span>
-<span class="linenos">167</span>    <span class="kn">import</span> <span class="nn">grass.temporal</span> <span class="k">as</span> <span class="nn">tgis</span>
+<span class="linenos">166</span><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">queue</span><span class="p">):</span>
+<span class="linenos">167</span>    <span class="kn">import</span><span class="w"> </span><span class="nn">grass.temporal</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tgis</span>
 <span class="linenos">168</span>
 <span class="linenos">169</span>    <span class="n">tgis</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
 <span class="linenos">170</span>
@@ -296,10 +296,10 @@ statistics (<span class="lcode">196</span>).</p>
           
           <h3>Table of Contents</h3>
           <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS GIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02.html">Unit 02 - First steps</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03.html">Unit 03 - Data Management</a></li>
-<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Modules, Region</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Tools, Region</a></li>
 <li class="toctree-l1"><a class="reference internal" href="05.html">Unit 05 - Raster processing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06.html">Unit 06 - Data export</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07.html">Unit 07 - QGIS loves GRASS</a></li>
@@ -357,7 +357,7 @@ statistics (<span class="lcode">196</span>).</p>
         <div class="right">
           
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2018-2024 Martin Landa and GISMentors.eu.
+        &#169; Copyright 2018-2026 Martin Landa and GISMentors.eu.
       Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
         </div>

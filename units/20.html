@@ -44,17 +44,17 @@
 <h1>Unit 20 - Sentinel downloader<a class="headerlink" href="#unit-20-sentinel-downloader" title="Permalink to this heading">¶</a></h1>
 <p>There are plenty of libraries or tools which allow downloading
 Sentinel products.</p>
-<p>For GRASS GIS there is the <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/i.sentinel.html">i.sentinel</a> toolbox.
-It consists of six GRASS addon modules:</p>
+<p>For GRASS there is the <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/addons/i.sentinel.html">i.sentinel</a> toolbox.
+It consists of six GRASS addon tools:</p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/i.sentinel.coverage.html">i.sentinel.coverage</a></p></li>
-<li><p><a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/i.sentinel.download.html">i.sentinel.download</a></p></li>
-<li><p><a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/i.sentinel.parallel.download.html">i.sentinel.parallel.download</a></p></li>
-<li><p><a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/i.sentinel.import.html">i.sentinel.import</a></p></li>
-<li><p><a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/i.sentinel.preproc.html">i.sentinel.preproc</a></p></li>
-<li><p><a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/i.sentinel.mask.html">i.sentinel.mask</a></p></li>
+<li><p><a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/addons/i.sentinel.coverage.html">i.sentinel.coverage</a></p></li>
+<li><p><a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/addons/i.sentinel.download.html">i.sentinel.download</a></p></li>
+<li><p><a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/addons/i.sentinel.parallel.download.html">i.sentinel.parallel.download</a></p></li>
+<li><p><a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/addons/i.sentinel.import.html">i.sentinel.import</a></p></li>
+<li><p><a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/addons/i.sentinel.preproc.html">i.sentinel.preproc</a></p></li>
+<li><p><a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/addons/i.sentinel.mask.html">i.sentinel.mask</a></p></li>
 </ul>
-<p>The addon can be installed by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/g.extension.html">g.extension</a> or from the main menu
+<p>The addon can be installed by <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/g.extension.html">g.extension</a> or from the main menu
 <span class="menuselection">Settings ‣ Addons extensions ‣ Install extension
 from addons</span>.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>g.extension<span class="w"> </span><span class="nv">extension</span><span class="o">=</span>i.sentinel
@@ -63,12 +63,12 @@ from addons</span>.</p>
 <figure class="align-center" id="id2">
 <img alt="../_images/g-extension1.png" src="../_images/g-extension1.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 106 </span><span class="caption-text">Install <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/i.sentinel.html">i.sentinel</a> GRASS Addon.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 106 </span><span class="caption-text">Install <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/addons/i.sentinel.html">i.sentinel</a> GRASS Addon.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Note that <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/i.sentinel.download.html">i.sentinel.download</a> requires
+<p>Note that <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/addons/i.sentinel.download.html">i.sentinel.download</a> requires
 also <a class="reference external" href="https://pypi.python.org/pypi/sentinelsat">sentinelsat</a> to
 be installed. It can be easily installed from the <span class="item">Console</span>
 tab by entering the command below.</p>
@@ -85,7 +85,7 @@ sentinelsat package is not compatible with the new CDSE.</strong> See <a class="
 for details. See also related <a class="reference external" href="https://github.com/OSGeo/grass-addons/issues/883">GRASS issue</a> reported on
 GitHub.</p>
 </div>
-<p><a class="reference internal" href="15.html#switch-location"><span class="std std-ref">Switch</span></a> to <cite>jena-region</cite> location which was created in <a class="reference internal" href="02.html"><span class="doc">Unit 02 - First steps</span></a>.</p>
+<p><a class="reference internal" href="15.html#switch-project"><span class="std std-ref">Switch</span></a> to <cite>jena-region</cite> project which was created in <a class="reference internal" href="02.html"><span class="doc">Unit 02 - First steps</span></a>.</p>
 <section id="download-data">
 <h2>Download data<a class="headerlink" href="#download-data" title="Permalink to this heading">¶</a></h2>
 <p>Let’s download suitable Sentinel products for our area of interest
@@ -101,11 +101,11 @@ sample dataset (directory <code class="file docutils literal notranslate"><span 
 continue with <a class="reference internal" href="#sentinel-import"><span class="std std-ref">importing sample data</span></a>.</p>
 </div>
 <p>Let’s search for the latest available product by means of
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/i.sentinel.download.html">i.sentinel.download</a>. Setting the <span class="param">-l</span> flag, the result will only
+<a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/addons/i.sentinel.download.html">i.sentinel.download</a>. Setting the <span class="param">-l</span> flag, the result will only
 be printed. The download procedure will be performed later. In order to
 search and download Sentinel products from the Copernicus Open Access Hub,
 you have to create an account first. See the manual page of
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/i.sentinel.download.html">i.sentinel.download</a> module for details. Create a new text
+<a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/addons/i.sentinel.download.html">i.sentinel.download</a> tool for details. Create a new text
 file <code class="file docutils literal notranslate"><span class="pre">sentinel.txt</span></code> containing two lines (username and
 password).</p>
 <div class="admonition note">
@@ -125,7 +125,7 @@ page for signing up.</p>
 <span class="o">...</span>
 </pre></div>
 </div>
-<p>By default the module returns products for the last 60 days. Let’s
+<p>By default the tool returns products for the last 60 days. Let’s
 change the search period setting <span class="param">start</span> and <span class="param">end</span>
 options. To be sure that our AOI is fully covered by a Sentinel
 product we also set <span class="param">area_relation</span> option.  We will also limit
@@ -152,7 +152,7 @@ where data should be saved.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Note all products are NOT available online. In this case the
-module fails with <code class="docutils literal notranslate"><span class="pre">Product</span>
+tool fails with <code class="docutils literal notranslate"><span class="pre">Product</span>
 <span class="pre">a844500a-049f-46a3-92de-bcda2c38fc3c</span> <span class="pre">is</span> <span class="pre">not</span>
 <span class="pre">online.</span> <span class="pre">Triggering</span> <span class="pre">retrieval</span> <span class="pre">from</span> <span class="pre">long</span> <span class="pre">term</span> <span class="pre">archive.</span></code> error
 message. Try to download affected product in the next days.</p>
@@ -162,11 +162,11 @@ message. Try to download affected product in the next days.</p>
 <h2>Import data<a class="headerlink" href="#import-data" title="Permalink to this heading">¶</a></h2>
 <p id="sentinel-import">Before importing or linking Sentinel data try to print a list of
 filtered raster files including projection match (second column, 1 for
-match otherwise 0). If the CRS of input data differs from the current location
-consider reprojection (<span class="param">-r</span>) or creating a new location for
+match otherwise 0). If the CRS of input data differs from the current project
+consider reprojection (<span class="param">-r</span>) or creating a new project for
 import.</p>
-<p>Data will be imported into the GRASS location by means of the
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/i.sentinel.import.html">i.sentinel.import</a> tool. The command will import
+<p>Data will be imported into the GRASS project by means of the
+<a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/addons/i.sentinel.import.html">i.sentinel.import</a> tool. The command will import
 <strong>all</strong> Sentinel bands from <span class="param">input</span> directory
 recursively. Before importing data let’s check content of the input
 directory by <span class="param">-p</span> flag. The import procedure will be limited to
@@ -188,12 +188,12 @@ useful to import cloud mask vector features by <span class="param">-c</span> fla
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Cloud mask is computed by
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/i.sentinel.import.html">i.sentinel.import</a>, the module doesn’t use cloud
+<a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/addons/i.sentinel.import.html">i.sentinel.import</a>, the tool doesn’t use cloud
 mask product stored in a SAFE directory.</p>
 </div>
 <div class="admonition-todo admonition" id="id1">
 <p class="admonition-title">Todo</p>
-<p>Fix <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/i.sentinel.import.html">i.sentinel.import</a> <code class="xref std std-option docutils literal notranslate"><span class="pre">-c</span></code> flag to
+<p>Fix <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/addons/i.sentinel.import.html">i.sentinel.import</a> <code class="xref std std-option docutils literal notranslate"><span class="pre">-c</span></code> flag to
 respect <code class="xref std std-option docutils literal notranslate"><span class="pre">pattern</span></code> parameter.</p>
 </div>
 <p>Now launch the NDVI sample script created in <a class="reference internal" href="12.html"><span class="doc">Unit 12 - Script User Interface</span></a> (<a class="reference external" href="../_static/scripts/ndvi-v4.py">ndvi-v4.py</a>) in order to compute NDVI classes
@@ -223,10 +223,10 @@ respect <code class="xref std std-option docutils literal notranslate"><span cla
           
           <h3>Table of Contents</h3>
           <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS GIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02.html">Unit 02 - First steps</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03.html">Unit 03 - Data Management</a></li>
-<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Modules, Region</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Tools, Region</a></li>
 <li class="toctree-l1"><a class="reference internal" href="05.html">Unit 05 - Raster processing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06.html">Unit 06 - Data export</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07.html">Unit 07 - QGIS loves GRASS</a></li>
@@ -288,7 +288,7 @@ respect <code class="xref std std-option docutils literal notranslate"><span cla
         <div class="right">
           
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2018-2024 Martin Landa and GISMentors.eu.
+        &#169; Copyright 2018-2026 Martin Landa and GISMentors.eu.
       Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
         </div>

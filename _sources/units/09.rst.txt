@@ -61,13 +61,14 @@ Overview of commands below:
    hectares whereas in the case of :grasscmd:`v.clean` it is given in
    square metres.
           
-The tools can be added to the existing model by |grass-module-add|
-:sup:`Add GRASS tool (module) to model`. Note that newly added tools
+The tools can be added to the existing model by |grass-tool-add|
+:sup:`Add GRASS tool (tool) to model`. Note that newly added tools
 are placed at the end of a computation workflow which is not
 desired. Commands order can be changed in :item:`Items` tab.
 
 .. figure:: ../images/units/09/reorder-items.png
-
+   :class: large
+           
    Reorder model items (GRASS tools) by :item:`Up/Down` buttons. In
    this case move :grasscmd:`v.overlay` up to the first position.
 
@@ -100,12 +101,13 @@ simple:
    <../_static/models/colors.txt>`__
          
 .. figure:: ../images/units/09/model-v2.png
-
+   :class: large
+           
    Extended model.
 
 Sample model to download: `ndvi-v2.gxm <../_static/models/ndvi-v2.gxm>`__
 (note: don't forget to fix path to reclass and colors file for
-:grasscmd:`r.recode` and :grasscmd:`r.colors` modules)
+:grasscmd:`r.recode` and :grasscmd:`r.colors` tools)
 
 Parameterization
 ----------------

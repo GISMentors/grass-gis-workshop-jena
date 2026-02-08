@@ -59,22 +59,22 @@ time). (source: <a class="reference external" href="https://grasswiki.osgeo.org/
 <p>MODIS data is provided in 3 projections (Sinusoidal, Lambert Azimuthal
 Equal-Area, and Geographic). For our purpose, data will be reprojected
 to ETRS89 / LAEA Europe <a class="reference external" href="https://epsg.io/3035">EPSG:3035</a>.</p>
-<p id="create-location-epsg">Create a new GRASS location <em>germany-modis</em> (see <a class="reference internal" href="02.html#create-location"><span class="std std-ref">Unit 02</span></a>) using EPSG code (<em>Select CRS from a list by EPSG
+<p id="create-project-epsg">Create a new GRASS project <em>germany-modis</em> (see <a class="reference internal" href="02.html#create-project"><span class="std std-ref">Unit 02</span></a>) using EPSG code (<em>Select CRS from a list by EPSG
 or description</em>).</p>
 <figure class="align-center" id="id1">
-<img alt="../_images/create-location-epsg-0.png" src="../_images/create-location-epsg-0.png" />
+<img alt="../_images/create-project-epsg-0.png" src="../_images/create-project-epsg-0.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 111 </span><span class="caption-text">Create a new location based on EPSG code.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 111 </span><span class="caption-text">Create a new project based on EPSG code.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <figure class="align-center" id="id2">
-<img alt="../_images/create-location-epsg-1.png" src="../_images/create-location-epsg-1.png" />
+<img alt="../_images/create-project-epsg-1.png" src="../_images/create-project-epsg-1.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 112 </span><span class="caption-text">Enter EPSG code.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>Enter a new GRASS session (PERMANENT mapset) and install
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/i.modis.html">i.modis</a> addons extension (more about installing
+<a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/addons/i.modis.html">i.modis</a> addons extension (more about installing
 addons in <a class="reference internal" href="17.html#grass-addons"><span class="std std-ref">Unit 17</span></a>) for downloading and importing
 MODIS data (note that you have to install also <a class="reference external" href="http://www.pymodis.org/">pyMODIS Python Library</a>). Run two commands below in
 <span class="item">Console</span> tab.</p>
@@ -83,10 +83,10 @@ MODIS data (note that you have to install also <a class="reference external" hre
 g.extension<span class="w"> </span><span class="nv">extension</span><span class="o">=</span>i.modis
 </pre></div>
 </div>
-<p>GRASS MODIS addon consists of two modules:</p>
+<p>GRASS MODIS addon consists of two tools:</p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/i.modis.download.html">i.modis.download</a> and</p></li>
-<li><p><a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/i.modis.import.html">i.modis.import</a></p></li>
+<li><p><a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/addons/i.modis.download.html">i.modis.download</a> and</p></li>
+<li><p><a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/addons/i.modis.import.html">i.modis.import</a></p></li>
 </ul>
 <section id="download-data">
 <h2>Download data<a class="headerlink" href="#download-data" title="Permalink to this heading">¶</a></h2>
@@ -97,7 +97,7 @@ sample dataset (<code class="file docutils literal notranslate"><span class="pre
 <a class="reference internal" href="#modis-import"><span class="std std-ref">importing sample data</span></a>.</p>
 </div>
 <p>Let’s download desired tiles (h18v03 and h18v04) for year 2023 by
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/i.modis.download.html">i.modis.download</a>.</p>
+<a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/addons/i.modis.download.html">i.modis.download</a>.</p>
 <p>Land Surface Temperature eight day 1 Km (Terra/Aqua) product will be
 downloaded.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>i.modis.download<span class="w"> </span><span class="nv">settings</span><span class="o">=</span>settings.txt<span class="w"> </span><span class="nv">folder</span><span class="o">=</span>modis<span class="w"> </span><span class="se">\</span>
@@ -109,7 +109,7 @@ downloaded.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Output folder (<code class="file docutils literal notranslate"><span class="pre">h18v03_04</span></code> in this case) must exists,
-otherwise the module will fail.</p>
+otherwise the tool will fail.</p>
 <p>File <code class="file docutils literal notranslate"><span class="pre">settings.txt</span></code> contains two lines: <em>username</em> and
 <em>password</em> for accessing MODIS download service.</p>
 <p>Please read <a class="reference external" href="http://www.pymodis.org/info.html#user-and-password">pyModis documentation</a> how to
@@ -118,8 +118,8 @@ register and set up your account.</p>
 </section>
 <section id="import-data">
 <span id="modis-import"></span><h2>Import data<a class="headerlink" href="#import-data" title="Permalink to this heading">¶</a></h2>
-<p>Input MODIS data can be imported and reprojected into target location
-by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/addons/i.modis.import.html">i.modis.import</a>.</p>
+<p>Input MODIS data can be imported and reprojected into target project
+by <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/addons/i.modis.import.html">i.modis.import</a>.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>i.modis.import<span class="w"> </span>-mw<span class="w"> </span><span class="nv">files</span><span class="o">=</span>modis/listfileMOD11A2.061.txt<span class="w"> </span><span class="se">\</span>
 <span class="nv">spectral</span><span class="o">=</span><span class="s1">&#39;( 1 0 0 0 1 0 0 0 0 0 0 0 )&#39;</span><span class="w"> </span><span class="nv">outfile</span><span class="o">=</span>tlist-mod.txt
 
@@ -145,7 +145,7 @@ related to <code class="xref std std-option docutils literal notranslate"><span 
 <h2>Germany administrative border<a class="headerlink" href="#germany-administrative-border" title="Permalink to this heading">¶</a></h2>
 <p>Germany administrative border can created by dissolving
 <span class="map">counties</span> used in <a class="reference internal" href="14.html"><span class="doc">Unit 14 - PyGRASS Vector Access</span></a>. Let’s import
-<code class="file docutils literal notranslate"><span class="pre">osm/counties.gpkg</span></code> into the current GRASS location as described
+<code class="file docutils literal notranslate"><span class="pre">osm/counties.gpkg</span></code> into the current GRASS project as described
 in <a class="reference internal" href="03.html"><span class="doc">Unit 03 - Data Management</span></a>.</p>
 <p>Next, open the attribute table <a class="reference internal" href="../_images/table.png"><img alt="grass-table" src="../_images/table.png" style="width: 1.5em;" /></a> <sup>Show attribute data
 for selected vector map</sup> and add a new column used for dissolving.</p>
@@ -170,13 +170,13 @@ for selected vector map</sup> and add a new column used for dissolving.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>Steps described above may me performed from command line by
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.db.addcolumn.html">v.db.addcolumn</a> and <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.db.update.html">v.db.update</a>.</p>
+<a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/v.db.addcolumn.html">v.db.addcolumn</a> and <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/v.db.update.html">v.db.update</a>.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>v.db.addcolumn<span class="w"> </span><span class="nv">map</span><span class="o">=</span>counties<span class="w"> </span><span class="nv">columns</span><span class="o">=</span><span class="s2">&quot;value int&quot;</span>
 v.db.update<span class="w"> </span><span class="nv">map</span><span class="o">=</span>counties<span class="w"> </span><span class="nv">column</span><span class="o">=</span>value<span class="w"> </span><span class="nv">value</span><span class="o">=</span><span class="m">1</span>
 </pre></div>
 </div>
 </div>
-<p>Now, we can perform dissolving all counties by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.dissolve.html">v.dissolve</a>:</p>
+<p>Now, we can perform dissolving all counties by <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/v.dissolve.html">v.dissolve</a>:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>v.dissolve<span class="w"> </span><span class="nv">input</span><span class="o">=</span>counties<span class="w"> </span><span class="nv">output</span><span class="o">=</span>germany<span class="w"> </span><span class="nv">column</span><span class="o">=</span>value
 </pre></div>
 </div>
@@ -185,15 +185,15 @@ v.db.update<span class="w"> </span><span class="nv">map</span><span class="o">=<
 <span id="modis-lst"></span><h2>LST<a class="headerlink" href="#lst" title="Permalink to this heading">¶</a></h2>
 <p>In this section <strong>Land Surface Temperature</strong> (LST) analysis will be
 perfmored for Germany.</p>
-<p>Mask will be created by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.mask.html">r.mask</a>. Don’t forget that
+<p>Mask will be created by <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.mask.html">r.mask</a>. Don’t forget that
 computational region must be set before creating a mask. Computational
 region will be defined by Germany vector map and aligned by the input
-MODIS data by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/g.region.html">g.region</a>.</p>
+MODIS data by <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/g.region.html">g.region</a>.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>g.region<span class="w"> </span><span class="nv">vector</span><span class="o">=</span>germany<span class="w"> </span><span class="nv">align</span><span class="o">=</span>MOD11A2.A2023001_mosaic_LST_Day_1km
 r.mask<span class="w"> </span><span class="nv">vector</span><span class="o">=</span>germany
 </pre></div>
 </div>
-<p>Let’s check range values of imported MODIS data by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.info.html">r.info</a> module:</p>
+<p>Let’s check range values of imported MODIS data by <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.info.html">r.info</a> tool:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.info<span class="w"> </span>-r<span class="w"> </span><span class="nv">map</span><span class="o">=</span>MOD11A2.A2023001_mosaic_LST_Day_1km
 </pre></div>
 </div>
@@ -205,7 +205,7 @@ r.mask<span class="w"> </span><span class="nv">vector</span><span class="o">=</s
 converted into Celsius or Kelvin scale.</p>
 <div class="math notranslate nohighlight">
 \[C = DN * 0.02 - 273.15\]</div>
-<p>Conversion to Celsium scale can be done by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.mapcalc.html">r.mapcalc</a> (see
+<p>Conversion to Celsium scale can be done by <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.mapcalc.html">r.mapcalc</a> (see
 also <a class="reference internal" href="05.html"><span class="doc">Unit 05 - Raster processing</span></a>). It’s also suitable to replace zero values with
 no-data value (NULL value in GRASS terminology).</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.mapcalc<span class="w"> </span><span class="nv">expression</span><span class="o">=</span><span class="s2">&quot;MOD11A2.A2023001_mosaic_LST_Day_1km_c = \</span>
@@ -241,10 +241,10 @@ no-data value (NULL value in GRASS terminology).</p>
           
           <h3>Table of Contents</h3>
           <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS GIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02.html">Unit 02 - First steps</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03.html">Unit 03 - Data Management</a></li>
-<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Modules, Region</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Tools, Region</a></li>
 <li class="toctree-l1"><a class="reference internal" href="05.html">Unit 05 - Raster processing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06.html">Unit 06 - Data export</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07.html">Unit 07 - QGIS loves GRASS</a></li>
@@ -308,7 +308,7 @@ no-data value (NULL value in GRASS terminology).</p>
         <div class="right">
           
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2018-2024 Martin Landa and GISMentors.eu.
+        &#169; Copyright 2018-2026 Martin Landa and GISMentors.eu.
       Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
         </div>

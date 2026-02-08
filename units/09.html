@@ -62,15 +62,15 @@ classes.</p>
 <p>From GRASS perspective a computation workflow may be decomposed to the
 following steps:</p>
 <ol class="arabic simple">
-<li><p>Erase cloud mask in input region (<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.overlay.html">v.overlay</a>: <code class="docutils literal notranslate"><span class="pre">not</span></code> operator)</p></li>
-<li><p>Set computation region based on modified input region (<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/g.region.html">g.region</a>)</p></li>
-<li><p>Set mask (<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.mask.html">r.mask</a>)</p></li>
-<li><p>Compute NDVI values (<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/i.vi.html">i.vi</a>)</p></li>
-<li><p>Reclassify NDVI values into classes (<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.recode.html">r.recode</a>)</p></li>
-<li><p>Remove small areas (<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.reclass.area.html">r.reclass.area</a>)</p></li>
+<li><p>Erase cloud mask in input region (<a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/v.overlay.html">v.overlay</a>: <code class="docutils literal notranslate"><span class="pre">not</span></code> operator)</p></li>
+<li><p>Set computation region based on modified input region (<a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/g.region.html">g.region</a>)</p></li>
+<li><p>Set mask (<a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.mask.html">r.mask</a>)</p></li>
+<li><p>Compute NDVI values (<a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/i.vi.html">i.vi</a>)</p></li>
+<li><p>Reclassify NDVI values into classes (<a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.recode.html">r.recode</a>)</p></li>
+<li><p>Remove small areas (<a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.reclass.area.html">r.reclass.area</a>)</p></li>
 <li><p>Fill holes (removed small areas) with adjacent area class
-(<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.grow.distance.html">r.grow.distance</a>)</p></li>
-<li><p>Set desired color table for NDVI classes (<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.colors.html">r.colors</a>)</p></li>
+(<a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.grow.distance.html">r.grow.distance</a>)</p></li>
+<li><p>Set desired color table for NDVI classes (<a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.colors.html">r.colors</a>)</p></li>
 </ol>
 <p>Overview of commands below:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>v.overlay<span class="w"> </span><span class="nv">ainput</span><span class="o">=</span>jena_boundary<span class="w"> </span><span class="nv">binput</span><span class="o">=</span>MaskFeature<span class="w"> </span><span class="nv">operator</span><span class="o">=</span>not<span class="w"> </span><span class="nv">output</span><span class="o">=</span>region_mask
@@ -92,34 +92,34 @@ v.clean<span class="w"> </span><span class="nv">input</span><span class="o">=</s
 v.colors<span class="w"> </span><span class="nv">map</span><span class="o">=</span>ndvi_class_filled<span class="w"> </span><span class="nv">raster</span><span class="o">=</span>ndvi_class
 </pre></div>
 </div>
-<p>Note that area in <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.reclass.area.html">r.reclass.area</a> is provided in
-hectares whereas in the case of <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.clean.html">v.clean</a> it is given in
+<p>Note that area in <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.reclass.area.html">r.reclass.area</a> is provided in
+hectares whereas in the case of <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/v.clean.html">v.clean</a> it is given in
 square metres.</p>
 </div>
-<p>The tools can be added to the existing model by <a class="reference internal" href="../_images/module-add.png"><img alt="grass-module-add" src="../_images/module-add.png" style="width: 1.5em;" /></a>
-<sup>Add GRASS tool (module) to model</sup>. Note that newly added tools
+<p>The tools can be added to the existing model by <a href="#id8"><span class="problematic" id="id9">|grass-tool-add|</span></a>
+<sup>Add GRASS tool (tool) to model</sup>. Note that newly added tools
 are placed at the end of a computation workflow which is not
 desired. Commands order can be changed in <span class="item">Items</span> tab.</p>
 <figure class="align-center" id="id1">
-<img alt="../_images/reorder-items.png" src="../_images/reorder-items.png" />
+<img alt="../_images/reorder-items.png" class="large" src="../_images/reorder-items.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 58 </span><span class="caption-text">Reorder model items (GRASS tools) by <span class="item">Up/Down</span> buttons. In
-this case move <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.overlay.html">v.overlay</a> up to the first position.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+this case move <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/v.overlay.html">v.overlay</a> up to the first position.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Don’t forget to align region bounds to input raster data
-(use <span class="param">align</span> option in <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/g.region.html">g.region</a> tool).</p>
+(use <span class="param">align</span> option in <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/g.region.html">g.region</a> tool).</p>
 </div>
 <p>Reclassification of floating point raster maps can be done by
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.recode.html">r.recode</a>. An example of reclassification table:</p>
+<a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.recode.html">r.recode</a>. An example of reclassification table:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>-1:0.2:1
 <span class="m">0</span>.2:0.6:2
 <span class="m">0</span>.6:1:3
 </pre></div>
 </div>
-<p>Beside predefined color tables <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.colors.html">r.colors</a> (see
+<p>Beside predefined color tables <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.colors.html">r.colors</a> (see
 <a class="reference internal" href="04.html#color-table"><span class="std std-ref">Color table</span></a> section) also allows to use user-defined color
 table by <span class="param">rules</span> option. In our case a color table can be quite
 simple:</p>
@@ -135,14 +135,14 @@ files otherwise it can be lost when opening model next time:
 <a class="reference external" href="../_static/models/reclass.txt">reclass.txt</a> and <a class="reference external" href="../_static/models/colors.txt">colors.txt</a></p>
 </div>
 <figure class="align-center" id="id2">
-<img alt="../_images/model-v2.png" src="../_images/model-v2.png" />
+<img alt="../_images/model-v2.png" class="large" src="../_images/model-v2.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 59 </span><span class="caption-text">Extended model.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>Sample model to download: <a class="reference external" href="../_static/models/ndvi-v2.gxm">ndvi-v2.gxm</a>
 (note: don’t forget to fix path to reclass and colors file for
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.recode.html">r.recode</a> and <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.colors.html">r.colors</a> modules)</p>
+<a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.recode.html">r.recode</a> and <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.colors.html">r.colors</a> tools)</p>
 <section id="parameterization">
 <h2>Parameterization<a class="headerlink" href="#parameterization" title="Permalink to this heading">¶</a></h2>
 <p>The model has all parameters hard-coded. User lacks possibility to
@@ -157,9 +157,9 @@ sharing same user-defined input value)</p></li>
 the model in order to provide the user ability to:</p>
 <ul class="simple">
 <li><p>define own area of interest (<span class="param">ainput</span> option in
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.overlay.html">v.overlay</a>)</p></li>
+<a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/v.overlay.html">v.overlay</a>)</p></li>
 <li><p>set threshold for small areas (<span class="param">value</span> option in
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.reclass.area.html">r.reclass.area</a>)</p></li>
+<a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.reclass.area.html">r.reclass.area</a>)</p></li>
 </ul>
 <p>To parameterize a command open its properties dialog. Option
 parametrization can be easily enabled by <span class="item">Parameterized in
@@ -167,7 +167,7 @@ model</span> checkbox as shown below.</p>
 <figure class="align-center" id="id3">
 <img alt="../_images/parametrize-cmd.png" src="../_images/parametrize-cmd.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 60 </span><span class="caption-text">Parametrization of <span class="param">ainput</span> option for <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.overlay.html">v.overlay</a>
+<p><span class="caption-number">Fig. 60 </span><span class="caption-text">Parametrization of <span class="param">ainput</span> option for <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/v.overlay.html">v.overlay</a>
 command.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
@@ -211,7 +211,7 @@ itself.</p>
 <div class="task admonition">
 <p class="admonition-title">Task</p>
 <p>Change computation region, eg. by buffering Jena city region
-(<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.buffer.html">v.buffer</a>) and run the model.</p>
+(<a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/v.buffer.html">v.buffer</a>) and run the model.</p>
 </div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>v.buffer<span class="w"> </span><span class="nv">input</span><span class="o">=</span>jena_boundary<span class="w"> </span><span class="nv">output</span><span class="o">=</span>jena_boundary_5km<span class="w"> </span><span class="nv">distance</span><span class="o">=</span><span class="m">5000</span>
 </pre></div>
@@ -236,10 +236,10 @@ itself.</p>
           
           <h3>Table of Contents</h3>
           <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS GIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02.html">Unit 02 - First steps</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03.html">Unit 03 - Data Management</a></li>
-<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Modules, Region</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Tools, Region</a></li>
 <li class="toctree-l1"><a class="reference internal" href="05.html">Unit 05 - Raster processing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06.html">Unit 06 - Data export</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07.html">Unit 07 - QGIS loves GRASS</a></li>
@@ -300,7 +300,7 @@ itself.</p>
         <div class="right">
           
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2018-2024 Martin Landa and GISMentors.eu.
+        &#169; Copyright 2018-2026 Martin Landa and GISMentors.eu.
       Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
         </div>

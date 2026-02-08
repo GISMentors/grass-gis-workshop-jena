@@ -18,14 +18,14 @@
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Unit 06 - Data export" href="06.html" />
-    <link rel="prev" title="Unit 04 - Modules, Region" href="04.html" /> 
+    <link rel="prev" title="Unit 04 - Tools, Region" href="04.html" /> 
   </head><body>
     <div class="header-wrapper" role="banner">
       <div class="header">
         <div class="headertitle"><a
           href="../index.html">Jena GRASS GIS Workshop</a></div>
         <div class="rel" role="navigation" aria-label="related navigation">
-          <a href="04.html" title="Unit 04 - Modules, Region"
+          <a href="04.html" title="Unit 04 - Tools, Region"
              accesskey="P">previous</a> |
           <a href="06.html" title="Unit 06 - Data export"
              accesskey="N">next</a>
@@ -47,8 +47,8 @@
 <a class="reference internal" href="04.html#region"><span class="std std-ref">computational region</span></a>.</p>
 <p>Let’s demostrate raster processing on <a class="reference external" href="https://en.wikipedia.org/wiki/map algebra">map algebra</a> based
 computation of <a class="reference external" href="https://en.wikipedia.org/wiki/NDVI">NDVI</a> (Normalized difference vegetation
-index). The key GRASS module that allows a user to do the map algebra
-is <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.mapcalc.html">r.mapcalc</a>. A GUI tool for map algebra can be launched
+index). The key GRASS tool that allows a user to do the map algebra
+is <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.mapcalc.html">r.mapcalc</a>. A GUI tool for map algebra can be launched
 from <span class="menuselection">Raster ‣ Raster map calculator</span> or by
 <a class="reference internal" href="../_images/raster-calculator.png"><img alt="grass-raster-calculator" src="../_images/raster-calculator.png" style="width: 1.5em;" /></a> <sup>Raster map calculator</sup> from the main
 toolbar.</p>
@@ -79,7 +79,7 @@ map (integer: -1, 0, 1).</p>
 <figure class="align-center" id="id2">
 <img alt="../_images/ndvi-mapcalc.png" class="large" src="../_images/ndvi-mapcalc.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 36 </span><span class="caption-text">NDVI computed by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.mapcalc.html">r.mapcalc</a> map algebra module (Jena
+<p><span class="caption-number">Fig. 36 </span><span class="caption-text">NDVI computed by <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.mapcalc.html">r.mapcalc</a> map algebra tool (Jena
 city in red color).</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
@@ -91,7 +91,7 @@ city in red color).</span><a class="headerlink" href="#id2" title="Permalink to 
 <p>The first shortcoming can be easily solved by changing color table to
 <cite>ndvi</cite> as described in <a class="reference internal" href="04.html#color-table"><span class="std std-ref">Color table</span></a> section. The second requires
 setting a mask to ignore cloudy areas by the computation. Raster mask
-can be created by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.mask.html">r.mask</a>. Like other modules from the
+can be created by <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.mask.html">r.mask</a>. Like other tools from the
 <code class="docutils literal notranslate"><span class="pre">r.*</span></code> family, it operates in the current computational region.</p>
 <section id="mask">
 <h2>Mask<a class="headerlink" href="#mask" title="Permalink to this heading">¶</a></h2>
@@ -127,10 +127,10 @@ legend</em>) from Map Display toolbar.</span><a class="headerlink" href="#id4" t
 </section>
 <section id="recommended-approach-for-computing-ndvi">
 <h2>Recommended approach for computing NDVI<a class="headerlink" href="#recommended-approach-for-computing-ndvi" title="Permalink to this heading">¶</a></h2>
-<p>Note that there is specialized module for computing various vegetation
-indices including NDVI - <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/i.vi.html">i.vi</a>. This module makes NDVI
+<p>Note that there is specialized tool for computing various vegetation
+indices including NDVI - <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/i.vi.html">i.vi</a>. This tool makes NDVI
 computing even simpler.</p>
-<p>Let’s recompute <span class="map">ndvi</span> map using <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/i.vi.html">i.vi</a> (map names
+<p>Let’s recompute <span class="map">ndvi</span> map using <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/i.vi.html">i.vi</a> (map names
 shorten):</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>i.vi<span class="w"> </span><span class="nv">red</span><span class="o">=</span>B04_10m<span class="w"> </span><span class="nv">output</span><span class="o">=</span>ndvi<span class="w"> </span><span class="nv">viname</span><span class="o">=</span>ndvi<span class="w"> </span><span class="nv">nir</span><span class="o">=</span>B08_10m
 </pre></div>
@@ -148,10 +148,10 @@ shorten):</p>
           
           <h3>Table of Contents</h3>
           <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS GIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02.html">Unit 02 - First steps</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03.html">Unit 03 - Data Management</a></li>
-<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Modules, Region</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Tools, Region</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Unit 05 - Raster processing</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#mask">Mask</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#recommended-approach-for-computing-ndvi">Recommended approach for computing NDVI</a></li>
@@ -201,7 +201,7 @@ shorten):</p>
       <div class="footer">
         <div class="left">
           <div role="navigation" aria-label="related navigaton">
-            <a href="04.html" title="Unit 04 - Modules, Region"
+            <a href="04.html" title="Unit 04 - Tools, Region"
               >previous</a> |
             <a href="06.html" title="Unit 06 - Data export"
               >next</a>
@@ -213,7 +213,7 @@ shorten):</p>
         <div class="right">
           
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2018-2024 Martin Landa and GISMentors.eu.
+        &#169; Copyright 2018-2026 Martin Landa and GISMentors.eu.
       Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
         </div>

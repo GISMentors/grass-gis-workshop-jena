@@ -17,14 +17,14 @@
     <script src="../_static/sphinx_highlight.js"></script>
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Unit 03 - Data Management" href="03.html" />
-    <link rel="prev" title="Unit 01 - About GRASS GIS" href="01.html" /> 
+    <link rel="prev" title="Unit 01 - About GRASS" href="01.html" /> 
   </head><body>
     <div class="header-wrapper" role="banner">
       <div class="header">
         <div class="headertitle"><a
           href="../index.html">Jena GRASS GIS Workshop</a></div>
         <div class="rel" role="navigation" aria-label="related navigation">
-          <a href="01.html" title="Unit 01 - About GRASS GIS"
+          <a href="01.html" title="Unit 01 - About GRASS"
              accesskey="P">previous</a> |
           <a href="03.html" title="Unit 03 - Data Management"
              accesskey="N">next</a>
@@ -44,17 +44,16 @@
 <h1>Unit 02 - First steps<a class="headerlink" href="#unit-02-first-steps" title="Permalink to this heading">¶</a></h1>
 <p>Starting a GRASS session requires basic knowledge about the software
 itself. GRASS motivates users to organize their data from an early
-beginning. GRASS uses a consistent structure of so-called
-<strong>locations</strong> and <strong>mapsets</strong> to organize its data. This has not
-changed in GRASS 8.</p>
-<p id="location-mapset-section">The GRASS data structure has three levels:</p>
+beginning. GRASS uses a consistent structure of so-called <strong>projects</strong>
+(formerly “locations”) and <strong>mapsets</strong> to organize its data.</p>
+<p id="project-mapset-section">The GRASS data structure has three levels:</p>
 <ol class="arabic simple">
 <li><p><strong>Database directory.</strong> A directory on local or network disc which
 contains all data accessed by GRASS. It’s usually a directory called
 <code class="file docutils literal notranslate"><span class="pre">grassdata</span></code> located in users’ home directory.</p></li>
-<li><p><strong>Location</strong>. All geodata stored within one location must have the
-same spatial coordinate system (GRASS doesn’t support on-the-fly
-projection for several reasons).</p></li>
+<li><p><strong>Project</strong> (formerly “Location”). All geodata stored within one
+project must have the same spatial coordinate system (GRASS
+doesn’t support on-the-fly projection for several reasons).</p></li>
 <li><p><strong>Mapset</strong>. Contains task-related data within one project. Helps
 organizing data into logical groups or to separate parallel work of
 different users on the same project.</p></li>
@@ -71,7 +70,7 @@ projections and start working on their project.</p>
 <figure class="align-center" id="id1">
 <span id="startup7"></span><img alt="../_images/grass7-start.png" src="../_images/grass7-start.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 3 </span><span class="caption-text">GRASS GIS startup screen in version 7.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 3 </span><span class="caption-text">GRASS startup screen in version 7.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 </div>
@@ -79,45 +78,44 @@ projections and start working on their project.</p>
 been reduced in GRASS 8. The startup screen has been
 replaced by a completely new mechanism. On the first launch, GRASS 8
 sets up the <em>database directory</em> automatically and launches GUI in a
-default location <em>World LatLong WGS84</em>. Also, a sample <em>world</em> vector
+default project <em>World LatLong WGS84</em>. Also, a sample <em>world</em> vector
 layer (in GRASS terminology <em>vector map</em>) is shown.</p>
 <p>GRASS GUI is designed as a <em>simple and lightweight</em> graphical user
-interface. Basically, it is a GUI front-end calling GRASS commands (see
-<a class="reference internal" href="04.html#grass-modules"><span class="std std-ref">Accessing GRASS modules</span></a>) in the background. The GUI consists of two main
-windows, see <a class="reference internal" href="#startup8"><span class="std std-numref">Fig. 4</span></a>.</p>
+interface, see <a class="reference internal" href="#startup8"><span class="std std-numref">Fig. 4</span></a>. Basically, it is a GUI front-end
+calling GRASS commands (see <a class="reference internal" href="04.html#grass-tools"><span class="std std-ref">Accessing GRASS tools</span></a>) in the background.</p>
 <figure class="align-center" id="id2">
 <span id="startup8"></span><img alt="../_images/grass8-start.png" class="large" src="../_images/grass8-start.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 4 </span><span class="caption-text">GRASS GIS 8 on startup.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 4 </span><span class="caption-text">GRASS 8 on startup.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>If GUI crashes, it can be started again by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/g.gui.html">g.gui</a>
+<p>If GUI crashes, it can be started again by <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/g.gui.html">g.gui</a>
 command from the underlying terminal (command prompt).</p>
 </div>
 <p>GRASS GUI guides users by means of tooltips as shown in
-<a class="reference internal" href="#startup8"><span class="std std-numref">Fig. 4</span></a>. The default location is not designed for real
-work. The next step is usually to create new “project(s)” (in GRASS
-terminology <em>a location</em>) with user-defined spatial coordinate systems.</p>
+<a class="reference internal" href="#startup8"><span class="std std-numref">Fig. 4</span></a>. The default project is not designed for real
+work. The next step is usually to create a new project with
+user-defined spatial coordinate systems.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Consider changing language settings to English in
 <span class="menuselection">Settings ‣ Preferences ‣ Appearance</span>. Change
 <cite>Language settings</cite> to <code class="docutils literal notranslate"><span class="pre">en</span></code> and restart GRASS.</p>
 </div>
-<section id="create-a-new-location">
-<span id="create-location"></span><h2>Create a new location<a class="headerlink" href="#create-a-new-location" title="Permalink to this heading">¶</a></h2>
-<p>By clicking on <span class="item">Create new Location</span> button in the tooltip (or by
-<a class="reference internal" href="../_images/location-add.png"><img alt="grass-location-add" src="../_images/location-add.png" style="width: 1.5em;" /></a> from the toolbar) the wizard appears. A new GRASS
-location can be easily created using <a class="reference external" href="https://en.wikipedia.org/wiki/EPSG">EPSG</a> codes or
+<section id="create-a-new-project">
+<span id="create-project"></span><h2>Create a new project<a class="headerlink" href="#create-a-new-project" title="Permalink to this heading">¶</a></h2>
+<p>By clicking on <span class="item">Create new Project</span> button in the tooltip (or by
+<a href="#id15"><span class="problematic" id="id16">|grass-project-add|</span></a> from the toolbar) the wizard appears. A new GRASS
+project can be easily created using <a class="reference external" href="https://en.wikipedia.org/wiki/EPSG">EPSG</a> codes or
 user-defined geodata.</p>
-<p>In the first page of the location wizard, the location name is defined.
+<p>In the first page of the project wizard, the project name is defined.
 Optionally, also a short description can be added.</p>
 <figure class="align-center" id="id3">
-<img alt="../_images/create-location-0.png" src="../_images/create-location-0.png" />
+<img alt="../_images/create-project-0.png" src="../_images/create-project-0.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 5 </span><span class="caption-text">Define a name for the new GRASS location.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 5 </span><span class="caption-text">Define a name for the new GRASS project.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>In the next page, a coordinate reference system (CRS) is chosen. CRS
@@ -125,17 +123,17 @@ is usually defined by EPSG code (<span class="item">Select CRS from a list by EP
 or description</span>) or by user-defined geodata (<span class="item">Read CRS from a
 georeferenced data file</span>).</p>
 <figure class="align-center" id="id4">
-<img alt="../_images/create-location-1.png" src="../_images/create-location-1.png" />
+<img alt="../_images/create-project-1.png" src="../_images/create-project-1.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 6 </span><span class="caption-text">Choose “Read CRS from a georeferenced data file” for creating a new
-GRASS location.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+GRASS project.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
-<p>In our case, a new location will be created by defining CRS from
+<p>In our case, a new project will be created by defining CRS from
 <code class="file docutils literal notranslate"><span class="pre">jena_boundary.gpkg</span></code> input file (located in the sample dataset
 in <code class="file docutils literal notranslate"><span class="pre">osm</span></code> directory).</p>
 <figure class="align-center" id="id5">
-<img alt="../_images/create-location-2.png" src="../_images/create-location-2.png" />
+<img alt="../_images/create-project-2.png" src="../_images/create-project-2.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 7 </span><span class="caption-text">Define an input file <code class="file docutils literal notranslate"><span class="pre">jena_boundary.gpkg</span></code>.</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
 </figcaption>
@@ -165,29 +163,29 @@ data afterwards, see <a class="reference internal" href="03.html"><span class="d
 <p>Spatial reference system is chosen based on input file (UTM zone 32N
 <a class="reference external" href="https://epsg.io/32632">EPSG:32632</a>).</p>
 <figure class="align-center" id="id6">
-<img alt="../_images/create-location-3.png" src="../_images/create-location-3.png" />
+<img alt="../_images/create-project-3.png" src="../_images/create-project-3.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 8 </span><span class="caption-text">Check the summary.</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
-<p>A new GRASS user-defined location will be created by clicking on
+<p>A new GRASS user-defined project will be created by clicking on
 <span class="item">Finish</span> button.</p>
-<p>After creating a new location (<span class="item">Finish</span> button) the user can
-optionally import data used for defining the new location (in our case
+<p>After creating a new project (<span class="item">Finish</span> button) the user can
+optionally import data used for defining the new project (in our case
 <code class="file docutils literal notranslate"><span class="pre">jena_boundary.gpkg</span></code>).</p>
 <figure class="align-center" id="id7">
-<img alt="../_images/create-location-4.png" class="small" src="../_images/create-location-4.png" />
+<img alt="../_images/create-project-4.png" class="small" src="../_images/create-project-4.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 9 </span><span class="caption-text">Let’s import data to simplify our first steps in GRASS GIS.</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 9 </span><span class="caption-text">Let’s import data to simplify our first steps in GRASS.</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
-<p>By default GRASS creates a <em>PERMANENT mapset</em> in the new location.
-Here, all location settings are stored. This mapset is commonly used
-for importing input geodata used in the location.</p>
+<p>By default GRASS creates a <em>PERMANENT mapset</em> in the new project.
+Here, all project settings are stored. This mapset is commonly used
+for importing input geodata used in the project.</p>
 <figure class="align-center" id="id8">
-<img alt="../_images/create-location-5.png" class="large" src="../_images/create-location-5.png" />
+<img alt="../_images/create-project-5.png" class="large" src="../_images/create-project-5.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 10 </span><span class="caption-text">GRASS GUI automatically switches to the new location.</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 10 </span><span class="caption-text">GRASS GUI automatically switches to the new project.</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 </section>
@@ -205,9 +203,8 @@ use double-click on the specified layer.</span><a class="headerlink" href="#id9"
 </figure>
 <p>Let’s also add a basemap from freely available OpenStreeMap map
 service. In our case <em>OpenStreetMap WMS</em> provided by <a class="reference external" href="https://mundialis.de">mundialis</a> company
-(<a class="reference external" href="http://ows.mundialis.de/services/service">http://ows.mundialis.de/services/service</a>). WMS layer can be added
-from <span class="item">Layers</span> tab <a class="reference internal" href="../_images/layer-wms-add.png"><img alt="grass-layer-wms-add" src="../_images/layer-wms-add.png" style="width: 1.5em;" /></a> <sup>Add web service
-layer</sup>.</p>
+(<a class="reference external" href="https://ows.mundialis.de/osm/service">https://ows.mundialis.de/osm/service</a>). WMS layer can be added from
+<span class="item">Layers</span> tab <a class="reference internal" href="../_images/layer-wms-add.png"><img alt="grass-layer-wms-add" src="../_images/layer-wms-add.png" style="width: 1.5em;" /></a> <sup>Add web service layer</sup>.</p>
 <figure class="align-center" id="id10">
 <img alt="../_images/d-wms-0.png" src="../_images/d-wms-0.png" />
 <figcaption>
@@ -258,14 +255,14 @@ blue color.</span><a class="headerlink" href="#id14" title="Permalink to this im
           
           <h3>Table of Contents</h3>
           <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS GIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Unit 02 - First steps</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#create-a-new-location">Create a new location</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#create-a-new-project">Create a new project</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#display-data">Display data</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="03.html">Unit 03 - Data Management</a></li>
-<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Modules, Region</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Tools, Region</a></li>
 <li class="toctree-l1"><a class="reference internal" href="05.html">Unit 05 - Raster processing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06.html">Unit 06 - Data export</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07.html">Unit 07 - QGIS loves GRASS</a></li>
@@ -311,7 +308,7 @@ blue color.</span><a class="headerlink" href="#id14" title="Permalink to this im
       <div class="footer">
         <div class="left">
           <div role="navigation" aria-label="related navigaton">
-            <a href="01.html" title="Unit 01 - About GRASS GIS"
+            <a href="01.html" title="Unit 01 - About GRASS"
               >previous</a> |
             <a href="03.html" title="Unit 03 - Data Management"
               >next</a>
@@ -323,7 +320,7 @@ blue color.</span><a class="headerlink" href="#id14" title="Permalink to this im
         <div class="right">
           
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2018-2024 Martin Landa and GISMentors.eu.
+        &#169; Copyright 2018-2026 Martin Landa and GISMentors.eu.
       Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
         </div>

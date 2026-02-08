@@ -6,11 +6,11 @@ Python objects. This unit shows how to deal with GRASS topological
 vector data by PyGRASS API.
 
 Let's import :file:`osm/counties.gpkg` into *jena-region*
-GRASS location as described in :doc:`03`. In this case coordinate
+GRASS project as described in :doc:`03`. In this case coordinate
 reference system (CRS) of input data (:epsg:`3035`) differs from
 *jena-region* CRS definition (:epsg:`32632`). GRASS will apply
 transformation of input data into target CRS provided by the current
-location (``Projection match: No``). This operation needs to be
+project (``Projection match: No``). This operation needs to be
 confirmed by a user, see :numref:`confirm-reprojection`.
 
 .. _confirm-reprojection:

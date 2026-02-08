@@ -16,7 +16,7 @@
     <script src="../_static/doctools.js"></script>
     <script src="../_static/sphinx_highlight.js"></script>
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Unit 04 - Modules, Region" href="04.html" />
+    <link rel="next" title="Unit 04 - Tools, Region" href="04.html" />
     <link rel="prev" title="Unit 02 - First steps" href="02.html" /> 
   </head><body>
     <div class="header-wrapper" role="banner">
@@ -26,7 +26,7 @@
         <div class="rel" role="navigation" aria-label="related navigation">
           <a href="02.html" title="Unit 02 - First steps"
              accesskey="P">previous</a> |
-          <a href="04.html" title="Unit 04 - Modules, Region"
+          <a href="04.html" title="Unit 04 - Tools, Region"
              accesskey="N">next</a>
         </div>
        </div>
@@ -88,9 +88,9 @@ interpretation will enhanced in <a class="reference internal" href="04.html#colo
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>GRASS imports/links RGB image as separate bands. Color
-composition can be displayed using <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/d.rgb.html">d.rgb</a>.</p>
+composition can be displayed using <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/d.rgb.html">d.rgb</a>.</p>
 </div>
-<p id="raster-metadata">Basic raster metadata can be printed by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.info.html">r.info</a> or from
+<p id="raster-metadata">Basic raster metadata can be printed by <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.info.html">r.info</a> or from
 <span class="item">Layers</span> tab.</p>
 <figure class="align-center" id="id3">
 <img alt="../_images/raster-metadata.png" src="../_images/raster-metadata.png" />
@@ -141,9 +141,9 @@ Map composition of Sentinel-2 4th band and cloud mask features.</span><a class="
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>If a spatial reference system (SRS) of raster/vector
-file differs from GRASS location (<span class="item">Project match</span>) input data
+file differs from GRASS project (<span class="item">Project match</span>) input data
 is automatically reprojected into SRS of the current GRASS
-location. Note that GRASS simply does not support on the fly
+project. Note that GRASS simply does not support on the fly
 transformation from several reasons.</p>
 </div>
 <div class="admonition note" id="import-no-srs">
@@ -151,12 +151,12 @@ transformation from several reasons.</p>
 <p>In some cases SRS of imported file can be missing or
 invalid. GRASS reports this issue as <em>In case of no
 significant differences in the projection definitions, use
-the -o flag to ignore them and use current location
-definition.  Consider generating a new location from the
-input dataset using the ‘location’ parameter.</em></p>
+the -o flag to ignore them and use current project
+definition.  Consider generating a new project from the
+input dataset using the ‘project’ parameter.</em></p>
 <p>GRASS allows importing such file by overriding project check
 (if you are really sure that SRS of input file is the same
-as GRASS location).</p>
+as GRASS project).</p>
 </div>
 <section id="vector-topology">
 <span id="vector-topo-section"></span><h3>Vector topology<a class="headerlink" href="#vector-topology" title="Permalink to this heading">¶</a></h3>
@@ -170,7 +170,7 @@ primitives (points, lines, boundaries, centroids, isles), see
 <p><span class="caption-number">Fig. 23 </span><span class="caption-text">Vector metadata of imported file.</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
-<p>GRASS GIS is a <strong>topological GIS</strong>. Importing vector data into GRASS also
+<p>GRASS is a <strong>topological GIS</strong>. Importing vector data into GRASS also
 means converting features from simple feature model (points,
 linestrings, polygons, …) into GRASS topological model.</p>
 <figure class="align-center" id="id8">
@@ -180,19 +180,19 @@ linestrings, polygons, …) into GRASS topological model.</p>
 boundaries, centroids, areas, and isles).</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
-<p>Topological errors are checked and repaired by GRASS GIS when
+<p>Topological errors are checked and repaired by GRASS when
 importing data, be awere of <span class="param">snap</span> option of
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.import.html">v.import</a> module. Topological errors which is not possible
+<a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/v.import.html">v.import</a> tool. Topological errors which is not possible
 repair automatically without user specification can fixed using
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.clean.html">v.clean</a> module.</p>
+<a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/v.clean.html">v.clean</a> tool.</p>
 <blockquote>
 <div></div></blockquote>
 </section>
 <section id="linking-external-formats">
 <span id="link-external"></span><h3>Linking external formats<a class="headerlink" href="#linking-external-formats" title="Permalink to this heading">¶</a></h3>
 <p>To avoid data duplication GRASS also allows linking raster data using
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.external.html">r.external</a> (<em>Link external raster data</em>) and vector data
-by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.external.html">v.external</a> (<em>Link external vector data</em>) which are also
+<a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.external.html">r.external</a> (<em>Link external raster data</em>) and vector data
+by <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/v.external.html">v.external</a> (<em>Link external vector data</em>) which are also
 accessible from the toolbar <a class="reference internal" href="../_images/layer-import.png"><img alt="grass-layer-import" src="../_images/layer-import.png" style="width: 1.5em;" /></a> in <span class="item">Data</span> tab.</p>
 <figure class="align-center" id="id9">
 <img alt="../_images/link-data-menu.png" src="../_images/link-data-menu.png" />
@@ -218,7 +218,7 @@ accessibility.</p>
           
           <h3>Table of Contents</h3>
           <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS GIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02.html">Unit 02 - First steps</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Unit 03 - Data Management</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#raster-data">Raster data</a></li>
@@ -226,7 +226,7 @@ accessibility.</p>
 <li class="toctree-l2"><a class="reference internal" href="#notes">Notes</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Modules, Region</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Tools, Region</a></li>
 <li class="toctree-l1"><a class="reference internal" href="05.html">Unit 05 - Raster processing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06.html">Unit 06 - Data export</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07.html">Unit 07 - QGIS loves GRASS</a></li>
@@ -274,7 +274,7 @@ accessibility.</p>
           <div role="navigation" aria-label="related navigaton">
             <a href="02.html" title="Unit 02 - First steps"
               >previous</a> |
-            <a href="04.html" title="Unit 04 - Modules, Region"
+            <a href="04.html" title="Unit 04 - Tools, Region"
               >next</a>
           </div>
           <div role="note" aria-label="source link">
@@ -284,7 +284,7 @@ accessibility.</p>
         <div class="right">
           
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2018-2024 Martin Landa and GISMentors.eu.
+        &#169; Copyright 2018-2026 Martin Landa and GISMentors.eu.
       Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
         </div>

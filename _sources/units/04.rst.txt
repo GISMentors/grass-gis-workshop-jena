@@ -1,44 +1,44 @@
-Unit 04 - Modules, Region
+Unit 04 - Tools, Region
 =========================
 
-.. _grass-modules:
+.. _grass-tools:
 
-Accessing GRASS modules
+Accessing GRASS tools
 -----------------------
 
-GRASS GIS is a **modular system** which consists of several hundreds
-*tools* ("modules" in GRASS terminology). Modules are accessible from
+GRASS is a **modular system** which consists of several hundreds
+*tools* ("tools" in GRASS terminology). Tools are accessible from
 the menu, :item:`Tools` tab, or from command prompt (:item:`Console`
 tab).
 
 Let's find a tool which clips cloud mask vector map by Jena city
 region.
 
-.. figure:: ../images/units/04/modules-tab.png
+.. figure:: ../images/units/04/tools-tab.png
 
    Search for a tool by 'clip' keyword in :item:`Tools` tab. The
-   module which we are looking for is :grasscmd:`v.clip`. Module
+   tool which we are looking for is :grasscmd:`v.clip`. Tool
    dialog can be open by :item:`Run` button.
 
-.. note:: Module :grasscmd:`v.clip` was introduced to GRASS in version
-   7.4.0. In older versions generic :grasscmd:`v.overlay` module can
+.. note:: Tool :grasscmd:`v.clip` was introduced to GRASS in version
+   7.4.0. In older versions generic :grasscmd:`v.overlay` tool can
    be used.
    
-.. figure:: ../images/units/04/modules-cmd.png
+.. figure:: ../images/units/04/tools-cmd.png
 
-   Launching :grasscmd:`v.clip` module from :item:`Console` tab.
+   Launching :grasscmd:`v.clip` tool from :item:`Console` tab.
 
-Tools (modules) can be run from GUI dialogs, from :item:`Console` tab,
+Tools (tools) can be run from GUI dialogs, from :item:`Console` tab,
 or by using Python API (see :doc:`10`). Figure bellow shows GUI dialog
-of :grasscmd:`v.clip` module.
+of :grasscmd:`v.clip` tool.
 
 .. _v-clip:
 
 .. figure:: ../images/units/04/v-clip.png
 
-   GUI dialog for launching :grasscmd:`v.clip` module.
+   GUI dialog for launching :grasscmd:`v.clip` tool.
 
-.. tip:: CLI syntax of modules is shown in GUI dialog statusbar, see
+.. tip:: CLI syntax of tools is shown in GUI dialog statusbar, see
    :numref:`v-clip`. Command can be copied to clipboard by
    :item:`Copy` button for later usage.
 
@@ -52,7 +52,7 @@ The corresponding command for console would be:
 
    Clipped clouds mask by Jena city region.
 
-Each GRASS module starts by a prefix. This prefix groups modules into
+Each GRASS tool starts by a prefix. This prefix groups tools into
 several sections, see table below.
   
 .. cssclass:: border
@@ -103,10 +103,10 @@ north-south). Note that GRASS supports only regular grids.
 .. note:: For 3D raster data (known as "volumes") there is an
    extension to the 3D computation grid.
 
-The great majority of raster processing modules (``r.*``) respect the 
-computational region. There are a few exceptions like import modules
+The great majority of raster processing tools (``r.*``) respect the 
+computational region. There are a few exceptions like import tools
 (eg. :grasscmd:`r.import`). On the other hand, most vector
-processing modules (``v.*``) ignore the computational region completely
+processing tools (``v.*``) ignore the computational region completely
 since there is no computation grid defined for them.
 
 The computational region can be easily set on existing raster or vector
@@ -125,7 +125,7 @@ Current computation region extent is by default visualized in map
 window as **a red rectangle**.
 
 .. tip:: Full flexibility for operating with computational region is allowed
-   via the :grasscmd:`g.region` module (:menuselection:`Settings -->
+   via the :grasscmd:`g.region` tool (:menuselection:`Settings -->
    Computational region --> Set region`). Example below:
 
    .. code-block:: bash

@@ -3,7 +3,7 @@ Unit 08 - Modeler
 
 The **Graphical Modeler** allows creating, editing, and managing complex
 models in an easy-to-use graphical user interface. Using the Graphical
-Modeler, a chain of tools (ie. GRASS modules) can be wrapped
+Modeler, a chain of tools (ie. GRASS tools) can be wrapped
 into one process (a model). A model can be executed repeatedly with
 slightly different inputs or parameters.
 
@@ -16,31 +16,31 @@ perform two operations:
 Graphical Modeler can be launched from menu :menuselection:`File -->
 Graphical modeler` or by |grass-modeler-main| :sup:`Graphical Modeler`
 from the main toolbar (or alternatively as :grasscmd:`g.gui.gmodeler`
-module from console).
+tool from console).
 
 .. figure:: ../images/units/08/gmodeler.png
-
+   :class: large
+           
    Graphical Modeler.
    
 GRASS tools can be added to the model from menu
-:menuselection:`Model --> Add command` or by |grass-module-add|
+:menuselection:`Modeler --> Model --> Add command` or by |grass-module-add|
 :sup:`Add GRASS tool (module) to model` from the main toolbar.
 
-.. figure:: ../images/units/08/add-module.png
-   
-   Add GRASS tool (module) to model, in this case :grasscmd:`r.mask`.
+.. figure:: ../images/units/08/add-tool.png
+
+   Add GRASS tool (tool) to model, in this case :grasscmd:`r.mask`.
 
 .. important:: Graphical Modeler sometimes has a problem with rendering
    the model. In this case it helps to redraw model canvas by
    |grass-redraw| :sup:`Redraw model canvas`.
 
-After adding :grasscmd:`r.mask` module to the model let's open its
+After adding :grasscmd:`r.mask` tool to the model let's open its
 properties dialog by double-click and enter vector map to be used as a
 mask. Don't forget to enable inverse mask by :param:`-i` flag in
 :item:`Create` tab.
 
-.. figure:: ../images/units/08/module-props.png
-   :class: middle
+.. figure:: ../images/units/08/tool-props.png
    
    Define parameters for :grasscmd:`r.mask`, a vector map used for
    creating a mask.
@@ -50,11 +50,12 @@ tool. Properties dialog for this command is open automatically because
 there are required options which must be set.
 
 .. figure:: ../images/units/08/model-v1.png
-
+   :class: middle
+           
    NDVI model version 1.
 
 It's a good idea to set metadata for the model and enable overwriting
-data produced by model (:menuselection:`Model --> Model
+data produced by model (:menuselection:`Modeler --> Model --> Model
 properties`). Resultant NDVI raster map may be also shown
 automatically in the map window.
 
@@ -65,7 +66,8 @@ automatically in the map window.
    model.
 
 .. figure:: ../images/units/08/model-v1-req-display.png
-   
+   :class: middle
+           
    Set the output raster map to be automatically displayed in the map
    window.
    
@@ -73,12 +75,13 @@ Now let's run our model by |grass-execute| :sup:`Run model`. Progress
 is printed into :item:`Command output`.
 
 .. figure:: ../images/units/08/model-v1-output.png
-
+   :class: large
+           
    Model computation progress.
 
 .. figure:: ../images/units/08/model-v1-display.png
    :class: large
-   
+
    NDVI raster map computed by the modeler.
 
 .. task:: Run the model repeatedly using different computation regions.

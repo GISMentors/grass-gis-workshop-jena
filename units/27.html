@@ -131,24 +131,24 @@ Python script in <a class="reference internal" href="26.html"><span class="doc">
 <li><p>New <span class="param">output</span> parameter is defined (<span class="lcode">22-23</span>).</p></li>
 <li><p>New function <code class="docutils literal notranslate"><span class="pre">check_date()</span></code> to validate input dates will be added
 (<span class="lcode">4,404-43,45-45</span>).</p></li>
-<li><p>Output of <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.univar.html">r.univar</a> will be parsed and statistics
+<li><p>Output of <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.univar.html">r.univar</a> will be parsed and statistics
 printed (<span class="lcode">3,68,70-74</span>).</p></li>
 <li><p>The <code class="docutils literal notranslate"><span class="pre">Model</span></code> class (too generic name) is renamed to <code class="docutils literal notranslate"><span class="pre">ModisV1</span></code>
 (<span class="lcode">11,25,82</span>).</p></li>
 </ol>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python3</span>
 
-<span class="hll"><span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">PIPE</span>
-</span><span class="hll"><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="hll"><span class="kn">from</span><span class="w"> </span><span class="nn">subprocess</span><span class="w"> </span><span class="kn">import</span> <span class="n">PIPE</span>
+</span><span class="hll"><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
 </span>
-<span class="kn">from</span> <span class="nn">grass.pygrass.modules</span> <span class="kn">import</span> <span class="n">Module</span>
-<span class="kn">from</span> <span class="nn">grass.script</span> <span class="kn">import</span> <span class="n">parse_key_val</span>
-<span class="kn">from</span> <span class="nn">pywps</span> <span class="kn">import</span> <span class="n">Process</span><span class="p">,</span> <span class="n">LiteralInput</span><span class="p">,</span> <span class="n">LiteralOutput</span><span class="p">,</span> <span class="n">Format</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">grass.pygrass.modules</span><span class="w"> </span><span class="kn">import</span> <span class="n">Module</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">grass.script</span><span class="w"> </span><span class="kn">import</span> <span class="n">parse_key_val</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pywps</span><span class="w"> </span><span class="kn">import</span> <span class="n">Process</span><span class="p">,</span> <span class="n">LiteralInput</span><span class="p">,</span> <span class="n">LiteralOutput</span><span class="p">,</span> <span class="n">Format</span>
 
 
-<span class="hll"><span class="k">class</span> <span class="nc">ModisV1</span><span class="p">(</span><span class="n">Process</span><span class="p">):</span>
+<span class="hll"><span class="k">class</span><span class="w"> </span><span class="nc">ModisV1</span><span class="p">(</span><span class="n">Process</span><span class="p">):</span>
 </span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">inputs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
         <span class="n">outputs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
 
@@ -174,8 +174,8 @@ printed (<span class="lcode">3,68,70-74</span>).</p></li>
             <span class="n">status_supported</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_handler</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
-<span class="hll">        <span class="k">def</span> <span class="nf">check_date</span><span class="p">(</span><span class="n">date_str</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_handler</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+<span class="hll">        <span class="k">def</span><span class="w"> </span><span class="nf">check_date</span><span class="p">(</span><span class="n">date_str</span><span class="p">):</span>
 </span><span class="hll">            <span class="n">d</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">date_str</span><span class="p">,</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
 </span><span class="hll">            <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">year</span> <span class="o">!=</span> <span class="mi">2023</span><span class="p">:</span>
 </span><span class="hll">                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Only year 2023 allowed&quot;</span><span class="p">)</span>
@@ -215,7 +215,7 @@ printed (<span class="lcode">3,68,70-74</span>).</p></li>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">pywps.app.Service</span> <span class="kn">import</span> <span class="n">Service</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">pywps.app.Service</span><span class="w"> </span><span class="kn">import</span> <span class="n">Service</span>
 
 <span class="hll">    <span class="n">processes</span> <span class="o">=</span> <span class="p">[</span><span class="n">ModisV1</span><span class="p">()]</span>
 </span>    <span class="n">application</span> <span class="o">=</span> <span class="n">Service</span><span class="p">(</span><span class="n">processes</span><span class="p">)</span>
@@ -226,17 +226,17 @@ printed (<span class="lcode">3,68,70-74</span>).</p></li>
 input (lines <span class="lcode">17-20</span>) and output parameters (line
 <span class="lcode">22-23</span>) are defined. Every process has its identifier (line
 <span class="lcode">27</span>), title and abstract. The process will operate in GRASS
-location defined on line <span class="lcode">32</span>. On line <span class="lcode">50</span> is assumed
+project defined on line <span class="lcode">32</span>. On line <span class="lcode">50</span> is assumed
 that space time LST dataset is located in PERMANENT, see
 <a class="reference internal" href="25.html"><span class="doc">Unit 25 - MODIS ST</span></a>. For each job (executed process by a client) PyWPS creates
-in this location a temporary mapset which is deleted when process is
+in this project a temporary mapset which is deleted when process is
 finished. Process body is implemented as <code class="docutils literal notranslate"><span class="pre">_handler()</span></code> method, see
 line <span class="lcode">39</span>. Resultant statistics is stored to response output as
 a simple string on line <span class="lcode">74</span>.</p>
 <p>Sample process to download: <a class="reference external" href="../_static/scripts/modis_v1.py">modis_v1.py</a></p>
 <p id="process-import">The process has to be activated in <code class="file docutils literal notranslate"><span class="pre">demo.py</span></code>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">...</span>
-<span class="kn">from</span> <span class="nn">processes.modis_v1</span> <span class="kn">import</span> <span class="n">ModisV1</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">processes.modis_v1</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModisV1</span>
 <span class="o">...</span>
 
 <span class="n">processes</span> <span class="o">=</span> <span class="p">[</span>
@@ -247,14 +247,14 @@ a simple string on line <span class="lcode">74</span>.</p>
 </div>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>In order to use GRASS GIS functionality update PyWPS
+<p>In order to use GRASS functionality update PyWPS
 configuration. Open <code class="file docutils literal notranslate"><span class="pre">pywps.cfg</span></code> and set correct GRASS
 installation directory, eg.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">gisbase</span><span class="o">=</span>/usr/lib/grass84
 </pre></div>
 </div>
 <p>On Windows specify path in Unix-like style:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">gisbase</span><span class="o">=</span>/C/Program<span class="w"> </span>Files/GRASS<span class="w"> </span>GIS<span class="w"> </span><span class="m">8</span>.4
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">gisbase</span><span class="o">=</span>/C/Program<span class="w"> </span>Files/GRASS<span class="w"> </span><span class="m">8</span>.4
 </pre></div>
 </div>
 </div>
@@ -299,10 +299,10 @@ reasonable than a string, eg. <a class="reference external" href="https://en.wik
           
           <h3>Table of Contents</h3>
           <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS GIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02.html">Unit 02 - First steps</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03.html">Unit 03 - Data Management</a></li>
-<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Modules, Region</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Tools, Region</a></li>
 <li class="toctree-l1"><a class="reference internal" href="05.html">Unit 05 - Raster processing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06.html">Unit 06 - Data export</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07.html">Unit 07 - QGIS loves GRASS</a></li>
@@ -363,7 +363,7 @@ reasonable than a string, eg. <a class="reference external" href="https://en.wik
         <div class="right">
           
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2018-2024 Martin Landa and GISMentors.eu.
+        &#169; Copyright 2018-2026 Martin Landa and GISMentors.eu.
       Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
         </div>

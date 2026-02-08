@@ -46,11 +46,11 @@
 Python objects. This unit shows how to deal with GRASS topological
 vector data by PyGRASS API.</p>
 <p>Let’s import <code class="file docutils literal notranslate"><span class="pre">osm/counties.gpkg</span></code> into <em>jena-region</em>
-GRASS location as described in <a class="reference internal" href="03.html"><span class="doc">Unit 03 - Data Management</span></a>. In this case coordinate
+GRASS project as described in <a class="reference internal" href="03.html"><span class="doc">Unit 03 - Data Management</span></a>. In this case coordinate
 reference system (CRS) of input data (<a class="reference external" href="https://epsg.io/3035">EPSG:3035</a>) differs from
 <em>jena-region</em> CRS definition (<a class="reference external" href="https://epsg.io/32632">EPSG:32632</a>). GRASS will apply
 transformation of input data into target CRS provided by the current
-location (<code class="docutils literal notranslate"><span class="pre">Projection</span> <span class="pre">match:</span> <span class="pre">No</span></code>). This operation needs to be
+project (<code class="docutils literal notranslate"><span class="pre">Projection</span> <span class="pre">match:</span> <span class="pre">No</span></code>). This operation needs to be
 confirmed by a user, see <a class="reference internal" href="#confirm-reprojection"><span class="std std-numref">Fig. 78</span></a>.</p>
 <figure class="align-center" id="id1">
 <span id="confirm-reprojection"></span><img alt="../_images/reproject.png" class="small" src="../_images/reproject.png" />
@@ -81,13 +81,13 @@ importing data into GRASS, see <a class="reference internal" href="#import-snap"
 settings</span> tab.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
-<p>Vector data can be treated by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/libpython/pygrass.vector.html#pygrass.vector.Vector">Vector</a> class when
+<p>Vector data can be treated by <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/libpython/pygrass.vector.html#pygrass.vector.Vector">Vector</a> class when
 dealing with basic vector primitives (points, lines, boundaries,
-centroids) or by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/libpython/pygrass.vector.html#pygrass.vector.VectorTopo">VectorTopo</a> which allows accessing
+centroids) or by <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/libpython/pygrass.vector.html#pygrass.vector.VectorTopo">VectorTopo</a> which allows accessing
 topological primitives like areas or isles. See
 <a class="reference internal" href="03.html#vector-topo-section"><span class="std std-ref">Vector topology</span></a> section for details:</p>
 <p>Example below prints county names and area size in hectares.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">grass.pygrass.vector</span> <span class="kn">import</span> <span class="n">VectorTopo</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">grass.pygrass.vector</span><span class="w"> </span><span class="kn">import</span> <span class="n">VectorTopo</span>
 <span class="n">counties</span> <span class="o">=</span> <span class="n">VectorTopo</span><span class="p">(</span><span class="s1">&#39;counties&#39;</span><span class="p">)</span>
 <span class="n">counties</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
 
@@ -118,8 +118,8 @@ topological primitives like areas or isles. See
 created.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python3</span>
 
-<span class="kn">from</span> <span class="nn">grass.pygrass.vector</span> <span class="kn">import</span> <span class="n">VectorTopo</span>
-<span class="kn">from</span> <span class="nn">grass.pygrass.vector.geometry</span> <span class="kn">import</span> <span class="n">Point</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">grass.pygrass.vector</span><span class="w"> </span><span class="kn">import</span> <span class="n">VectorTopo</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">grass.pygrass.vector.geometry</span><span class="w"> </span><span class="kn">import</span> <span class="n">Point</span>
 
 <span class="c1"># create the columns definition</span>
 <span class="n">cols</span> <span class="o">=</span> <span class="p">[(</span><span class="sa">u</span><span class="s1">&#39;cat&#39;</span><span class="p">,</span>   <span class="s1">&#39;INTEGER PRIMARY KEY&#39;</span><span class="p">),</span>
@@ -146,7 +146,7 @@ section in <a class="reference internal" href="03.html"><span class="doc">Unit 0
 <p>Sample script below prints for each county number of its neighbours.</p>
 <ol class="arabic simple">
 <li><p>Vector map <span class="map">counties</span> is open on line <span class="lcode">3</span> by
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/libpython/pygrass.vector.html#pygrass.vector.VectorTopo">VectorTopo</a> and its method <code class="docutils literal notranslate"><span class="pre">open()</span></code>.</p></li>
+<a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/libpython/pygrass.vector.html#pygrass.vector.VectorTopo">VectorTopo</a> and its method <code class="docutils literal notranslate"><span class="pre">open()</span></code>.</p></li>
 <li><p>Topological primitives (areas in this case) are sequentially read by <code class="docutils literal notranslate"><span class="pre">for</span></code> loop
 on line <span class="lcode">6</span>. Areas are interated by <code class="docutils literal notranslate"><span class="pre">viter()</span></code> function.</p></li>
 <li><p>For each county its boudaries are looped, see line <span class="lcode">8</span>. Each
@@ -155,7 +155,7 @@ side (<code class="docutils literal notranslate"><span class="pre">-1</span></co
 </ol>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="ch">#!/usr/bin/env python3</span>
 <span class="linenos"> 2</span>
-<span class="hll"><span class="linenos"> 3</span><span class="kn">from</span> <span class="nn">grass.pygrass.vector</span> <span class="kn">import</span> <span class="n">VectorTopo</span>
+<span class="hll"><span class="linenos"> 3</span><span class="kn">from</span><span class="w"> </span><span class="nn">grass.pygrass.vector</span><span class="w"> </span><span class="kn">import</span> <span class="n">VectorTopo</span>
 </span><span class="hll"><span class="linenos"> 4</span>
 </span><span class="linenos"> 5</span><span class="n">counties</span> <span class="o">=</span> <span class="n">VectorTopo</span><span class="p">(</span><span class="s1">&#39;counties&#39;</span><span class="p">)</span>
 <span class="hll"><span class="linenos"> 6</span><span class="n">counties</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
@@ -199,10 +199,10 @@ county.</p>
           
           <h3>Table of Contents</h3>
           <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS GIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02.html">Unit 02 - First steps</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03.html">Unit 03 - Data Management</a></li>
-<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Modules, Region</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Tools, Region</a></li>
 <li class="toctree-l1"><a class="reference internal" href="05.html">Unit 05 - Raster processing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06.html">Unit 06 - Data export</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07.html">Unit 07 - QGIS loves GRASS</a></li>
@@ -264,7 +264,7 @@ county.</p>
         <div class="right">
           
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2018-2024 Martin Landa and GISMentors.eu.
+        &#169; Copyright 2018-2026 Martin Landa and GISMentors.eu.
       Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
         </div>

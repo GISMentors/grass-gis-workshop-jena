@@ -50,13 +50,13 @@ EU-DEM tiles covers large regions (4GB per tile).</p>
 <p>Note that a new Copernicus DEM product is available at
 <a class="reference external" href="https://spacedata.copernicus.eu/collections/copernicus-digital-elevation-model">Copernicus Contributing Missions Online</a>.</p>
 </div>
-<p>Normally <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.import.html">r.import</a> could be used to import and
-automatically reproject data into target location. In our case there
+<p>Normally <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.import.html">r.import</a> could be used to import and
+automatically reproject data into target project. In our case there
 is no need to import into GRASS a whole big DEM tile. By using <code class="docutils literal notranslate"><span class="pre">-r</span></code>
-flag of <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.in.gdal.html">r.in.gdal</a> GRASS module only a subregion covering
-AOI can be imported. Unfortunately <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.import.html">r.import</a> do not offer
+flag of <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.in.gdal.html">r.in.gdal</a> GRASS tool only a subregion covering
+AOI can be imported. Unfortunately <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.import.html">r.import</a> do not offer
 such flag. This is a reason why data will be reprojected
-manually. Input data will be imported into a new location
+manually. Input data will be imported into a new project
 (ETRS89-extended / LAEA Europe <a class="reference external" href="https://epsg.io/3035">EPSG:3035</a>). In the next step
 imported data will be reprojected into target <em>jena-region</em>
 (WGS 84 / UTM zone 32N <a class="reference external" href="https://epsg.io/32632">EPSG:32632</a>).</p>
@@ -66,28 +66,28 @@ imported data will be reprojected into target <em>jena-region</em>
 clipped by larger region than Jena AOI. Modified tile is available
 from <code class="file docutils literal notranslate"><span class="pre">eu-dem</span></code> directory.</p>
 </div>
-<section id="create-location-for-data-import">
-<h2>Create location for data import<a class="headerlink" href="#create-location-for-data-import" title="Permalink to this heading">¶</a></h2>
+<section id="create-project-for-data-import">
+<h2>Create project for data import<a class="headerlink" href="#create-project-for-data-import" title="Permalink to this heading">¶</a></h2>
 <p>EU-DEM dataset is provided in ETRS89-extended / LAEA Europe
-(<a class="reference external" href="https://epsg.io/3035">EPSG:3035</a>). Start a new GRASS session and create a new location
+(<a class="reference external" href="https://epsg.io/3035">EPSG:3035</a>). Start a new GRASS session and create a new project
 <em>jena-eu-dem</em> based on input <code class="file docutils literal notranslate"><span class="pre">eu-dem/dem_sample.tif</span></code>
-file as described in <a class="reference internal" href="02.html#create-location"><span class="std std-ref">Unit 02</span></a>) or from EPSG code.</p>
+file as described in <a class="reference internal" href="02.html#create-project"><span class="std std-ref">Unit 02</span></a>) or from EPSG code.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>Skip data import provided by
-location wizard since only subregion defined by Jena city region is
+project wizard since only subregion defined by Jena city region is
 planned to be imported.</p>
 </div>
-<p>Enter new location (PERMANENT mapset) and copy (ie. reproject)
-<span class="map">jena_boundary</span> into the current location.</p>
+<p>Enter new project (PERMANENT mapset) and copy (ie. reproject)
+<span class="map">jena_boundary</span> into the current project.</p>
 <figure class="align-center" id="data-reproject-fig">
-<img alt="../_images/data-reproject.png" class="middle" src="../_images/data-reproject.png" />
+<img alt="../_images/data-reproject.png" src="../_images/data-reproject.png" />
 </figure>
 <figure class="align-center" id="id1">
-<img alt="../_images/data-reproject-1.png" class="middle" src="../_images/data-reproject-1.png" />
+<img alt="../_images/data-reproject-1.png" src="../_images/data-reproject-1.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 81 </span><span class="caption-text">Copy <span class="map">jena_boundary</span> vector map from <cite>jena-region</cite> location
-(<a class="reference external" href="https://epsg.io/32632">EPSG:32632</a>) to the current location (<a class="reference external" href="https://epsg.io/3035">EPSG:3035</a>).</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 81 </span><span class="caption-text">Copy <span class="map">jena_boundary</span> vector map from <cite>jena-region</cite> project
+(<a class="reference external" href="https://epsg.io/32632">EPSG:32632</a>) to the current project (<a class="reference external" href="https://epsg.io/3035">EPSG:3035</a>).</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <figure class="align-center" id="id2">
@@ -98,8 +98,8 @@ planned to be imported.</p>
 </figure>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The same operation can be done by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.proj.html">v.proj</a>:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>v.proj<span class="w"> </span><span class="nv">location</span><span class="o">=</span>jena-region<span class="w"> </span><span class="nv">mapset</span><span class="o">=</span>PERMANENT<span class="w"> </span><span class="nv">input</span><span class="o">=</span>jena_boundary
+<p>The same operation can be done by <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/v.proj.html">v.proj</a>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>v.proj<span class="w"> </span><span class="nv">project</span><span class="o">=</span>jena-region<span class="w"> </span><span class="nv">mapset</span><span class="o">=</span>PERMANENT<span class="w"> </span><span class="nv">input</span><span class="o">=</span>jena_boundary
 </pre></div>
 </div>
 </div>
@@ -111,7 +111,7 @@ reprojected Jena city region.</p>
 <p><span class="caption-number">Fig. 83 </span><span class="caption-text">Set computational region extent based on Jena city region.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
-<p>Launch <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.in.gdal.html">r.in.gdal</a> (<span class="menuselection">File ‣ Import raster
+<p>Launch <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.in.gdal.html">r.in.gdal</a> (<span class="menuselection">File ‣ Import raster
 data ‣ Import of common raster formats</span>) to import DEM tile, don’t
 forget to enable <code class="xref std std-option docutils literal notranslate"><span class="pre">-r</span></code> flag.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.in.gdal<span class="w"> </span>-r<span class="w"> </span><span class="nv">input</span><span class="o">=</span>geodata/eu-dem/dem_sample.tif<span class="w"> </span><span class="nv">output</span><span class="o">=</span>dem
@@ -125,17 +125,17 @@ forget to enable <code class="xref std std-option docutils literal notranslate">
 </figcaption>
 </figure>
 </section>
-<section id="reproject-dem-into-target-location">
-<h2>Reproject DEM into target location<a class="headerlink" href="#reproject-dem-into-target-location" title="Permalink to this heading">¶</a></h2>
-<p>Now switch back to <em>jena-region</em> (target) location (PERMANENT mapset).</p>
+<section id="reproject-dem-into-target-project">
+<h2>Reproject DEM into target project<a class="headerlink" href="#reproject-dem-into-target-project" title="Permalink to this heading">¶</a></h2>
+<p>Now switch back to <em>jena-region</em> (target) project (PERMANENT mapset).</p>
 <figure class="align-center" id="id5">
-<span id="switch-location"></span><img alt="../_images/switch-location.png" class="middle" src="../_images/switch-location.png" />
+<span id="switch-project"></span><img alt="../_images/switch-project.png" src="../_images/switch-project.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 85 </span><span class="caption-text">Switch to jena-region location and PERMANENT mapset from
+<p><span class="caption-number">Fig. 85 </span><span class="caption-text">Switch to jena-region project and PERMANENT mapset from
 <span class="item">Data</span> tab.</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
-<p>Reproject DEM from <em>jena-eu-dem</em> location by copying in <span class="item">Data</span>
+<p>Reproject DEM from <em>jena-eu-dem</em> project by copying in <span class="item">Data</span>
 tab. Set desired resolution (25m) and choose appropriate resampling
 method (in our case <em>bilinear</em>).</p>
 <div class="admonition note">
@@ -152,8 +152,8 @@ resampling method.</span><a class="headerlink" href="#id6" title="Permalink to t
 </figure>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The same operation can be done by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.proj.html">r.proj</a>:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.proj<span class="w"> </span><span class="nv">location</span><span class="o">=</span>jena-eu-dem<span class="w"> </span><span class="nv">mapset</span><span class="o">=</span>PERMANENT<span class="w"> </span><span class="nv">input</span><span class="o">=</span>dem<span class="w"> </span><span class="nv">method</span><span class="o">=</span>bilinear<span class="w"> </span><span class="nv">resolution</span><span class="o">=</span><span class="m">25</span>
+<p>The same operation can be done by <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.proj.html">r.proj</a>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.proj<span class="w"> </span><span class="nv">project</span><span class="o">=</span>jena-eu-dem<span class="w"> </span><span class="nv">mapset</span><span class="o">=</span>PERMANENT<span class="w"> </span><span class="nv">input</span><span class="o">=</span>dem<span class="w"> </span><span class="nv">method</span><span class="o">=</span>bilinear<span class="w"> </span><span class="nv">resolution</span><span class="o">=</span><span class="m">25</span>
 </pre></div>
 </div>
 </div>
@@ -176,10 +176,10 @@ resampling method.</span><a class="headerlink" href="#id6" title="Permalink to t
           
           <h3>Table of Contents</h3>
           <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS GIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02.html">Unit 02 - First steps</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03.html">Unit 03 - Data Management</a></li>
-<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Modules, Region</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Tools, Region</a></li>
 <li class="toctree-l1"><a class="reference internal" href="05.html">Unit 05 - Raster processing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06.html">Unit 06 - Data export</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07.html">Unit 07 - QGIS loves GRASS</a></li>
@@ -191,8 +191,8 @@ resampling method.</span><a class="headerlink" href="#id6" title="Permalink to t
 <li class="toctree-l1"><a class="reference internal" href="13.html">Unit 13 - PyGRASS Raster Access</a></li>
 <li class="toctree-l1"><a class="reference internal" href="14.html">Unit 14 - PyGRASS Vector Access</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Unit 15 - Data reprojection</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#create-location-for-data-import">Create location for data import</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#reproject-dem-into-target-location">Reproject DEM into target location</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#create-project-for-data-import">Create project for data import</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#reproject-dem-into-target-project">Reproject DEM into target project</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="16.html">Unit 16 - Flooding simulation</a></li>
@@ -241,7 +241,7 @@ resampling method.</span><a class="headerlink" href="#id6" title="Permalink to t
         <div class="right">
           
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2018-2024 Martin Landa and GISMentors.eu.
+        &#169; Copyright 2018-2026 Martin Landa and GISMentors.eu.
       Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
         </div>

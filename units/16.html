@@ -74,11 +74,11 @@ dataset as <code class="file docutils literal notranslate"><span class="pre">osm
 <p><span class="caption-number">Fig. 88 </span><span class="caption-text">DEM, Jena boundary and rivers provided by OSM.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
-<p>Flooding can be easily simulated by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.lake.html">r.lake</a> module which
+<p>Flooding can be easily simulated by <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.lake.html">r.lake</a> tool which
 fills a lake to a target water level from a given start point or seed
 raster. The resulting raster map contains cells with values
 representing lake depth (NULL for all other cells beyond the lake).</p>
-<p>The <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.lake.html">r.lake</a> requires seeds coordinates and water level to
+<p>The <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.lake.html">r.lake</a> requires seeds coordinates and water level to
 be defined. The coordinates can be set also interactively as
 <a class="reference internal" href="#r-lake-coord"><span class="std std-numref">Fig. 89</span></a> shows.</p>
 <figure class="align-center" id="id2">
@@ -89,8 +89,8 @@ be defined. The coordinates can be set also interactively as
 </figure>
 <p>Height of seed point can be determined by querying DEM map layer
 <a class="reference internal" href="../_images/info.png"><img alt="grass-info" src="../_images/info.png" style="width: 1.5em;" /></a> <sup>Query raster/vector map(s)</sup> from Map Display
-toolbar (see <a class="reference internal" href="#dem-what"><span class="std std-numref">Fig. 90</span></a>) or directly using <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.what.html">r.what</a>
-module:</p>
+toolbar (see <a class="reference internal" href="#dem-what"><span class="std std-numref">Fig. 90</span></a>) or directly using <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.what.html">r.what</a>
+tool:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.what<span class="w"> </span><span class="nv">map</span><span class="o">=</span>dem<span class="w"> </span><span class="nv">coordinates</span><span class="o">=</span><span class="m">681734</span>,5644423
 </pre></div>
 </div>
@@ -108,15 +108,15 @@ module:</p>
 </figure>
 <div class="admonition note" id="create-mapset">
 <p class="admonition-title">Note</p>
-<p>Before running <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.lake.html">r.lake</a> let’s start <strong>organizing
+<p>Before running <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.lake.html">r.lake</a> let’s start <strong>organizing
 our work</strong>. Till now we used PERMANENT mapsets only. There is input
 data like DEM, Jena city region, cloud mask vector map, Sentinel
 bands, results of NDVI computation and so on. Data organization can
 be improved by using multiple mapsets. Let’s create a new mapset
-<em>flooding</em> in the current location <em>jena-region</em>. New mapset from
-<span class="item">Data</span> tab or by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/g.mapset.html">g.mapset</a> module.</p>
+<em>flooding</em> in the current project <em>jena-region</em>. New mapset from
+<span class="item">Data</span> tab or by <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/g.mapset.html">g.mapset</a> tool.</p>
 <figure class="align-center" id="id5">
-<img alt="../_images/create_mapset.png" class="middle" src="../_images/create_mapset.png" />
+<img alt="../_images/create_mapset.png" src="../_images/create_mapset.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 92 </span><span class="caption-text">Create a new mapset in <span class="item">Data</span> tab.</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
 </figcaption>
@@ -154,10 +154,10 @@ based on <span class="map">dem</span> raster map.</p>
           
           <h3>Table of Contents</h3>
           <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS GIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02.html">Unit 02 - First steps</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03.html">Unit 03 - Data Management</a></li>
-<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Modules, Region</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Tools, Region</a></li>
 <li class="toctree-l1"><a class="reference internal" href="05.html">Unit 05 - Raster processing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06.html">Unit 06 - Data export</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07.html">Unit 07 - QGIS loves GRASS</a></li>
@@ -215,7 +215,7 @@ based on <span class="map">dem</span> raster map.</p>
         <div class="right">
           
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2018-2024 Martin Landa and GISMentors.eu.
+        &#169; Copyright 2018-2026 Martin Landa and GISMentors.eu.
       Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
         </div>

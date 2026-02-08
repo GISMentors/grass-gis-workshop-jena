@@ -42,21 +42,21 @@
             
   <section id="unit-07-qgis-loves-grass">
 <h1>Unit 07 - QGIS loves GRASS<a class="headerlink" href="#unit-07-qgis-loves-grass" title="Permalink to this heading">¶</a></h1>
-<p>Let’s step out of the GRASS GIS environment for a moment. <a class="reference external" href="http://qgis.org">QGIS</a> is a very popular open source GIS package which
+<p>Let’s step out of the GRASS environment for a moment. <a class="reference external" href="http://qgis.org">QGIS</a> is a very popular open source GIS package which
 made a significant progress in the last years. Nowadays it’s used in
 education, academic environment, but also in commercial settings. In
 2002 QGIS started a multiplatform viewer for geospatial data. In the
 recent years QGIS made important steps for being analytical
 tool. Beside native algoritms QGIS offers also connection to
-third-party software packages as SAGA, Orfeo or GRASS GIS. GRASS tools
+third-party software packages as SAGA, Orfeo or GRASS. GRASS tools
 can be run directly from QGIS enviroment without starting GRASS
 explicitly.</p>
-<p>Data produced by GRASS GIS may be easily accessed directly from
+<p>Data produced by GRASS may be easily accessed directly from
 <span class="item">Browser</span> tab.</p>
 <figure class="align-center" id="id1">
 <img alt="../_images/qgis-display-grass-data.png" class="middle" src="../_images/qgis-display-grass-data.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 42 </span><span class="caption-text">Show data produced by GRASS GIS in QGIS environment.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 42 </span><span class="caption-text">Show data produced by GRASS in QGIS environment.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <div class="admonition note">
@@ -71,7 +71,7 @@ symbology may be fixed in <span class="item">Properties</span> dialog.</p>
 </figure>
 </div>
 <p>It is also possible to run GRASS tools from <strong>Processing</strong> plugin.</p>
-<p>Let’s compute NDVI as described in <a class="reference internal" href="05.html"><span class="doc">Unit 05 - Raster processing</span></a> using <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/i.vi.html">i.vi</a>
+<p>Let’s compute NDVI as described in <a class="reference internal" href="05.html"><span class="doc">Unit 05 - Raster processing</span></a> using <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/i.vi.html">i.vi</a>
 GRASS tool, but in this case directly from QGIS UI. Load into QGIS
 input data: Jena city region (<code class="file docutils literal notranslate"><span class="pre">osm/jena_boundary.gpkg</span></code>)
 and Sentinel bands (red and near-infrared channels) from
@@ -87,11 +87,11 @@ and Sentinel bands (red and near-infrared channels) from
 <p>Processing plugin is a generic toolbox which allows to run tools
 provided by QGIS or third-party software packages like eg. GRASS. Let’s
 open <span class="menuselection">Processing ‣ Toolbox</span> and search for
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/i.vi.html">i.vi</a> GRASS module.</p>
+<a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/i.vi.html">i.vi</a> GRASS tool.</p>
 <figure class="align-center" id="id4">
 <img alt="../_images/processing-i-vi.png" class="small" src="../_images/processing-i-vi.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 45 </span><span class="caption-text">Search for <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/i.vi.html">i.vi</a> GRASS module in Processing toolbox.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 45 </span><span class="caption-text">Search for <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/i.vi.html">i.vi</a> GRASS tool in Processing toolbox.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <figure class="align-center" id="id5">
@@ -102,17 +102,17 @@ be optionally defined in <span class="item">Advanced parameters</span> section.<
 </figcaption>
 </figure>
 <p><a class="reference internal" href="#processing-i-vi-running"><span class="std std-numref">Fig. 47</span></a> shows how Processing plugin
-works. First of all a temporary GRASS location is created by
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/g.proj.html">g.proj</a>, input data is linked into temporary location by
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.external.html">r.external</a>. Then computation can finally starts by running
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/i.vi.html">i.vi</a> module. In the last step output data is exported out
-of GRASS using <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.out.gdal.html">r.out.gdal</a>. The resultant GeoTiff file is
+works. First of all a temporary GRASS project is created by
+<a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/g.proj.html">g.proj</a>, input data is linked into temporary project by
+<a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.external.html">r.external</a>. Then computation can finally starts by running
+<a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/i.vi.html">i.vi</a> tool. In the last step output data is exported out
+of GRASS using <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.out.gdal.html">r.out.gdal</a>. The resultant GeoTiff file is
 vizualized in QGIS map window.</p>
 <figure class="align-center" id="id6">
 <span id="processing-i-vi-running"></span><img alt="../_images/processing-i-vi-running.png" src="../_images/processing-i-vi-running.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 47 </span><span class="caption-text">Running <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/i.vi.html">i.vi</a> tool and exporting result from GRASS
-temporary location.</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 47 </span><span class="caption-text">Running <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/i.vi.html">i.vi</a> tool and exporting result from GRASS
+temporary project.</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <figure class="align-center" id="id7">
@@ -135,10 +135,10 @@ color interpretation than grayscale). No clouds mask involved.</span><a class="h
           
           <h3>Table of Contents</h3>
           <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS GIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02.html">Unit 02 - First steps</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03.html">Unit 03 - Data Management</a></li>
-<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Modules, Region</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Tools, Region</a></li>
 <li class="toctree-l1"><a class="reference internal" href="05.html">Unit 05 - Raster processing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06.html">Unit 06 - Data export</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Unit 07 - QGIS loves GRASS</a><ul>
@@ -199,7 +199,7 @@ color interpretation than grayscale). No clouds mask involved.</span><a class="h
         <div class="right">
           
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2018-2024 Martin Landa and GISMentors.eu.
+        &#169; Copyright 2018-2026 Martin Landa and GISMentors.eu.
       Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
         </div>

@@ -69,7 +69,7 @@ enough.</p>
 have any just use GRASS-integrated Python editor <a class="reference internal" href="../_images/python.png"><img alt="grass-python" src="../_images/python.png" style="width: 1.5em;" /></a> <sub>Open
 a simple Python code editor</sub>.</p>
 <figure class="align-center" id="id3">
-<img alt="../_images/editor.png" src="../_images/editor.png" />
+<img alt="../_images/editor.png" class="middle" src="../_images/editor.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 71 </span><span class="caption-text">Simple GRASS Python code editor in action.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </figcaption>
@@ -90,8 +90,8 @@ crucial for Python syntax) as described in <a class="reference internal" href="1
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Import also relevant function</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">PIPE</span>
-<span class="kn">from</span> <span class="nn">grass.script</span> <span class="kn">import</span> <span class="n">parser</span><span class="p">,</span> <span class="n">parse_key_val</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">subprocess</span><span class="w"> </span><span class="kn">import</span> <span class="n">PIPE</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">grass.script</span><span class="w"> </span><span class="kn">import</span> <span class="n">parser</span><span class="p">,</span> <span class="n">parse_key_val</span>
 </pre></div>
 </div>
 </div>
@@ -105,7 +105,7 @@ in <span class="item">Console</span> tab.</span><a class="headerlink" href="#id4
 <section id="statistics">
 <h2>Statistics<a class="headerlink" href="#statistics" title="Permalink to this heading">¶</a></h2>
 <p>Let’s add additional NDVI classes statistics computed by
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.stats.html">r.stats</a>:</p>
+<a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.stats.html">r.stats</a>:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.stats<span class="w"> </span>-ian<span class="w"> </span><span class="nv">input</span><span class="o">=</span>ndvi_class_filled
 </pre></div>
 </div>
@@ -122,16 +122,16 @@ in <span class="item">Console</span> tab.</span><a class="headerlink" href="#id4
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;NDVI class </span><span class="si">{0}</span><span class="s1">: </span><span class="si">{1:.1f}</span><span class="s1"> ha&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cat</span><span class="p">,</span> <span class="n">area</span><span class="o">/</span><span class="mf">1e4</span><span class="p">))</span> 
 </pre></div>
 </div>
-<p>Output of <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.stats.html">r.stats</a> module need to be parsed. Unfortunately
+<p>Output of <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.stats.html">r.stats</a> tool need to be parsed. Unfortunately
 the command does not offer a shell script output similarly to
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.univar.html">r.univar</a>. This may be solved by Python functions like
+<a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.univar.html">r.univar</a>. This may be solved by Python functions like
 <code class="docutils literal notranslate"><span class="pre">splitlines()</span></code> and <code class="docutils literal notranslate"><span class="pre">split()</span></code>.</p>
 <p>Additionally let’s compute also zonal statistics (min, max, mean) for each NDVI
-class. This could be computed by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.stats.zonal.html">r.stats.zonal</a> for each
-object-based statistic (min, max, mean). Alternatively raster classes may be converted to vector by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.to.vect.html">r.to.vect</a> and statistics may be computed by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.rast.stats.html">v.rast.stats</a> as shown below.</p>
+class. This could be computed by <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.stats.zonal.html">r.stats.zonal</a> for each
+object-based statistic (min, max, mean). Alternatively raster classes may be converted to vector by <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.to.vect.html">r.to.vect</a> and statistics may be computed by <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/v.rast.stats.html">v.rast.stats</a> as shown below.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Unfortunately <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.grow.distance.html">r.grow.distance</a>
+<p>Unfortunately <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.grow.distance.html">r.grow.distance</a>
 is producing floating-point (DCELL) raster data by default. So first,
 let’s convert <span class="map">ndvi_class_filled</span> from floating-point (DCELL) to
 integer.</p>
@@ -182,7 +182,7 @@ NDVI class 3: -0.6094 (min) 0.9997 (max) 0.7740 (mean)
 <p class="admonition-title">Task</p>
 <p>In order to simplify testing and improve code readability
 split code into two Python functions: <code class="docutils literal notranslate"><span class="pre">compute()</span></code> and <code class="docutils literal notranslate"><span class="pre">stats()</span></code>.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">options</span><span class="p">,</span> <span class="n">flags</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">options</span><span class="p">,</span> <span class="n">flags</span><span class="p">):</span>
     <span class="n">compute</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
     <span class="n">stats</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
 
@@ -210,10 +210,10 @@ and filling holes by adjacent class.</p>
           
           <h3>Table of Contents</h3>
           <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS GIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02.html">Unit 02 - First steps</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03.html">Unit 03 - Data Management</a></li>
-<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Modules, Region</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Tools, Region</a></li>
 <li class="toctree-l1"><a class="reference internal" href="05.html">Unit 05 - Raster processing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06.html">Unit 06 - Data export</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07.html">Unit 07 - QGIS loves GRASS</a></li>
@@ -274,7 +274,7 @@ and filling holes by adjacent class.</p>
         <div class="right">
           
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2018-2024 Martin Landa and GISMentors.eu.
+        &#169; Copyright 2018-2026 Martin Landa and GISMentors.eu.
       Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
         </div>

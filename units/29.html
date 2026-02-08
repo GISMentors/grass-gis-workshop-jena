@@ -45,12 +45,12 @@
 <p>A third version of the process will return LST statistics for region
 in Germany defined by input vector (polygon) data. Input area of
 interest is defined as <code class="docutils literal notranslate"><span class="pre">region</span></code> <code class="docutils literal notranslate"><span class="pre">ComplexInput</span></code> parameter
-(<span class="lcode">9,18-21</span>) and imported by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.import.html">v.import</a> (line
+(<span class="lcode">9,18-21</span>) and imported by <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/v.import.html">v.import</a> (line
 <span class="lcode">53</span>), resultant statistics is computed similarly as in process
-verion 1 (<a class="reference internal" href="27.html"><span class="doc">Unit 27 - PyWPS intro</span></a>) by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/t.rast.series.html">t.rast.series</a> (line <span class="lcode">59</span>)
-and <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.univar.html">r.univar</a> (line <span class="lcode">72</span>). Before computation the
-computational region and mask is set by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/g.region.html">g.region</a>
-(<span class="lcode">56</span>) and <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.mask.html">r.mask</a> (<span class="lcode">57</span>). Statistics is
+verion 1 (<a class="reference internal" href="27.html"><span class="doc">Unit 27 - PyWPS intro</span></a>) by <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/t.rast.series.html">t.rast.series</a> (line <span class="lcode">59</span>)
+and <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.univar.html">r.univar</a> (line <span class="lcode">72</span>). Before computation the
+computational region and mask is set by <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/g.region.html">g.region</a>
+(<span class="lcode">56</span>) and <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.mask.html">r.mask</a> (<span class="lcode">57</span>). Statistics is
 provided in JSON structure similary to process version 2 (<a class="reference internal" href="28.html"><span class="doc">Unit 28 - PyWPS LST point stats</span></a>)
 on line <span class="lcode">83</span>.</p>
 <p>Note that also class name (<span class="lcode">30</span>), process identifier
@@ -58,18 +58,18 @@ on line <span class="lcode">83</span>.</p>
 (<span class="lcode">39</span>) needs to be updated.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python3</span>
 
-<span class="kn">import</span> <span class="nn">json</span> 
-<span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">PIPE</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span> 
+<span class="kn">from</span><span class="w"> </span><span class="nn">subprocess</span><span class="w"> </span><span class="kn">import</span> <span class="n">PIPE</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
 
-<span class="kn">from</span> <span class="nn">grass.pygrass.modules</span> <span class="kn">import</span> <span class="n">Module</span>
-<span class="kn">from</span> <span class="nn">grass.script</span> <span class="kn">import</span> <span class="n">parse_key_val</span>
-<span class="hll"><span class="kn">from</span> <span class="nn">pywps</span> <span class="kn">import</span> <span class="n">Process</span><span class="p">,</span> <span class="n">LiteralInput</span><span class="p">,</span> <span class="n">ComplexInput</span><span class="p">,</span> <span class="n">ComplexOutput</span><span class="p">,</span> <span class="n">Format</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">grass.pygrass.modules</span><span class="w"> </span><span class="kn">import</span> <span class="n">Module</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">grass.script</span><span class="w"> </span><span class="kn">import</span> <span class="n">parse_key_val</span>
+<span class="hll"><span class="kn">from</span><span class="w"> </span><span class="nn">pywps</span><span class="w"> </span><span class="kn">import</span> <span class="n">Process</span><span class="p">,</span> <span class="n">LiteralInput</span><span class="p">,</span> <span class="n">ComplexInput</span><span class="p">,</span> <span class="n">ComplexOutput</span><span class="p">,</span> <span class="n">Format</span>
 </span>
 
-<span class="k">class</span> <span class="nc">ModisV3</span><span class="p">(</span><span class="n">Process</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ModisV3</span><span class="p">(</span><span class="n">Process</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">inputs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
         <span class="n">outputs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
 
@@ -99,8 +99,8 @@ on line <span class="lcode">83</span>.</p>
             <span class="n">status_supported</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_handler</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
-        <span class="k">def</span> <span class="nf">check_date</span><span class="p">(</span><span class="n">date_str</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_handler</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">check_date</span><span class="p">(</span><span class="n">date_str</span><span class="p">):</span>
             <span class="n">d</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">date_str</span><span class="p">,</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">year</span> <span class="o">!=</span> <span class="mi">2023</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Only year 2023 allowed&quot;</span><span class="p">)</span>
@@ -144,7 +144,7 @@ on line <span class="lcode">83</span>.</p>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">pywps.app.Service</span> <span class="kn">import</span> <span class="n">Service</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">pywps.app.Service</span><span class="w"> </span><span class="kn">import</span> <span class="n">Service</span>
 
     <span class="n">processes</span> <span class="o">=</span> <span class="p">[</span><span class="n">ModisV3</span><span class="p">()]</span>
     <span class="n">application</span> <span class="o">=</span> <span class="n">Service</span><span class="p">(</span><span class="n">processes</span><span class="p">)</span>
@@ -176,10 +176,10 @@ execute the process.</p>
           
           <h3>Table of Contents</h3>
           <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS GIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02.html">Unit 02 - First steps</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03.html">Unit 03 - Data Management</a></li>
-<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Modules, Region</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Tools, Region</a></li>
 <li class="toctree-l1"><a class="reference internal" href="05.html">Unit 05 - Raster processing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06.html">Unit 06 - Data export</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07.html">Unit 07 - QGIS loves GRASS</a></li>
@@ -237,7 +237,7 @@ execute the process.</p>
         <div class="right">
           
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2018-2024 Martin Landa and GISMentors.eu.
+        &#169; Copyright 2018-2026 Martin Landa and GISMentors.eu.
       Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
         </div>

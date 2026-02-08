@@ -45,10 +45,10 @@
 <p>PyGRASS allows to access GRASS raster and vector maps in the sense of
 Python objects. This unit shows how to deal with GRASS raster data by
 PyGRASS API.</p>
-<p>Raster map can be treated by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/libpython/pygrass.raster.html#pygrass.raster.RasterRow">RasterRow</a> for reading
-raster data row by row. There is also <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/libpython/pygrass.raster.html#pygrass.raster.RasterSegment">RasterSegment</a>
+<p>Raster map can be treated by <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/libpython/pygrass.raster.html#pygrass.raster.RasterRow">RasterRow</a> for reading
+raster data row by row. There is also <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/libpython/pygrass.raster.html#pygrass.raster.RasterSegment">RasterSegment</a>
 which allows reading data by user-defined segments (tiles).</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">grass.pygrass.raster</span> <span class="kn">import</span> <span class="n">RasterRow</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">grass.pygrass.raster</span><span class="w"> </span><span class="kn">import</span> <span class="n">RasterRow</span>
 
 <span class="n">ndvi</span> <span class="o">=</span> <span class="n">RasterRow</span><span class="p">(</span><span class="s1">&#39;ndvi&#39;</span><span class="p">)</span>
 <span class="n">ndvi</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
@@ -79,9 +79,9 @@ range.</p>
 statistics below.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python3</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span>
 
-<span class="kn">from</span> <span class="nn">grass.pygrass.raster</span> <span class="kn">import</span> <span class="n">RasterRow</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">grass.pygrass.raster</span><span class="w"> </span><span class="kn">import</span> <span class="n">RasterRow</span>
 
 <span class="n">ndvi</span> <span class="o">=</span> <span class="n">RasterRow</span><span class="p">(</span><span class="s1">&#39;ndvi&#39;</span><span class="p">)</span>
 <span class="n">ndvi</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
@@ -113,9 +113,9 @@ statistics below.</p>
 <p>Optimized version based on <a class="reference external" href="https://numpy.org">NumPy</a> library:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python3</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span>
 
-<span class="kn">from</span> <span class="nn">grass.pygrass.raster</span> <span class="kn">import</span> <span class="n">RasterRow</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">grass.pygrass.raster</span><span class="w"> </span><span class="kn">import</span> <span class="n">RasterRow</span>
 
 <span class="n">ndvi</span> <span class="o">=</span> <span class="n">RasterRow</span><span class="p">(</span><span class="s1">&#39;ndvi&#39;</span><span class="p">)</span>
 <span class="n">ndvi</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
@@ -132,7 +132,7 @@ statistics below.</p>
 <div class="task admonition">
 <p class="admonition-title">Task</p>
 <p>Compare computation speed of two sample scripts with C-based
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.univar.html">r.univar</a> module.</p>
+<a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.univar.html">r.univar</a> tool.</p>
 </div>
 </section>
 <section id="writing-raster-data">
@@ -142,9 +142,9 @@ map will be computed from Sentinel-2 red and near-infrated channels
 similarly as in <a class="reference internal" href="05.html"><span class="doc">Unit 05 - Raster processing</span></a>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python3</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span>
 
-<span class="kn">from</span> <span class="nn">grass.pygrass.raster</span> <span class="kn">import</span> <span class="n">RasterRow</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">grass.pygrass.raster</span><span class="w"> </span><span class="kn">import</span> <span class="n">RasterRow</span>
 
 <span class="n">b04</span> <span class="o">=</span> <span class="n">RasterRow</span><span class="p">(</span><span class="s1">&#39;L2A_T32UPB_20170706T102021_B04_10m&#39;</span><span class="p">)</span>
 <span class="n">b04</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
@@ -173,19 +173,19 @@ similarly as in <a class="reference internal" href="05.html"><span class="doc">U
 Buffer object in PyGRASS.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python3</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span>
 
-<span class="kn">from</span> <span class="nn">grass.pygrass.raster</span> <span class="kn">import</span> <span class="n">RasterRow</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">grass.pygrass.raster</span><span class="w"> </span><span class="kn">import</span> <span class="n">RasterRow</span>
 
 <span class="n">newscratch</span> <span class="o">=</span> <span class="n">RasterRow</span><span class="p">(</span><span class="s1">&#39;newscratch&#39;</span><span class="p">)</span>
 <span class="n">newscratch</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="c1"># get computational region info</span>
-<span class="kn">from</span> <span class="nn">grass.pygrass.gis.region</span> <span class="kn">import</span> <span class="n">Region</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">grass.pygrass.gis.region</span><span class="w"> </span><span class="kn">import</span> <span class="n">Region</span>
 <span class="n">reg</span> <span class="o">=</span> <span class="n">Region</span><span class="p">()</span>
 
 <span class="c1"># import buffer and create empty row</span>
-<span class="kn">from</span> <span class="nn">grass.pygrass.raster.buffer</span> <span class="kn">import</span> <span class="n">Buffer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">grass.pygrass.raster.buffer</span><span class="w"> </span><span class="kn">import</span> <span class="n">Buffer</span>
 <span class="n">newrow</span> <span class="o">=</span> <span class="n">Buffer</span><span class="p">((</span><span class="n">reg</span><span class="o">.</span><span class="n">cols</span><span class="p">,),</span> <span class="n">mtype</span><span class="o">=</span><span class="s1">&#39;CELL&#39;</span><span class="p">)</span>
 
 <span class="c1"># we create a raster to fill all the GRASS GIS region</span>
@@ -217,10 +217,10 @@ Buffer object in PyGRASS.</p>
           
           <h3>Table of Contents</h3>
           <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS GIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02.html">Unit 02 - First steps</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03.html">Unit 03 - Data Management</a></li>
-<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Modules, Region</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Tools, Region</a></li>
 <li class="toctree-l1"><a class="reference internal" href="05.html">Unit 05 - Raster processing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06.html">Unit 06 - Data export</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07.html">Unit 07 - QGIS loves GRASS</a></li>
@@ -282,7 +282,7 @@ Buffer object in PyGRASS.</p>
         <div class="right">
           
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2018-2024 Martin Landa and GISMentors.eu.
+        &#169; Copyright 2018-2026 Martin Landa and GISMentors.eu.
       Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
         </div>

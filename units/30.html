@@ -43,26 +43,26 @@
 and dates LST zones in vector format (<a class="reference external" href="https://en.wikipedia.org/wiki/GML">GML</a>). The output
 parameter is defined as <code class="docutils literal notranslate"><span class="pre">ComplexOutput</span></code>, see lines <span class="lcode">26-29</span>.
 Zones defined on lines <span class="lcode">85-88</span> are created by
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.recode.html">r.recode</a> (<span class="lcode">92</span>). Than raster zones are convert to
-vector by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.to.vect.html">r.to.vect</a> on line <span class="lcode">99</span>. Finally vector
+<a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.recode.html">r.recode</a> (<span class="lcode">92</span>). Than raster zones are convert to
+vector by <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.to.vect.html">r.to.vect</a> on line <span class="lcode">99</span>. Finally vector
 zones are exported into GML format on line <span class="lcode">106</span> by
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.out.ogr.html">v.out.ogr</a>. Response content is set on line <span class="lcode">112</span>.</p>
+<a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/v.out.ogr.html">v.out.ogr</a>. Response content is set on line <span class="lcode">112</span>.</p>
 <p>Note that also class name (<span class="lcode">31</span>), process identifier
 (<span class="lcode">33</span>), title (<span class="lcode">34</span>), abstract (<span class="lcode">39</span>) and version
 (<span class="lcode">40</span>) needs to be updated.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python3</span>
 
-<span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">PIPE</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">subprocess</span><span class="w"> </span><span class="kn">import</span> <span class="n">PIPE</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
 
-<span class="kn">from</span> <span class="nn">grass.pygrass.modules</span> <span class="kn">import</span> <span class="n">Module</span>
-<span class="kn">from</span> <span class="nn">grass.script</span> <span class="kn">import</span> <span class="n">parse_key_val</span>
-<span class="kn">from</span> <span class="nn">pywps</span> <span class="kn">import</span> <span class="n">Process</span><span class="p">,</span> <span class="n">LiteralInput</span><span class="p">,</span> <span class="n">ComplexInput</span><span class="p">,</span> <span class="n">ComplexOutput</span><span class="p">,</span> <span class="n">Format</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">grass.pygrass.modules</span><span class="w"> </span><span class="kn">import</span> <span class="n">Module</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">grass.script</span><span class="w"> </span><span class="kn">import</span> <span class="n">parse_key_val</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pywps</span><span class="w"> </span><span class="kn">import</span> <span class="n">Process</span><span class="p">,</span> <span class="n">LiteralInput</span><span class="p">,</span> <span class="n">ComplexInput</span><span class="p">,</span> <span class="n">ComplexOutput</span><span class="p">,</span> <span class="n">Format</span>
 
 
-<span class="k">class</span> <span class="nc">ModisV4</span><span class="p">(</span><span class="n">Process</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ModisV4</span><span class="p">(</span><span class="n">Process</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">inputs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
         <span class="n">outputs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
 
@@ -94,8 +94,8 @@ zones are exported into GML format on line <span class="lcode">106</span> by
             <span class="n">status_supported</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_handler</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
-        <span class="k">def</span> <span class="nf">check_date</span><span class="p">(</span><span class="n">date_str</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_handler</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">check_date</span><span class="p">(</span><span class="n">date_str</span><span class="p">):</span>
             <span class="n">d</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">date_str</span><span class="p">,</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">year</span> <span class="o">!=</span> <span class="mi">2023</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Only year 2023 allowed&quot;</span><span class="p">)</span>
@@ -167,7 +167,7 @@ zones are exported into GML format on line <span class="lcode">106</span> by
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">pywps.app.Service</span> <span class="kn">import</span> <span class="n">Service</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">pywps.app.Service</span><span class="w"> </span><span class="kn">import</span> <span class="n">Service</span>
 
     <span class="n">processes</span> <span class="o">=</span> <span class="p">[</span><span class="n">ModisV4</span><span class="p">()]</span>
     <span class="n">application</span> <span class="o">=</span> <span class="n">Service</span><span class="p">(</span><span class="n">processes</span><span class="p">)</span>
@@ -193,7 +193,7 @@ file.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶
 <hr class="docutils" />
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><strong>It is the end (of the workshop), enjoy GRASS GIS (and your
+<p><strong>It is the end (of the workshop), enjoy GRASS (and your
 real life)! :-)</strong></p>
 </div>
 </section>
@@ -208,10 +208,10 @@ real life)! :-)</strong></p>
           
           <h3>Table of Contents</h3>
           <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS GIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02.html">Unit 02 - First steps</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03.html">Unit 03 - Data Management</a></li>
-<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Modules, Region</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Tools, Region</a></li>
 <li class="toctree-l1"><a class="reference internal" href="05.html">Unit 05 - Raster processing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06.html">Unit 06 - Data export</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07.html">Unit 07 - QGIS loves GRASS</a></li>
@@ -267,7 +267,7 @@ real life)! :-)</strong></p>
         <div class="right">
           
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2018-2024 Martin Landa and GISMentors.eu.
+        &#169; Copyright 2018-2026 Martin Landa and GISMentors.eu.
       Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
         </div>

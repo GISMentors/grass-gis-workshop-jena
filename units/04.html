@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Unit 04 - Modules, Region &#8212; Jena GRASS GIS Workshop</title>
+    <title>Unit 04 - Tools, Region &#8212; Jena GRASS GIS Workshop</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/gismentors.css" />
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
@@ -40,48 +40,48 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="unit-04-modules-region">
-<h1>Unit 04 - Modules, Region<a class="headerlink" href="#unit-04-modules-region" title="Permalink to this heading">¶</a></h1>
-<section id="accessing-grass-modules">
-<span id="grass-modules"></span><h2>Accessing GRASS modules<a class="headerlink" href="#accessing-grass-modules" title="Permalink to this heading">¶</a></h2>
-<p>GRASS GIS is a <strong>modular system</strong> which consists of several hundreds
-<em>tools</em> (“modules” in GRASS terminology). Modules are accessible from
+  <section id="unit-04-tools-region">
+<h1>Unit 04 - Tools, Region<a class="headerlink" href="#unit-04-tools-region" title="Permalink to this heading">¶</a></h1>
+<section id="accessing-grass-tools">
+<span id="grass-tools"></span><h2>Accessing GRASS tools<a class="headerlink" href="#accessing-grass-tools" title="Permalink to this heading">¶</a></h2>
+<p>GRASS is a <strong>modular system</strong> which consists of several hundreds
+<em>tools</em> (“tools” in GRASS terminology). Tools are accessible from
 the menu, <span class="item">Tools</span> tab, or from command prompt (<span class="item">Console</span>
 tab).</p>
 <p>Let’s find a tool which clips cloud mask vector map by Jena city
 region.</p>
 <figure class="align-center" id="id2">
-<img alt="../_images/modules-tab.png" src="../_images/modules-tab.png" />
+<img alt="../_images/tools-tab.png" src="../_images/tools-tab.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 26 </span><span class="caption-text">Search for a tool by ‘clip’ keyword in <span class="item">Tools</span> tab. The
-module which we are looking for is <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.clip.html">v.clip</a>. Module
+tool which we are looking for is <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/v.clip.html">v.clip</a>. Tool
 dialog can be open by <span class="item">Run</span> button.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Module <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.clip.html">v.clip</a> was introduced to GRASS in version
-7.4.0. In older versions generic <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.overlay.html">v.overlay</a> module can
+<p>Tool <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/v.clip.html">v.clip</a> was introduced to GRASS in version
+7.4.0. In older versions generic <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/v.overlay.html">v.overlay</a> tool can
 be used.</p>
 </div>
 <figure class="align-center" id="id3">
-<img alt="../_images/modules-cmd.png" src="../_images/modules-cmd.png" />
+<img alt="../_images/tools-cmd.png" src="../_images/tools-cmd.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 27 </span><span class="caption-text">Launching <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.clip.html">v.clip</a> module from <span class="item">Console</span> tab.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 27 </span><span class="caption-text">Launching <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/v.clip.html">v.clip</a> tool from <span class="item">Console</span> tab.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
-<p>Tools (modules) can be run from GUI dialogs, from <span class="item">Console</span> tab,
+<p>Tools (tools) can be run from GUI dialogs, from <span class="item">Console</span> tab,
 or by using Python API (see <a class="reference internal" href="10.html"><span class="doc">Unit 10 - Python intro</span></a>). Figure bellow shows GUI dialog
-of <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.clip.html">v.clip</a> module.</p>
+of <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/v.clip.html">v.clip</a> tool.</p>
 <figure class="align-center" id="id4">
 <span id="v-clip"></span><img alt="../_images/v-clip.png" src="../_images/v-clip.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 28 </span><span class="caption-text">GUI dialog for launching <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v.clip.html">v.clip</a> module.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 28 </span><span class="caption-text">GUI dialog for launching <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/v.clip.html">v.clip</a> tool.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>CLI syntax of modules is shown in GUI dialog statusbar, see
+<p>CLI syntax of tools is shown in GUI dialog statusbar, see
 <a class="reference internal" href="#v-clip"><span class="std std-numref">Fig. 28</span></a>. Command can be copied to clipboard by
 <span class="item">Copy</span> button for later usage.</p>
 </div>
@@ -95,7 +95,7 @@ of <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/v
 <p><span class="caption-number">Fig. 29 </span><span class="caption-text">Clipped clouds mask by Jena city region.</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
-<p>Each GRASS module starts by a prefix. This prefix groups modules into
+<p>Each GRASS tool starts by a prefix. This prefix groups tools into
 several sections, see table below.</p>
 <table class="border docutils align-default">
 <thead>
@@ -106,39 +106,39 @@ several sections, see table below.</p>
 </thead>
 <tbody>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">db.</span></code></p></td>
-<td><p><a class="reference external" href="https://grass.osgeo.org/grass83/manuals/database.html">database</a></p></td>
+<td><p><a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/database.html">database</a></p></td>
 <td><p>attribute data management</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">d.</span></code></p></td>
-<td><p><a class="reference external" href="https://grass.osgeo.org/grass83/manuals/display.html">display</a></p></td>
+<td><p><a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/display.html">display</a></p></td>
 <td><p>display commands</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">g.</span></code></p></td>
-<td><p><a class="reference external" href="https://grass.osgeo.org/grass83/manuals/general.html">general</a></p></td>
+<td><p><a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/general.html">general</a></p></td>
 <td><p>generic commands</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">i.</span></code></p></td>
-<td><p><a class="reference external" href="https://grass.osgeo.org/grass83/manuals/imagery.html">imagery</a></p></td>
+<td><p><a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/imagery.html">imagery</a></p></td>
 <td><p>imagery data processing</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ps.</span></code></p></td>
-<td><p><a class="reference external" href="https://grass.osgeo.org/grass83/manuals/postscript.html">postscript</a></p></td>
+<td><p><a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/postscript.html">postscript</a></p></td>
 <td><p>map outputs</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">r.</span></code></p></td>
-<td><p><a class="reference external" href="https://grass.osgeo.org/grass83/manuals/raster.html">raster</a></p></td>
+<td><p><a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/raster.html">raster</a></p></td>
 <td><p>2D raster data processing</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">r3.</span></code></p></td>
-<td><p><a class="reference external" href="https://grass.osgeo.org/grass83/manuals/raster3D.html">raster3D</a></p></td>
+<td><p><a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/raster3D.html">raster3D</a></p></td>
 <td><p>3D raster data processing</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">t.</span></code></p></td>
-<td><p><a class="reference external" href="https://grass.osgeo.org/grass83/manuals/temporal.html">temporal</a></p></td>
+<td><p><a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/temporal.html">temporal</a></p></td>
 <td><p>Temporal data processing</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">v.</span></code></p></td>
-<td><p><a class="reference external" href="https://grass.osgeo.org/grass83/manuals/vector.html">vector</a></p></td>
+<td><p><a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/vector.html">vector</a></p></td>
 <td><p>2D/3D vector data processing</p></td>
 </tr>
 </tbody>
@@ -169,10 +169,10 @@ north-south). Note that GRASS supports only regular grids.</p>
 <p>For 3D raster data (known as “volumes”) there is an
 extension to the 3D computation grid.</p>
 </div>
-<p>The great majority of raster processing modules (<code class="docutils literal notranslate"><span class="pre">r.*</span></code>) respect the
-computational region. There are a few exceptions like import modules
-(eg. <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.import.html">r.import</a>). On the other hand, most vector
-processing modules (<code class="docutils literal notranslate"><span class="pre">v.*</span></code>) ignore the computational region completely
+<p>The great majority of raster processing tools (<code class="docutils literal notranslate"><span class="pre">r.*</span></code>) respect the
+computational region. There are a few exceptions like import tools
+(eg. <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.import.html">r.import</a>). On the other hand, most vector
+processing tools (<code class="docutils literal notranslate"><span class="pre">v.*</span></code>) ignore the computational region completely
 since there is no computation grid defined for them.</p>
 <p>The computational region can be easily set on existing raster or vector
 map from <span class="item">Layer</span> tab.</p>
@@ -191,7 +191,7 @@ window as <strong>a red rectangle</strong>.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>Full flexibility for operating with computational region is allowed
-via the <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/g.region.html">g.region</a> module (<span class="menuselection">Settings ‣
+via the <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/g.region.html">g.region</a> tool (<span class="menuselection">Settings ‣
 Computational region ‣ Set region</span>). Example below:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>g.region<span class="w"> </span><span class="nv">vector</span><span class="o">=</span>jena_boundary<span class="w"> </span><span class="nv">align</span><span class="o">=</span>L2A_T32UPB_20170706T102021_B04_10m
 </pre></div>
@@ -201,7 +201,7 @@ Computational region ‣ Set region</span>). Example below:</p>
 <section id="color-table">
 <span id="id1"></span><h2>Color table<a class="headerlink" href="#color-table" title="Permalink to this heading">¶</a></h2>
 <p>The color table of raster maps can be changed by the
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.colors.html">r.colors</a> command. With knowledge of computational region
+<a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.colors.html">r.colors</a> command. With knowledge of computational region
 let’s enhance color table of imported Sentinel band using histogram
 equalization (which is influenced by computation region as we already
 know).</p>
@@ -246,11 +246,11 @@ predefined color tables do not satisfy user’s needs.</p>
           
           <h3>Table of Contents</h3>
           <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS GIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02.html">Unit 02 - First steps</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03.html">Unit 03 - Data Management</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Unit 04 - Modules, Region</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#accessing-grass-modules">Accessing GRASS modules</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Unit 04 - Tools, Region</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#accessing-grass-tools">Accessing GRASS tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#computational-region">Computational region</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#color-table">Color table</a></li>
 </ul>
@@ -312,7 +312,7 @@ predefined color tables do not satisfy user’s needs.</p>
         <div class="right">
           
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2018-2024 Martin Landa and GISMentors.eu.
+        &#169; Copyright 2018-2026 Martin Landa and GISMentors.eu.
       Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
         </div>

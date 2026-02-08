@@ -42,7 +42,7 @@
             
   <section id="unit-22-spatio-temporal-scripting">
 <h1>Unit 22 - Spatio-temporal scripting<a class="headerlink" href="#unit-22-spatio-temporal-scripting" title="Permalink to this heading">¶</a></h1>
-<p>GRASS offers a Python API for <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/libpython/temporal_framework.html">space-time processing</a>. The usage is presented in the
+<p>GRASS offers a Python API for <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/libpython/temporal_framework.html">space-time processing</a>. The usage is presented in the
 script described below.</p>
 <p>In the script below similar computation to <a class="reference internal" href="11.html"><span class="doc">Unit 11 - PyGRASS scripting</span></a> and <a class="reference internal" href="12.html"><span class="doc">Unit 12 - Script User Interface</span></a>
 will be performed. But instead of processing single Sentinel scene, a
@@ -67,16 +67,16 @@ processed.</p>
 </section>
 <section id="python-temporal-api">
 <h2>Python Temporal API<a class="headerlink" href="#python-temporal-api" title="Permalink to this heading">¶</a></h2>
-<p id="temporal-api">Used functions from <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/libpython/temporal_framework.html">GRASS GIS Temporal Framework</a>:</p>
+<p id="temporal-api">Used functions from <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/libpython/temporal_framework.html">GRASS Temporal Framework</a>:</p>
 <ul class="simple">
-<li><p>initialization must be done by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/libpython/temporal.html#temporal.core.init">init</a> function, see line
+<li><p>initialization must be done by <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/libpython/temporal.html#temporal.core.init">init</a> function, see line
 <span class="lcode">142</span></p></li>
 <li><p>space time datasets are open on lines <span class="lcode">144-146</span> by
-<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/libpython/temporal.html#temporal.open_stds.open_old_stds">open_old_stds</a></p></li>
+<a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/libpython/temporal.html#temporal.open_stds.open_old_stds">open_old_stds</a></p></li>
 <li><p>raster maps registered in reference dataset (b4) are listed on line
-<span class="lcode">151</span> by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/libpython/temporal.html#temporal.abstract_space_time_dataset.AbstractSpaceTimeDataset.get_registered_maps">get_registered_maps</a></p></li>
+<span class="lcode">151</span> by <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/libpython/temporal.html#temporal.abstract_space_time_dataset.AbstractSpaceTimeDataset.get_registered_maps">get_registered_maps</a></p></li>
 <li><p>related raster maps in two other datasets (b8, cl) are searched on
-lines <span class="lcode">154-157</span> by <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/libpython/temporal.html#temporal.abstract_space_time_dataset.AbstractSpaceTimeDataset.get_registered_maps">get_registered_maps</a>
+lines <span class="lcode">154-157</span> by <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/libpython/temporal.html#temporal.abstract_space_time_dataset.AbstractSpaceTimeDataset.get_registered_maps">get_registered_maps</a>
 with <code class="docutils literal notranslate"><span class="pre">where</span></code> parameter</p></li>
 </ul>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">  1</span><span class="ch">#!/usr/bin/env python3</span>
@@ -121,15 +121,15 @@ with <code class="docutils literal notranslate"><span class="pre">where</span></
 <span class="linenos"> 40</span><span class="c1"># % answer: 1600</span>
 <span class="linenos"> 41</span><span class="c1"># %end</span>
 <span class="linenos"> 42</span>
-<span class="linenos"> 43</span><span class="kn">import</span> <span class="nn">sys</span>
-<span class="linenos"> 44</span><span class="kn">import</span> <span class="nn">os</span>
-<span class="linenos"> 45</span><span class="kn">import</span> <span class="nn">atexit</span>
-<span class="linenos"> 46</span><span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">PIPE</span>
+<span class="linenos"> 43</span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="linenos"> 44</span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="linenos"> 45</span><span class="kn">import</span><span class="w"> </span><span class="nn">atexit</span>
+<span class="linenos"> 46</span><span class="kn">from</span><span class="w"> </span><span class="nn">subprocess</span><span class="w"> </span><span class="kn">import</span> <span class="n">PIPE</span>
 <span class="linenos"> 47</span>
-<span class="linenos"> 48</span><span class="kn">from</span> <span class="nn">grass.script</span> <span class="kn">import</span> <span class="n">parser</span><span class="p">,</span> <span class="n">parse_key_val</span>
-<span class="linenos"> 49</span><span class="kn">from</span> <span class="nn">grass.pygrass.modules</span> <span class="kn">import</span> <span class="n">Module</span>
+<span class="linenos"> 48</span><span class="kn">from</span><span class="w"> </span><span class="nn">grass.script</span><span class="w"> </span><span class="kn">import</span> <span class="n">parser</span><span class="p">,</span> <span class="n">parse_key_val</span>
+<span class="linenos"> 49</span><span class="kn">from</span><span class="w"> </span><span class="nn">grass.pygrass.modules</span><span class="w"> </span><span class="kn">import</span> <span class="n">Module</span>
 <span class="linenos"> 50</span>    
-<span class="linenos"> 51</span><span class="k">def</span> <span class="nf">cleanup</span><span class="p">():</span>
+<span class="linenos"> 51</span><span class="k">def</span><span class="w"> </span><span class="nf">cleanup</span><span class="p">():</span>
 <span class="linenos"> 52</span>    <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;g.remove&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;region_mask&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;vector&#39;</span><span class="p">)</span>
 <span class="linenos"> 53</span>    <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;g.remove&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ndvi&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;raster&#39;</span><span class="p">)</span>
 <span class="linenos"> 54</span>    <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;g.remove&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ndvi_class&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;raster&#39;</span><span class="p">)</span>
@@ -137,7 +137,7 @@ with <code class="docutils literal notranslate"><span class="pre">where</span></
 <span class="linenos"> 56</span>    <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;g.remove&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ndvi_class_filled_i&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;raster&#39;</span><span class="p">)</span>
 <span class="linenos"> 57</span>    <span class="n">Module</span><span class="p">(</span><span class="s1">&#39;g.remove&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ndvi_class_filled&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;vector&#39;</span><span class="p">)</span>
 <span class="linenos"> 58</span>
-<span class="linenos"> 59</span><span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="n">b4</span><span class="p">,</span> <span class="n">b8</span><span class="p">,</span> <span class="n">msk</span><span class="p">,</span> <span class="n">min_area_ha</span><span class="p">,</span> <span class="n">output</span><span class="p">):</span>
+<span class="linenos"> 59</span><span class="k">def</span><span class="w"> </span><span class="nf">compute</span><span class="p">(</span><span class="n">b4</span><span class="p">,</span> <span class="n">b8</span><span class="p">,</span> <span class="n">msk</span><span class="p">,</span> <span class="n">min_area_ha</span><span class="p">,</span> <span class="n">output</span><span class="p">):</span>
 <span class="linenos"> 60</span>    <span class="n">Module</span><span class="p">(</span><span class="s2">&quot;g.region&quot;</span><span class="p">,</span>
 <span class="linenos"> 61</span>           <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 <span class="linenos"> 62</span>           <span class="n">raster</span><span class="o">=</span><span class="n">msk</span><span class="p">,</span>
@@ -185,7 +185,7 @@ with <code class="docutils literal notranslate"><span class="pre">where</span></
 <span class="linenos">104</span>           <span class="n">offset</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
 <span class="linenos">105</span>           <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="linenos">106</span>    
-<span class="linenos">107</span><span class="k">def</span> <span class="nf">stats</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">date</span><span class="p">,</span> <span class="n">fd</span><span class="p">):</span>
+<span class="linenos">107</span><span class="k">def</span><span class="w"> </span><span class="nf">stats</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">date</span><span class="p">,</span> <span class="n">fd</span><span class="p">):</span>
 <span class="linenos">108</span>    <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
 <span class="linenos">109</span>    <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
 <span class="linenos">110</span>    <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;NDVI class statistics (</span><span class="si">{0}</span><span class="s1">: </span><span class="si">{1}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">date</span><span class="p">))</span>
@@ -217,8 +217,8 @@ with <code class="docutils literal notranslate"><span class="pre">where</span></
 <span class="linenos">136</span>        <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;NDVI class </span><span class="si">{0}</span><span class="s1">: </span><span class="si">{1:.4f}</span><span class="s1"> (min) </span><span class="si">{2:.4f}</span><span class="s1"> (max) </span><span class="si">{3:.4f}</span><span class="s1"> (mean)</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
 <span class="linenos">137</span>        <span class="n">cat</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="nb">min</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="nb">max</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">mean</span><span class="p">)))</span>
 <span class="linenos">138</span>        
-<span class="linenos">139</span><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-<span class="linenos">140</span>    <span class="kn">import</span> <span class="nn">grass.temporal</span> <span class="k">as</span> <span class="nn">tgis</span>
+<span class="linenos">139</span><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+<span class="linenos">140</span>    <span class="kn">import</span><span class="w"> </span><span class="nn">grass.temporal</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tgis</span>
 <span class="linenos">141</span>
 <span class="hll"><span class="linenos">142</span>    <span class="n">tgis</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
 </span><span class="linenos">143</span>
@@ -293,10 +293,10 @@ NDVI class 3: -0.9978 (min) 0.9994 (max) 0.6992 (mean)
           
           <h3>Table of Contents</h3>
           <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS GIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02.html">Unit 02 - First steps</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03.html">Unit 03 - Data Management</a></li>
-<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Modules, Region</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Tools, Region</a></li>
 <li class="toctree-l1"><a class="reference internal" href="05.html">Unit 05 - Raster processing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06.html">Unit 06 - Data export</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07.html">Unit 07 - QGIS loves GRASS</a></li>
@@ -358,7 +358,7 @@ NDVI class 3: -0.9978 (min) 0.9994 (max) 0.6992 (mean)
         <div class="right">
           
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2018-2024 Martin Landa and GISMentors.eu.
+        &#169; Copyright 2018-2026 Martin Landa and GISMentors.eu.
       Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
         </div>

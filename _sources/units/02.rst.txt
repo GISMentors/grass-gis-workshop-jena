@@ -3,11 +3,10 @@ Unit 02 - First steps
 
 Starting a GRASS session requires basic knowledge about the software
 itself. GRASS motivates users to organize their data from an early
-beginning. GRASS uses a consistent structure of so-called
-**locations** and **mapsets** to organize its data. This has not 
-changed in GRASS 8.
+beginning. GRASS uses a consistent structure of so-called **projects**
+(formerly "locations") and **mapsets** to organize its data.
 
-.. _location-mapset-section:
+.. _project-mapset-section:
 
 The GRASS data structure has three levels:
 
@@ -15,9 +14,9 @@ The GRASS data structure has three levels:
    contains all data accessed by GRASS. It's usually a directory called
    :file:`grassdata` located in users' home directory. 
 
-#. **Location**. All geodata stored within one location must have the
-   same spatial coordinate system (GRASS doesn't support on-the-fly
-   projection for several reasons).
+#. **Project** (formerly "Location"). All geodata stored within one
+   project must have the same spatial coordinate system (GRASS
+   doesn't support on-the-fly projection for several reasons).
 
 #. **Mapset**. Contains task-related data within one project. Helps
    organizing data into logical groups or to separate parallel work of
@@ -35,71 +34,70 @@ The GRASS data structure has three levels:
    
    .. figure:: ../images/units/02/grass7-start.png
 
-      GRASS GIS startup screen in version 7.
+      GRASS startup screen in version 7.
 
 Obstacles (especially for newcomers) related to the startup screen have
 been reduced in GRASS 8. The startup screen has been
 replaced by a completely new mechanism. On the first launch, GRASS 8 
 sets up the *database directory* automatically and launches GUI in a
-default location *World LatLong WGS84*. Also, a sample *world* vector
+default project *World LatLong WGS84*. Also, a sample *world* vector
 layer (in GRASS terminology *vector map*) is shown.
 
 GRASS GUI is designed as a *simple and lightweight* graphical user
-interface. Basically, it is a GUI front-end calling GRASS commands (see
-:ref:`grass-modules`) in the background. The GUI consists of two main
-windows, see :numref:`startup8`.
+interface, see :numref:`startup8`. Basically, it is a GUI front-end
+calling GRASS commands (see :ref:`grass-tools`) in the background.
 
 .. _startup8:
 
 .. figure:: ../images/units/02/grass8-start.png
    :class: large
            
-   GRASS GIS 8 on startup.
+   GRASS 8 on startup.
 
 .. tip:: If GUI crashes, it can be started again by :grasscmd:`g.gui`
    command from the underlying terminal (command prompt).
          
 GRASS GUI guides users by means of tooltips as shown in
-:numref:`startup8`. The default location is not designed for real
-work. The next step is usually to create new "project(s)" (in GRASS
-terminology *a location*) with user-defined spatial coordinate systems.
+:numref:`startup8`. The default project is not designed for real
+work. The next step is usually to create a new project with
+user-defined spatial coordinate systems.
 
 .. note:: Consider changing language settings to English in
    :menuselection:`Settings --> Preferences --> Appearance`. Change
    `Language settings` to ``en`` and restart GRASS.
 
-.. _create-location:
+.. _create-project:
 
-Create a new location
+Create a new project
 ---------------------
 
-By clicking on :item:`Create new Location` button in the tooltip (or by
-|grass-location-add| from the toolbar) the wizard appears. A new GRASS
-location can be easily created using :wikipedia:`EPSG` codes or
+By clicking on :item:`Create new Project` button in the tooltip (or by
+|grass-project-add| from the toolbar) the wizard appears. A new GRASS
+project can be easily created using :wikipedia:`EPSG` codes or
 user-defined geodata.
 
-In the first page of the location wizard, the location name is defined. 
+In the first page of the project wizard, the project name is defined. 
 Optionally, also a short description can be added.
           
-.. figure:: ../images/units/02/create-location-0.png
+.. figure:: ../images/units/02/create-project-0.png
 
-   Define a name for the new GRASS location.
+   Define a name for the new GRASS project.
 
 In the next page, a coordinate reference system (CRS) is chosen. CRS
 is usually defined by EPSG code (:item:`Select CRS from a list by EPSG
 or description`) or by user-defined geodata (:item:`Read CRS from a
 georeferenced data file`).
    
-.. figure:: ../images/units/02/create-location-1.png
+.. figure:: ../images/units/02/create-project-1.png
 
    Choose "Read CRS from a georeferenced data file" for creating a new
-   GRASS location.
+   GRASS project.
             
-In our case, a new location will be created by defining CRS from
+In our case, a new project will be created by defining CRS from
 :file:`jena_boundary.gpkg` input file (located in the sample dataset
 in :file:`osm` directory).
 
-.. figure:: ../images/units/02/create-location-2.png
+.. figure:: ../images/units/02/create-project-2.png
 
    Define an input file :file:`jena_boundary.gpkg`.
 
@@ -131,30 +129,30 @@ in :file:`osm` directory).
 Spatial reference system is chosen based on input file (UTM zone 32N
 :epsg:`32632`).
 
-.. figure:: ../images/units/02/create-location-3.png
+.. figure:: ../images/units/02/create-project-3.png
             
    Check the summary.
    
-A new GRASS user-defined location will be created by clicking on
+A new GRASS user-defined project will be created by clicking on
 :item:`Finish` button.
       
-After creating a new location (:item:`Finish` button) the user can
-optionally import data used for defining the new location (in our case
+After creating a new project (:item:`Finish` button) the user can
+optionally import data used for defining the new project (in our case
 :file:`jena_boundary.gpkg`).
 
-.. figure:: ../images/units/02/create-location-4.png
+.. figure:: ../images/units/02/create-project-4.png
    :class: small
 
-   Let's import data to simplify our first steps in GRASS GIS.
+   Let's import data to simplify our first steps in GRASS.
 
-By default GRASS creates a *PERMANENT mapset* in the new location.
-Here, all location settings are stored. This mapset is commonly used
-for importing input geodata used in the location.
+By default GRASS creates a *PERMANENT mapset* in the new project.
+Here, all project settings are stored. This mapset is commonly used
+for importing input geodata used in the project.
 
-.. figure:: ../images/units/02/create-location-5.png
+.. figure:: ../images/units/02/create-project-5.png
    :class: large
            
-   GRASS GUI automatically switches to the new location.
+   GRASS GUI automatically switches to the new project.
 
 Display data
 ------------
@@ -172,9 +170,8 @@ Imported :map:`jena_boundary` data layer can be easily displayed from
 Let's also add a basemap from freely available OpenStreeMap map
 service. In our case *OpenStreetMap WMS* provided by `mundialis
 <https://mundialis.de>`__ company
-(http://ows.mundialis.de/services/service). WMS layer can be added
-from :item:`Layers` tab |grass-layer-wms-add| :sup:`Add web service
-layer`.
+(https://ows.mundialis.de/osm/service). WMS layer can be added from
+:item:`Layers` tab |grass-layer-wms-add| :sup:`Add web service layer`.
 
 .. figure:: ../images/units/02/d-wms-0.png
 

@@ -32,7 +32,7 @@ Python Temporal API
          
 .. _temporal-api:
 
-Used functions from :grasscmd2:`GRASS GIS Temporal Framework
+Used functions from :grasscmd2:`GRASS Temporal Framework
 <libpython/temporal_framework.html>`:
 
 * initialization must be done by :grasscmd2:`init

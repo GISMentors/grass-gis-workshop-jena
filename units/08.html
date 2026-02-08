@@ -44,32 +44,32 @@
 <h1>Unit 08 - Modeler<a class="headerlink" href="#unit-08-modeler" title="Permalink to this heading">¶</a></h1>
 <p>The <strong>Graphical Modeler</strong> allows creating, editing, and managing complex
 models in an easy-to-use graphical user interface. Using the Graphical
-Modeler, a chain of tools (ie. GRASS modules) can be wrapped
+Modeler, a chain of tools (ie. GRASS tools) can be wrapped
 into one process (a model). A model can be executed repeatedly with
 slightly different inputs or parameters.</p>
 <p>Our first model will be based on <a class="reference internal" href="05.html"><span class="doc">Unit 05 - Raster processing</span></a>. Actually the model will
 perform two operations:</p>
 <ol class="arabic simple">
-<li><p>set mask based on vector cloud mask file (<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.mask.html">r.mask</a>) and</p></li>
-<li><p>compute NDVI (<a class="reference external" href="https://grass.osgeo.org/grass83/manuals/i.vi.html">i.vi</a>)</p></li>
+<li><p>set mask based on vector cloud mask file (<a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.mask.html">r.mask</a>) and</p></li>
+<li><p>compute NDVI (<a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/i.vi.html">i.vi</a>)</p></li>
 </ol>
 <p>Graphical Modeler can be launched from menu <span class="menuselection">File ‣
 Graphical modeler</span> or by <a class="reference internal" href="../_images/modeler-main.png"><img alt="grass-modeler-main" src="../_images/modeler-main.png" style="width: 1.5em;" /></a> <sup>Graphical Modeler</sup>
-from the main toolbar (or alternatively as <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/g.gui.gmodeler.html">g.gui.gmodeler</a>
-module from console).</p>
+from the main toolbar (or alternatively as <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/g.gui.gmodeler.html">g.gui.gmodeler</a>
+tool from console).</p>
 <figure class="align-center" id="id1">
-<img alt="../_images/gmodeler.png" src="../_images/gmodeler.png" />
+<img alt="../_images/gmodeler.png" class="large" src="../_images/gmodeler.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 49 </span><span class="caption-text">Graphical Modeler.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>GRASS tools can be added to the model from menu
-<span class="menuselection">Model ‣ Add command</span> or by <a class="reference internal" href="../_images/module-add.png"><img alt="grass-module-add" src="../_images/module-add.png" style="width: 1.5em;" /></a>
+<span class="menuselection">Modeler ‣ Model ‣ Add command</span> or by <a class="reference internal" href="../_images/module-add.png"><img alt="grass-module-add" src="../_images/module-add.png" style="width: 1.5em;" /></a>
 <sup>Add GRASS tool (module) to model</sup> from the main toolbar.</p>
 <figure class="align-center" id="id2">
-<img alt="../_images/add-module.png" src="../_images/add-module.png" />
+<img alt="../_images/add-tool.png" src="../_images/add-tool.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 50 </span><span class="caption-text">Add GRASS tool (module) to model, in this case <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.mask.html">r.mask</a>.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 50 </span><span class="caption-text">Add GRASS tool (tool) to model, in this case <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.mask.html">r.mask</a>.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <div class="admonition important">
@@ -78,28 +78,28 @@ module from console).</p>
 the model. In this case it helps to redraw model canvas by
 <a class="reference internal" href="../_images/redraw.png"><img alt="grass-redraw" src="../_images/redraw.png" style="width: 1.5em;" /></a> <sup>Redraw model canvas</sup>.</p>
 </div>
-<p>After adding <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.mask.html">r.mask</a> module to the model let’s open its
+<p>After adding <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.mask.html">r.mask</a> tool to the model let’s open its
 properties dialog by double-click and enter vector map to be used as a
 mask. Don’t forget to enable inverse mask by <span class="param">-i</span> flag in
 <span class="item">Create</span> tab.</p>
 <figure class="align-center" id="id3">
-<img alt="../_images/module-props.png" class="middle" src="../_images/module-props.png" />
+<img alt="../_images/tool-props.png" src="../_images/tool-props.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 51 </span><span class="caption-text">Define parameters for <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/r.mask.html">r.mask</a>, a vector map used for
+<p><span class="caption-number">Fig. 51 </span><span class="caption-text">Define parameters for <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.mask.html">r.mask</a>, a vector map used for
 creating a mask.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
-<p>In similar way will be added to model the <a class="reference external" href="https://grass.osgeo.org/grass83/manuals/i.vi.html">i.vi</a>
+<p>In similar way will be added to model the <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/i.vi.html">i.vi</a>
 tool. Properties dialog for this command is open automatically because
 there are required options which must be set.</p>
 <figure class="align-center" id="id4">
-<img alt="../_images/model-v1.png" src="../_images/model-v1.png" />
+<img alt="../_images/model-v1.png" class="middle" src="../_images/model-v1.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 52 </span><span class="caption-text">NDVI model version 1.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>It’s a good idea to set metadata for the model and enable overwriting
-data produced by model (<span class="menuselection">Model ‣ Model
+data produced by model (<span class="menuselection">Modeler ‣ Model ‣ Model
 properties</span>). Resultant NDVI raster map may be also shown
 automatically in the map window.</p>
 <figure class="align-center" id="id5">
@@ -110,7 +110,7 @@ model.</span><a class="headerlink" href="#id5" title="Permalink to this image">�
 </figcaption>
 </figure>
 <figure class="align-center" id="id6">
-<img alt="../_images/model-v1-req-display.png" src="../_images/model-v1-req-display.png" />
+<img alt="../_images/model-v1-req-display.png" class="middle" src="../_images/model-v1-req-display.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 54 </span><span class="caption-text">Set the output raster map to be automatically displayed in the map
 window.</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
@@ -119,7 +119,7 @@ window.</span><a class="headerlink" href="#id6" title="Permalink to this image">
 <p>Now let’s run our model by <a class="reference internal" href="../_images/execute.png"><img alt="grass-execute" src="../_images/execute.png" style="width: 1.5em;" /></a> <sup>Run model</sup>. Progress
 is printed into <span class="item">Command output</span>.</p>
 <figure class="align-center" id="id7">
-<img alt="../_images/model-v1-output.png" src="../_images/model-v1-output.png" />
+<img alt="../_images/model-v1-output.png" class="large" src="../_images/model-v1-output.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 55 </span><span class="caption-text">Model computation progress.</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
 </figcaption>
@@ -167,10 +167,10 @@ exists.</p>
           
           <h3>Table of Contents</h3>
           <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS GIS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01.html">Unit 01 - About GRASS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02.html">Unit 02 - First steps</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03.html">Unit 03 - Data Management</a></li>
-<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Modules, Region</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04.html">Unit 04 - Tools, Region</a></li>
 <li class="toctree-l1"><a class="reference internal" href="05.html">Unit 05 - Raster processing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06.html">Unit 06 - Data export</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07.html">Unit 07 - QGIS loves GRASS</a></li>
@@ -228,7 +228,7 @@ exists.</p>
         <div class="right">
           
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2018-2024 Martin Landa and GISMentors.eu.
+        &#169; Copyright 2018-2026 Martin Landa and GISMentors.eu.
       Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     </div>
         </div>

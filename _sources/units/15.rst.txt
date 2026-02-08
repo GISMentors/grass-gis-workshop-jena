@@ -11,12 +11,12 @@ EU-DEM tiles covers large regions (4GB per tile).
    <https://spacedata.copernicus.eu/collections/copernicus-digital-elevation-model>`__.
 
 Normally :grasscmd:`r.import` could be used to import and
-automatically reproject data into target location. In our case there
+automatically reproject data into target project. In our case there
 is no need to import into GRASS a whole big DEM tile. By using ``-r``
-flag of :grasscmd:`r.in.gdal` GRASS module only a subregion covering
+flag of :grasscmd:`r.in.gdal` GRASS tool only a subregion covering
 AOI can be imported. Unfortunately :grasscmd:`r.import` do not offer
 such flag. This is a reason why data will be reprojected
-manually. Input data will be imported into a new location
+manually. Input data will be imported into a new project
 (ETRS89-extended / LAEA Europe :epsg:`3035`). In the next step
 imported data will be reprojected into target *jena-region*
 (WGS 84 / UTM zone 32N :epsg:`32632`).
@@ -25,31 +25,29 @@ imported data will be reprojected into target *jena-region*
    clipped by larger region than Jena AOI. Modified tile is available
    from :file:`eu-dem` directory.
 
-Create location for data import
+Create project for data import
 -------------------------------
 
 EU-DEM dataset is provided in ETRS89-extended / LAEA Europe
-(:epsg:`3035`). Start a new GRASS session and create a new location
+(:epsg:`3035`). Start a new GRASS session and create a new project
 *jena-eu-dem* based on input :file:`eu-dem/dem_sample.tif`
-file as described in :ref:`Unit 02 <create-location>`) or from EPSG code.
+file as described in :ref:`Unit 02 <create-project>`) or from EPSG code.
 
 .. important:: Skip data import provided by
-               location wizard since only subregion defined by Jena city region is
+               project wizard since only subregion defined by Jena city region is
                planned to be imported.
 
-Enter new location (PERMANENT mapset) and copy (ie. reproject)
-:map:`jena_boundary` into the current location.
+Enter new project (PERMANENT mapset) and copy (ie. reproject)
+:map:`jena_boundary` into the current project.
 
 .. _data-reproject-fig:
 
 .. figure:: ../images/units/15/data-reproject.png
-   :class: middle
            
 .. figure:: ../images/units/15/data-reproject-1.png
-   :class: middle
            
-   Copy :map:`jena_boundary` vector map from `jena-region` location
-   (:epsg:`32632`) to the current location (:epsg:`3035`).
+   Copy :map:`jena_boundary` vector map from `jena-region` project
+   (:epsg:`32632`) to the current project (:epsg:`3035`).
 
 .. figure:: ../images/units/15/data-reproject-dialog.png
    :class: small
@@ -60,7 +58,7 @@ Enter new location (PERMANENT mapset) and copy (ie. reproject)
 
    .. code-block:: bash
                           
-      v.proj location=jena-region mapset=PERMANENT input=jena_boundary
+      v.proj project=jena-region mapset=PERMANENT input=jena_boundary
 
 Before importing DEM set computation region extent based on
 reprojected Jena city region.
@@ -84,20 +82,19 @@ forget to enable :option:`-r` flag.
    Imported DEM limited to current region extent. Visualized using
    ``elevation`` color table.
 
-Reproject DEM into target location
+Reproject DEM into target project
 ----------------------------------
 
-Now switch back to *jena-region* (target) location (PERMANENT mapset).
+Now switch back to *jena-region* (target) project (PERMANENT mapset).
 
-.. _switch-location:
+.. _switch-project:
 
-.. figure:: ../images/units/15/switch-location.png
-   :class: middle
+.. figure:: ../images/units/15/switch-project.png
 	   
-   Switch to jena-region location and PERMANENT mapset from
+   Switch to jena-region project and PERMANENT mapset from
    :item:`Data` tab.
 
-Reproject DEM from *jena-eu-dem* location by copying in :item:`Data`
+Reproject DEM from *jena-eu-dem* project by copying in :item:`Data`
 tab. Set desired resolution (25m) and choose appropriate resampling
 method (in our case *bilinear*).
 
@@ -114,7 +111,7 @@ method (in our case *bilinear*).
 
    .. code-block:: bash
 		
-      r.proj location=jena-eu-dem mapset=PERMANENT input=dem method=bilinear resolution=25
+      r.proj project=jena-eu-dem mapset=PERMANENT input=dem method=bilinear resolution=25
 
 .. figure:: ../images/units/15/dem-3d.png
    :class: large

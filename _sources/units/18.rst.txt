@@ -13,7 +13,7 @@ directory. Data is stored in LAZ format (compressed LAS format).
 
 Sample data for this unit are located in :file:`lidar` directory.
    
-For importing LAS/LAZ data there are available two GRASS modules:
+For importing LAS/LAZ data there are available two GRASS tools:
 
 * :grasscmd:`r.in.lidar` for importing point cloud data as raster map
 * :grasscmd:`v.in.lidar` for importing point cloud data as vector point map
@@ -34,14 +34,14 @@ For importing LAS/LAZ data there are available two GRASS modules:
       Max X Y Z:                   681999.990 5644999.990 968.621
       ...
 
-   There is also a new generation of Lidar modules based on `PDAL
+   There is also a new generation of Lidar tools based on `PDAL
    <https://pdal.io/>`__ library: :grasscmd:`r.in.pdal` and
    :grasscmd:`v.in.pdal`. 
 
-.. important:: Unfortunately on MS Windows PDAL-based modules are
+.. important:: Unfortunately on MS Windows PDAL-based tools are
    missing due to compilation problems (`#1821
    <https://github.com/OSGeo/grass/issues/1821>`__) and libLAS-based
-   modules lack compression support.
+   tools lack compression support.
 
    Data can be converted from LAZ to LAS by :program:`pdal`
    command-line tool:
@@ -50,12 +50,12 @@ For importing LAS/LAZ data there are available two GRASS modules:
 
       pdal translate las_681_5644_1_th_2014-2019.laz las_681_5644_1_th_2014-2019.las
 
-Let's create a new GRASS location *jena-lidar* defined by
+Let's create a new GRASS project *jena-lidar* defined by
 :epsg:`25832` (the SRS in which the Lidar data is referenced).
 
-.. figure:: ../images/units/18/create-location-epsg.png
+.. figure:: ../images/units/18/create-project-epsg.png
 
-   Create a new GRASS location by specifying EPSG code (*Select CRS
+   Create a new GRASS project by specifying EPSG code (*Select CRS
    from a list by EPSG or description*).
       
 Raster processing
@@ -98,10 +98,10 @@ Basic metadata about created raster map can be obtained by
 Filling gaps
 ^^^^^^^^^^^^
 
-There are several GRASS modules for filling gaps in raster maps like
-:grasscmd:`r.fillnulls` or :grasscmd:`r.fill.stats`. The first module
+There are several GRASS tools for filling gaps in raster maps like
+:grasscmd:`r.fillnulls` or :grasscmd:`r.fill.stats`. The first tool
 is based on spline interpolation, the second fills gaps with
-interpolated values using IDW. Let's use the second module which fill
+interpolated values using IDW. Let's use the second tool which fill
 nulls rapidly compared to :grasscmd:`r.fillnulls`. By :option:`-k`
 flag it is ensured that original values will be kept untouched. Only
 cells with no-data value will be modified.
@@ -169,7 +169,7 @@ map. That is reason why :grasscmd:`g.region` can run for a while.
 Point density is calculated for map (square) unit.
 
 Basic metadata can be printed by :grasscmd:`v.info` (since no topology
-is built, the module must scan all points in the map):
+is built, the tool must scan all points in the map):
 
 .. code-block:: bash
                    

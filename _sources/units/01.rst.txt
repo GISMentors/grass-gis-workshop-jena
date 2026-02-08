@@ -1,27 +1,26 @@
-Unit 01 - About GRASS GIS
+Unit 01 - About GRASS
 =========================
 
-**GRASS GIS**, commonly referred to as GRASS (Geographic Resources
-Analysis Support System), is a free and open-source Geographic
-Information System (GIS) software suite used for geospatial data
-management and analysis, image processing, graphics and maps
-production, spatial modelling, and visualization. GRASS GIS is
-currently used in academic and commercial settings around the world,
-as well as by many governmental agencies and environmental consulting
-companies. It is a founding member of the Open Source Geospatial
-Foundation (`OSGeo <http://www.osgeo.org>`__).
+**GRASS** (Geographic Resources Analysis Support System), is a free
+and open-source Geographic Information System (GIS) software suite
+used for geospatial data management and analysis, image processing,
+graphics and maps production, spatial modelling, and
+visualization. GRASS is currently used in academic and commercial
+settings around the world, as well as by many governmental agencies
+and environmental consulting companies. It is a founding member of the
+Open Source Geospatial Foundation (`OSGeo <http://www.osgeo.org>`__).
 
 Originally developed by the U.S. Army Construction Engineering
 Research Laboratories (USA-CERL, 1982-1995, see history of GRASS
 1.0-4.2 and 5beta), a branch of the US Army Corp of Engineers, as a
 tool for land management and environmental planning by the military,
-GRASS GIS has evolved into a powerful utility with a wide range of
+GRASS has evolved into a powerful utility with a wide range of
 applications in many different areas of applications and scientific
 research (source: https://grass.osgeo.org).
 
 .. youtube:: U3Hf0qI4JLc
 
-   GRASS GIS promo video from 1987
+   GRASS promo video from 1987
 
 .. tip:: Get higher quality video at `TIB AV-Portal
          <https://av.tib.eu/media/12963>`__.
@@ -48,7 +47,7 @@ In a nutshell
 * vector topology (confusing for GIS beginners, sometimes tricky to
   import broken GIS data)
 
-**When to use GRASS GIS?**
+**When to use GRASS?**
 
 * doing data analysis
 * working with topological vector data
@@ -63,7 +62,7 @@ In a nutshell
 
 * want to visualize geodata in an easy and quick way (use QGIS instead)
 * want to access simple features
-* being scared of location and mapsets ;-)
+* being scared of projects and mapsets ;-)
 * *add your point here...*
 
 How to install
@@ -93,7 +92,7 @@ There are basically two options:
 #. Traditional standalone installer
 #. OSGeo4W network installer
 
-.. tip:: GRASS GIS is also part of the `QGIS installer on Windows
+.. tip:: GRASS is also part of the `QGIS installer on Windows
    <https://qgis.org/en/site/forusers/download.html>`__. So if QGIS is
    already installed on your machine, you don't have to install GRASS
    GIS separately.
@@ -101,12 +100,12 @@ There are basically two options:
 Useful links
 -------------
 
-* `GRASS GIS homepage <https://grass.osgeo.org>`__
-* `GRASS GIS wiki <https://grasswiki.osgeo.org>`__: a lot of information, with examples
+* `GRASS homepage <https://grass.osgeo.org>`__
+* `GRASS tutorials <https://grass-tutorials.osgeo.org/>`__:
+  growing list of tutorials related to GRASS
+* `GRASS wiki <https://grasswiki.osgeo.org>`__: a lot of information, with examples
   and tutorials
-* `GRASS GIS user mailing list <http://lists.osgeo.org/mailman/listinfo/grass-user>`__:
+* `GRASS forum <https://discourse.osgeo.org/tag/grass>`__:
   the simpler and most used way to ask for support
-* `GRASS GIS on StackExchange <https://gis.stackexchange.com/questions/tagged/grass>`__:
+* `GRASS on StackExchange <https://gis.stackexchange.com/questions/tagged/grass>`__:
   another way to ask for support
-* `GRASS GIS tutorials <https://grass.osgeo.org/documentation/tutorials/>`__:
-  an incomplete list of tutorials related to GRASS GIS

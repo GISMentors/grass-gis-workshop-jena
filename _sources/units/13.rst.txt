@@ -55,7 +55,7 @@ Sample script to download: `ndvi-pygrass-univar-numpy.py
 <../_static/scripts/ndvi-pygrass-univar-numpy.py>`__
 
 .. task:: Compare computation speed of two sample scripts with C-based
-   :grasscmd:`r.univar` module.
+   :grasscmd:`r.univar` tool.
 
 Writing raster data
 -------------------
