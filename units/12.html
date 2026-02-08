@@ -226,6 +226,19 @@ accessible by keys. See list of changes below:</p>
 <span class="hll">           <span class="n">value</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;min_area&quot;</span><span class="p">])</span> <span class="o">/</span> <span class="mf">1e4</span><span class="p">,</span>
 </span>           <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;greater&quot;</span><span class="p">,</span>
            <span class="n">method</span><span class="o">=</span><span class="s2">&quot;reclass&quot;</span><span class="p">)</span>
+
+    <span class="n">Module</span><span class="p">(</span><span class="s2">&quot;r.grow.distance&quot;</span><span class="p">,</span>
+           <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+           <span class="nb">input</span><span class="o">=</span><span class="s2">&quot;ndvi_class_area&quot;</span><span class="p">,</span>
+<span class="hll">           <span class="n">value</span><span class="o">=</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;output&quot;</span><span class="p">],</span>
+</span>           <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;euclidean&quot;</span><span class="p">)</span>
+
+    <span class="n">Module</span><span class="p">(</span><span class="s2">&quot;r.colors&quot;</span><span class="p">,</span>
+<span class="hll">           <span class="nb">map</span><span class="o">=</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;output&quot;</span><span class="p">],</span>
+</span>           <span class="n">rules</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span>
+           <span class="n">stdin_</span><span class="o">=</span><span class="s2">&quot;1 grey</span><span class="se">\n</span><span class="s2">2 255 255 0</span><span class="se">\n</span><span class="s2">3 green&quot;</span><span class="p">,</span>
+           <span class="n">offset</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+           <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
 <figure class="align-center" id="id3">

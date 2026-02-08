@@ -94,8 +94,8 @@ accessible by keys. See list of changes below:
 
 .. literalinclude:: ../_static/scripts/ndvi-v4.py
    :language: python
-   :lines:  99-105
-   :emphasize-lines: 5
+   :lines:  99-118
+   :emphasize-lines: 5, 12, 16
       
 .. figure:: ../images/units/12/call-ndvi-script.png
    :class: large
