@@ -6,20 +6,21 @@ In this unit EU-DEM global dataset provided by `Copernicus programme
 will be used. Jena region is covered by tile E40N30. Be aware that
 EU-DEM tiles covers large regions (4GB per tile).
 
-.. important:: Note that a new Copernicus DEM product is available at
-   `Copernicus Contributing Missions Online
-   <https://spacedata.copernicus.eu/collections/copernicus-digital-elevation-model>`__.
+.. important:: Note that a new Copernicus DEM product is available from
+   `Copernicus Data Space Ecosystem
+   <https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM>`__.
 
-Normally :grasscmd:`r.import` could be used to import and
-automatically reproject data into target project. In our case there
-is no need to import into GRASS a whole big DEM tile. By using ``-r``
-flag of :grasscmd:`r.in.gdal` GRASS tool only a subregion covering
-AOI can be imported. Unfortunately :grasscmd:`r.import` do not offer
-such flag. This is a reason why data will be reprojected
-manually. Input data will be imported into a new project
-(ETRS89-extended / LAEA Europe :epsg:`3035`). In the next step
-imported data will be reprojected into target *jena-region*
-(WGS 84 / UTM zone 32N :epsg:`32632`).
+The DEM tile can be imported and automatically reprojected into the
+target project (*jena-region*) similarly as other input data used in
+this course. However, it is unnecessary to import the entire DEM tile
+into GRASS; only the portion covering the area of interest (AOI) is
+required. By using the ``-r`` flag of the :grasscmd:`r.in.gdal` tool,
+it is possible to import only a subregion corresponding to the
+AOI. Unfortunately, the :grasscmd:`r.import` module does not provide
+this option. For this reason, the data are reprojected manually. The
+input data are first imported into a new project (ETRS89-extended /
+LAEA Europe, :epsg:`3035`) and subsequently reprojected into the
+target *jena-region* (WGS 84 / UTM zone 32N, :epsg:`32632`).
 
 .. note:: In order to save disk space the original EU-DEM tile was
    clipped by larger region than Jena AOI. Modified tile is available
@@ -29,9 +30,9 @@ Create project for data import
 -------------------------------
 
 EU-DEM dataset is provided in ETRS89-extended / LAEA Europe
-(:epsg:`3035`). Start a new GRASS session and create a new project
-*jena-eu-dem* based on input :file:`eu-dem/dem_sample.tif`
-file as described in :ref:`Unit 02 <create-project>`) or from EPSG code.
+(:epsg:`3035`). Create a new GRASS project *jena-eu-dem* based on
+input :file:`eu-dem/dem_sample.tif` file as described in :ref:`Unit 02
+<create-project>`) or from EPSG code.
 
 .. important:: Skip data import provided by
                project wizard since only subregion defined by Jena city region is
