@@ -28,7 +28,7 @@ region.
 
    Launching :grasscmd:`v.clip` tool from :item:`Console` tab.
 
-Tools (tools) can be run from GUI dialogs, from :item:`Console` tab,
+Tools (formerly "Modules") can be run from GUI dialogs, from :item:`Console` tab,
 or by using Python API (see :doc:`10`). Figure bellow shows GUI dialog
 of :grasscmd:`v.clip` tool.
 
