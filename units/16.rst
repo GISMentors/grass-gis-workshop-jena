@@ -41,6 +41,20 @@ fills a lake to a target water level from a given start point or seed
 raster. The resulting raster map contains cells with values
 representing lake depth (NULL for all other cells beyond the lake).
 
+.. _create-mapset:
+   
+.. note:: Before running :grasscmd:`r.lake` let's start **organizing
+   our work**. Till now we used PERMANENT mapsets only. There is input
+   data like DEM, Jena city region, cloud mask vector map, Sentinel
+   bands, results of NDVI computation and so on. Data organization can
+   be improved by using multiple mapsets. Let's create a new mapset
+   *flooding* in the current project *jena-region*. New mapset from
+   :item:`Data` tab or by :grasscmd:`g.mapset` tool.
+
+   .. figure:: ../images/units/16/create_mapset.png
+           
+      Create a new mapset in :item:`Data` tab.   
+
 The :grasscmd:`r.lake` requires seeds coordinates and water level to
 be defined. The coordinates can be set also interactively as
 :numref:`r-lake-coord` shows.
@@ -72,20 +86,6 @@ tool:
            
    Query DEM layer for an elevation value.
 
-.. _create-mapset:
-   
-.. note:: Before running :grasscmd:`r.lake` let's start **organizing
-   our work**. Till now we used PERMANENT mapsets only. There is input
-   data like DEM, Jena city region, cloud mask vector map, Sentinel
-   bands, results of NDVI computation and so on. Data organization can
-   be improved by using multiple mapsets. Let's create a new mapset
-   *flooding* in the current project *jena-region*. New mapset from
-   :item:`Data` tab or by :grasscmd:`g.mapset` tool.
-
-   .. figure:: ../images/units/16/create_mapset.png
-           
-      Create a new mapset in :item:`Data` tab.
-         
 Before starting computation the computation region have to be set
 based on :map:`dem` raster map.
 
