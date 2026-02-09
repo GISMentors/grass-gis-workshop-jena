@@ -47,19 +47,20 @@ will be used. Jena region is covered by tile E40N30. Be aware that
 EU-DEM tiles covers large regions (4GB per tile).</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>Note that a new Copernicus DEM product is available at
-<a class="reference external" href="https://spacedata.copernicus.eu/collections/copernicus-digital-elevation-model">Copernicus Contributing Missions Online</a>.</p>
+<p>Note that a new Copernicus DEM product is available from
+<a class="reference external" href="https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM">Copernicus Data Space Ecosystem</a>.</p>
 </div>
-<p>Normally <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.import.html">r.import</a> could be used to import and
-automatically reproject data into target project. In our case there
-is no need to import into GRASS a whole big DEM tile. By using <code class="docutils literal notranslate"><span class="pre">-r</span></code>
-flag of <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.in.gdal.html">r.in.gdal</a> GRASS tool only a subregion covering
-AOI can be imported. Unfortunately <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.import.html">r.import</a> do not offer
-such flag. This is a reason why data will be reprojected
-manually. Input data will be imported into a new project
-(ETRS89-extended / LAEA Europe <a class="reference external" href="https://epsg.io/3035">EPSG:3035</a>). In the next step
-imported data will be reprojected into target <em>jena-region</em>
-(WGS 84 / UTM zone 32N <a class="reference external" href="https://epsg.io/32632">EPSG:32632</a>).</p>
+<p>The DEM tile can be imported and automatically reprojected into the
+target project (<em>jena-region</em>) similarly as other input data used in
+this course. However, it is unnecessary to import the entire DEM tile
+into GRASS; only the portion covering the area of interest (AOI) is
+required. By using the <code class="docutils literal notranslate"><span class="pre">-r</span></code> flag of the <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.in.gdal.html">r.in.gdal</a> tool,
+it is possible to import only a subregion corresponding to the
+AOI. Unfortunately, the <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.import.html">r.import</a> module does not provide
+this option. For this reason, the data are reprojected manually. The
+input data are first imported into a new project (ETRS89-extended /
+LAEA Europe, <a class="reference external" href="https://epsg.io/3035">EPSG:3035</a>) and subsequently reprojected into the
+target <em>jena-region</em> (WGS 84 / UTM zone 32N, <a class="reference external" href="https://epsg.io/32632">EPSG:32632</a>).</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>In order to save disk space the original EU-DEM tile was
@@ -69,9 +70,8 @@ from <code class="file docutils literal notranslate"><span class="pre">eu-dem</s
 <section id="create-project-for-data-import">
 <h2>Create project for data import<a class="headerlink" href="#create-project-for-data-import" title="Permalink to this heading">¶</a></h2>
 <p>EU-DEM dataset is provided in ETRS89-extended / LAEA Europe
-(<a class="reference external" href="https://epsg.io/3035">EPSG:3035</a>). Start a new GRASS session and create a new project
-<em>jena-eu-dem</em> based on input <code class="file docutils literal notranslate"><span class="pre">eu-dem/dem_sample.tif</span></code>
-file as described in <a class="reference internal" href="02.html#create-project"><span class="std std-ref">Unit 02</span></a>) or from EPSG code.</p>
+(<a class="reference external" href="https://epsg.io/3035">EPSG:3035</a>). Create a new GRASS project <em>jena-eu-dem</em> based on
+input <code class="file docutils literal notranslate"><span class="pre">eu-dem/dem_sample.tif</span></code> file as described in <a class="reference internal" href="02.html#create-project"><span class="std std-ref">Unit 02</span></a>) or from EPSG code.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>Skip data import provided by

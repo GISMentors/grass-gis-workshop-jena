@@ -78,34 +78,6 @@ dataset as <code class="file docutils literal notranslate"><span class="pre">osm
 fills a lake to a target water level from a given start point or seed
 raster. The resulting raster map contains cells with values
 representing lake depth (NULL for all other cells beyond the lake).</p>
-<p>The <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.lake.html">r.lake</a> requires seeds coordinates and water level to
-be defined. The coordinates can be set also interactively as
-<a class="reference internal" href="#r-lake-coord"><span class="std std-numref">Fig. 90</span></a> shows.</p>
-<figure class="align-center" id="id2">
-<span id="r-lake-coord"></span><img alt="../_images/r-lake-coords.png" class="large" src="../_images/r-lake-coords.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 90 </span><span class="caption-text">Set seed coordinates interactively from map display.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
-</figcaption>
-</figure>
-<p>Height of seed point can be determined by querying DEM map layer
-<a class="reference internal" href="../_images/info.png"><img alt="grass-info" src="../_images/info.png" style="width: 1.5em;" /></a> <sup>Query raster/vector map(s)</sup> from Map Display
-toolbar (see <a class="reference internal" href="#dem-what"><span class="std std-numref">Fig. 91</span></a>) or directly using <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.what.html">r.what</a>
-tool:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.what<span class="w"> </span><span class="nv">map</span><span class="o">=</span>dem<span class="w"> </span><span class="nv">coordinates</span><span class="o">=</span><span class="m">681734</span>,5644423
-</pre></div>
-</div>
-<figure class="align-center" id="id3">
-<span id="dem-what"></span><img alt="../_images/goto-coordinates.png" src="../_images/goto-coordinates.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 91 </span><span class="caption-text">Select <span class="item">Go to coordinates</span>.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
-</figcaption>
-</figure>
-<figure class="align-center" id="id4">
-<img alt="../_images/dem-what.png" class="large" src="../_images/dem-what.png" />
-<figcaption>
-<p><span class="caption-number">Fig. 92 </span><span class="caption-text">Query DEM layer for an elevation value.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
-</figcaption>
-</figure>
 <div class="admonition note" id="create-mapset">
 <p class="admonition-title">Note</p>
 <p>Before running <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.lake.html">r.lake</a> let’s start <strong>organizing
@@ -115,13 +87,41 @@ bands, results of NDVI computation and so on. Data organization can
 be improved by using multiple mapsets. Let’s create a new mapset
 <em>flooding</em> in the current project <em>jena-region</em>. New mapset from
 <span class="item">Data</span> tab or by <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/g.mapset.html">g.mapset</a> tool.</p>
-<figure class="align-center" id="id5">
+<figure class="align-center" id="id2">
 <img alt="../_images/create_mapset.png" src="../_images/create_mapset.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 93 </span><span class="caption-text">Create a new mapset in <span class="item">Data</span> tab.</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 90 </span><span class="caption-text">Create a new mapset in <span class="item">Data</span> tab.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 </div>
+<p>The <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.lake.html">r.lake</a> requires seeds coordinates and water level to
+be defined. The coordinates can be set also interactively as
+<a class="reference internal" href="#r-lake-coord"><span class="std std-numref">Fig. 91</span></a> shows.</p>
+<figure class="align-center" id="id3">
+<span id="r-lake-coord"></span><img alt="../_images/r-lake-coords.png" class="large" src="../_images/r-lake-coords.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 91 </span><span class="caption-text">Set seed coordinates interactively from map display.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>Height of seed point can be determined by querying DEM map layer
+<a class="reference internal" href="../_images/info.png"><img alt="grass-info" src="../_images/info.png" style="width: 1.5em;" /></a> <sup>Query raster/vector map(s)</sup> from Map Display
+toolbar (see <a class="reference internal" href="#dem-what"><span class="std std-numref">Fig. 92</span></a>) or directly using <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.what.html">r.what</a>
+tool:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.what<span class="w"> </span><span class="nv">map</span><span class="o">=</span>dem<span class="w"> </span><span class="nv">coordinates</span><span class="o">=</span><span class="m">681734</span>,5644423
+</pre></div>
+</div>
+<figure class="align-center" id="id4">
+<span id="dem-what"></span><img alt="../_images/goto-coordinates.png" src="../_images/goto-coordinates.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 92 </span><span class="caption-text">Select <span class="item">Go to coordinates</span>.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="id5">
+<img alt="../_images/dem-what.png" class="large" src="../_images/dem-what.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 93 </span><span class="caption-text">Query DEM layer for an elevation value.</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>Before starting computation the computation region have to be set
 based on <span class="map">dem</span> raster map.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>g.region<span class="w"> </span><span class="nv">raster</span><span class="o">=</span>dem
