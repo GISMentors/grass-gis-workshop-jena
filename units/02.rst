@@ -72,7 +72,7 @@ Create a new project
 ---------------------
 
 By clicking on :item:`Create new Project` button in the tooltip (or by
-|grass-project-add| from the toolbar) the wizard appears. A new GRASS
+|grass-location-add| from the toolbar) the wizard appears. A new GRASS
 project can be easily created using :wikipedia:`EPSG` codes or
 user-defined geodata.
 
