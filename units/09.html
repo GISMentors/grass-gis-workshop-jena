@@ -46,9 +46,9 @@
 in a current computation region, it would be better to define region
 based on user input.</p>
 <p>NDVI values range from +1.0 to -1.0. Areas of barren rock, sand, or
-snow usually show very low NDVI values (less than 0.1). Sparse
+snow usually show very low NDVI values (less than 0.2). Sparse
 vegetation such as shrubs and grasslands or senescing crops may result
-in moderate NDVI values (approximately between 0.2 and 0.5). High NDVI values
+in moderate NDVI values (approximately between 0.2 and 0.6). High NDVI values
 (approximately between 0.6 and 1.0) correspond to dense vegetation such as that
 found in temperate and tropical forests or crops at their peak growth
 stage. Let’s classify NDVI into 3 major classes:</p>
@@ -75,7 +75,6 @@ following steps:</p>
 <p>Overview of commands below:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>v.overlay<span class="w"> </span><span class="nv">ainput</span><span class="o">=</span>jena_boundary<span class="w"> </span><span class="nv">binput</span><span class="o">=</span>MaskFeature<span class="w"> </span><span class="nv">operator</span><span class="o">=</span>not<span class="w"> </span><span class="nv">output</span><span class="o">=</span>region_mask
 g.region<span class="w"> </span><span class="nv">vector</span><span class="o">=</span>region_mask<span class="w"> </span><span class="nv">align</span><span class="o">=</span>L2A_T32UPB_20170706T102021_B04_10m
-r.mask<span class="w"> </span>-r
 r.mask<span class="w"> </span><span class="nv">vector</span><span class="o">=</span>region_mask
 i.vi<span class="w"> </span><span class="nv">red</span><span class="o">=</span>L2A_T32UPB_20170706T102021_B04_10m<span class="w"> </span><span class="nv">output</span><span class="o">=</span>ndvi<span class="w"> </span><span class="nv">nir</span><span class="o">=</span>L2A_T32UPB_20170706T102021_B08_10m
 r.recode<span class="w"> </span><span class="nv">input</span><span class="o">=</span>ndvi<span class="w"> </span><span class="nv">output</span><span class="o">=</span>ndvi_class<span class="w"> </span><span class="nv">rules</span><span class="o">=</span>reclass.txt

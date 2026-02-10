@@ -6,9 +6,9 @@ in a current computation region, it would be better to define region
 based on user input. 
 
 NDVI values range from +1.0 to -1.0. Areas of barren rock, sand, or
-snow usually show very low NDVI values (less than 0.1). Sparse
+snow usually show very low NDVI values (less than 0.2). Sparse
 vegetation such as shrubs and grasslands or senescing crops may result
-in moderate NDVI values (approximately between 0.2 and 0.5). High NDVI values
+in moderate NDVI values (approximately between 0.2 and 0.6). High NDVI values
 (approximately between 0.6 and 1.0) correspond to dense vegetation such as that
 found in temperate and tropical forests or crops at their peak growth
 stage. Let's classify NDVI into 3 major classes:
@@ -39,7 +39,6 @@ Overview of commands below:
 
    v.overlay ainput=jena_boundary binput=MaskFeature operator=not output=region_mask
    g.region vector=region_mask align=L2A_T32UPB_20170706T102021_B04_10m
-   r.mask -r
    r.mask vector=region_mask
    i.vi red=L2A_T32UPB_20170706T102021_B04_10m output=ndvi nir=L2A_T32UPB_20170706T102021_B08_10m
    r.recode input=ndvi output=ndvi_class rules=reclass.txt
