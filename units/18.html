@@ -136,6 +136,14 @@ interpolated values using IDW. Let’s use the second tool which fill
 nulls rapidly compared to <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.fillnulls.html">r.fillnulls</a>. By <code class="xref std std-option docutils literal notranslate"><span class="pre">-k</span></code>
 flag it is ensured that original values will be kept untouched. Only
 cells with no-data value will be modified.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Don’t forget to adjust computation region before running
+<a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/r.fillnulls.html">r.fillnulls</a>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>g.region<span class="w"> </span><span class="nv">raster</span><span class="o">=</span>las_681_5644
+</pre></div>
+</div>
+</div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>r.fill.stats<span class="w"> </span>-k<span class="w"> </span><span class="nv">input</span><span class="o">=</span>las_681_5644<span class="w"> </span><span class="nv">output</span><span class="o">=</span>las_681_5644_filled
 </pre></div>
 </div>
