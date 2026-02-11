@@ -32,7 +32,7 @@ In the next step the exported model into Python will be improved:
 .. literalinclude:: ../_static/scripts/modis-date-stats.py
    :language: python
    :linenos:
-   :emphasize-lines: 18-29,34-35,37,44-47,50-52,60-61,72,74-77
+   :emphasize-lines: 18-29,34-35,37,44-47,50-52,60-61,65,72,74-77
 
 Sample script to download: `modis-date-stats.py
 <../_static/scripts/modis-date-stats.py>`__

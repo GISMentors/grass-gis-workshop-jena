@@ -167,6 +167,7 @@ for a single raster map.</p>
 <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/t.rast.aggregate.html">t.rast.aggregate</a>. Based on specified <span class="param">granularity</span>
 a new temporal dataset with aggregated data is created.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.aggregate<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_c<span class="w"> </span><span class="nv">output</span><span class="o">=</span>modis_cm<span class="w"> </span><span class="nv">basename</span><span class="o">=</span>cm<span class="w"> </span><span class="nv">granularity</span><span class="o">=</span><span class="s2">&quot;1 months&quot;</span><span class="w"> </span><span class="nv">nproc</span><span class="o">=</span><span class="m">3</span>
+t.rast.colors<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_cm<span class="w"> </span><span class="nv">color</span><span class="o">=</span>celsius
 </pre></div>
 </div>
 <p>Statistics can be computed by <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/t.rast.univar.html">t.rast.univar</a>.</p>
@@ -182,17 +183,13 @@ a new temporal dataset with aggregated data is created.</p>
 <h2>Data extraction<a class="headerlink" href="#data-extraction" title="Permalink to this heading">¶</a></h2>
 <p>A new space time dataset only with subset of data can be created by
 <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/t.rast.extract.html">t.rast.extract</a>. Example for the four seasons below.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_c<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt;= &#39;2023-03-20&#39; and start_time &lt; &#39;2023-06-20&#39;&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="nv">output</span><span class="o">=</span>modis_spring
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_c<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt;= &#39;2023-03-20&#39; and start_time &lt; &#39;2023-06-20&#39;&quot;</span><span class="w"> </span><span class="nv">output</span><span class="o">=</span>modis_spring
 
-t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_c<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt;= &#39;2023-06-20&#39; and start_time &lt; &#39;2023-09-22&#39;&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="nv">output</span><span class="o">=</span>modis_summer
+t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_c<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt;= &#39;2023-06-20&#39; and start_time &lt; &#39;2023-09-22&#39;&quot;</span><span class="w"> </span><span class="nv">output</span><span class="o">=</span>modis_summer
 
-t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_c<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt;= &#39;2023-09-22&#39; and start_time &lt; &#39;2023-12-21&#39;&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="nv">output</span><span class="o">=</span>modis_autumn
+t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_c<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt;= &#39;2023-09-22&#39; and start_time &lt; &#39;2023-12-21&#39;&quot;</span><span class="w"> </span><span class="nv">output</span><span class="o">=</span>modis_autumn
 
-t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_c<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt;= &#39;2022-12-21&#39; and start_time &lt; &#39;2023-03-20&#39;&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="nv">output</span><span class="o">=</span>modis_winter
+t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_c<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt;= &#39;2022-12-21&#39; and start_time &lt; &#39;2023-03-20&#39;&quot;</span><span class="w"> </span><span class="nv">output</span><span class="o">=</span>modis_winter
 </pre></div>
 </div>
 <p>Another aggregation method is based on <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/t.rast.series.html">t.rast.series</a>, it
