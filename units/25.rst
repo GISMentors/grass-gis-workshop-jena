@@ -157,6 +157,7 @@ a new temporal dataset with aggregated data is created.
 .. code-block:: bash
                           
    t.rast.aggregate input=modis_c output=modis_cm basename=cm granularity="1 months" nproc=3
+   t.rast.colors input=modis_cm color=celsius
 
 Statistics can be computed by :grasscmd:`t.rast.univar`.
 
@@ -178,17 +179,13 @@ A new space time dataset only with subset of data can be created by
 
 .. code-block:: bash
                           
-   t.rast.extract input=modis_c where="start_time >= '2023-03-20' and start_time < '2023-06-20'" \
-   output=modis_spring
+   t.rast.extract input=modis_c where="start_time >= '2023-03-20' and start_time < '2023-06-20'" output=modis_spring
 
-   t.rast.extract input=modis_c where="start_time >= '2023-06-20' and start_time < '2023-09-22'" \
-   output=modis_summer
+   t.rast.extract input=modis_c where="start_time >= '2023-06-20' and start_time < '2023-09-22'" output=modis_summer
                 
-   t.rast.extract input=modis_c where="start_time >= '2023-09-22' and start_time < '2023-12-21'" \
-   output=modis_autumn
+   t.rast.extract input=modis_c where="start_time >= '2023-09-22' and start_time < '2023-12-21'" output=modis_autumn
                 
-   t.rast.extract input=modis_c where="start_time >= '2022-12-21' and start_time < '2023-03-20'" \
-   output=modis_winter
+   t.rast.extract input=modis_c where="start_time >= '2022-12-21' and start_time < '2023-03-20'" output=modis_winter
 
 Another aggregation method is based on :grasscmd:`t.rast.series`, it
 allows to aggregate space time raster dataset or part of it by various
