@@ -112,7 +112,7 @@ where data should be saved.
 
    i.sentinel.download map=jena_boundary producttype=S2MSI2A settings=sentinel.txt \
    start=2025-04-01 end=2025-10-01 area_relation=Contains clouds=10 \
-   limit=1 output=sentinel_2025
+   limit=1 output=geodata/sentinel/2025
 
 .. note:: Note all scenes are NOT available online. In this case the
    tool fails, try to download affected scene in the next days.
