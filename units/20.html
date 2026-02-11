@@ -44,8 +44,8 @@
 <h1>Unit 20 - Sentinel downloader<a class="headerlink" href="#unit-20-sentinel-downloader" title="Permalink to this heading">¶</a></h1>
 <p>There are plenty of libraries or tools which allow downloading
 Sentinel products.</p>
-<p>For GRASS there is the <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/addons/i.sentinel.html">i.sentinel</a> toolbox.
-It consists of six GRASS addon tools:</p>
+<p>For GRASS there are the <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/addons/i.sentinel.html">i.sentinel</a> toolbox. It
+consists of six GRASS addon tools:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/addons/i.sentinel.coverage.html">i.sentinel.coverage</a></p></li>
 <li><p><a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/addons/i.sentinel.download.html">i.sentinel.download</a></p></li>
@@ -60,30 +60,22 @@ from addons</span>.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>g.extension<span class="w"> </span><span class="nv">extension</span><span class="o">=</span>i.sentinel
 </pre></div>
 </div>
-<figure class="align-center" id="id2">
+<figure class="align-center" id="id1">
 <img alt="../_images/g-extension1.png" src="../_images/g-extension1.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 107 </span><span class="caption-text">Install <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/addons/i.sentinel.html">i.sentinel</a> GRASS Addon.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 107 </span><span class="caption-text">Install <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/addons/i.sentinel.html">i.sentinel</a> GRASS Addon.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Note that <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/addons/i.sentinel.download.html">i.sentinel.download</a> requires
-also <a class="reference external" href="https://pypi.python.org/pypi/sentinelsat">sentinelsat</a> to
-be installed. It can be easily installed from the <span class="item">Console</span>
-tab by entering the command below.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>sentinelsat<span class="w"> </span>pandas
+<a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/addons/i.eodag.html">i.eodag</a> and also <a class="reference external" href="https://pypi.org/project/eodag/">eodag</a> package to be installed. It
+can be easily installed from the <span class="item">Console</span> tab by entering
+the command below.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>g.extension<span class="w"> </span><span class="nv">extension</span><span class="o">=</span>i.eodag
+python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>eodag
 </pre></div>
 </div>
-</div>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
-<p>Copernicus Open Access Hub was closed at the end of
-October 2023 (<a class="reference external" href="https://scihub.copernicus.eu/">source</a>). Copernicus Sentinel data are
-now available in the Copernicus Data Space Ecosystem (CDSE). <strong>Currently,
-sentinelsat package is not compatible with the new CDSE.</strong> See <a class="reference external" href="https://github.com/sentinelsat/sentinelsat?tab=readme-ov-file#sentinelsat">sentinelsat Github repository</a>
-for details. See also related <a class="reference external" href="https://github.com/OSGeo/grass-addons/issues/883">GRASS issue</a> reported on
-GitHub.</p>
 </div>
 <p><a class="reference internal" href="15.html#switch-project"><span class="std std-ref">Switch</span></a> to <cite>jena-region</cite> project which was created in <a class="reference internal" href="02.html"><span class="doc">Unit 02 - First steps</span></a>.</p>
 <section id="download-data">
@@ -92,18 +84,18 @@ GitHub.</p>
 (AOI) and perform the NDVI calculation as described in <a class="reference internal" href="05.html"><span class="doc">Unit 05 - Raster processing</span></a>
 (implemented as a model in <a class="reference internal" href="08.html"><span class="doc">Unit 08 - Modeler</span></a> or as a Python script in
 <a class="reference internal" href="11.html"><span class="doc">Unit 11 - PyGRASS scripting</span></a>). AOI region is defined by Jena city region created in
-<a class="reference internal" href="03.html"><span class="doc">Unit 03 - Data Management</span></a>. <a class="reference external" href="https://sentinels.copernicus.eu/web/sentinel/user-guides/sentinel-2-msi/product-types/level-2a/">Sentinel-2 L2A products</a>
+<a class="reference internal" href="03.html"><span class="doc">Unit 03 - Data Management</span></a>. <a class="reference external" href="https://sentinels.copernicus.eu/sentinel-data-access/sentinel-products/sentinel-2-data-products/collection-1-level-2a">Sentinel-2 L2A products</a>
 will be used to avoid computing atmospheric corrections.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>Pre-downloaded Sentinel scenes are available in the
-sample dataset (directory <code class="file docutils literal notranslate"><span class="pre">sentinel/2019</span></code>). Readers can
-continue with <a class="reference internal" href="#sentinel-import"><span class="std std-ref">importing sample data</span></a>.</p>
+sample dataset (directory <code class="file docutils literal notranslate"><span class="pre">sentinel/2019</span></code>). You may continue
+with <a class="reference internal" href="#sentinel-import"><span class="std std-ref">importing sample data</span></a> section.</p>
 </div>
 <p>Let’s search for the latest available product by means of
 <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/addons/i.sentinel.download.html">i.sentinel.download</a>. Setting the <span class="param">-l</span> flag, the result will only
 be printed. The download procedure will be performed later. In order to
-search and download Sentinel products from the Copernicus Open Access Hub,
+search and download Sentinel products from the Copernicus Data Space Ecosystem,
 you have to create an account first. See the manual page of
 <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/addons/i.sentinel.download.html">i.sentinel.download</a> tool for details. Create a new text
 file <code class="file docutils literal notranslate"><span class="pre">sentinel.txt</span></code> containing two lines (username and
@@ -111,51 +103,48 @@ password).</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>To get username and password you need to register at the
-<a class="reference external" href="https://scihub.copernicus.eu/">Copernicus Open Access Hub</a>,
-see <a class="reference external" href="https://scihub.copernicus.eu/dhus/#/self-registration">Register new account</a>
+<a class="reference external" href="https://dataspace.copernicus.eu/">Copernicus Data Space Ecosystem</a>,
+see <a class="reference external" href="https://identity.dataspace.copernicus.eu/auth/realms/CDSE/login-actions/registration?client_id=account-console&amp;tab_id=RPclMHTeCMQ">Create a new account</a>
 page for signing up.</p>
 </div>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>i.sentinel.download<span class="w"> </span>-l<span class="w"> </span><span class="nv">map</span><span class="o">=</span>jena_boundary<span class="w"> </span><span class="nv">producttype</span><span class="o">=</span>S2MSI2A<span class="w"> </span><span class="nv">settings</span><span class="o">=</span>sentinel.txt
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">11</span> <span class="n">Sentinel</span> <span class="n">product</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">found</span>
-<span class="mi">37438</span><span class="n">a05</span><span class="o">-</span><span class="n">f795</span><span class="o">-</span><span class="mf">4e77</span><span class="o">-</span><span class="n">b68e</span><span class="o">-</span><span class="mi">3</span><span class="n">a3c0ec5f04b</span> <span class="o">...</span> <span class="mi">2022</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">06</span><span class="n">T10</span><span class="p">:</span><span class="mi">23</span><span class="p">:</span><span class="mi">19</span><span class="n">Z</span>  <span class="mi">4</span><span class="o">%</span> <span class="n">S2MSI2A</span> <span class="mf">1.08</span> <span class="n">GB</span>
-<span class="n">b4bc9d3b</span><span class="o">-</span><span class="mf">1e1</span><span class="n">a</span><span class="o">-</span><span class="mi">4</span><span class="n">cfd</span><span class="o">-</span><span class="n">bd01</span><span class="o">-</span><span class="mi">14</span><span class="n">c21a596e8a</span> <span class="o">...</span> <span class="mi">2022</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">05</span><span class="n">T10</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mi">19</span><span class="n">Z</span> <span class="mi">64</span><span class="o">%</span> <span class="n">S2MSI2A</span> <span class="mf">1.03</span> <span class="n">GB</span>
-<span class="n">f2a604a6</span><span class="o">-</span><span class="mf">8e50</span><span class="o">-</span><span class="mi">4</span><span class="n">c62</span><span class="o">-</span><span class="n">b98b</span><span class="o">-</span><span class="mi">22077365</span><span class="n">df7a</span> <span class="o">...</span> <span class="mi">2022</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">21</span><span class="n">T10</span><span class="p">:</span><span class="mi">23</span><span class="p">:</span><span class="mi">31</span><span class="n">Z</span> <span class="mi">65</span><span class="o">%</span> <span class="n">S2MSI2A</span> <span class="mf">933.01</span> <span class="n">MB</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">14</span> <span class="n">scene</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">found</span><span class="o">.</span>
+<span class="n">S2C_MSIL2A_20260120T102341_N0511_R065_T32UPB_20260120T135514</span> <span class="mi">2026</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">20</span><span class="n">T10</span><span class="p">:</span><span class="mi">23</span><span class="p">:</span><span class="mi">41</span>   <span class="mi">0</span><span class="o">%</span> <span class="n">S2MSI2A</span> <span class="n">size_NA</span>
+<span class="n">S2B_MSIL2A_20251226T102339_N0511_R065_T32UPB_20251226T124209</span> <span class="mi">2025</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">26</span><span class="n">T10</span><span class="p">:</span><span class="mi">23</span><span class="p">:</span><span class="mi">39</span>  <span class="mi">71</span><span class="o">%</span> <span class="n">S2MSI2A</span> <span class="n">size_NA</span>
+<span class="n">S2A_MSIL2A_20251213T102441_N0511_R065_T32UPB_20251213T114209</span> <span class="mi">2025</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">13</span><span class="n">T10</span><span class="p">:</span><span class="mi">24</span><span class="p">:</span><span class="mi">41</span>  <span class="mi">75</span><span class="o">%</span> <span class="n">S2MSI2A</span> <span class="n">size_NA</span>
 <span class="o">...</span>
 </pre></div>
 </div>
-<p>By default the tool returns products for the last 60 days. Let’s
+<p>By default the tool returns scenes for the last 60 days. Let’s
 change the search period setting <span class="param">start</span> and <span class="param">end</span>
 options. To be sure that our AOI is fully covered by a Sentinel
 product we also set <span class="param">area_relation</span> option.  We will also limit
-products by <span class="param">clouds</span> coverage percentage threshold</p>
+scenes by <span class="param">clouds</span> coverage percentage threshold</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>i.sentinel.download<span class="w"> </span>-l<span class="w"> </span><span class="nv">map</span><span class="o">=</span>jena_boundary<span class="w"> </span><span class="nv">producttype</span><span class="o">=</span>S2MSI2A<span class="w"> </span><span class="nv">settings</span><span class="o">=</span>sentinel.txt<span class="w"> </span><span class="se">\</span>
-<span class="nv">start</span><span class="o">=</span><span class="m">2021</span>-04-01<span class="w"> </span><span class="nv">end</span><span class="o">=</span><span class="m">2021</span>-10-01<span class="w"> </span><span class="nv">area_relation</span><span class="o">=</span>Contains<span class="w"> </span><span class="nv">clouds</span><span class="o">=</span><span class="m">10</span>
+<span class="nv">start</span><span class="o">=</span><span class="m">2025</span>-04-01<span class="w"> </span><span class="nv">end</span><span class="o">=</span><span class="m">2025</span>-10-01<span class="w"> </span><span class="nv">area_relation</span><span class="o">=</span>Contains<span class="w"> </span><span class="nv">clouds</span><span class="o">=</span><span class="m">10</span>
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">6</span> <span class="n">Sentinel</span> <span class="n">product</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">found</span>
-<span class="n">a844500a</span><span class="o">-</span><span class="mi">049</span><span class="n">f</span><span class="o">-</span><span class="mi">46</span><span class="n">a3</span><span class="o">-</span><span class="mi">92</span><span class="n">de</span><span class="o">-</span><span class="n">bcda2c38fc3c</span> <span class="o">...</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">31</span><span class="n">T10</span><span class="p">:</span><span class="mi">15</span><span class="p">:</span><span class="mi">59</span><span class="n">Z</span>  <span class="mi">2</span><span class="o">%</span> <span class="n">S2MSI2A</span> <span class="mf">1.09</span> <span class="n">GB</span>
-<span class="n">d5b73db9</span><span class="o">-</span><span class="mi">0</span><span class="n">acf</span><span class="o">-</span><span class="mi">401</span><span class="n">d</span><span class="o">-</span><span class="mi">9</span><span class="n">bf4</span><span class="o">-</span><span class="n">a6f199df1119</span> <span class="o">...</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">08</span><span class="n">T10</span><span class="p">:</span><span class="mi">15</span><span class="p">:</span><span class="mi">59</span><span class="n">Z</span>  <span class="mi">3</span><span class="o">%</span> <span class="n">S2MSI2A</span> <span class="mf">1.09</span> <span class="n">GB</span>
-<span class="n">b00d5dfd</span><span class="o">-</span><span class="mi">9</span><span class="n">cce</span><span class="o">-</span><span class="mi">48</span><span class="n">c6</span><span class="o">-</span><span class="n">a011</span><span class="o">-</span><span class="n">fd46b85de814</span> <span class="o">...</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">03</span><span class="n">T10</span><span class="p">:</span><span class="mi">20</span><span class="p">:</span><span class="mi">21</span><span class="n">Z</span>  <span class="mi">3</span><span class="o">%</span> <span class="n">S2MSI2A</span> <span class="mf">1.09</span> <span class="n">GB</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">7</span> <span class="n">scene</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">found</span><span class="o">.</span>
+<span class="n">S2A_MSIL2A_20250427T101701_N0511_R065_T32UPB_20250427T170513</span> <span class="mi">2025</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">27</span><span class="n">T10</span><span class="p">:</span><span class="mi">17</span><span class="p">:</span><span class="mi">01</span>   <span class="mi">0</span><span class="o">%</span> <span class="n">S2MSI2A</span> <span class="n">size_NA</span>
+<span class="n">S2C_MSIL2A_20250813T102041_N0511_R065_T32UPB_20250813T160110</span> <span class="mi">2025</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">13</span><span class="n">T10</span><span class="p">:</span><span class="mi">20</span><span class="p">:</span><span class="mi">41</span>   <span class="mi">0</span><span class="o">%</span> <span class="n">S2MSI2A</span> <span class="n">size_NA</span>
+<span class="n">S2C_MSIL2A_20250614T101621_N0511_R065_T32UPB_20250614T142405</span> <span class="mi">2025</span><span class="o">-</span><span class="mi">06</span><span class="o">-</span><span class="mi">14</span><span class="n">T10</span><span class="p">:</span><span class="mi">16</span><span class="p">:</span><span class="mi">21</span>   <span class="mi">2</span><span class="o">%</span> <span class="n">S2MSI2A</span> <span class="n">size_NA</span>
 <span class="o">...</span>
 </pre></div>
 </div>
-<p>Let’s download the desired product(s). Just remove the <span class="param">-l</span> flag and
+<p>Let’s download the desired scene(s). Just remove the <span class="param">-l</span> flag and
 add the <span class="param">output</span> option in order to define the path to the output directory
 where data should be saved.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>i.sentinel.download<span class="w"> </span><span class="nv">map</span><span class="o">=</span>jena_boundary<span class="w"> </span><span class="nv">producttype</span><span class="o">=</span>S2MSI2A<span class="w"> </span><span class="nv">settings</span><span class="o">=</span>sentinel.txt<span class="w"> </span><span class="se">\</span>
-<span class="nv">start</span><span class="o">=</span><span class="m">2021</span>-04-01<span class="w"> </span><span class="nv">end</span><span class="o">=</span><span class="m">2021</span>-10-01<span class="w"> </span><span class="nv">area_relation</span><span class="o">=</span>Contains<span class="w"> </span><span class="nv">clouds</span><span class="o">=</span><span class="m">10</span><span class="w"> </span><span class="se">\</span>
-<span class="nv">limit</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">output</span><span class="o">=</span>geodata/sentinel/2021
+<span class="nv">start</span><span class="o">=</span><span class="m">2025</span>-04-01<span class="w"> </span><span class="nv">end</span><span class="o">=</span><span class="m">2025</span>-10-01<span class="w"> </span><span class="nv">area_relation</span><span class="o">=</span>Contains<span class="w"> </span><span class="nv">clouds</span><span class="o">=</span><span class="m">10</span><span class="w"> </span><span class="se">\</span>
+<span class="nv">limit</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">output</span><span class="o">=</span>sentinel_2025
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Note all products are NOT available online. In this case the
-tool fails with <code class="docutils literal notranslate"><span class="pre">Product</span>
-<span class="pre">a844500a-049f-46a3-92de-bcda2c38fc3c</span> <span class="pre">is</span> <span class="pre">not</span>
-<span class="pre">online.</span> <span class="pre">Triggering</span> <span class="pre">retrieval</span> <span class="pre">from</span> <span class="pre">long</span> <span class="pre">term</span> <span class="pre">archive.</span></code> error
-message. Try to download affected product in the next days.</p>
+<p>Note all scenes are NOT available online. In this case the
+tool fails, try to download affected scene in the next days.</p>
 </div>
 </section>
 <section id="import-data">
@@ -191,23 +180,18 @@ useful to import cloud mask vector features by <span class="param">-c</span> fla
 <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/addons/i.sentinel.import.html">i.sentinel.import</a>, the tool doesn’t use cloud
 mask product stored in a SAFE directory.</p>
 </div>
-<div class="admonition-todo admonition" id="id1">
-<p class="admonition-title">Todo</p>
-<p>Fix <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/addons/i.sentinel.import.html">i.sentinel.import</a> <code class="xref std std-option docutils literal notranslate"><span class="pre">-c</span></code> flag to
-respect <code class="xref std std-option docutils literal notranslate"><span class="pre">pattern</span></code> parameter.</p>
-</div>
 <p>Now launch the NDVI sample script created in <a class="reference internal" href="12.html"><span class="doc">Unit 12 - Script User Interface</span></a> (<a class="reference external" href="../_static/scripts/ndvi-v4.py">ndvi-v4.py</a>) in order to compute NDVI classes
 (see processing workflow described in <a class="reference internal" href="09.html"><span class="doc">Unit 09 - Model tuning</span></a>).</p>
-<figure class="align-center" id="id3">
+<figure class="align-center" id="id2">
 <img alt="../_images/run-script1.png" src="../_images/run-script1.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 108 </span><span class="caption-text">Run script to compute NDVI classes.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 108 </span><span class="caption-text">Run script to compute NDVI classes.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
-<figure class="align-center" id="id4">
+<figure class="align-center" id="id3">
 <img alt="../_images/ndvi-classes.png" class="large" src="../_images/ndvi-classes.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 109 </span><span class="caption-text">Computed NDVI classes for given AOI.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+<p><span class="caption-number">Fig. 109 </span><span class="caption-text">Computed NDVI classes for given AOI.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </figcaption>
 </figure>
 </section>
