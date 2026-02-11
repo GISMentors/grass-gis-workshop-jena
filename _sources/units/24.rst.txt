@@ -93,9 +93,9 @@ by :grasscmdaddons:`i.modis.import`.
 
 .. code-block:: bash
 
-   i.modis.import -mw files=modis/listfileMOD11A2.061.txt outfile=tlist-mod.txt
+   i.modis.import -qmw files=modis/listfileMOD11A2.061.txt outfile=tlist-mod.txt
 
-   i.modis.import -mw files=modis/listfileMYD11A2.061.txt outfile=tlist-myd.txt
+   i.modis.import -qmw files=modis/listfileMYD11A2.061.txt outfile=tlist-myd.txt
 
 If ``-m`` flag is given mosaic from input tiles is created
 automatically, see :numref:`modis-mosaics`.

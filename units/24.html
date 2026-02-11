@@ -120,9 +120,9 @@ register and set up your account.</p>
 <span id="modis-import"></span><h2>Import data<a class="headerlink" href="#import-data" title="Permalink to this heading">¶</a></h2>
 <p>Input MODIS data can be imported and reprojected into target project
 by <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/addons/i.modis.import.html">i.modis.import</a>.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>i.modis.import<span class="w"> </span>-mw<span class="w"> </span><span class="nv">files</span><span class="o">=</span>modis/listfileMOD11A2.061.txt<span class="w"> </span><span class="nv">outfile</span><span class="o">=</span>tlist-mod.txt
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>i.modis.import<span class="w"> </span>-qmw<span class="w"> </span><span class="nv">files</span><span class="o">=</span>modis/listfileMOD11A2.061.txt<span class="w"> </span><span class="nv">outfile</span><span class="o">=</span>tlist-mod.txt
 
-i.modis.import<span class="w"> </span>-mw<span class="w"> </span><span class="nv">files</span><span class="o">=</span>modis/listfileMYD11A2.061.txt<span class="w"> </span><span class="nv">outfile</span><span class="o">=</span>tlist-myd.txt
+i.modis.import<span class="w"> </span>-qmw<span class="w"> </span><span class="nv">files</span><span class="o">=</span>modis/listfileMYD11A2.061.txt<span class="w"> </span><span class="nv">outfile</span><span class="o">=</span>tlist-myd.txt
 </pre></div>
 </div>
 <p>If <code class="docutils literal notranslate"><span class="pre">-m</span></code> flag is given mosaic from input tiles is created
