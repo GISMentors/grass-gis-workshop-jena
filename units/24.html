@@ -120,20 +120,13 @@ register and set up your account.</p>
 <span id="modis-import"></span><h2>Import data<a class="headerlink" href="#import-data" title="Permalink to this heading">¶</a></h2>
 <p>Input MODIS data can be imported and reprojected into target project
 by <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/addons/i.modis.import.html">i.modis.import</a>.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>i.modis.import<span class="w"> </span>-mw<span class="w"> </span><span class="nv">files</span><span class="o">=</span>modis/listfileMOD11A2.061.txt<span class="w"> </span><span class="se">\</span>
-<span class="nv">spectral</span><span class="o">=</span><span class="s1">&#39;( 1 0 0 0 1 0 0 0 0 0 0 0 )&#39;</span><span class="w"> </span><span class="nv">outfile</span><span class="o">=</span>tlist-mod.txt
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>i.modis.import<span class="w"> </span>-mw<span class="w"> </span><span class="nv">files</span><span class="o">=</span>modis/listfileMOD11A2.061.txt<span class="w"> </span><span class="nv">outfile</span><span class="o">=</span>tlist-mod.txt
 
-i.modis.import<span class="w"> </span>-mw<span class="w"> </span><span class="nv">files</span><span class="o">=</span>modis/listfileMYD11A2.061.txt<span class="w"> </span><span class="se">\</span>
-<span class="nv">spectral</span><span class="o">=</span><span class="s1">&#39;( 1 0 0 0 1 0 0 0 0 0 0 0 )&#39;</span><span class="w"> </span><span class="nv">outfile</span><span class="o">=</span>tlist-myd.txt
+i.modis.import<span class="w"> </span>-mw<span class="w"> </span><span class="nv">files</span><span class="o">=</span>modis/listfileMYD11A2.061.txt<span class="w"> </span><span class="nv">outfile</span><span class="o">=</span>tlist-myd.txt
 </pre></div>
 </div>
 <p>If <code class="docutils literal notranslate"><span class="pre">-m</span></code> flag is given mosaic from input tiles is created
 automatically, see <a class="reference internal" href="#modis-mosaics"><span class="std std-numref">Fig. 114</span></a>.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>See relevant <a class="reference external" href="https://github.com/OSGeo/grass-addons/blob/grass8/src/imagery/i.modis/libmodis/rmodislib.py#L78">source code</a>
-related to <code class="xref std std-option docutils literal notranslate"><span class="pre">spectral</span></code> option.</p>
-</div>
 <figure class="align-center" id="id3">
 <span id="modis-mosaics"></span><img alt="../_images/modis-mosaics.png" class="large" src="../_images/modis-mosaics.png" />
 <figcaption>
