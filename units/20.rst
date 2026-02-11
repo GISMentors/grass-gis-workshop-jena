@@ -1,6 +1,12 @@
 Unit 20 - Sentinel downloader
 =============================
 
+:ref:`Create a new mapset <create-mapset>` in *jena-region* project:
+`sentinel`.
+
+.. important:: Do not use dashes in the mapset name otherwise
+   :grasscmd:`t.rast.algebra` will most probably fail.
+
 There are plenty of libraries or tools which allow downloading
 Sentinel products.
 
