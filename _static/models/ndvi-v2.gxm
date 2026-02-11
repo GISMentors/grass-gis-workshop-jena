@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE gxm SYSTEM "grass-gxm.dtd">
 <gxm>
-    <window pos="26,23" size="1232,926" />
+    <window pos="1,32" size="1134,883" />
     <properties>
         <name>ndvi-v2</name>
         <description>NDVI computation version 2.</description>
@@ -43,14 +43,14 @@
             </parameter>
         </task>
     </action>
-    <action id="2" name="g.region" pos="1065,185" size="125,50">
+    <action id="2" name="g.region" pos="595,285" size="125,50">
         <task name="g.region">
             <flag name="overwrite" />
             <parameter name="vector">
                 <value>region_mask</value>
             </parameter>
             <parameter name="align">
-                <value>L2A_T32UPB_20170706T102021_B04_10m</value>
+                <value>L2A_T32UPB_20170706T102021_B04_10m@PERMANENT</value>
             </parameter>
         </task>
     </action>
@@ -177,18 +177,13 @@
         <relation dir="to" id="1" name="output">
         </relation>
     </data>
-    <data pos="1065,300" size="175,50">
-        <data-parameter prompt="raster">
-            <value>L2A_T32UPB_20170706T102021_B04_10m</value>
-        </data-parameter>
-        <relation dir="from" id="2" name="align">
-        </relation>
-    </data>
     <data pos="595,180" size="175,50">
         <data-parameter prompt="raster">
             <value>L2A_T32UPB_20170706T102021_B04_10m@PERMANENT</value>
         </data-parameter>
         <relation dir="from" id="4" name="red">
+        </relation>
+        <relation dir="from" id="2" name="align">
         </relation>
     </data>
     <data pos="375,290" size="175,50">
