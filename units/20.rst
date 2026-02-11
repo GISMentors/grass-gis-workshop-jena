@@ -4,8 +4,8 @@ Unit 20 - Sentinel downloader
 There are plenty of libraries or tools which allow downloading
 Sentinel products.
 
-For GRASS there is the :grasscmdaddons:`i.sentinel` toolbox.
-It consists of six GRASS addon tools:
+For GRASS there are the :grasscmdaddons:`i.sentinel` toolbox. It
+consists of six GRASS addon tools:
 
 * :grasscmdaddons:`i.sentinel.coverage`
 * :grasscmdaddons:`i.sentinel.download`
@@ -27,23 +27,15 @@ from addons`.
    Install :grasscmdaddons:`i.sentinel` GRASS Addon.
 
 .. note:: Note that :grasscmdaddons:`i.sentinel.download` requires
-   also `sentinelsat <https://pypi.python.org/pypi/sentinelsat>`__ to
-   be installed. It can be easily installed from the :item:`Console`
-   tab by entering the command below.
+   :grasscmdaddons:`i.eodag` and also `eodag
+   <https://pypi.org/project/eodag/>`__ package to be installed. It
+   can be easily installed from the :item:`Console` tab by entering
+   the command below.
 	
    .. code-block:: bash
-	
-      python3 -m pip install sentinelsat pandas
 
-.. important:: Copernicus Open Access Hub was closed at the end of
-   October 2023 (`source
-   <https://scihub.copernicus.eu/>`__). Copernicus Sentinel data are
-   now available in the Copernicus Data Space Ecosystem (CDSE). **Currently,
-   sentinelsat package is not compatible with the new CDSE.** See `sentinelsat Github repository
-   <https://github.com/sentinelsat/sentinelsat?tab=readme-ov-file#sentinelsat>`__
-   for details. See also related `GRASS issue
-   <https://github.com/OSGeo/grass-addons/issues/883>`__ reported on
-   GitHub.
+      g.extension extension=i.eodag                   
+      python3 -m pip install eodag
 
 :ref:`Switch <switch-project>` to `jena-region` project which was created in :doc:`02`.
 
@@ -55,17 +47,17 @@ Let's download suitable Sentinel products for our area of interest
 (implemented as a model in :doc:`08` or as a Python script in
 :doc:`11`). AOI region is defined by Jena city region created in
 :doc:`03`. `Sentinel-2 L2A products
-<https://sentinels.copernicus.eu/web/sentinel/user-guides/sentinel-2-msi/product-types/level-2a/>`__
+<https://sentinels.copernicus.eu/sentinel-data-access/sentinel-products/sentinel-2-data-products/collection-1-level-2a>`__
 will be used to avoid computing atmospheric corrections.
 
 .. important:: Pre-downloaded Sentinel scenes are available in the
-   sample dataset (directory :file:`sentinel/2019`). Readers can
-   continue with :ref:`importing sample data <sentinel-import>`.
+   sample dataset (directory :file:`sentinel/2019`). You may continue
+   with :ref:`importing sample data <sentinel-import>` section.
 
 Let's search for the latest available product by means of
 :grasscmdaddons:`i.sentinel.download`. Setting the :param:`-l` flag, the result will only
 be printed. The download procedure will be performed later. In order to
-search and download Sentinel products from the Copernicus Open Access Hub, 
+search and download Sentinel products from the Copernicus Data Space Ecosystem, 
 you have to create an account first. See the manual page of
 :grasscmdaddons:`i.sentinel.download` tool for details. Create a new text
 file :file:`sentinel.txt` containing two lines (username and
@@ -73,8 +65,8 @@ password).
 
 .. note::
    To get username and password you need to register at the 
-   `Copernicus Open Access Hub <https://scihub.copernicus.eu/>`__,
-   see `Register new account <https://scihub.copernicus.eu/dhus/#/self-registration>`__
+   `Copernicus Data Space Ecosystem <https://dataspace.copernicus.eu/>`__,
+   see `Create a new account <https://identity.dataspace.copernicus.eu/auth/realms/CDSE/login-actions/registration?client_id=account-console&tab_id=RPclMHTeCMQ>`__
    page for signing up.
 
 .. code-block:: bash
@@ -83,50 +75,47 @@ password).
 
 ::
 
-   11 Sentinel product(s) found
-   37438a05-f795-4e77-b68e-3a3c0ec5f04b ... 2022-01-06T10:23:19Z  4% S2MSI2A 1.08 GB
-   b4bc9d3b-1e1a-4cfd-bd01-14c21a596e8a ... 2022-02-05T10:21:19Z 64% S2MSI2A 1.03 GB
-   f2a604a6-8e50-4c62-b98b-22077365df7a ... 2022-01-21T10:23:31Z 65% S2MSI2A 933.01 MB
+   14 scene(s) found.
+   S2C_MSIL2A_20260120T102341_N0511_R065_T32UPB_20260120T135514 2026-01-20T10:23:41   0% S2MSI2A size_NA  
+   S2B_MSIL2A_20251226T102339_N0511_R065_T32UPB_20251226T124209 2025-12-26T10:23:39  71% S2MSI2A size_NA  
+   S2A_MSIL2A_20251213T102441_N0511_R065_T32UPB_20251213T114209 2025-12-13T10:24:41  75% S2MSI2A size_NA  
    ...
 
-By default the tool returns products for the last 60 days. Let's
+By default the tool returns scenes for the last 60 days. Let's
 change the search period setting :param:`start` and :param:`end`
 options. To be sure that our AOI is fully covered by a Sentinel
 product we also set :param:`area_relation` option.  We will also limit
-products by :param:`clouds` coverage percentage threshold
+scenes by :param:`clouds` coverage percentage threshold
        
 .. code-block:: bash
                 
    i.sentinel.download -l map=jena_boundary producttype=S2MSI2A settings=sentinel.txt \
-   start=2021-04-01 end=2021-10-01 area_relation=Contains clouds=10
+   start=2025-04-01 end=2025-10-01 area_relation=Contains clouds=10
 
 ::
 
-   6 Sentinel product(s) found
-   a844500a-049f-46a3-92de-bcda2c38fc3c ... 2021-05-31T10:15:59Z  2% S2MSI2A 1.09 GB
-   d5b73db9-0acf-401d-9bf4-a6f199df1119 ... 2021-09-08T10:15:59Z  3% S2MSI2A 1.09 GB
-   b00d5dfd-9cce-48c6-a011-fd46b85de814 ... 2021-09-03T10:20:21Z  3% S2MSI2A 1.09 GB
+   7 scene(s) found.
+   S2A_MSIL2A_20250427T101701_N0511_R065_T32UPB_20250427T170513 2025-04-27T10:17:01   0% S2MSI2A size_NA  
+   S2C_MSIL2A_20250813T102041_N0511_R065_T32UPB_20250813T160110 2025-08-13T10:20:41   0% S2MSI2A size_NA  
+   S2C_MSIL2A_20250614T101621_N0511_R065_T32UPB_20250614T142405 2025-06-14T10:16:21   2% S2MSI2A size_NA  
    ...
 
 ..
-   .. tip:: If more products have been found you can limit search by
+   .. tip:: If more scenes have been found you can limit search by
    :param:`limit` option.
 
-Let's download the desired product(s). Just remove the :param:`-l` flag and
+Let's download the desired scene(s). Just remove the :param:`-l` flag and
 add the :param:`output` option in order to define the path to the output directory
 where data should be saved.
 
 .. code-block:: bash
 
    i.sentinel.download map=jena_boundary producttype=S2MSI2A settings=sentinel.txt \
-   start=2021-04-01 end=2021-10-01 area_relation=Contains clouds=10 \
-   limit=1 output=geodata/sentinel/2021
+   start=2025-04-01 end=2025-10-01 area_relation=Contains clouds=10 \
+   limit=1 output=sentinel_2025
 
-.. note:: Note all products are NOT available online. In this case the
-   tool fails with ``Product
-   a844500a-049f-46a3-92de-bcda2c38fc3c is not
-   online. Triggering retrieval from long term archive.`` error
-   message. Try to download affected product in the next days.
+.. note:: Note all scenes are NOT available online. In this case the
+   tool fails, try to download affected scene in the next days.
 
 Import data
 -----------
@@ -169,9 +158,6 @@ useful to import cloud mask vector features by :param:`-c` flag.
 .. note:: Cloud mask is computed by
    :grasscmdaddons:`i.sentinel.import`, the tool doesn't use cloud
    mask product stored in a SAFE directory.
-
-.. todo:: Fix :grasscmdaddons:`i.sentinel.import` :option:`-c` flag to
-          respect :option:`pattern` parameter.
           
 Now launch the NDVI sample script created in :doc:`12` (`ndvi-v4.py
 <../_static/scripts/ndvi-v4.py>`__) in order to compute NDVI classes
