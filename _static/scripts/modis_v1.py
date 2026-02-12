@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import os
 from subprocess import PIPE
 from datetime import datetime
 
@@ -11,6 +12,8 @@ from pywps import Process, LiteralInput, LiteralOutput, Format
 class ModisV1(Process):
 
     def __init__(self):
+        os.environ["GRASS_OVERWRITE"] = "1"
+
         inputs = list()
         outputs = list()
 
@@ -71,7 +74,7 @@ class ModisV1(Process):
         outstr = 'Min: {0:.1f};Max: {1:.1f};Mean: {2:.1f}'.format(
             stats['min'], stats['max'], stats['mean']
         )
-        response.outputs['output'].data = outstr        
+        response.outputs['output'].data = outstr
 
         return response
 

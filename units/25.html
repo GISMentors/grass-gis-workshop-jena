@@ -178,28 +178,18 @@ t.rast.colors<span class="w"> </span><span class="nv">input</span><span class="o
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.univar<span class="w"> </span>modis_cm<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt;= &#39;2023-07-01&#39; and start_time &lt; &#39;2023-09-01&#39;&quot;</span>
 </pre></div>
 </div>
-</section>
-<section id="data-extraction">
-<h2>Data extraction<a class="headerlink" href="#data-extraction" title="Permalink to this heading">¶</a></h2>
-<p>A new space time dataset only with subset of data can be created by
-<a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/t.rast.extract.html">t.rast.extract</a>. Example for the four seasons below.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_c<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt;= &#39;2023-03-20&#39; and start_time &lt; &#39;2023-06-20&#39;&quot;</span><span class="w"> </span><span class="nv">output</span><span class="o">=</span>modis_spring
-
-t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_c<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt;= &#39;2023-06-20&#39; and start_time &lt; &#39;2023-09-22&#39;&quot;</span><span class="w"> </span><span class="nv">output</span><span class="o">=</span>modis_summer
-
-t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_c<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt;= &#39;2023-09-22&#39; and start_time &lt; &#39;2023-12-21&#39;&quot;</span><span class="w"> </span><span class="nv">output</span><span class="o">=</span>modis_autumn
-
-t.rast.extract<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_c<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt;= &#39;2022-12-21&#39; and start_time &lt; &#39;2023-03-20&#39;&quot;</span><span class="w"> </span><span class="nv">output</span><span class="o">=</span>modis_winter
-</pre></div>
-</div>
 <p>Another aggregation method is based on <a class="reference external" href="https://grass.osgeo.org/grass-stable/manuals/t.rast.series.html">t.rast.series</a>, it
 allows to aggregate space time raster dataset or part of it by various
 methods. The tool returns a single raster map as output. In example
 below average temperature for each seasons will be computed.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.series<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_spring<span class="w"> </span><span class="nv">output</span><span class="o">=</span>modis_spring_avg<span class="w"> </span><span class="nv">method</span><span class="o">=</span>average
-t.rast.series<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_summer<span class="w"> </span><span class="nv">output</span><span class="o">=</span>modis_summer_avg<span class="w"> </span><span class="nv">method</span><span class="o">=</span>average
-t.rast.series<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_autumn<span class="w"> </span><span class="nv">output</span><span class="o">=</span>modis_autumn_avg<span class="w"> </span><span class="nv">method</span><span class="o">=</span>average
-t.rast.series<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_winter<span class="w"> </span><span class="nv">output</span><span class="o">=</span>modis_winter_avg<span class="w"> </span><span class="nv">method</span><span class="o">=</span>average
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>t.rast.series<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_spring<span class="w"> </span><span class="nv">output</span><span class="o">=</span>modis_spring_avg<span class="w"> </span><span class="nv">method</span><span class="o">=</span>average<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt;= &#39;2023-03-20&#39; and start_time &lt; &#39;2023-06-20&#39;&quot;</span>
+t.rast.series<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_summer<span class="w"> </span><span class="nv">output</span><span class="o">=</span>modis_summer_avg<span class="w"> </span><span class="nv">method</span><span class="o">=</span>average<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt;= &#39;2023-06-20&#39; and start_time &lt; &#39;2023-09-22&#39;&quot;</span>
+t.rast.series<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_autumn<span class="w"> </span><span class="nv">output</span><span class="o">=</span>modis_autumn_avg<span class="w"> </span><span class="nv">method</span><span class="o">=</span>average<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt;= &#39;2023-09-22&#39; and start_time &lt; &#39;2023-12-21&#39;&quot;</span>
+t.rast.series<span class="w"> </span><span class="nv">input</span><span class="o">=</span>modis_winter<span class="w"> </span><span class="nv">output</span><span class="o">=</span>modis_winter_avg<span class="w"> </span><span class="nv">method</span><span class="o">=</span>average<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span><span class="nv">where</span><span class="o">=</span><span class="s2">&quot;start_time &gt;= &#39;2022-12-21&#39; and start_time &lt; &#39;2023-03-20&#39;&quot;</span>
 </pre></div>
 </div>
 <p>Univariate statistics of created raster map with average temperature
@@ -306,7 +296,6 @@ values.</p>
 <li class="toctree-l2"><a class="reference internal" href="#data-extracting">Data extracting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#lst">LST</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#data-aggregation">Data aggregation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#data-extraction">Data extraction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#data-visualization">Data visualization</a></li>
 </ul>
 </li>
