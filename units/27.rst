@@ -93,36 +93,36 @@ In the next step, we will enhance the PyWPS process similar to the
 Python script in :doc:`26`:
 
 1. The option :param:`where` will be split into two options
-   (:lcode:`17-20,55-57`): :param:`start` - Start date and
+   (:lcode:`20-23,58-60`): :param:`start` - Start date and
    :param:`end` - End date.
 
-2. New :param:`output` parameter is defined (:lcode:`22-23`).
+2. New :param:`output` parameter is defined (:lcode:`25-26`).
 
 3. New function ``check_date()`` to validate input dates will be added
-   (:lcode:`4,404-43,45-45`).
+   (:lcode:`5,43-46,48-49`).
 
 4. Output of :grasscmd:`r.univar` will be parsed and statistics
-   printed (:lcode:`3,68,70-74`).
+   printed (:lcode:`4,64,71,73-77`).
 
 5. The ``Model`` class (too generic name) is renamed to ``ModisV1``
-   (:lcode:`11,25,82`).
+   (:lcode:`12,28,85`).
    
 .. literalinclude:: ../_static/scripts/modis_v1.py
    :language: python
-   :emphasize-lines: 3,4,11,25,17-20,22-23,27,40-43,45-46,55-57,68,70-74,82
+   :emphasize-lines: 3-5,8,9,12,15,20-23,25-26,28,30,43-46,48-49,58-60,64,71,73-77,77,85
 
 Source code comments: process itself is defined as a Python class,
-:class:`ModisV1` in this case (line :lcode:`11`). In class constructor
-input (lines :lcode:`17-20`) and output parameters (line
-:lcode:`22-23`) are defined. Every process has its identifier (line
-:lcode:`27`), title and abstract. The process will operate in GRASS
-project defined on line :lcode:`32`. On line :lcode:`50` is assumed
+:class:`ModisV1` in this case (line :lcode:`12`). In class constructor
+input (lines :lcode:`20-23`) and output parameters (line
+:lcode:`25-26`) are defined. Every process has its identifier (line
+:lcode:`30`), title and abstract. The process will operate in GRASS
+project defined on line :lcode:`35`. On line :lcode:`53` is assumed
 that space time LST dataset is located in PERMANENT, see
 :doc:`25`. For each job (executed process by a client) PyWPS creates
 in this project a temporary mapset which is deleted when process is
 finished. Process body is implemented as ``_handler()`` method, see
-line :lcode:`39`. Resultant statistics is stored to response output as
-a simple string on line :lcode:`74`.
+line :lcode:`42`. Resultant statistics is stored to response output as
+a simple string on line :lcode:`77`.
 
 Sample process to download: `modis_v1.py
 <../_static/scripts/modis_v1.py>`__
@@ -142,21 +142,13 @@ The process has to be activated in :file:`demo.py`.
     ModisV1(),
    ]
 
-.. important:: In order to use GRASS functionality update PyWPS
-   configuration. Open :file:`pywps.cfg` and set correct GRASS
-   installation directory, eg.
+.. note:: In the case that PyWPS is not launched from a GRASS session
+   the PyWPS configuration needs to be adjusted. Open
+   :file:`pywps.cfg` and define GRASS installation directory (may be
+   printed by ``GISBASE`` environmental variable from a GRASS session).
 
-   .. code-block:: bash
-                   
-      gisbase=/usr/lib/grass84
-
-   On Windows specify path in Unix-like style:
-
-   .. code-block:: bash
-                
-      gisbase=/C/Program Files/GRASS 8.4
-   
-Stop running demo PyWPS server by :kbd:`Ctrl+C` and start again.
+Now stop running demo PyWPS server by :kbd:`Ctrl+C` and start again to
+reflect changes we have done.
 
 .. code-block:: bash
 
