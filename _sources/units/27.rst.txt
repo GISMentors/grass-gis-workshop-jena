@@ -31,7 +31,11 @@ server. (source: `PyWPS documentation
 
    OGC Web Processing Service example.
 
-This unit shows how to write your own WPS processes. The processes
+.. tip:: Try QGIS WPS Client plugin. Install the plugin from `ZIP
+   <https://github.com/OpenGeoLabs/qgis-wps-plugin/archive/refs/heads/master.zip>`__
+   file and try to use some freely available WPS servers.
+   
+This unit shows how to create your own WPS processes. The processes
 will be tested in `PyWPS demo
 <https://github.com/geopython/pywps-flask>`__ environment.
 
