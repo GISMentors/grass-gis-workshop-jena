@@ -93,6 +93,22 @@ As`) in :file:`pywps-flask-master/processes` directory.
 
 .. note:: Avoid dashes in the Python filename, use eg. :file:`modis_v1.py`.
 
+First remove unwanted code:
+
+.. code:: python
+
+   Module("r.out.gdal",
+          input="t_rast_series_out",
+          output=os.path.join(
+                  tempfile.gettempdir(),
+                  "t_rast_series_out" + ".tif"),
+          format="GTiff",
+               overwrite=True)
+
+   response.outputs["trastseries1_output"].file = os.path.join(
+       tempfile.gettempdir(),
+       "t_rast_series_out" + ".tif")
+   
 In the next step, we will enhance the PyWPS process similar to the
 Python script in :doc:`26`:
 
