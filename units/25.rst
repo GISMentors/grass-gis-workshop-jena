@@ -113,7 +113,7 @@ command :grasscmd:`t.rast.mapcalc` which applies map algebra to all
 the maps registered in input space time dataset.
 
 .. tip::
-   Many temporal data processing modules (``t.*``) support
+   Many temporal data processing tools (``t.*``) support
    parallelization (see :param:`nproc` option).
 
 .. code-block:: bash
@@ -157,6 +157,7 @@ a new temporal dataset with aggregated data is created.
 .. code-block:: bash
                           
    t.rast.aggregate input=modis_c output=modis_cm basename=cm granularity="1 months" nproc=3
+   t.rast.colors input=modis_cm color=celsius
 
 Statistics can be computed by :grasscmd:`t.rast.univar`.
 
@@ -170,37 +171,21 @@ Example for July and August only.
 
    t.rast.univar modis_cm where="start_time >= '2023-07-01' and start_time < '2023-09-01'"
 
-Data extraction
----------------
-
-A new space time dataset only with subset of data can be created by
-:grasscmd:`t.rast.extract`. Example for the four seasons below.
-
-.. code-block:: bash
-                          
-   t.rast.extract input=modis_c where="start_time >= '2023-03-20' and start_time < '2023-06-20'" \
-   output=modis_spring
-
-   t.rast.extract input=modis_c where="start_time >= '2023-06-20' and start_time < '2023-09-22'" \
-   output=modis_summer
-                
-   t.rast.extract input=modis_c where="start_time >= '2023-09-22' and start_time < '2023-12-21'" \
-   output=modis_autumn
-                
-   t.rast.extract input=modis_c where="start_time >= '2022-12-21' and start_time < '2023-03-20'" \
-   output=modis_winter
-
 Another aggregation method is based on :grasscmd:`t.rast.series`, it
 allows to aggregate space time raster dataset or part of it by various
-methods. The module returns a single raster map as output. In example
+methods. The tool returns a single raster map as output. In example
 below average temperature for each seasons will be computed.
 
 .. code-block:: bash
                 
-   t.rast.series input=modis_spring output=modis_spring_avg method=average
-   t.rast.series input=modis_summer output=modis_summer_avg method=average
-   t.rast.series input=modis_autumn output=modis_autumn_avg method=average
-   t.rast.series input=modis_winter output=modis_winter_avg method=average
+   t.rast.series input=modis_spring output=modis_spring_avg method=average \
+    where="start_time >= '2023-03-20' and start_time < '2023-06-20'"
+   t.rast.series input=modis_summer output=modis_summer_avg method=average \
+    where="start_time >= '2023-06-20' and start_time < '2023-09-22'"
+   t.rast.series input=modis_autumn output=modis_autumn_avg method=average \
+    where="start_time >= '2023-09-22' and start_time < '2023-12-21'"
+   t.rast.series input=modis_winter output=modis_winter_avg method=average \
+    where="start_time >= '2022-12-21' and start_time < '2023-03-20'"
 
 Univariate statistics of created raster map with average temperature
 values can be calculated by :grasscmd:`r.univar`.

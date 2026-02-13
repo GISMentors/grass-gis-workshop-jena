@@ -18,7 +18,7 @@ Note that also class name (:lcode:`28`), process identifier
 
 .. literalinclude:: ../_static/scripts/modis_v2.py
    :language: python
-   :emphasize-lines: 3,9,18-19,25-26,28,30,31,36,37,53,62-84,86
+   :emphasize-lines: 3,9,18-19,25-26,28,30,31,36,37,53,62-85
 
 Sample process to download: `modis_v2.py
 <../_static/scripts/modis_v2.py>`__

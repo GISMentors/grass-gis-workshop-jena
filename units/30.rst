@@ -35,12 +35,10 @@ http://localhost:5000/wps?request=Execute&service=WPS&identifier=modis-v4&versio
 .. figure:: ../images/units/30/qgis-result.png
    :class: large
            
-   Example of WPS process consumption in QGIS using WPS Client
-   plugin. Install the plugin from `ZIP
-   <https://github.com/OpenGeoLabs/qgis-wps-plugin/archive/refs/heads/master.zip>`__
-   file.
+   Example of WPS process consumption in QGIS using `WPS Client plugin
+   <https://github.com/OpenGeoLabs/qgis-wps-plugin/archive/refs/heads/master.zip>`__.
 
 ----
 
-.. note:: **It is the end (of the workshop), enjoy GRASS GIS (and your
+.. note:: **It is the end (of the workshop), enjoy GRASS (and your
           real life)! :-)**

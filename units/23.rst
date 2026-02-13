@@ -3,15 +3,15 @@ Unit 23 - Spatio-temporal parallelization
 
 This unit is focused on improving the script created in :doc:`22` by
 processing Sentinel scenes in parallel. Paralelization is performed by
-:pygrass-modules:`ParallelModuleQueue` similarly as in :doc:`19`, see
+:pygrass-tools:`ParallelToolQueue` similarly as in :doc:`19`, see
 line :lcode:`209`.
 
 New PyGRASS functionality is introduced on line :lcode:`132`. By
-:pygrass-modules:`MultiModule` it is possible to define a list of
-modules which will work as isolated units not influenced by other
+:pygrass-tools:`MultiTool` it is possible to define a list of
+tools which will work as isolated units not influenced by other
 processes running parallel. By setting ``set_temp_region`` computation
 region settings will be also isolated from other processes. By
-``sync=True`` all modules will run in serial order in a background
+``sync=True`` all tools will run in serial order in a background
 process. Tools are added to the queue (:lcode:`132`) with
 ``run_=False`` to prevent them from running immediately, see
 eg. :lcode:`72`. Queue with calculation tools is processed on line
@@ -25,7 +25,7 @@ Compared to `ndvi-tgrass-v1.py
 :grasscmd:`r.mapcalc` (:lcode:`74`) instead of combination of
 :grasscmd:`r.mask` and :grasscmd:`i.vi`. The concept of raster masks
 created by :grasscmd:`r.mask` would not be functional in the case of
-parallel computation (the module creates raster map named
+parallel computation (the tool creates raster map named
 :map:`MASK`). The for loop (:lcode:`179`) is split into two parts: 1)
 perform computation in parallel (:lcode:`192`) and 2) compute
 statistics (:lcode:`196`).

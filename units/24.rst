@@ -21,17 +21,17 @@ MODIS data is provided in 3 projections (Sinusoidal, Lambert Azimuthal
 Equal-Area, and Geographic). For our purpose, data will be reprojected
 to ETRS89 / LAEA Europe :epsg:`3035`.
 
-.. _create-location-epsg:
+.. _create-project-epsg:
 
-Create a new GRASS location *germany-modis* (see :ref:`Unit 02
-<create-location>`) using EPSG code (*Select CRS from a list by EPSG
+Create a new GRASS project *germany-modis* (see :ref:`Unit 02
+<create-project>`) using EPSG code (*Select CRS from a list by EPSG
 or description*).
 
-.. figure:: ../images/units/24/create-location-epsg-0.png
+.. figure:: ../images/units/24/create-project-epsg-0.png
 
-   Create a new location based on EPSG code.
+   Create a new project based on EPSG code.
 
-.. figure:: ../images/units/24/create-location-epsg-1.png
+.. figure:: ../images/units/24/create-project-epsg-1.png
 
    Enter EPSG code.
 
@@ -48,7 +48,7 @@ MODIS data (note that you have to install also `pyMODIS Python Library
    
    g.extension extension=i.modis
 
-GRASS MODIS addon consists of two modules:
+GRASS MODIS addon consists of two tools:
 
 * :grasscmdaddons:`i.modis.download` and
 * :grasscmdaddons:`i.modis.import`
@@ -74,7 +74,7 @@ downloaded.
    startday=2023-01-01 endday=2023-12-31
 
 .. note:: Output folder (:file:`h18v03_04` in this case) must exists,
-   otherwise the module will fail.
+   otherwise the tool will fail.
              
    File :file:`settings.txt` contains two lines: *username* and
    *password* for accessing MODIS download service.
@@ -88,24 +88,18 @@ downloaded.
 Import data
 -----------
           
-Input MODIS data can be imported and reprojected into target location
+Input MODIS data can be imported and reprojected into target project
 by :grasscmdaddons:`i.modis.import`.
 
 .. code-block:: bash
 
-   i.modis.import -mw files=modis/listfileMOD11A2.061.txt \
-   spectral='( 1 0 0 0 1 0 0 0 0 0 0 0 )' outfile=tlist-mod.txt
+   i.modis.import -qmw files=modis/listfileMOD11A2.061.txt outfile=tlist-mod.txt
 
-   i.modis.import -mw files=modis/listfileMYD11A2.061.txt \
-   spectral='( 1 0 0 0 1 0 0 0 0 0 0 0 )' outfile=tlist-myd.txt
+   i.modis.import -qmw files=modis/listfileMYD11A2.061.txt outfile=tlist-myd.txt
 
 If ``-m`` flag is given mosaic from input tiles is created
 automatically, see :numref:`modis-mosaics`.
 
-.. note:: See relevant `source code
-   <https://github.com/OSGeo/grass-addons/blob/grass8/src/imagery/i.modis/libmodis/rmodislib.py#L78>`__
-   related to :option:`spectral` option.
-          
 .. _modis-mosaics:
 
 .. figure:: ../images/units/24/modis-mosaics.png
@@ -118,7 +112,7 @@ Germany administrative border
 
 Germany administrative border can created by dissolving
 :map:`counties` used in :doc:`14`. Let's import
-:file:`osm/counties.gpkg` into the current GRASS location as described
+:file:`osm/counties.gpkg` into the current GRASS project as described
 in :doc:`03`.
 
 Next, open the attribute table |grass-table| :sup:`Show attribute data
@@ -170,7 +164,7 @@ MODIS data by :grasscmd:`g.region`.
    g.region vector=germany align=MOD11A2.A2023001_mosaic_LST_Day_1km
    r.mask vector=germany
 
-Let's check range values of imported MODIS data by :grasscmd:`r.info` module:
+Let's check range values of imported MODIS data by :grasscmd:`r.info` tool:
 
 .. code-block:: bash
 

@@ -25,7 +25,8 @@ have any just use GRASS-integrated Python editor |grass-python| :sub:`Open
 a simple Python code editor`.
 
 .. figure:: ../images/units/11/editor.png
-
+   :class: middle
+           
    Simple GRASS Python code editor in action.
 
 Load script by |grass-open| :sup:`Open` and improve the script by
@@ -66,7 +67,7 @@ In Python:
    :language: python
    :lines:  113-122
 
-Output of :grasscmd:`r.stats` module need to be parsed. Unfortunately
+Output of :grasscmd:`r.stats` tool need to be parsed. Unfortunately
 the command does not offer a shell script output similarly to
 :grasscmd:`r.univar`. This may be solved by Python functions like
 ``splitlines()`` and ``split()``.

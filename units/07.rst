@@ -1,24 +1,24 @@
 Unit 07 - QGIS loves GRASS
 ==========================
 
-Let's step out of the GRASS GIS environment for a moment. `QGIS
+Let's step out of the GRASS environment for a moment. `QGIS
 <http://qgis.org>`__ is a very popular open source GIS package which
 made a significant progress in the last years. Nowadays it's used in
 education, academic environment, but also in commercial settings. In
 2002 QGIS started a multiplatform viewer for geospatial data. In the
 recent years QGIS made important steps for being analytical
 tool. Beside native algoritms QGIS offers also connection to
-third-party software packages as SAGA, Orfeo or GRASS GIS. GRASS tools
+third-party software packages as SAGA, Orfeo or GRASS. GRASS tools
 can be run directly from QGIS enviroment without starting GRASS
 explicitly.
 
-Data produced by GRASS GIS may be easily accessed directly from
+Data produced by GRASS may be easily accessed directly from
 :item:`Browser` tab.
 
 .. figure:: ../images/units/07/qgis-display-grass-data.png
    :class: middle
            
-   Show data produced by GRASS GIS in QGIS environment.
+   Show data produced by GRASS in QGIS environment.
 
 .. note::
 
@@ -48,12 +48,12 @@ Processing plugin
 Processing plugin is a generic toolbox which allows to run tools
 provided by QGIS or third-party software packages like eg. GRASS. Let's
 open :menuselection:`Processing --> Toolbox` and search for
-:grasscmd:`i.vi` GRASS module.
+:grasscmd:`i.vi` GRASS tool.
 
 .. figure:: ../images/units/07/processing-i-vi.png
    :class: small
            
-   Search for :grasscmd:`i.vi` GRASS module in Processing toolbox.
+   Search for :grasscmd:`i.vi` GRASS tool in Processing toolbox.
 
 .. figure:: ../images/units/07/processing-i-vi-params.png
    :class: middle
@@ -62,10 +62,10 @@ open :menuselection:`Processing --> Toolbox` and search for
    be optionally defined in :item:`Advanced parameters` section.
 
 :numref:`processing-i-vi-running` shows how Processing plugin
-works. First of all a temporary GRASS location is created by
-:grasscmd:`g.proj`, input data is linked into temporary location by
+works. First of all a temporary GRASS project is created by
+:grasscmd:`g.proj`, input data is linked into temporary project by
 :grasscmd:`r.external`. Then computation can finally starts by running
-:grasscmd:`i.vi` module. In the last step output data is exported out
+:grasscmd:`i.vi` tool. In the last step output data is exported out
 of GRASS using :grasscmd:`r.out.gdal`. The resultant GeoTiff file is
 vizualized in QGIS map window.
 
@@ -74,7 +74,7 @@ vizualized in QGIS map window.
 .. figure:: ../images/units/07/processing-i-vi-running.png
            
    Running :grasscmd:`i.vi` tool and exporting result from GRASS
-   temporary location.
+   temporary project.
    
 .. _processing-result:
 

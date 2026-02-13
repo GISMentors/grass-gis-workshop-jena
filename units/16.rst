@@ -36,10 +36,24 @@ dataset as :file:`osm/jena-rivers.gpkg` file.
 	   
    DEM, Jena boundary and rivers provided by OSM.
 
-Flooding can be easily simulated by :grasscmd:`r.lake` module which
+Flooding can be easily simulated by :grasscmd:`r.lake` tool which
 fills a lake to a target water level from a given start point or seed
 raster. The resulting raster map contains cells with values
 representing lake depth (NULL for all other cells beyond the lake).
+
+.. _create-mapset:
+   
+.. note:: Before running :grasscmd:`r.lake` let's start **organizing
+   our work**. Till now we used PERMANENT mapsets only. There is input
+   data like DEM, Jena city region, cloud mask vector map, Sentinel
+   bands, results of NDVI computation and so on. Data organization can
+   be improved by using multiple mapsets. Let's create a new mapset
+   *flooding* in the current project *jena-region*. New mapset from
+   :item:`Data` tab or by :grasscmd:`g.mapset` tool.
+
+   .. figure:: ../images/units/16/create_mapset.png
+           
+      Create a new mapset in :item:`Data` tab.   
 
 The :grasscmd:`r.lake` requires seeds coordinates and water level to
 be defined. The coordinates can be set also interactively as
@@ -55,7 +69,7 @@ be defined. The coordinates can be set also interactively as
 Height of seed point can be determined by querying DEM map layer
 |grass-info| :sup:`Query raster/vector map(s)` from Map Display
 toolbar (see :numref:`dem-what`) or directly using :grasscmd:`r.what`
-module:
+tool:
 
 .. code-block:: bash
 
@@ -72,21 +86,6 @@ module:
            
    Query DEM layer for an elevation value.
 
-.. _create-mapset:
-   
-.. note:: Before running :grasscmd:`r.lake` let's start **organizing
-   our work**. Till now we used PERMANENT mapsets only. There is input
-   data like DEM, Jena city region, cloud mask vector map, Sentinel
-   bands, results of NDVI computation and so on. Data organization can
-   be improved by using multiple mapsets. Let's create a new mapset
-   *flooding* in the current location *jena-region*. New mapset from
-   :item:`Data` tab or by :grasscmd:`g.mapset` module.
-
-   .. figure:: ../images/units/16/create_mapset.png
-      :class: middle
-           
-      Create a new mapset in :item:`Data` tab.
-         
 Before starting computation the computation region have to be set
 based on :map:`dem` raster map.
 

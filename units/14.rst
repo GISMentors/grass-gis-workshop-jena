@@ -6,11 +6,11 @@ Python objects. This unit shows how to deal with GRASS topological
 vector data by PyGRASS API.
 
 Let's import :file:`osm/counties.gpkg` into *jena-region*
-GRASS location as described in :doc:`03`. In this case coordinate
+GRASS project as described in :doc:`03`. In this case coordinate
 reference system (CRS) of input data (:epsg:`3035`) differs from
 *jena-region* CRS definition (:epsg:`32632`). GRASS will apply
 transformation of input data into target CRS provided by the current
-location (``Projection match: No``). This operation needs to be
+project (``Projection match: No``). This operation needs to be
 confirmed by a user, see :numref:`confirm-reprojection`.
 
 .. _confirm-reprojection:
@@ -64,7 +64,7 @@ Example below prints county names and area size in hectares.
    for feat in counties.viter('areas'):
        if not feat.attrs:
            continue
-       print ('{0}: {1:.1f}ha'.format(feat.attrs['name'], feat.area() / 10e4))
+       print ('{0}: {1:.1f}ha'.format(feat.attrs['name'], feat.area() / 1e4))
    
    counties.close()
 
@@ -72,11 +72,11 @@ Example of output:
 
 ::
 
-   Hamburg: 31.5ha
-   Hamburg: 26.6ha
-   Niedersachsen: 306.4ha
-   Niedersachsen: 279.2ha
-   Niedersachsen: 205.7ha   
+   Hamburg: 314.8ha
+   Hamburg: 265.6ha
+   Niedersachsen: 3063.6ha
+   Niedersachsen: 2792.4ha
+   Niedersachsen: 2056.9ha   
    ...
 
 .. task:: Modify the script to print overall area for each county.

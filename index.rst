@@ -62,17 +62,17 @@ Software used in this training materials
 .. figure:: ./images/grass-gis-logo.png
    :class: small
           
-* `GRASS GIS <http://grass.osgeo.org>`__ (recommended version 8.4) for
+* `GRASS <http://grass.osgeo.org>`__ (recommended version 8.4) for
   geospatial raster, imagery, and vector data processing and providing
   spatial analysis.
-* `QGIS desktop <http://qgis.org>`__ (recommended version 3.28) for
+* `QGIS desktop <http://qgis.org>`__ (recommended version 3.40) for
   geospatial visualization, creating hardcopy outputs, and data
   publishing.
 * `GDAL library <http://gdal.org>`__ for reading and writing various
   geospatial data.
-* `sentinelsat library <https://pypi.python.org/pypi/sentinelsat>`__
+* `EODAG library <https://pypi.org/project/eodag/>`__
   utility to search and download Copernicus Sentinel satellite images.
-* `pyModis <http://www.pymodis.org/>`__ Python based library to work
+* `pyModis <https://pymodis.org/>`__ Python based library to work
   with MODIS data.
 * `pyWPS <http://pywps.org/>`__ implementation of the Web Processing
   Service standard from the Open Geospatial Consortium written in
@@ -81,7 +81,7 @@ Software used in this training materials
 Installation notes
 ------------------
 
-It is recommended to have at least 10GB free space (GRASS GIS
+It is recommended to have at least 10GB free space (GRASS
 installation + sample data + computation results).
 
 Debian/Ubuntu Linux
@@ -94,7 +94,7 @@ Debian/Ubuntu Linux
 MS Windows
 ^^^^^^^^^^
 
-* Install GRASS GIS 8 using `standalone installer
+* Install GRASS 8 using `standalone installer
   <https://grass.osgeo.org/download/windows/#standalone-installers>`__
 
 Sample dataset
@@ -120,13 +120,13 @@ List of data sources used for sample dataset:
 * Administrative regions (directory: :file:`osm`, source:
   OpenStreetMap)
 * Sentinel-2 data (directory: :file:`sentinel`, source: `Copernicus
-  Open Access Hub <https://scihub.copernicus.eu/>`__)
+  Data Space Ecosystem <https://dataspace.copernicus.eu/>`__)
 
 Units
 =====
 
 `Time Schedule
-<https://docs.google.com/spreadsheets/d/1E-7AJD0D_5kNuuGHszf_pEx04V9PuNyqlmtTdPSwGMI/edit?usp=sharing>`__
+<https://docs.google.com/spreadsheets/d/1k_mgV35LaMdEYYKhCAFZ5m-TBfrrVzlS5qlJ3IhTdBM/edit?usp=sharing>`__
 
 .. toctree::
    :maxdepth: 2

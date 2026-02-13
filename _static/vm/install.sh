@@ -21,7 +21,7 @@ sudo apt -y install \
      python3-pip \
      liblas-dev
 
-sudo pip3 install pymodis sentinelsat pandas pywps
+sudo pip3 install pymodis eodag pandas pywps
 
 # laszip
 wget https://github.com/LASzip/LASzip/releases/download/v2.2.0/laszip-src-2.2.0.tar.gz

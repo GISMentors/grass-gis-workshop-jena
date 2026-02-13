@@ -6,7 +6,7 @@ language is very popular in the field of GIS and data science in
 general. Python is also the main scripting platform for Esri products
 (see `arcpy
 <http://pro.arcgis.com/en/pro-app/arcpy/get-started/what-is-arcpy-.htm>`__
-package). GRASS is not an exception. In reality, many GRASS modules
+package). GRASS is not an exception. In reality, many GRASS tools
 are basically Python scripts, eg. :grasscmd:`r.mask` (see *Source
 Code* section).
 
@@ -15,14 +15,19 @@ GRASS Python environment consists various libraries, see
 details. Let's focus on three main libraries related to this workshop:
 
 * :grasscmd2:`GRASS Script Package <libpython/script_intro.html>`
-  as entering node to Python scripting capabilities in GRASS GIS
+  as entering node to Python scripting capabilities in GRASS
 * object-oriented (native for Python) :grasscmd2:`pyGRASS
   <libpython/pygrass_index.html>`
-* spatio-temporal :grasscmd2:`GRASS GIS Temporal Framework
+* spatio-temporal :grasscmd2:`GRASS Temporal Framework
   <libpython/temporal_framework.html>`
 
+.. tip:: GRASS 8.5 comes with a new `GRASS tools
+         <https://grass.osgeo.org/grass85/manuals/libpython/grass.tools.html>`_
+         package which provides a specialized Python interface to
+         GRASS tools.
+         
 :grasscmd2:`PyGRASS <libpython/pygrass_index.html>` is designed as an
-**object-oriented** Python API for GRASS GIS. This is a major
+**object-oriented** Python API for GRASS. This is a major
 difference to GRASS Script Package which consists of procedures - Python
 functions. It is important to highlight that PyGRASS is not a
 replacement for GRASS Script Package. The both packages are living
@@ -34,7 +39,6 @@ Let's do our first steps towards Python scripting in :item:`Python`
 tab.
 
 .. figure:: ../images/units/10/layer-manager-python.png
-   :class: middle
            
    Interactive prompt in :item:`Python` tab.
             
@@ -62,7 +66,7 @@ The workflow is represented by a set of GRASS commands (map names shorten):
    # 5.
    r.univar map=ndvi
 
-.. tip:: GRASS modules run from :item:`Console` or GUI dialogs are
+.. tip:: GRASS tools run from :item:`Console` or GUI dialogs are
    logged by commands history. This history may be exported by
    :item:`Export history` button in :item:`Console` tab. Logged
    commands can be used as a starting point for your first Python
@@ -72,7 +76,7 @@ The workflow is represented by a set of GRASS commands (map names shorten):
    .. figure:: ../images/units/10/history-panel.png
       :class: large
               
-      GRASS GIS 8.4 comes with much better command history management.
+      GRASS 8.4 comes with much better command history management.
             
 Python code may be interactively run from :item:`Python` tab. In the
 following units PyGRASS API will be systematically used.
@@ -142,7 +146,7 @@ Graphical Modeler and Python
 
 Model created in Graphical Modeler can be easily converted into Python
 script. Let's open the model created in :doc:`09`: `ndvi-v3.gxm
-<../_static/models/ndvi-v3.gxm>`__ and switch to :item:`Python editor`
+<../_static/models/ndvi-v3.gxm>`__ and switch to :item:`Script editor`
 tab.
 
 .. figure:: ../images/units/10/model-python-editor.png
@@ -150,3 +154,12 @@ tab.
    
    Python editor integrated in Graphical Modeler. Python code can be
    modified, run or saved into file (:file:`ndvi-v3.py`).
+
+.. note:: Don't forget to change Modeler's settings
+   (:menuselection:`Modeler --> Settings --> Preferences`) to use
+   PyGRASS API (default is GRASS Script package).
+
+   .. figure:: ../images/units/10/gmodeler-settings-pygrass.png
+      :class: small
+              
+      Change Python API to PyGRASS in the Modeler settings. 

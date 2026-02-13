@@ -6,9 +6,9 @@ in a current computation region, it would be better to define region
 based on user input. 
 
 NDVI values range from +1.0 to -1.0. Areas of barren rock, sand, or
-snow usually show very low NDVI values (less than 0.1). Sparse
+snow usually show very low NDVI values (less than 0.2). Sparse
 vegetation such as shrubs and grasslands or senescing crops may result
-in moderate NDVI values (approximately between 0.2 and 0.5). High NDVI values
+in moderate NDVI values (approximately between 0.2 and 0.6). High NDVI values
 (approximately between 0.6 and 1.0) correspond to dense vegetation such as that
 found in temperate and tropical forests or crops at their peak growth
 stage. Let's classify NDVI into 3 major classes:
@@ -39,7 +39,6 @@ Overview of commands below:
 
    v.overlay ainput=jena_boundary binput=MaskFeature operator=not output=region_mask
    g.region vector=region_mask align=L2A_T32UPB_20170706T102021_B04_10m
-   r.mask -r
    r.mask vector=region_mask
    i.vi red=L2A_T32UPB_20170706T102021_B04_10m output=ndvi nir=L2A_T32UPB_20170706T102021_B08_10m
    r.recode input=ndvi output=ndvi_class rules=reclass.txt
@@ -61,13 +60,14 @@ Overview of commands below:
    hectares whereas in the case of :grasscmd:`v.clean` it is given in
    square metres.
           
-The tools can be added to the existing model by |grass-module-add|
-:sup:`Add GRASS tool (module) to model`. Note that newly added tools
+The tools can be added to the existing model by |grass-tool-add|
+:sup:`Add GRASS tool (tool) to model`. Note that newly added tools
 are placed at the end of a computation workflow which is not
 desired. Commands order can be changed in :item:`Items` tab.
 
 .. figure:: ../images/units/09/reorder-items.png
-
+   :class: large
+           
    Reorder model items (GRASS tools) by :item:`Up/Down` buttons. In
    this case move :grasscmd:`v.overlay` up to the first position.
 
@@ -100,12 +100,13 @@ simple:
    <../_static/models/colors.txt>`__
          
 .. figure:: ../images/units/09/model-v2.png
-
+   :class: large
+           
    Extended model.
 
 Sample model to download: `ndvi-v2.gxm <../_static/models/ndvi-v2.gxm>`__
 (note: don't forget to fix path to reclass and colors file for
-:grasscmd:`r.recode` and :grasscmd:`r.colors` modules)
+:grasscmd:`r.recode` and :grasscmd:`r.colors` tools)
 
 Parameterization
 ----------------

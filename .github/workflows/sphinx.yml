@@ -20,6 +20,7 @@ jobs:
 
     - name: Install locales
       run: |
+        sudo apt-get update
         sudo apt-get install --yes locales-all --reinstall
 
     - name: Download template
