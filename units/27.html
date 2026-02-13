@@ -127,6 +127,20 @@ As</span>) in <code class="file docutils literal notranslate"><span class="pre">
 <p class="admonition-title">Note</p>
 <p>Avoid dashes in the Python filename, use eg. <code class="file docutils literal notranslate"><span class="pre">modis_v1.py</span></code>.</p>
 </div>
+<p>First remove unwanted code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Module</span><span class="p">(</span><span class="s2">&quot;r.out.gdal&quot;</span><span class="p">,</span>
+       <span class="nb">input</span><span class="o">=</span><span class="s2">&quot;t_rast_series_out&quot;</span><span class="p">,</span>
+       <span class="n">output</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+               <span class="n">tempfile</span><span class="o">.</span><span class="n">gettempdir</span><span class="p">(),</span>
+               <span class="s2">&quot;t_rast_series_out&quot;</span> <span class="o">+</span> <span class="s2">&quot;.tif&quot;</span><span class="p">),</span>
+       <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;GTiff&quot;</span><span class="p">,</span>
+            <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">response</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="s2">&quot;trastseries1_output&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+    <span class="n">tempfile</span><span class="o">.</span><span class="n">gettempdir</span><span class="p">(),</span>
+    <span class="s2">&quot;t_rast_series_out&quot;</span> <span class="o">+</span> <span class="s2">&quot;.tif&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 <p>In the next step, we will enhance the PyWPS process similar to the
 Python script in <a class="reference internal" href="26.html"><span class="doc">Unit 26 - MODIS ST scripting</span></a>:</p>
 <ol class="arabic simple">
